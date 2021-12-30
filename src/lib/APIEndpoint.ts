@@ -54,7 +54,7 @@ function APIEndpoint<Opts, Response>(def: APIEndpointDefinition<Opts, Response>)
   async function call<RequestOverrides extends https.RequestOptions & { body?: any }>(
     this: Resource,
     opts: Opts | { (err: ErrorResponse, res: Response): any; } = {} as any,
-    overrides?: RequestOverrides | { (err: boolean, res: Response): any; },
+    overrides?: RequestOverrides | { (err: ErrorResponse, res: Response): any; },
     cb?: { (err: ErrorResponse, res: Response): any; },
   ): Promise<Response | ErrorResponse | null> {
     const params = { ...def.bodyParams, ...def.queryParams };

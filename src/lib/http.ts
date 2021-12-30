@@ -118,7 +118,7 @@ async function makeRequest<Return>(
           resolve([error, reply]);
         }
 
-        resolve([error, reply]);
+        resolve([null, reply]);
       });
 
       res.on('error', (e) => {
