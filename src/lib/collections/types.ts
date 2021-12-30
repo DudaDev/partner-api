@@ -87,14 +87,14 @@ export type AddRowResponse = Array<{
   id: string,
 }>
 
+export interface CollectionRow {
+  data: any,
+}
+
 export interface AddRowPayload {
   site_name: string,
   collection_name: string,
   raw_body: Array<CollectionRow>,
-}
-
-export interface CollectionRow {
-  data: any,
 }
 
 export interface UpdateRowPayload {
