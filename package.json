@@ -1,6 +1,6 @@
 {
   "name": "@dudadev/api",
-  "version": "1.0.0",
+  "version": "0.0.3",
   "files": [
     "dist",
     "src"
@@ -8,7 +8,7 @@
   "main": "dist/index.js",
   "typings": "dist/types",
   "license": "MIT",
-  "description": "---description---",
+  "description": "Provides convenient access to Duda's public APIs from applications written in server-side Javascript.",
   "repository": "---repo---",
   "author": "Everett Morgan",
   "scripts": {
@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "dotenv": "^10.0.0",
-    "ejmorgan-request": "^1.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

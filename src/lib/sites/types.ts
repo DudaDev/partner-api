@@ -129,7 +129,7 @@ export interface CreateSitePayload {
   fav_icon?: string,
   default_domain_prefix?: string,
   lang?: string,
-  site_data: {
+  site_data?: {
     external_uid?: string,
     site_business_info?: {
       business_name?: string,

@@ -32,7 +32,7 @@ before('create a new site and account to test against', async function () {
   duda = Duda.New({
     user: process.env.DUDA_API_USER,
     pass: process.env.DUDA_API_PASS,
-    host: Duda.envs.sandbox,
+    env: Duda.envs.sandbox,
   });
 
   await duda.accounts.create({
@@ -45,7 +45,7 @@ beforeEach(function () {
   duda = Duda.New({
     user: process.env.DUDA_API_USER,
     pass: process.env.DUDA_API_PASS,
-    host: Duda.envs.sandbox,
+    env: Duda.envs.sandbox,
   });
 });
 

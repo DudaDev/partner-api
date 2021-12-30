@@ -37,15 +37,15 @@ interface APIEndpointDefinition<Opts, Response> {
 }
 
 function APIEndpoint<Opts, Response>(def: APIEndpointDefinition<Opts, Response>) {
+  function call(cb: { (err: boolean, res: Response): any; }): void;
+
   function call(): Promise<Response>;
 
-  function call(cb: { (err: boolean, res: Response): any; }): void;
+  function call(opts: Opts, cb: { (err: boolean, res: Response): any; }): void;
 
   function call(opts: Opts): Promise<Response>;
 
   function call(opts: Opts, overrides?: RequestOptions): Promise<Response>;
-
-  function call(opts: Opts, cb: { (err: boolean, res: Response): any; }): void;
 
   function call(opts: Opts, overrides: RequestOptions, cb: {
     (err: boolean, res: Response): any;
