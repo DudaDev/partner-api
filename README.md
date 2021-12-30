@@ -165,6 +165,9 @@ duda.sites.get({ site_name: 'a-site-name' }, {
   headers: {
     'X-CUSTOM-HEADER': 'a-value',
   },
+}, (err, site) => {
+  if (err) console.log(err);
+  console.log(site);
 });
 ```
 
