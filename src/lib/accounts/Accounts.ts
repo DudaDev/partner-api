@@ -6,9 +6,9 @@ import Permissions from './Permissions';
 import Authentication from './Authentication';
 
 class Accounts extends Resource {
-  permissions = new Permissions(this.config);
+  permissions = new Permissions(this.__config);
 
-  authentication = new Authentication(this.config);
+  authentication = new Authentication(this.__config);
 
   get = APIEndpoint<Types.GetAccountPayload, Types.GetAccountResponse>({
     method: 'get',

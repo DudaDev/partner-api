@@ -19,6 +19,7 @@
     "no-unused-vars": "off",
     "prefer-arrow-callback": "off",
     "import/no-unresolved": "off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "no-underscore-dangle": "off"
   }
 }

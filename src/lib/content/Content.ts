@@ -6,9 +6,9 @@ import MultiLocation from './MultiLocation';
 import InjectedContent from './InjectedContent';
 
 class Content extends Resource {
-  multilocation = new MultiLocation(this.config);
+  multilocation = new MultiLocation(this.__config);
 
-  injectedContent = new InjectedContent(this.config);
+  injectedContent = new InjectedContent(this.__config);
 
   get = APIEndpoint<Types.GetContentPayload, Types.ContentLibrary>({
     method: 'get',

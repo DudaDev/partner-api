@@ -5,7 +5,7 @@ import PagesV2 from './v2';
 import { APIEndpoint } from '../APIEndpoint';
 
 class Pages extends Resource {
-  v2 = new PagesV2(this.config);
+  v2 = new PagesV2(this.__config);
 
   list = APIEndpoint<Types.V1.ListPagesPayload, Types.V1.ListPagesResponse>({
     method: 'get',

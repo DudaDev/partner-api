@@ -1,4 +1,4 @@
-/* eslint-disable max-classes-per-file */
+/* eslint-disable max-classes-per-file, no-underscore-dangle */
 
 import { RequestOptions } from './http';
 import { APIEndpointDefinition } from './APIEndpoint';
@@ -26,14 +26,16 @@ class Config {
 }
 
 abstract class Resource {
-  basePath!: string;
+  readonly __config!: Config;
 
-  readonly config!: Config;
+  __basePath!: string;
 
   constructor(config: Config) {
-    this.config = config;
+    this.__config = config;
 
-    if (!this.basePath) this.basePath = '';
+    if (!this.__basePath) this.__basePath = '';
+
+    Object.freeze(this.__config);
   }
 
   buildRequest?(
@@ -43,12 +45,12 @@ abstract class Resource {
 }
 
 abstract class SubResource extends Resource {
-  base: Resource;
+  __base: Resource;
 
   constructor(base: Resource) {
-    super(base.config);
-    this.base = base;
-    this.basePath = base.basePath;
+    super(base.__config);
+    this.__base = base;
+    this.__basePath = base.__basePath;
     this.buildRequest = base.buildRequest;
   }
 }

@@ -61,7 +61,7 @@ function APIEndpoint<Opts, Response>(def: APIEndpointDefinition<Opts, Response>)
 
     validateParams(params, opts);
 
-    const path = buildPath(`${this.basePath}${def.path}`, opts);
+    const path = buildPath(`${this.__basePath}${def.path}`, opts);
 
     const query = def.queryParams && buildQueryParams(def.queryParams, opts);
 
@@ -71,12 +71,12 @@ function APIEndpoint<Opts, Response>(def: APIEndpointDefinition<Opts, Response>)
       headers: {},
       method: def.method,
       path: query ? `${path}?${query}` : path,
-      ...(this.config.user && this.config.pass && {
-        auth: `${this.config.user}:${this.config.pass}`,
+      ...(this.__config.user && this.__config.pass && {
+        auth: `${this.__config.user}:${this.__config.pass}`,
       }),
       ...def.defaults,
       ...(body && { body }),
-      ...(this.config.host && { host: this.config.host }),
+      ...(this.__config.host && { host: this.__config.host }),
       ...(typeof overrides !== 'function' && overrides),
     };
 
