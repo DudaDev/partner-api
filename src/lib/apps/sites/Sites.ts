@@ -1,14 +1,10 @@
-// import * as apps from './types';
+import * as Types from './types';
 import { SubResource } from '../../base';
 import { APIEndpoint } from '../../APIEndpoint';
+import { TokenRequest } from '../types';
 
 class AppsSites extends SubResource {
-  get = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  get = APIEndpoint<TokenRequest<Types.GetSiteByNamePayload>, Types.GetSiteResponse>({
     method: 'get',
     path: '/site/{site_name}',
     defaults: {
@@ -21,12 +17,8 @@ class AppsSites extends SubResource {
     },
   });
 
-  getBrandingDetails = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  // eslint-disable-next-line
+  getBrandingDetails = APIEndpoint<TokenRequest<Types.GetBrandingPayload>, Types.GetBrandingResponse>({
     method: 'get',
     path: '/site/{site_name}/branding',
     defaults: {
@@ -39,12 +31,7 @@ class AppsSites extends SubResource {
     },
   });
 
-  update = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  update = APIEndpoint<TokenRequest<Types.UpdateSitePayload>, Types.UpdateSiteResponse>({
     method: 'post',
     path: '/site/{site_name}',
     defaults: {
@@ -57,12 +44,7 @@ class AppsSites extends SubResource {
     },
   });
 
-  republish = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  republish = APIEndpoint<TokenRequest<Types.PublishSitePayload>, Types.PublishSiteResponse>({
     method: 'post',
     path: '/site/{site_name}/republish',
     defaults: {
@@ -75,16 +57,8 @@ class AppsSites extends SubResource {
     },
   });
 
-  uploadResource = APIEndpoint<{
-    site_name: string;
-    raw_body: Array<{
-      resource_type: string;
-      src: string;
-    }>;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  // eslint-disable-next-line
+  uploadResources = APIEndpoint<TokenRequest<Types.UploadResourcesPayload>, Types.UploadResourceResponse>({
     method: 'post',
     path: '/site/{site_name}/resources/upload',
     defaults: {

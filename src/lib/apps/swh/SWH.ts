@@ -1,14 +1,10 @@
-// import * as apps from './types';
+import * as Types from './types';
 import { SubResource } from '../../base';
 import { APIEndpoint } from '../../APIEndpoint';
+import { TokenRequest } from '../types';
 
 class AppsSWH extends SubResource {
-  list = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  list = APIEndpoint<TokenRequest<Types.ListSWHPayload>, Types.ListSWHResponse>({
     method: 'get',
     path: '/site/{site_name}/sitewidehtml/list',
     defaults: {
@@ -21,12 +17,7 @@ class AppsSWH extends SubResource {
     },
   });
 
-  get = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  get = APIEndpoint<TokenRequest<Types.GetSWHPayload>, Types.GetSWHResponse>({
     method: 'get',
     path: '/site/{site_name}/sitewidehtml/{swh_uuid}',
     defaults: {
@@ -39,12 +30,7 @@ class AppsSWH extends SubResource {
     },
   });
 
-  add = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  add = APIEndpoint<TokenRequest<Types.CreateSWHPayload>, Types.CreateSWHResponse>({
     method: 'post',
     path: '/site/{site_name}/sitewidehtml',
     defaults: {
@@ -57,12 +43,7 @@ class AppsSWH extends SubResource {
     },
   });
 
-  update = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  update = APIEndpoint<TokenRequest<Types.UpdateSWHPayload>, Types.UpdateSWHResponse>({
     method: 'put',
     path: '/site/{site_name}/sitewidehtml/{swh_uuid}',
     defaults: {
@@ -75,12 +56,7 @@ class AppsSWH extends SubResource {
     },
   });
 
-  delete = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  delete = APIEndpoint<TokenRequest<Types.DeleteSWHPayload>, Types.DeleteSWHResponse>({
     method: 'delete',
     path: '/site/{site_name}/sitewidehtml/{swh_uuid}',
     defaults: {

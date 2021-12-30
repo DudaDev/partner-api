@@ -1,14 +1,10 @@
-// import * as apps from './types';
+import * as Types from './types';
 import { SubResource } from '../../base';
 import { APIEndpoint } from '../../APIEndpoint';
+import { TokenRequest } from '../types';
 
 class AppsPages extends SubResource {
-  get = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  get = APIEndpoint<TokenRequest<Types.V1.GetPagePayload>, Types.V1.GetPageResponse>({
     method: 'get',
     path: '/site/{site_name}/pages',
     defaults: {

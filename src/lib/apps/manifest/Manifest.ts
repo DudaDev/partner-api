@@ -1,11 +1,10 @@
-// import * as apps from './types';
+import * as Types from './types';
 import { SubResource } from '../../base';
 import { APIEndpoint } from '../../APIEndpoint';
+import { TokenRequest } from '../types';
 
 class AppsManifest extends SubResource {
-  get = APIEndpoint<{
-    app_uuid: string;
-  }, any>({
+  get = APIEndpoint<TokenRequest<Types.GetManifestPayload>, Types.Manifest>({
     method: 'get',
     path: '/{app_uuid}',
     defaults: {
@@ -13,9 +12,7 @@ class AppsManifest extends SubResource {
     },
   });
 
-  update = APIEndpoint<{
-    app_uuid: string;
-  }, any>({
+  update = APIEndpoint<TokenRequest<Types.Manifest>, null>({
     method: 'post',
     path: '/{app_uuid}',
     defaults: {

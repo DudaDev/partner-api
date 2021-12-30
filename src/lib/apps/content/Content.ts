@@ -1,19 +1,15 @@
-// import * as apps from './types';
+import * as Types from './types';
 import { SubResource } from '../../base';
 import { APIEndpoint } from '../../APIEndpoint';
 import AppsContentLocation from './Locations';
+import { TokenRequest } from '../types';
 
 class AppsContent extends SubResource {
   basePath = '/application';
 
   locations = new AppsContentLocation(this.base);
 
-  get = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  get = APIEndpoint<TokenRequest<Types.GetContentPayload>, Types.ContentLibrary>({
     method: 'get',
     path: '/site/{site_name}/content',
     defaults: {
@@ -26,12 +22,7 @@ class AppsContent extends SubResource {
     },
   });
 
-  update = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  update = APIEndpoint<TokenRequest<Types.UpdateContentPayload>, Types.UpdateContentResponse>({
     method: 'post',
     path: '/site/{site_name}/content',
     defaults: {
@@ -44,12 +35,7 @@ class AppsContent extends SubResource {
     },
   });
 
-  publish = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  publish = APIEndpoint<TokenRequest<Types.PublishContentPayload>, Types.PublishContentResponse>({
     method: 'post',
     path: '/site/{site_name}/content/publish',
     defaults: {

@@ -1,16 +1,11 @@
-// import * as apps from './types';
+import * as Types from './types';
 import { SubResource } from '../../base';
 import { APIEndpoint } from '../../APIEndpoint';
+import { TokenRequest } from '../types';
 
 class AppsAccounts extends SubResource {
-  basePath = '/application';
-
-  getOwner = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  // eslint-disable-next-line
+  getOwner = APIEndpoint<TokenRequest<Types.GetAccountOwnerPayload>, Types.GetAccountOwnerResponse>({
     method: 'get',
     path: '/site/{site_name}/account/details',
     defaults: {
