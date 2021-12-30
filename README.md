@@ -10,7 +10,8 @@ Javascript.
 5. [Request Overrides](#request-overrides)
 6. [Responses](#responses)
 7. [Debugging](#debugging)
-8. [More Information](#more-information)
+8. [App Store](#app-store-api)
+9. [More Information](#more-information)
 
 ## Requirements
 
@@ -237,6 +238,25 @@ $ DUDA_API_LOG_LEVEL=debug node index.js
     }
   ]
 }
+```
+
+## App Store API
+
+If you're an app developer, you can access the App Store API under `duda.appstore` after calling `Duda.New(opts)`.
+
+### Authenticating requests
+
+API Endpoints protected by an `X-DUDA-ACCESS-TOKEN` expect method calls to include a `token` property set to the
+`authorization_code` **without** `Bearer` included.
+
+```typescript
+duda.appstore.sites.get({
+  site_name: 'a-site-name',
+  token: 'authorization-code',
+}, (err, site) => {
+  if (err) console.log(err);
+  console.log(site);
+})
 ```
 
 ## More Information
