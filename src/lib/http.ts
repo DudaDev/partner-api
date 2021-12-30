@@ -23,14 +23,14 @@ function tryJSONStringify(thing: any) {
   }
 }
 
-interface ErrorResponse<T> {
+interface ErrorResponse {
   status: number;
-  error: T;
+  error: any;
 }
 
 async function makeRequest<Return>(
   req: RequestOptions,
-): Promise<[boolean, Return | ErrorResponse<Return>]> {
+): Promise<[boolean, Return | ErrorResponse]> {
   const logger = log.trace();
 
   const missing = checkMissingKeys(req, ['env', 'method', 'path']);
@@ -102,7 +102,7 @@ async function makeRequest<Return>(
 
         logger.debug(`request ended: status=${res.statusCode} time=${time}s`);
 
-        const error = {} as ErrorResponse<Return>;
+        const error = {} as ErrorResponse;
 
         let reply: any;
 

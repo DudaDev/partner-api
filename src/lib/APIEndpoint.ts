@@ -33,7 +33,7 @@ interface APIEndpointDefinition<Opts, Response> {
   potentialErrors?: any;
 
   beforeRequest?: (opts: Opts) => Partial<Opts> | Array<any>;
-  afterRequest?: (err: boolean, opts: Response | ErrorResponse<Response>) => Response;
+  afterRequest?: (err: boolean, opts: Response | ErrorResponse) => Response;
 }
 
 function APIEndpoint<Opts, Response>(def: APIEndpointDefinition<Opts, Response>) {
@@ -56,7 +56,7 @@ function APIEndpoint<Opts, Response>(def: APIEndpointDefinition<Opts, Response>)
     opts: Opts | { (err: boolean, res: Response): any; } = {} as any,
     overrides?: RequestOverrides | { (err: boolean, res: Response): any; },
     cb?: { (err: boolean, res: Response): any; },
-  ): Promise<Response | ErrorResponse<Response> | null> {
+  ): Promise<Response | ErrorResponse | null> {
     const params = { ...def.bodyParams, ...def.queryParams };
 
     validateParams(params, opts);
