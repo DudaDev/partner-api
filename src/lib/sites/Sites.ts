@@ -1,10 +1,10 @@
-import * as Site from './types';
+import * as Types from './types';
 import Resource from '../base';
 
 import { APIEndpoint } from '../APIEndpoint';
 
 class Sites extends Resource {
-  get = APIEndpoint<Site.GetSiteOpts, Site.GetSiteResponse>({
+  get = APIEndpoint<Types.GetSiteByNamePayload, Types.GetSiteResponse>({
     method: 'get',
     path: '/api/sites/multiscreen/{site_name}',
     defaults: {
@@ -12,7 +12,7 @@ class Sites extends Resource {
     },
   });
 
-  publish = APIEndpoint<{ site_name: string }, null>({
+  publish = APIEndpoint<Types.PublishSitePayload, Types.PublishSiteResponse>({
     method: 'post',
     path: '/api/sites/multiscreen/publish/{site_name}',
     defaults: {
@@ -20,7 +20,7 @@ class Sites extends Resource {
     },
   });
 
-  delete = APIEndpoint<{ site_name: string }, null>({
+  delete = APIEndpoint<Types.DeleteSitePayload, Types.DeleteSiteResponse>({
     method: 'delete',
     path: '/api/sites/multiscreen/{site_name}',
     defaults: {
@@ -28,7 +28,7 @@ class Sites extends Resource {
     },
   });
 
-  unpublish = APIEndpoint<{ site_name: string }, null>({
+  unpublish = APIEndpoint<Types.UnPublishSitePayload, Types.UnPublishSiteResponse>({
     method: 'post',
     path: '/api/sites/multiscreen/unpublish/{site_name}',
     defaults: {
@@ -36,7 +36,7 @@ class Sites extends Resource {
     },
   });
 
-  resetSite = APIEndpoint<{ site_name: string }, null>({
+  reset = APIEndpoint<Types.ResetSitePayload, Types.ResetSiteResponse>({
     method: 'post',
     path: '/api/sites/multiscreen/reset/{site_name}',
     defaults: {
@@ -44,10 +44,7 @@ class Sites extends Resource {
     },
   });
 
-  switchTemplate = APIEndpoint<{
-    site_name: string,
-    template_id: string
-  }, null>({
+  switchTemplate = APIEndpoint<Types.SwitchTemplatePayload, Types.SwitchTemplateResponse>({
     method: 'post',
     path: '/api/sites/multiscreen/switchTemplate/{site_name}',
     defaults: {
@@ -55,7 +52,7 @@ class Sites extends Resource {
     },
   });
 
-  getByExtId = APIEndpoint<any, any>({
+  getByExternalID = APIEndpoint<Types.GetSiteByExtIDPayload, Types.GetSiteResponse>({
     method: 'get',
     path: '/api/sites/multiscreen/byexternalid/{external_uid}',
     defaults: {
@@ -63,7 +60,7 @@ class Sites extends Resource {
     },
   });
 
-  update = APIEndpoint<Site.UpdateSiteOpts, Site.UpdateSiteResponse>({
+  update = APIEndpoint<Types.UpdateSitePayload, Types.UpdateSiteResponse>({
     method: 'post',
     path: '/api/sites/multiscreen/update/{site_name}',
     defaults: {
@@ -71,11 +68,7 @@ class Sites extends Resource {
     },
   });
 
-  create = APIEndpoint<{
-    template_id: string;
-  }, {
-    site_name: string;
-  }>({
+  create = APIEndpoint<Types.CreateSitePayload, Types.CreateSiteResponse>({
     method: 'post',
     path: '/api/sites/multiscreen/create',
     defaults: {
@@ -89,13 +82,7 @@ class Sites extends Resource {
     },
   });
 
-  duplicate = APIEndpoint<{
-    site_name: string;
-    new_default_domain_prefix: string;
-    new_external_uid?: string;
-  }, {
-    site_name: string;
-  }>({
+  duplicate = APIEndpoint<Types.DuplicateSitePayload, Types.DuplicateSiteResponse>({
     method: 'post',
     path: '/api/sites/multiscreen/duplicate/{site_name}',
     defaults: {

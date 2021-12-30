@@ -7,19 +7,30 @@ import { checkMissingKeys } from './helpers';
 
 let agent: https.Agent;
 
-export interface RequestOptions extends https.RequestOptions {
+interface RequestOptions extends https.RequestOptions {
   body?: any;
+  headers?: {
+    [key: string]: string;
+  };
 }
 
 function tryJSONStringify(thing: any) {
   try {
     return JSON.stringify(thing);
   } catch (e) {
+    console.log('err', e);
     return thing;
   }
 }
 
-async function makeRequest<Return>(req: RequestOptions): Promise<Return> {
+interface ErrorResponse<T> {
+  status: number;
+  error: T;
+}
+
+async function makeRequest<Return>(
+  req: RequestOptions,
+): Promise<[boolean, Return | ErrorResponse<Return>]> {
   const logger = log.trace();
 
   const missing = checkMissingKeys(req, ['env', 'method', 'path']);
@@ -46,6 +57,7 @@ async function makeRequest<Return>(req: RequestOptions): Promise<Return> {
   logger.info(`new request: method=${req.method} endpoint=${req.host}${req.path}`);
 
   const redactedRequest = JSON.stringify(req)
+    .replace(/(Bearer|Basic) [^"]+/g, '[redacted]')
     .replace(
       /"(user(name)?|pass(word)?|auth(orization)?)":"[^"]+"/gi,
       '"$1": [redacted]',
@@ -54,6 +66,8 @@ async function makeRequest<Return>(req: RequestOptions): Promise<Return> {
   logger.debug(`full request details: req=${redactedRequest}`);
 
   const start = Date.now();
+
+  const body = tryJSONStringify(req.body);
 
   return new Promise((resolve, reject) => {
     const request = https.request({
@@ -66,6 +80,7 @@ async function makeRequest<Return>(req: RequestOptions): Promise<Return> {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        ...(body && { 'Content-Length': body.length }),
         ...req.headers,
       },
 
@@ -87,11 +102,23 @@ async function makeRequest<Return>(req: RequestOptions): Promise<Return> {
 
         logger.debug(`request ended: status=${res.statusCode} time=${time}s`);
 
+        const error = {} as ErrorResponse<Return>;
+
+        let reply: any;
+
         try {
-          resolve(JSON.parse(data));
+          reply = JSON.parse(data);
         } catch (e) {
-          resolve({ data } as any);
+          reply = { data } as any;
         }
+
+        if (res.statusCode! >= 400) {
+          error.status = res.statusCode!;
+          error.error = reply;
+          resolve([true, error]);
+        }
+
+        resolve([false, reply]);
       });
 
       res.on('error', (e) => {
@@ -101,9 +128,8 @@ async function makeRequest<Return>(req: RequestOptions): Promise<Return> {
     });
 
     if (req.body) {
-      const bodyStr = JSON.stringify(req.body);
-      logger.debug(`request body: body=${bodyStr}`);
-      request.write(tryJSONStringify(req.body));
+      logger.debug(`request body: body=${body}`);
+      request.write(body);
     }
 
     request.end();
@@ -111,4 +137,4 @@ async function makeRequest<Return>(req: RequestOptions): Promise<Return> {
 }
 
 export default makeRequest;
-export { makeRequest };
+export { makeRequest, RequestOptions, ErrorResponse };

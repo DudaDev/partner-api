@@ -1,16 +1,23 @@
 import log from './log';
 
-interface Parameters {
+interface HeaderOptions {
   [key: string]: {
-    type: 'string' | 'array' | 'object' | 'number' | 'boolean',
     required: boolean;
   };
 }
 
-function copyWithoutKeys(toCopy: any, keys: string[]) {
+interface Parameters {
+  [key: string]: {
+    type: 'string' | 'array' | 'object' | 'number' | 'boolean',
+    properKey?: string;
+    required: boolean;
+  };
+}
+
+function copyWithoutKeys<T>(toCopy: T, keys: string[]): Partial<T> {
   const copy = { ...toCopy };
 
-  keys.forEach((key: string) => delete copy[key]);
+  keys.forEach((key: string) => delete (copy as any)[key]);
 
   return copy;
 }
@@ -37,6 +44,26 @@ function checkMissingKeys(obj: any, keys: string[]) {
   return missing;
 }
 
+function validateHeaders(check: any, opts?: HeaderOptions) {
+  if (!opts) {
+    return;
+  }
+
+  const keys = Reflect.ownKeys(opts) as string[];
+
+  const missing: string[] = [];
+
+  keys.forEach((key: string) => {
+    if (opts[key].required && !Reflect.has(check, key)) {
+      missing.push(key);
+    }
+  });
+
+  if (missing.length) {
+    throw new Error(`[error] missing headers: missing=${JSON.stringify(missing)}`);
+  }
+}
+
 function validateParams(parameters: Parameters, check: any) {
   const keys = Reflect.ownKeys(parameters) as string[];
 
@@ -51,8 +78,6 @@ function validateParams(parameters: Parameters, check: any) {
   if (missing.length) {
     throw new Error(`[error] missing parameters: missing=${JSON.stringify(missing)}`);
   }
-
-  return missing;
 }
 
 function buildQueryParams(parameters: Parameters, check: any) {
@@ -63,7 +88,8 @@ function buildQueryParams(parameters: Parameters, check: any) {
 
   keys.forEach((key: string) => {
     if (Reflect.has(check, key)) {
-      query.append(key, check[key]);
+      const properKey = parameters[key].properKey ?? key;
+      query.append(properKey, check[key]);
       // eslint-disable-next-line
       delete check[key];
     } else if (parameters[key].required && !Reflect.has(check, key)) {
@@ -127,7 +153,9 @@ export {
   checkMissingKeys,
   buildQueryParams,
   validateParams,
+  validateHeaders,
   interpolate,
   buildPath,
   Parameters,
+  HeaderOptions,
 };

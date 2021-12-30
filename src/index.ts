@@ -4,6 +4,7 @@ import/extensions,
 import/prefer-default-export
 */
 
+import Apps from './lib/apps/Apps';
 import Other from './lib/other/Other';
 import Content from './lib/content/Content';
 import Reporting from './lib/reporting/Reporting';
@@ -22,18 +23,26 @@ const envs = {
   sandbox: 'api-sandbox.duda.co',
 };
 
-function New(opts: Config) {
-  const config = new Config(opts);
+interface DudaConfig extends Config {
+  env?: string;
+}
+
+function New(opts: DudaConfig) {
+  const config = new Config({
+    ...opts,
+    host: opts.env ?? envs.direct,
+  });
 
   // new:resource:
   return {
+    appstore: new Apps(config),
     other: new Other(config),
     content: new Content(config),
     reporting: new Reporting(config),
     accounts: new Accounts(config),
     collections: new Collections(config),
     plans: new Plans(config),
-    urlrules: new Urlrules(config),
+    urlRules: new Urlrules(config),
     pages: new Pages(config),
     sites: new Sites(config),
     templates: new Templates(config),

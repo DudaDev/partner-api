@@ -4,6 +4,7 @@ import/extensions,
 import/prefer-default-export
 */
 
+import Other from './lib/other/Other';
 import Content from './lib/content/Content';
 import Reporting from './lib/reporting/Reporting';
 import Accounts from './lib/accounts/Accounts';
@@ -26,6 +27,7 @@ function New(opts: Config) {
 
   // new:resource:
   return {
+    other: new Other(config),
     content: new Content(config),
     reporting: new Reporting(config),
     accounts: new Accounts(config),

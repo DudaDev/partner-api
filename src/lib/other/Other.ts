@@ -1,16 +1,12 @@
-import * as other from './types';
 import Resource from '../base';
 
-import { APIEndpoint } from '../APIEndpoint';
+import Backups from './Backups';
+import SSL from './SSL';
 
 class Other extends Resource {
-  get = APIEndpoint<other.Other, any>({
-    method: 'get',
-    path: '/api/sites/multiscreen/{site_name}',
-    defaults: {
-      host: 'api.duda.co',
-    },
-  });
+  backups = new Backups(this.config);
+
+  ssl = new SSL(this.config);
 }
 
 export default Other;

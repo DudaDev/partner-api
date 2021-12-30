@@ -1,16 +1,22 @@
-import * as reporting from './types';
+// import * as reporting from './types';
 import Resource from '../base';
 
-import { APIEndpoint } from '../APIEndpoint';
+import Forms from './Forms';
+import SiteReporting from './Sites';
+import Analytics from './Analytics';
+import Activities from './Activities';
+import EmailSettings from './EmailSettings';
 
 class Reporting extends Resource {
-  get = APIEndpoint<reporting.Reporting, any>({
-    method: 'get',
-    path: '/api/sites/multiscreen/{site_name}',
-    defaults: {
-      host: 'api.duda.co',
-    },
-  });
+  sites = new SiteReporting(this.config);
+
+  forms = new Forms(this.config);
+
+  activities = new Activities(this.config);
+
+  analytics = new Analytics(this.config);
+
+  emailSettings = new EmailSettings(this.config);
 }
 
 export default Reporting;

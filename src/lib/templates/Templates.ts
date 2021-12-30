@@ -1,11 +1,9 @@
-// import * as Template from './types';
+import * as Types from './types';
 import Resource from '../base';
 import { APIEndpoint } from '../APIEndpoint';
 
 class Templates extends Resource {
-  list = APIEndpoint<{
-    lang?: string
-  }, any>({
+  list = APIEndpoint<Types.ListTemplatesPayload, Types.ListTemplatesResponse>({
     method: 'get',
     path: '/api/sites/multiscreen/templates',
     defaults: {
@@ -19,10 +17,7 @@ class Templates extends Resource {
     },
   });
 
-  get = APIEndpoint<{
-    template_id: string;
-    lang?: string;
-  }, any>({
+  get = APIEndpoint<Types.GetTemplatePayload, Types.GetTemplateResponse>({
     method: 'get',
     path: '/api/sites/multiscreen/templates/{template_id}',
     defaults: {
@@ -36,10 +31,7 @@ class Templates extends Resource {
     },
   });
 
-  delete = APIEndpoint<{
-    template_id: string;
-    lang?: string;
-  }, any>({
+  delete = APIEndpoint<Types.DeleteTemplatePayload, Types.DeleteTemplateResponse>({
     method: 'delete',
     path: '/api/sites/multiscreen/templates/{template_id}',
     defaults: {
@@ -47,10 +39,7 @@ class Templates extends Resource {
     },
   });
 
-  update = APIEndpoint<{
-    template_id: string;
-    new_name: string;
-  }, any>({
+  update = APIEndpoint<Types.UpdateTemplatePayload, Types.UpdateTemplateResponse>({
     method: 'post',
     path: '/api/sites/multiscreen/templates/{template_id}',
     defaults: {
@@ -64,10 +53,7 @@ class Templates extends Resource {
     },
   });
 
-  createFromSite = APIEndpoint<{
-    site_name: string;
-    new_template_name: string;
-  }, any>({
+  createFromSite = APIEndpoint<Types.CreateFromSitePayload, Types.CreateFromResponse>({
     method: 'post',
     path: '/api/sites/multiscreen/templates/fromsite',
     defaults: {
@@ -85,10 +71,7 @@ class Templates extends Resource {
     },
   });
 
-  createFromTemplate = APIEndpoint<{
-    template_id: string;
-    new_template_name: string;
-  }, any>({
+  createFromTemplate = APIEndpoint<Types.CreateFromTemplatePayload, Types.CreateFromResponse>({
     method: 'post',
     path: '/api/sites/multiscreen/templates/fromtemplate',
     defaults: {

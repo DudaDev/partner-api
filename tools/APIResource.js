@@ -59,8 +59,40 @@ import Resource from '../base';
 'import { APIEndpoint } from '../APIEndpoint';
 
 class ${name} extends Resource {
-  get = APIEndpoint<${name.toLowerCase()}.${name}, any>({
+  list = APIEndpoint<${name.toLowerCase()}.${name}}, any>({
     method: 'get',
+    path: '/api/sites/multiscreen/{site_name}',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  get = APIEndpoint<${name.toLowerCase()}.${name}}, any>({
+    method: 'get',
+    path: '/api/sites/multiscreen/{site_name}',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  create = APIEndpoint<${name.toLowerCase()}.${name}}, any>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  update = APIEndpoint<${name.toLowerCase()}.${name}}, any>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  delete = APIEndpoint<collections.Collections, any>({
+    method: 'delete',
     path: '/api/sites/multiscreen/{site_name}',
     defaults: {
       host: 'api.duda.co',
