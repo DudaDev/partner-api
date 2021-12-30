@@ -33,29 +33,29 @@ interface APIEndpointDefinition<Opts, Response> {
   potentialErrors?: any;
 
   beforeRequest?: (opts: Opts) => Partial<Opts> | Array<any>;
-  afterRequest?: (err: boolean, opts: Response | ErrorResponse) => Response;
+  afterRequest?: (err: ErrorResponse | null, opts: Response) => Response;
 }
 
 function APIEndpoint<Opts, Response>(def: APIEndpointDefinition<Opts, Response>) {
-  function call(cb: { (err: boolean, res: Response): any; }): void;
+  function call(cb: { (err: ErrorResponse, res: Response): any; }): void;
 
   function call(): Promise<Response>;
 
-  function call(opts: Opts, cb: { (err: boolean, res: Response): any; }): void;
+  function call(opts: Opts, cb: { (err: ErrorResponse, res: Response): any; }): void;
 
   function call(opts: Opts): Promise<Response>;
 
   function call(opts: Opts, overrides?: RequestOptions): Promise<Response>;
 
   function call(opts: Opts, overrides: RequestOptions, cb: {
-    (err: boolean, res: Response): any;
+    (err: ErrorResponse, res: Response): any;
   }): void;
 
   async function call<RequestOverrides extends https.RequestOptions & { body?: any }>(
     this: Resource,
-    opts: Opts | { (err: boolean, res: Response): any; } = {} as any,
+    opts: Opts | { (err: ErrorResponse, res: Response): any; } = {} as any,
     overrides?: RequestOverrides | { (err: boolean, res: Response): any; },
-    cb?: { (err: boolean, res: Response): any; },
+    cb?: { (err: ErrorResponse, res: Response): any; },
   ): Promise<Response | ErrorResponse | null> {
     const params = { ...def.bodyParams, ...def.queryParams };
 
@@ -84,24 +84,24 @@ function APIEndpoint<Opts, Response>(def: APIEndpointDefinition<Opts, Response>)
 
     validateHeaders(builtRequest?.headers ?? request.headers, def.headerOptions);
 
-    const [err, response] = await makeRequest<Response>(builtRequest ?? request);
+    const [error, response] = await makeRequest<Response>(builtRequest ?? request);
 
-    const finalResponse = def.afterRequest?.(err, response as Response) ?? response;
+    const finalResponse = def.afterRequest?.(error, response) ?? response;
 
     if (typeof opts === 'function') {
-      return (opts as any)(err, finalResponse);
+      return (opts as any)(error, finalResponse);
     }
 
     if (overrides && typeof overrides === 'function') {
-      return (overrides as any)(err, finalResponse);
+      return (overrides as any)(error, finalResponse);
     }
 
     if (cb && typeof cb === 'function') {
-      return (cb as any)(err, finalResponse);
+      return (cb as any)(error, finalResponse);
     }
 
-    if (err) {
-      throw response;
+    if (error) {
+      throw error;
     }
 
     return finalResponse;

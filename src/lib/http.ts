@@ -30,7 +30,7 @@ interface ErrorResponse {
 
 async function makeRequest<Return>(
   req: RequestOptions,
-): Promise<[boolean, Return | ErrorResponse]> {
+): Promise<[ErrorResponse | null, Return]> {
   const logger = log.trace();
 
   const missing = checkMissingKeys(req, ['env', 'method', 'path']);
@@ -115,10 +115,10 @@ async function makeRequest<Return>(
         if (res.statusCode! >= 400) {
           error.status = res.statusCode!;
           error.error = reply;
-          resolve([true, error]);
+          resolve([error, reply]);
         }
 
-        resolve([false, reply]);
+        resolve([error, reply]);
       });
 
       res.on('error', (e) => {
