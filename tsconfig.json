@@ -1,6 +1,12 @@
 {
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "tests"],
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "tests"
+  ],
   "compilerOptions": {
     "outDir": "dist",
     "declaration": true,
@@ -18,6 +24,7 @@
     "experimentalDecorators": true,
     "noImplicitThis": true,
     "noFallthroughCasesInSwitch": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "stripInternal": true
   }
 }

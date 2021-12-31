@@ -26,18 +26,21 @@ class Config {
 }
 
 abstract class Resource {
-  readonly __config!: Config;
+  /** @internal */
+  readonly config!: Config;
 
-  __basePath!: string;
+  /** @internal */
+  basePath!: string;
 
   constructor(config: Config) {
-    this.__config = config;
+    this.config = config;
 
-    if (!this.__basePath) this.__basePath = '';
+    if (!this.basePath) this.basePath = '';
 
-    Object.freeze(this.__config);
+    Object.freeze(this.config);
   }
 
+  /** @internal */
   buildRequest?(
     req: RequestOptions,
     def: APIEndpointDefinition<any, any>,
@@ -45,12 +48,13 @@ abstract class Resource {
 }
 
 abstract class SubResource extends Resource {
-  __base: Resource;
+  /** @internal */
+  base: Resource;
 
   constructor(base: Resource) {
-    super(base.__config);
-    this.__base = base;
-    this.__basePath = base.__basePath;
+    super(base.config);
+    this.base = base;
+    this.basePath = base.basePath;
     this.buildRequest = base.buildRequest;
   }
 }

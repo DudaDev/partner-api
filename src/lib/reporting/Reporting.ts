@@ -8,15 +8,15 @@ import Activities from './Activities';
 import EmailSettings from './EmailSettings';
 
 class Reporting extends Resource {
-  sites = new SiteReporting(this.__config);
+  sites = new SiteReporting(this.config);
 
-  forms = new Forms(this.__config);
+  forms = new Forms(this.config);
 
-  activities = new Activities(this.__config);
+  activities = new Activities(this.config);
 
-  analytics = new Analytics(this.__config);
+  analytics = new Analytics(this.config);
 
-  emailSettings = new EmailSettings(this.__config);
+  emailSettings = new EmailSettings(this.config);
 }
 
 export default Reporting;

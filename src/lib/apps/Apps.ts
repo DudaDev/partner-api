@@ -3,6 +3,7 @@ import Resource from '../base';
 import { APIEndpoint } from '../APIEndpoint';
 
 import AppsSWH from './swh/SWH';
+import Utils from './utils/Utils';
 import AppsPages from './pages/Pages';
 import AppsSites from './sites/Sites';
 import AppsContent from './content/Content';
@@ -11,6 +12,7 @@ import AppsAccounts from './accounts/Accounts';
 import { RequestOptions } from '../http';
 
 class Apps extends Resource {
+  /** @internal */
   basePath = '/api/integrationhub/application';
 
   sites = new AppsSites(this);
@@ -25,6 +27,8 @@ class Apps extends Resource {
 
   sitewidehtml = new AppsSWH(this);
 
+  utils = Utils;
+
   ping = APIEndpoint<any, any>({
     method: 'get',
     path: '/health',
@@ -34,6 +38,7 @@ class Apps extends Resource {
     },
   });
 
+  /** @internal */
   // eslint-disable-next-line
   buildRequest(req: RequestOptions, def: any, opts: any) {
     if (opts.token) {

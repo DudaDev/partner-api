@@ -7,9 +7,9 @@
 const path = require('path');
 const fs = require('fs');
 
-const indexDir = path.resolve(__dirname, '../src');
-const resourceDir = path.resolve(__dirname, '../src/lib');
-const testDir = path.resolve(__dirname, '../tests');
+const indexDir = path.resolve(dirname, '../src');
+const resourceDir = path.resolve(dirname, '../src/lib');
+const testDir = path.resolve(dirname, '../tests');
 
 const resourceDirContents = fs.readdirSync(resourceDir);
 

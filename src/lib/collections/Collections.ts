@@ -6,9 +6,9 @@ import Rows from './Rows';
 import Fields from './Fields';
 
 class Collections extends Resource {
-  rows = new Rows(this.__config);
+  rows = new Rows(this.config);
 
-  fields = new Fields(this.__config);
+  fields = new Fields(this.config);
 
   list = APIEndpoint<Types.ListCollectionsPayload, Types.ListCollectionsPayload>({
     method: 'get',

@@ -3,7 +3,6 @@ import/no-unresolved,
 import/extensions,
 import/prefer-default-export
 */
-
 import Apps from './lib/apps/Apps';
 import Other from './lib/other/Other';
 import Content from './lib/content/Content';

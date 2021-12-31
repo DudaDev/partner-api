@@ -7,7 +7,7 @@ import { TokenRequest } from '../types';
 class AppsContent extends SubResource {
   basePath = '/application';
 
-  locations = new AppsContentLocation(this.__base);
+  locations = new AppsContentLocation(this.base);
 
   get = APIEndpoint<TokenRequest<Types.GetContentPayload>, Types.ContentLibrary>({
     method: 'get',
