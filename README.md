@@ -126,12 +126,18 @@ duda.templates.list()
 The package can be initialized with several options:
 
 ```typescript
-const duda = new Duda({
+const duda = Duda.New({
   user: 'api-user',
   pass: 'api-pass',
-  env: Duda.envs.sandbox, // also, .Direct, .EU
+  env: Duda.envs.sandbox, // also, .direct, .eu
 });
 ```
+
+### API Environments
+
+- Duda.envs.eu: api.eu.duda.co
+- Duda.envs.direct: api.duda.co
+- Duda.envs.sandbox: api-sandbox.duda.co
 
 ### Network Retries
 
@@ -139,7 +145,7 @@ Automatic network retries can be enabled with the maxNetworkRetries config optio
 exponential backoff if they fail due to an intermittent network problem.
 
 ```typescript
-const duda = new Duda({
+const duda = Duda.New({
   ...,
   maxNetworkRetries: 2
 });
