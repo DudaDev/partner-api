@@ -213,6 +213,14 @@
   dependencies:
     "@cspotcode/source-map-consumer" "0.8.0"
 
+"@dudadev/api@0.0.15":
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/@dudadev/api/-/api-0.0.15.tgz#7815240eefb87ccebba9130b9401d42df4bdb584"
+  integrity sha512-dBQhq/bVAO8+/W4x5KfGmTpQABEbNBEPuuLtQaqOWwZwkcOIrlmjaRqqweFyOhJO4Nl0I+z1OmCRs2wZal9Kig==
+  dependencies:
+    dotenv "^10.0.0"
+    uuid "^8.3.2"
+
 "@eslint/eslintrc@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.0.4.tgz#dfe0ff7ba270848d10c5add0715e04964c034b31"

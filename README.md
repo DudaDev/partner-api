@@ -1,16 +1,24 @@
-# @dudadev/api
+# @dudadev/partner-api
 
-The `@dudadev/api` library provides convenient access to Duda's public APIs from applications written in server-side
-Javascript.
+The `@dudadev/partner-api` library provides convenient access to Duda's public APIs from applications written in
+server-side Javascript.
 
 1. [Requirements](#requirements)
 2. [Installation](#installation)
 3. [Usage](#usage)
 4. [Configuration](#configuration)
+    1. [Initialize with config object](#initialize-with-config-object)
+    2. [API Environments](#api-environments)
+    3. [Network Retries](#network-retries)
 5. [Request Overrides](#request-overrides)
 6. [Responses](#responses)
+    1. [Success](#success)
+    2. [Errors](#errors)
 7. [Debugging](#debugging)
 8. [App Store](#app-store-api)
+    1. [Authenticating requests](#authenticating-requests)
+    2. [Handling different `api_endpoint` values](#handling-different-api_endpoint-values)
+    3. [Utility functions](#utility-functions)
 9. [More Information](#more-information)
 
 ## Requirements
@@ -22,9 +30,9 @@ Node v12 or higher.
 Install the package with:
 
 ```bash
-npm install @dudadev/api --save
+npm install @dudadev/partner-api --save
 # or
-yarn add @dudadev/api
+yarn add @dudadev/partner-api
 ```
 
 ## Usage
@@ -32,21 +40,17 @@ yarn add @dudadev/api
 The package needs to be configured with your API credentials:
 
 ```typescript
-const { Duda } = require('@dudadev/api');
+const { Duda } = require('@dudadev/partner-api');
 
-const duda = Duda.New({
+const duda = new Duda({
   user: process.env.DUDA_API_USER,
   pass: process.env.DUDA_API_PASS,
-  env: Duda.envs.direct,
+  env: Duda.Envs.direct,
 });
 
-duda.sites.get({ site_name: "a-site-name" }, function (err, site) {
-  if (err) {
-    console.log(err.status, err.error);
-    // handle error
-  }
-  console.log(site);
-})
+duda.sites.get({ site_name: "a-site-name" })
+  .then((site) => console.log(site))
+  .catch((error) => console.error(error));
 ```
 
 Or using ES modules and `async/await`:
@@ -58,65 +62,10 @@ Or using ES modules and `async/await`:
     const site = await duda.sites.get({ site_name: "a-site-name" });
     console.log(site);
   } catch (error) {
+    console.log(error.status, error.error);
     // handle error
   }
 })();
-```
-
-### Usage with TypeScript
-
-Import Duda as the default import (not * as Duda) and call Duda.New(opts).
-
-```typescript
-import { Duda, Types } from '@dudadev/api';
-
-const duda = Duda.New({
-  user: process.env.DUDA_API_USER,
-  pass: process.env.DUDA_API_PASS,
-  env: Duda.envs.direct,
-});
-
-const switchTemplate = async (site: string, template: number) => {
-  try {
-    const opts: Types.GetSiteByNamePayload = { site_name: "a-site-name" };
-
-    const site: Types.GetSiteByNameResponse = await duda.sites.get(opts);
-
-    console.log(site.site_name);
-  } catch (error) {
-    // handle error
-  }
-}
-```
-
-### Using Promises
-
-```typescript
-// get a list of available templates
-duda.templates.list()
-  .then((templates) => {
-    // create a new site from the first template in the returned array
-    return duda.sites.create({
-      template_id: templates[0].template_id
-    })
-      .then((site) => {
-        return duda.accounts.permissions.grantSiteAccess({
-          account_name: "account-name",
-          site_name: site.site_name,
-          permissions: ["EDIT"]
-        })
-          .then(() => {
-            return duda.accounts.authentication.getSSOLink({
-              account_name: "account-name",
-              site_name: site.site_name,
-              target: "EDITOR"
-            })
-          })
-      })
-  })
-  .catch((err) => {
-    // handle error
-  });
 ```
 
 ## Configuration
@@ -126,18 +75,18 @@ duda.templates.list()
 The package can be initialized with several options:
 
 ```typescript
-const duda = Duda.New({
+const duda = new Duda({
   user: 'api-user',
   pass: 'api-pass',
-  env: Duda.envs.sandbox, // also, .direct, .eu
+  env: Duda.Envs.sandbox, // also, .direct, .eu
 });
 ```
 
 ### API Environments
 
-- Duda.envs.eu: api.eu.duda.co
-- Duda.envs.direct: api.duda.co
-- Duda.envs.sandbox: api-sandbox.duda.co
+- `Duda.Envs.eu`: api.eu.duda.co
+- `Duda.Envs.direct`: api.duda.co
+- `Duda.Envs.sandbox`: api-sandbox.duda.co
 
 ### Network Retries
 
@@ -145,7 +94,7 @@ Automatic network retries can be enabled with the maxNetworkRetries config optio
 exponential backoff if they fail due to an intermittent network problem.
 
 ```typescript
-const duda = Duda.New({
+const duda = new Duda({
   ...,
   maxNetworkRetries: 2
 });
@@ -153,16 +102,17 @@ const duda = Duda.New({
 
 ## Request Overrides
 
-You can override the http.RequestOptions of any method on a per-request basis by passing a second object with custom
-options:
+You can override
+the [http.RequestOptions](https://definitelytyped.org/docs/node--node/interfaces/https.requestoptions.html)
+of any method on a per-request basis by passing a second object with custom options:
 
 ```typescript
-const { Duda } = require('@dudadev/api');
+const { Duda } = require('@dudadev/partner-api');
 
-const duda = Duda.New({
+const duda = new Duda({
   user: process.env.DUDA_API_USER,
   pass: process.env.DUDA_API_PASS,
-  env: Duda.envs.direct,
+  env: Duda.Envs.direct,
 });
 
 duda.sites.get({ site_name: 'a-site-name' }, {
@@ -171,43 +121,27 @@ duda.sites.get({ site_name: 'a-site-name' }, {
   headers: {
     'X-CUSTOM-HEADER': 'a-value',
   },
-}, (err, site) => {
-  if (err) console.log(err);
-  console.log(site);
-});
+})
+  .then((site) => console.log(site))
+  .catch((error) => console.error(error))
 ```
 
 ## Responses
 
 ### Success
 
-The library will attempt to parse all successful responses as JSON, and will return the raw value if can't.
+The library will attempt to parse all successful responses as JSON, and will return the raw value if it can't.
 
 ### Errors
 
-The library will either throw (promises) or return (callbacks) the following payload after receiving a status code >=
-400:
+The library will either throw (for promises) or return (for callbacks) the following payload after receiving a status
+code >= 400:
 
 ```typescript
-interface ErrorResponse<T> {
+interface ErrorResponse<DudaError> {
   status: number;
-  error: T;
+  error: DudaError;
 }
-```
-
-### Example
-
-```typescript
-duda.sites.get({ site_name: 'no-site' }, (err, site) => {
-  if (err) {
-    console.log(err.status, err.error);
-  }
-  console.log(site.site_name);
-})
-
-duda.sites.get({ site_name: 'no-site' })
-  .then((site) => console.log(site.site_name))
-  .catch((err) => console.log(err.status, err.error));
 ```
 
 ## Debugging
@@ -215,15 +149,15 @@ duda.sites.get({ site_name: 'no-site' })
 You can debug requests made by the library by setting the `DUDA_API_LOG_LEVEL` environment variable to one of the
 following levels:
 
-- (1) error: only shows fatal errors
-- (2) warning: shows all errors and warnings
-- (3) info: high-level debugging information
-- (4) debug: verbose debugging information
+1. error: only shows fatal errors
+2. warning: shows all errors and warnings
+3. info: high-level debugging information
+4. debug: verbose debugging information
 
 The library will display logs that are >= `DUDA_API_LOG_LEVEL`. So, for example, setting the log level to warning (2)
 would log all warnings (2) and errors (1).
 
-The logger will attempt to redact any sensitive information before it logs with the following regexs:
+The logger will attempt to redact any sensitive information before it logs using the following regular expressions:
 
 - `/(user(name)?|pass(word)?|auth(orization)?)":"[^"]+/gi`
 - `/(Bearer|Basic) [^"]+/gi`
@@ -237,21 +171,11 @@ $ DUDA_API_LOG_LEVEL=debug node index.js
 [debug] 8ce2a72d-d6b6-4fe8-bf39-45ebe99f7233 full request details: req={"headers":{},"method":"get","path":"/api/sites/multiscreen/374f37ea1eff44e7966b2c685ded251a/pages","auth": [redacted],"host":"api-sandbox.duda.co"}
 [debug] 8ce2a72d-d6b6-4fe8-bf39-45ebe99f7233 data received: raw={"results":[{"uuid":"683340afe033436caab26cf8a548b1dd","title":"Home","path":"home","seo":{"no_index":false}}]}
 [debug] 8ce2a72d-d6b6-4fe8-bf39-45ebe99f7233 request ended: status=200 time=0.51s
-{
-  results: [
-    {
-      uuid: '683340afe033436caab26cf8a548b1dd',
-      title: 'Home',
-      path: 'home',
-      seo: [Object]
-    }
-  ]
-}
 ```
 
 ## App Store API
 
-If you're an app developer, you can access the App Store API under `duda.appstore` after calling `Duda.New(opts)`.
+If you're an app developer, you can access the App Store API under `duda.appstore` after calling `new Duda(opts)`.
 
 ### Authenticating requests
 
@@ -262,10 +186,49 @@ API Endpoints protected by an `X-DUDA-ACCESS-TOKEN` expect method calls to inclu
 duda.appstore.sites.get({
   site_name: 'a-site-name',
   token: 'authorization-code',
-}, (err, site) => {
-  if (err) console.log(err);
-  console.log(site);
 })
+```
+
+### Handling different `api_endpoint` values
+
+You can use the [request override](#request-overrides) feature to set the host of a method call to the correct
+`api_endpoint` for a particular site.
+
+```typescript
+function getSite(site: string) {
+  const {
+    site_name,
+    auth,
+    api_endpoint
+  } = getInstallFromDB(site);
+
+  return duda.appstore.sites.get({
+    site_name: site_name,
+    token: auth.authorization_code,
+  }, {
+    host: api_endpoint,
+  })
+}
+
+getSite('a-site-name')
+  .then((site) => console.log(site))
+  .catch((err) => console.log(err.status, err.error))
+```
+
+### Utility functions
+
+Included under `Duda.appstore` is `utils` which contains useful methods for validating webhooks & signatures.
+
+```typescript
+function validateWebook(req: YourRequestObject): boolean {
+  // conform request object
+  return duda.appstore.utils.validateWebook(process.env.SECRET_KEY, req.headers, req.body);
+}
+
+function validateSSO(req: YourRequestObject): boolean {
+  // conform request object
+  return duda.appstore.utils.validateSSOLink(process.env.SECRET_KEY, req.query);
+}
 ```
 
 ## More Information

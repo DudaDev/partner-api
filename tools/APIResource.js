@@ -1,5 +1,9 @@
+/* eslint-disable no-console */
+
 /*
 * Quick tool to create new API resource definitions.
+*
+* TODO: fix
 *
 * USAGE: yarn new:resource [string, string, string, ...]
 */
@@ -28,13 +32,13 @@ prefer-arrow-callback,
 import './fakes/api';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
-import * as Duda from '../src/index';
+import { Duda } from '../src/index';
 
 const { expect } = chai;
 
 chai.use(chaiAsPromised);
 
-const duda = Duda.New({
+const duda = new Duda({
   user: process.env.DUDA_API_USER,
   pass: process.env.DUDA_API_PASS,
   logLevel: 'debug',
@@ -114,7 +118,7 @@ Promise.all(newResources.map(function (resource) {
     return console.log(`[error] ${resource} already exists`);
   }
 
-  return new Promise((resolve, reject) => {
+  return new Promise(() => {
     const newResourceDir = `${resourceDir}/${resource}`;
 
     fs.mkdir(newResourceDir, function (err) {
@@ -130,7 +134,7 @@ Promise.all(newResources.map(function (resource) {
       fs.writeFileSync(`${resourceDir}/${resource}/${capitalized}.ts`, classTemplate(capitalized));
       console.log(`[info] created ${resourceDir}/${resource}/${capitalized}.ts`);
 
-      const [_, indexReturnObject] = /\/\/\snew:resource:\s*\n*\s*return\s*({[^}]+})/g.exec(indexContent.toString());
+      const indexReturnObject = /\/\/\snew:resource:\s*\n*\s*return\s*({[^}]+})/g.exec(indexContent.toString())?.[1];
 
       if (indexReturnObject) {
         const toInject = `    ${resource}: new ${capitalized}(config),\n`;
