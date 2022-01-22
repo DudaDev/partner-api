@@ -9,6 +9,13 @@ class AppsTokens extends SubResource {
     defaults: {
       host: 'api.duda.co',
     },
+    bodyParams: {
+      refresh_token: {
+        type: 'string',
+        required: true,
+        properKey: 'refreshToken',
+      },
+    },
   });
 }
 
