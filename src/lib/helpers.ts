@@ -104,6 +104,30 @@ function buildQueryParams(parameters: Parameters, check: any) {
   return query.toString();
 }
 
+function buildBodyParams(parameters: Parameters, check: any) {
+  const keys = Reflect.ownKeys(parameters) as string[];
+  const missing: string[] = [];
+
+  const newBody: any = {};
+
+  keys.forEach((key: string) => {
+    if (parameters[key].required && !Reflect.has(check, key)) {
+      missing.push(key);
+    }
+
+    const properKey = parameters[key].properKey ?? key;
+    newBody[properKey] = check[key];
+    // eslint-disable-next-line
+    delete check[key];
+  });
+
+  if (missing.length) {
+    throw new Error(`[error] missing parameters: missing=${JSON.stringify(missing)}`);
+  }
+
+  return newBody;
+}
+
 function interpolate(str: string, vals: any, del?: boolean) {
   const regExp = /{[^}]+}/g;
   const matches = str.matchAll(regExp);
@@ -124,16 +148,16 @@ function interpolate(str: string, vals: any, del?: boolean) {
 }
 
 function buildPath(path: string, opts: any) {
-  const urlParameters = /{[^}]+}/g.exec(path)
-    ?.slice(0);
+  const found = /{[^}]+}/g.exec(path);
+  const vars = found?.slice(0);
 
-  if (!urlParameters) {
+  if (!vars) {
     return path;
   }
 
   const missing: string[] = [];
 
-  urlParameters.forEach((parameter: string) => {
+  vars.forEach((parameter: string) => {
     const key = parameter.slice(1, parameter.length - 1);
 
     if (!Reflect.has(opts, key)) {
@@ -152,6 +176,7 @@ export {
   copyWithoutKeys,
   checkMissingKeys,
   buildQueryParams,
+  buildBodyParams,
   validateParams,
   validateHeaders,
   interpolate,
