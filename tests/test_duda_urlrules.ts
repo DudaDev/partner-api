@@ -7,7 +7,7 @@ no-shadow
 */
 
 import * as chai from 'chai';
-import * as Duda from '../src/index';
+import { Duda } from '../src/index';
 
 import {
   GetTestSite,
@@ -28,7 +28,7 @@ before('create a new site to test against', async function () {
 });
 
 beforeEach(function () {
-  duda = Duda.New({
+  duda = new Duda({
     user: process.env.DUDA_API_USER,
     pass: process.env.DUDA_API_PASS,
     env: Duda.envs.sandbox,
@@ -49,7 +49,9 @@ describe('Duda.urlrules', function () {
       target: 'https://www.example.net',
       response_code: 302,
     })
-      .then((resp: any) => url_rule_id = resp.id);
+      .then((resp: any) => {
+        url_rule_id = resp.id;
+      });
   });
 
   it('can get a url rule by id', function () {

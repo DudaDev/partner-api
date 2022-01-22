@@ -8,7 +8,7 @@ no-shadow
 
 import * as chai from 'chai';
 import { v4 as uuidv4 } from 'uuid';
-import * as Duda from '../src/index';
+import { Duda } from '../src/index';
 
 import {
   GetTestSite,
@@ -29,7 +29,7 @@ before('create a new site to test against', async function () {
 });
 
 beforeEach(function () {
-  duda = Duda.New({
+  duda = new Duda({
     user: process.env.DUDA_API_USER,
     pass: process.env.DUDA_API_PASS,
     env: Duda.envs.sandbox,
@@ -87,6 +87,7 @@ describe('Duda.pages', function (this: any) {
         const pages = response.filter((a: any) => a.page_path !== 'home');
         return pages[0].page_name;
       })
+      // eslint-disable-next-line
       .catch((err: any) => console.log(err));
 
     return duda.pages.delete({
@@ -143,6 +144,7 @@ describe('Duda.pages.v2', function (this: any) {
         );
         return pages[0].uuid;
       })
+      // eslint-disable-next-line
       .catch((err: any) => console.log(err));
 
     return duda.pages.v2.delete({

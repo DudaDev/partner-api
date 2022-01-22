@@ -26,27 +26,53 @@ interface DudaConfig extends Config {
   env?: string;
 }
 
-function New(opts: DudaConfig) {
-  const config = new Config({
-    ...opts,
-    host: opts.env ?? envs.direct,
-  });
+class Duda {
+  static envs = envs;
 
-  // new:resource:
-  return {
-    appstore: new Apps(config),
-    other: new Other(config),
-    content: new Content(config),
-    reporting: new Reporting(config),
-    accounts: new Accounts(config),
-    collections: new Collections(config),
-    plans: new Plans(config),
-    urlRules: new Urlrules(config),
-    pages: new Pages(config),
-    sites: new Sites(config),
-    templates: new Templates(config),
-  };
+  // new:resource::type
+
+  appstore: Apps;
+
+  other: Other;
+
+  content: Content;
+
+  reporting: Reporting;
+
+  accounts: Accounts;
+
+  collections: Collections;
+
+  plans: Plans;
+
+  urlRules: Urlrules;
+
+  pages: Pages;
+
+  sites: Sites;
+
+  templates: Templates;
+
+  constructor(opts: DudaConfig) {
+    const config = new Config({
+      ...opts,
+      host: opts.env ?? envs.direct,
+    });
+
+    // new:resource::hook
+    this.appstore = new Apps(config);
+    this.other = new Other(config);
+    this.content = new Content(config);
+    this.reporting = new Reporting(config);
+    this.accounts = new Accounts(config);
+    this.collections = new Collections(config);
+    this.plans = new Plans(config);
+    this.urlRules = new Urlrules(config);
+    this.pages = new Pages(config);
+    this.sites = new Sites(config);
+    this.templates = new Templates(config);
+  }
 }
 
-export default New;
-export { New, envs };
+export default Duda;
+export { Duda };

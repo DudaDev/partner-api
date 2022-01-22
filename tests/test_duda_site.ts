@@ -9,7 +9,7 @@ no-shadow
 import * as chai from 'chai';
 import { v4 as uuidv4 } from 'uuid';
 
-import * as Duda from '../src/index';
+import { Duda } from '../src/index';
 
 require('dotenv')
   .config();
@@ -19,7 +19,7 @@ chai.use(require('chai-as-promised'));
 let duda: any;
 
 beforeEach(function () {
-  duda = Duda.New({
+  duda = new Duda({
     user: process.env.DUDA_API_USER,
     pass: process.env.DUDA_API_PASS,
     env: Duda.envs.sandbox,
