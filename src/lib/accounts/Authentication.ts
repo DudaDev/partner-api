@@ -16,10 +16,6 @@ class Authentication extends Resource {
         type: 'string',
         required: true,
       },
-      account_name: {
-        type: 'string',
-        required: true,
-      },
     },
   });
 
