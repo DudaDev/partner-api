@@ -116,3 +116,28 @@ export interface GetResetPwdLinkPayload {
 export interface GetResetPwdLinkResponse {
   reset_url: string;
 }
+
+export type ListCustomTeamGroupsPayload = null;
+
+export interface ListCustomTeamGroupsResponse {
+  group_name: string;
+  color: string;
+  title: string;
+  permissions: string;
+}
+
+export type ListDudaTeamGroupsPayload = null;
+
+export interface ListDudaTeamGroupsResponse {
+  group_name: string;
+  color: string;
+  title: string;
+  permissions: string;
+}
+
+export interface AssignTeamToGroupPayload {
+  group_name: string;
+  account_name: string;
+}
+
+export type AssignTeamToGroupResponse = null;

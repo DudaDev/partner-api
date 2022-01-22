@@ -114,6 +114,21 @@ describe('Duda.accounts', function (this: any) {
       });
     });
 
+    it('can successfully list all duda team member groups', function () {
+      return duda.accounts.permissions.listDudaTeamGroups();
+    });
+
+    it('can successfully list all custom team member groups', function () {
+      return duda.accounts.permissions.listCustomTeamGroups();
+    });
+
+    it('can successfully assign a group to a team member', function () {
+      return duda.accounts.permissions.assignTeamMemberGroup({
+        account_name,
+        group_name: uuidv4(),
+      });
+    });
+
     after('remove test account', async function () {
       await duda.accounts.delete({
         account_name,
