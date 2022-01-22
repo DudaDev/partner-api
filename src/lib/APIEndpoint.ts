@@ -1,15 +1,17 @@
 /* eslint-disable no-redeclare, default-param-last */
 
 import * as https from 'https';
+
 import makeRequest, { RequestOptions, ErrorResponse } from './http';
 
 import {
   buildPath,
-  buildQueryParams,
   Parameters,
+  HeaderOptions,
   validateParams,
   validateHeaders,
-  HeaderOptions,
+  buildBodyParams,
+  buildQueryParams,
 } from './helpers';
 
 import Resource from './base';
@@ -65,7 +67,9 @@ function APIEndpoint<Opts, Response>(def: APIEndpointDefinition<Opts, Response>)
 
     const query = def.queryParams && buildQueryParams(def.queryParams, opts);
 
-    const body = def.beforeRequest?.(opts as Opts) ?? (Object.keys(opts).length ? opts : null);
+    const optz = def.bodyParams ? buildBodyParams(def.bodyParams, opts) : opts;
+
+    const body = def.beforeRequest?.(optz as Opts) ?? (Object.keys(optz).length ? optz : null);
 
     const request = {
       headers: {},
