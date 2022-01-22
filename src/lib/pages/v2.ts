@@ -27,15 +27,15 @@ class Pages extends Resource {
       host: 'api.duda.co',
     },
     bodyParams: {
-      page_title: {
+      title: {
         type: 'string',
         required: false,
       },
-      page_path: {
+      path: {
         type: 'string',
         required: false,
       },
-      page_seo: {
+      seo: {
         type: 'object',
         required: false,
       },
