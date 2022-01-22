@@ -18,7 +18,8 @@ function tryJSONStringify(thing: any) {
   try {
     return JSON.stringify(thing);
   } catch (e) {
-    console.log('err', e);
+    // eslint-disable-next-line
+    console.log('JSON.stringify:', e);
     return thing;
   }
 }
@@ -80,6 +81,7 @@ async function makeRequest<Return>(
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        'User-Agent': 'd-node-api-library',
         ...(body && { 'Content-Length': body.length }),
         ...req.headers,
       },
