@@ -6,6 +6,7 @@ import AppsSWH from './swh/SWH';
 import Utils from './utils/Utils';
 import AppsPages from './pages/Pages';
 import AppsSites from './sites/Sites';
+import AppsTokens from './tokens/Tokens';
 import AppsContent from './content/Content';
 import AppsManifest from './manifest/Manifest';
 import AppsAccounts from './accounts/Accounts';
@@ -16,6 +17,8 @@ class Apps extends Resource {
   basePath = '/api/integrationhub/application';
 
   sites = new AppsSites(this);
+
+  tokens = new AppsTokens(this);
 
   pages = new AppsPages(this);
 
