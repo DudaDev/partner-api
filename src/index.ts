@@ -27,7 +27,7 @@ interface DudaConfig extends Config {
 }
 
 class Duda {
-  static envs = envs;
+  static Envs = envs;
 
   // new:resource::type
 

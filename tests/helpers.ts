@@ -6,7 +6,7 @@ require('dotenv')
 const duda = new Duda({
   user: process.env.DUDA_API_USER,
   pass: process.env.DUDA_API_PASS,
-  env: Duda.envs.sandbox,
+  env: Duda.Envs.sandbox,
 });
 
 let testSiteName: string | null;
