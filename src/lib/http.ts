@@ -1,6 +1,8 @@
 /* eslint-disable no-redeclare */
 
 import * as https from 'https';
+// @ts-ignore
+import { Retry } from 'ejmorgan-retry';
 import log from './log';
 
 import { checkMissingKeys } from './helpers';
@@ -31,6 +33,9 @@ interface ErrorResponse {
 
 async function makeRequest<Return>(
   req: RequestOptions,
+  opts: {
+    maxNetworkRetries?: number;
+  },
 ): Promise<[ErrorResponse | null, Return]> {
   const logger = log.trace();
 
@@ -70,7 +75,7 @@ async function makeRequest<Return>(
 
   const body = tryJSONStringify(req.body);
 
-  return new Promise((resolve, reject) => {
+  const $ = new Retry(function (resolve: any, reject: any, retry: any) {
     const request = https.request({
       method: req.method,
 
@@ -114,13 +119,26 @@ async function makeRequest<Return>(
           reply = { data } as any;
         }
 
-        if (res.statusCode! >= 400) {
+        // if (res.statusCode! >= 400) {
+        //   error.status = res.statusCode!;
+        //   error.error = reply;
+        //   resolve([error, reply]);
+        // }
+
+        // success
+        if (res.statusCode! >= 200 && res.statusCode! < 400) {
+          resolve([null, reply]);
+        } else if (opts.maxNetworkRetries && retry.attempts < opts.maxNetworkRetries) {
+          // this line reschedules the retry
+          // you MUST use the resolve() function
+          // otherwise, using `return` or `reject`
+          // will exit out of the Retry immediately
+          resolve(retry.reschedule(2000));
+        } else {
           error.status = res.statusCode!;
           error.error = reply;
-          resolve([error, reply]);
+          reject([error, reply]);
         }
-
-        resolve([null, reply]);
       });
 
       res.on('error', (e) => {
@@ -136,6 +154,8 @@ async function makeRequest<Return>(
 
     request.end();
   });
+
+  return $.schedule();
 }
 
 export default makeRequest;

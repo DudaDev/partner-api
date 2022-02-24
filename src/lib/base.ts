@@ -10,6 +10,8 @@ class Config {
 
   pass?: string;
 
+  maxNetworkRetries?: number;
+
   logger?: {
     (message?: any, ...optionalParams: any[]): void
   };
@@ -22,6 +24,7 @@ class Config {
     this.pass = opts.pass;
     this.logger = opts.logger;
     this.logLevel = opts.logLevel;
+    this.maxNetworkRetries = opts.maxNetworkRetries;
   }
 }
 

@@ -2,7 +2,7 @@
 
 import * as https from 'https';
 
-import makeRequest, { RequestOptions, ErrorResponse } from './http';
+import makeRequest, { RequestOptions } from './http';
 
 import {
   buildPath,
@@ -16,7 +16,7 @@ import {
 
 import Resource from './base';
 
-interface APIEndpointDefinition<Opts, Response> {
+interface APIEndpointDefinition<Opts, Return> {
   method: 'get' | 'put' | 'post' | 'delete';
 
   path: string;
@@ -35,30 +35,30 @@ interface APIEndpointDefinition<Opts, Response> {
   potentialErrors?: any;
 
   beforeRequest?: (opts: Opts) => Partial<Opts> | Array<any>;
-  afterRequest?: (err: ErrorResponse | null, opts: Response) => Response;
+  afterRequest?: (err: any | null, opts: Return) => Return;
 }
 
-function APIEndpoint<Opts, Response>(def: APIEndpointDefinition<Opts, Response>) {
-  function call(cb: { (err: ErrorResponse, res: Response): any; }): void;
+function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
+  function call(cb: { (err: any, res: Return): any; }): void;
 
-  function call(): Promise<Response>;
+  function call(): Promise<Return>;
 
-  function call(opts: Opts, cb: { (err: ErrorResponse, res: Response): any; }): void;
+  function call(opts: Opts, cb: { (err: any, res: Return): any; }): void;
 
-  function call(opts: Opts): Promise<Response>;
+  function call(opts: Opts): Promise<Return>;
 
-  function call(opts: Opts, overrides?: RequestOptions): Promise<Response>;
+  function call(opts: Opts, overrides?: RequestOptions): Promise<Return>;
 
   function call(opts: Opts, overrides: RequestOptions, cb: {
-    (err: ErrorResponse, res: Response): any;
+    (err: any, res: Return): any;
   }): void;
 
   async function call<RequestOverrides extends https.RequestOptions & { body?: any }>(
     this: Resource,
-    opts: Opts | { (err: ErrorResponse, res: Response): any; } = {} as any,
-    overrides?: RequestOverrides | { (err: ErrorResponse, res: Response): any; },
-    cb?: { (err: ErrorResponse, res: Response): any; },
-  ): Promise<Response | ErrorResponse | null> {
+    opts: Opts | { (err: any, res: Return): any; } = {} as any,
+    overrides?: RequestOverrides | { (err: any, res: Return): any; },
+    cb?: { (err: any, res: Return): any; },
+  ): Promise<Return | any | null> {
     const params = { ...def.bodyParams, ...def.queryParams };
 
     validateParams(params, opts);
@@ -88,9 +88,13 @@ function APIEndpoint<Opts, Response>(def: APIEndpointDefinition<Opts, Response>)
 
     validateHeaders(builtRequest?.headers ?? request.headers, def.headerOptions);
 
-    const [error, response] = await makeRequest<Response>(builtRequest ?? request);
+    console.log(this.config);
 
-    const finalResponse = def.afterRequest?.(error, response) ?? response;
+    const [error, response] = await makeRequest<Return>(builtRequest ?? request, {
+      maxNetworkRetries: (this.config as any).maxNetworkRetries!,
+    });
+
+    const finalResponse = def.afterRequest?.(error, response ?? {} as Return) ?? response;
 
     if (typeof opts === 'function') {
       return (opts as any)(error, finalResponse);
