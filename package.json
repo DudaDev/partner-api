@@ -1,6 +1,6 @@
 {
   "name": "@dudadev/partner-api",
-  "version": "1.5.1",
+  "version": "1.5.7",
   "files": [
     "dist",
     "src"
@@ -18,10 +18,13 @@
     "tests": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' node ./node_modules/nyc/bin/nyc.js --reporter=html --reporter=text ./node_modules/mocha/bin/mocha -r ./node_modules/ts-node/register/index.js 'tests/**/*.ts'",
     "test:file": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' node ./node_modules/nyc/bin/nyc.js --reporter=html --reporter=text ./node_modules/mocha/bin/mocha -r ./node_modules/ts-node/register/index.js \"tests/**/$FILENAME.ts\"",
     "test-publish": "npm publish --dry-run",
-    "publish": "npm publish"
+    "publish": "npm publish",
+    "prepublishOnly": "npm run test",
+    "preversion": "npm run test"
   },
   "dependencies": {
     "dotenv": "^10.0.0",
+    "ejmorgan-retry": "^1.0.6",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

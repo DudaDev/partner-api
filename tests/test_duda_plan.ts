@@ -45,6 +45,7 @@ describe('Duda.plans', function () {
   });
   it('can update site plan', async function () {
     const [first] = await duda.plans.list();
+
     return duda.plans.update({
       site_name: test_site,
       plan_id: first.planId,

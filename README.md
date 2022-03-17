@@ -23,7 +23,7 @@ server-side Javascript.
 
 ## Requirements
 
-Node v12 or higher.
+Node v14 or higher.
 
 ## Installation
 
