@@ -88,8 +88,6 @@ function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
 
     validateHeaders(builtRequest?.headers ?? request.headers, def.headerOptions);
 
-    console.log(this.config);
-
     const [error, response] = await makeRequest<Return>(builtRequest ?? request, {
       maxNetworkRetries: (this.config as any).maxNetworkRetries!,
     });

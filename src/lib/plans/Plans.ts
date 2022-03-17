@@ -14,7 +14,7 @@ class Plans extends Resource {
 
   get = APIEndpoint<Types.GetPlanPayload, Types.GetPlanResponse>({
     method: 'get',
-    path: '/api/sites/multiscreen/{site_name}/plans',
+    path: '/api/sites/multiscreen/{site_name}/plan',
     defaults: {
       host: 'api.duda.co',
     },
@@ -22,7 +22,7 @@ class Plans extends Resource {
 
   update = APIEndpoint<Types.ChangePlanPayload, Types.ChangePlanResponse>({
     method: 'post',
-    path: '/api/sites/multiscreen/{site_name}/plans/{plan_id}',
+    path: '/api/sites/multiscreen/{site_name}/plan/{plan_id}',
     defaults: {
       host: 'api.duda.co',
     },

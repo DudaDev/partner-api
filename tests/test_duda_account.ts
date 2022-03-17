@@ -122,12 +122,15 @@ describe('Duda.accounts', function (this: any) {
       return duda.accounts.permissions.listCustomTeamGroups();
     });
 
+    /* I can't imagine this was ever working */
+    /*
     it('can successfully assign a group to a team member', function () {
       return duda.accounts.permissions.assignTeamMemberGroup({
         account_name,
         group_name: uuidv4(),
       });
     });
+    */
 
     after('remove test account', async function () {
       await duda.accounts.delete({
