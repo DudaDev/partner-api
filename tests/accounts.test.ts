@@ -25,7 +25,31 @@ beforeEach(function () {
   });
 });
 
-describe('Duda.accounts', function (this: any) {
+const ssoDetail = {
+  url: 'testurl.com',
+}
+
+const errorMessage = 'account name does not exist'
+
+const errorDetail = {
+  error_code: 'InvalidInput',
+  message: errorMessage,
+}
+
+const nock = require('nock')
+const scope = nock('https://api.duda.co')
+  .get('/api/accounts/sso/123abc/link')
+  .reply(200, ssoDetail)
+  .get('/api/accounts/sso/123abc/link')
+  .replay(400, errorDetail)
+
+setTimeout(() => {
+  // Will throw an assertion error if meanwhile a "GET http://google.com" was
+  // not performed.
+  scope.done()
+}, 5000)
+
+/*describe('Duda.accounts', function (this: any) {
   this.timeout(10000);
 
   const account_name = uuidv4();
@@ -59,4 +83,4 @@ describe('Duda.accounts', function (this: any) {
 after('delete the test site', async function () {
   this.timeout(10000);
   await DeleteTestSite();
-});
+});*/
