@@ -78,7 +78,8 @@ export interface UnPublishSitePayload extends SiteNamedPayload {
 }
 
 export interface DuplicateSitePayload extends SiteNamedPayload {
-  new_default_domain_prefix: string;
+  new_default_domain_prefix: string,
+  new_external_uid?: string
 }
 
 export interface ResetSitePayload extends SiteNamedPayload {
