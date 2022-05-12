@@ -49,8 +49,8 @@ const duda = new Duda({
 });
 
 duda.sites.get({ site_name: "a-site-name" })
-  .then((site) => console.log(site))
-  .catch((error) => console.error(error));
+  .then(site => console.log(site))
+  .catch(error => console.error(error));
 ```
 
 Or using ES modules and `async/await`:
