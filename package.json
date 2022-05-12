@@ -1,6 +1,6 @@
 {
   "name": "@dudadev/partner-api",
-  "version": "1.5.7",
+  "version": "1.5.8",
   "files": [
     "dist",
     "src"
