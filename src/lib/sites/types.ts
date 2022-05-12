@@ -98,11 +98,8 @@ export interface UpdateSitePayload {
   default_domain_prefix?: string,
   external_uid?: string,
   lang?: string,
-  site_alternate_domains?: {
-    domains?: Array<string>,
-    is_redirect?: boolean
-  },
-  force_https?: boolean,
+  site_alternate_domains?: string,
+  force_https?: string,
   site_seo?: {
     og_image?: string,
     title?: string,
@@ -110,7 +107,10 @@ export interface UpdateSitePayload {
   },
   schemas?: {
     local_business?: {
-      enabled?: boolean
+      enabled?: boolean,
+      status?: 'MISSING_REQUIRED_FIELDS' | 'MISSING_RECOMMENDED_FIELDS' | 'VALID',
+      missing_required_fields?: Array<string>,
+      missing_recommended_fields?: Array<string>
     }
   },
   fav_icon?: string,
