@@ -44,8 +44,6 @@ const scope = nock('https://api.duda.co')
   .replay(400, errorDetail)
 
 setTimeout(() => {
-  // Will throw an assertion error if meanwhile a "GET http://google.com" was
-  // not performed.
   scope.done()
 }, 5000)
 
