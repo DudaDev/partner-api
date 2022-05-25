@@ -1,51 +1,69 @@
-import { v4 as uuidv4 } from 'uuid';
+//import { v4 as uuidv4 } from 'uuid';
 import { Duda } from '../src/index';
 
-import {
-  GetTestSite,
-  DeleteTestSite,
-} from './helpers';
+// import {
+//   GetTestSite,
+//   DeleteTestSite,
+// } from './helpers';
 
-require('dotenv')
-  .config();
+// require('dotenv')
+//   .config();
 
 let duda: any;
-let test_site: any;
+// let test_site: any;
 
-before('create a new site to test against', async function () {
-  this.timeout(10000);
-  test_site = await GetTestSite();
-});
+// before('create a new site to test against', async function () {
+//   this.timeout(10000);
+//   test_site = await GetTestSite();
+// });
 
-beforeEach(function () {
-  duda = new Duda({
-    user: process.env.DUDA_API_USER,
-    pass: process.env.DUDA_API_PASS,
-    env: Duda.Envs.sandbox,
-  });
+// beforeEach(function () {
+//   duda = new Duda({
+//     user: process.env.DUDA_API_USER,
+//     pass: process.env.DUDA_API_PASS,
+//     env: Duda.Envs.sandbox,
+//   });
+// });
+
+duda = new Duda({
+  user: process.env.DUDA_API_USER,
+  pass: process.env.DUDA_API_PASS,
+  env: Duda.Envs.sandbox,
 });
 
 const ssoDetail = {
   url: 'testurl.com',
 }
 
-const errorMessage = 'account name does not exist'
-
-const errorDetail = {
-  error_code: 'InvalidInput',
-  message: errorMessage,
+const responseDetail = {
+  account_name: 'new@example.com',
+  site_name: 'abc123',
+  target: 'EDITOR'
 }
+
+// const errorMessage = 'account name does not exist'
+
+// const errorDetail = {
+//   error_code: 'InvalidInput',
+//   message: errorMessage,
+// }
 
 const nock = require('nock')
 const scope = nock('https://api.duda.co')
   .get('/api/accounts/sso/123abc/link')
   .reply(200, ssoDetail)
-  .get('/api/accounts/sso/123abc/link')
-  .replay(400, errorDetail)
 
-setTimeout(() => {
-  scope.done()
-}, 5000)
+const res = duda.accounts.authentication.getSSOLink({
+  account_name: 'new@example.com',
+  site_name: 'abc123',
+  target: 'EDITOR'
+})
+var expect = require('chai').expect
+expect(res.body).to.eq(JSON.stringify(responseDetail))
+  //.get('/api/accounts/sso/123abc/link')
+  //.replay(400, errorDetail)
+
+scope.isDone()
 
 /*describe('Duda.accounts', function (this: any) {
   this.timeout(10000);
