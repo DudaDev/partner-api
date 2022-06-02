@@ -25,6 +25,7 @@
     "noImplicitThis": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
-    "stripInternal": true
+    "stripInternal": true,
+    "esModuleInterop": true
   }
 }
