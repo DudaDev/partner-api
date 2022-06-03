@@ -14,6 +14,8 @@ describe('Account tests', () => {
     email: 'foo@example.org'
   }
 
+  const permissions = ['EDIT']
+
   before(() => {
     duda = new Duda({
       user: 'testuser',
@@ -25,7 +27,6 @@ describe('Account tests', () => {
   })
 
   it('can create an account', () => {
-
     scope.post('/api/accounts/create', (body) => {
       expect(body).to.eql({ ...account })
       return body
@@ -63,7 +64,6 @@ describe('Account tests', () => {
       scope.post('/api/accounts/test_account/sites/test_site/permissions', (body) => {
         const { permissions } = body;
         expect(permissions).to.eql(['EDIT'])
-
         return body
       }).reply(204)
       return duda.accounts.permissions.grantSiteAccess({
@@ -71,6 +71,21 @@ describe('Account tests', () => {
         site_name: 'test_site',
         permissions: ['EDIT']
       })
+    })
+    it('can successfully get all permissions', () => {
+      scope.get('/api/accounts/permissions/multiscreen').reply(200, permissions)
+      return duda.accounts.permissions.list()
+    })
+    it('can get site permissions for an account by name', () => {
+      scope.get((path: string) => {
+          return path === '/api/accounts/test_account/sites/test_site/permissions'
+      }).reply(200, permissions)
+    
+      return duda.accounts.permissions.get({
+        account_name: 'test_account',
+        site_name: 'test_site'
+      })
+        .then(res => expect(res).to.eql(permissions))
     })
   })
 })
