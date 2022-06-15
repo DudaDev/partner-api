@@ -104,13 +104,13 @@ describe('Collection tests', () => {
       })
     })
 
-    it('can successfully get all collections', () => {
-      scope.get('/api/sites/multiscreen/test_site/collection').reply(204, collection_output)
+    it('can list all collections', () => {
+      scope.get('/api/sites/multiscreen/test_site/collection').reply(200, collection_output)
       return duda.collections.list({ site_name:'test_site' })
     })
 
     it('can get a specific collection', () => {
-      scope.get('/api/sites/multiscreen/test_site/collection/test_collection').reply(204, collection_output)
+      scope.get('/api/sites/multiscreen/test_site/collection/test_collection').reply(200, collection_output)
       return duda.collections.get({
         site_name: 'test_site',
         collection_name: 'test_collection'
@@ -128,12 +128,12 @@ describe('Collection tests', () => {
     //     site_name: 'test_site',
     //     current_collection_name: 'test_collection',
     //     external_details: {
-    //       enabled: true
+    //       enabled: true,
     //       external_id: '1',
     //       external_endpoint: '2',
     //       page_item_url_field: '3',
     //       collection_data_json_path: '4',
-    //       authorization_header_value: '5',
+    //       authorization_header_value: '5'
     //     }
     //   })
     // })
@@ -195,46 +195,46 @@ describe('Collection tests', () => {
 
       //   return duda.collections.rows.delete({
       //     site_name: 'test_site',
-      //     collection_info: 'test_collection',
+      //     collection_name: 'test_collection',
       //     raw_body: row_delete
       //   })
       // })
     })
-  describe('fields', () => {
-    it('can add a field to a collection', () => {
-      scope.post('/api/sites/multiscreen/test_site/collection/test_collection/field', (body) => {
-        expect(body).to.eql(field)
-        return body
-      }).reply(204)
+    describe('fields', () => {
+      it('can add a field to a collection', () => {
+        scope.post('/api/sites/multiscreen/test_site/collection/test_collection/field', (body) => {
+          expect(body).to.eql(field)
+          return body
+        }).reply(204)
 
-      return duda.collections.fields.create({
-        site_name: 'test_site',
-        collection_name: 'test_collection',
-        raw_body: field
+        return duda.collections.fields.create({
+          site_name: 'test_site',
+          collection_name: 'test_collection',
+          raw_body: field
+        })
+      })
+
+      it('can update a field in a collection', () => {
+        scope.put('/api/sites/multiscreen/test_site/collection/test_collection/field/test_field', (body) => {
+          expect(body).to.eql({ name:'new_name' })
+          return body
+        }).reply(204)
+
+        return duda.collections.fields.update({
+          site_name: 'test_site',
+          collection_name: 'test_collection',
+          field_name: 'test_field',
+          name: 'new_name'
+        })
+      })
+
+      it('can delete a field in a collection', () => {
+        scope.delete('/api/sites/multiscreen/test_site/collection/test_collection/field/test_field').reply(204)
+        return duda.collections.fields.delete({
+          site_name: 'test_site',
+          collection_name: 'test_collection',
+          field_name: 'test_field'
+        })
       })
     })
-
-    it('can update a field in a collection', () => {
-      scope.put('/api/sites/multiscreen/test_site/collection/test_collection/field/test_field', (body) => {
-        expect(body).to.eql({ name:'new_name' })
-        return body
-      }).reply(204)
-
-      return duda.collections.fields.update({
-        site_name: 'test_site',
-        collection_name: 'test_collection',
-        field_name: 'test_field',
-        name: 'new_name'
-      })
-    })
-
-    it('can delete a field in a collection', () => {
-      scope.delete('/api/sites/multiscreen/test_site/collection/test_collection/field/test_field').reply(204)
-      return duda.collections.fields.delete({
-        site_name: 'test_site',
-        collection_name: 'test_collection',
-        field_name: 'test_field'
-      })
-    })
-  })
 })
