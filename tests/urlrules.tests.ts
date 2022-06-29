@@ -1,3 +1,4 @@
+import { expect } from "chai";
 import nock from "nock"
 import { Duda } from "../src/index"
 
@@ -40,7 +41,10 @@ describe('URLRule tests', () => {
   })
 
   it('can create a rule for a site', () => {
-    scope.post(`${api_path}${site_name}/urlrules`).reply(200, response)
+    scope.post(`${api_path}${site_name}/urlrules`, (body) => {
+      expect(body).to.eql({ source, target, response_code })
+      return body
+    }).reply(200, response)
     duda.urlRules.create({ site_name, source, target, response_code })
   })
 
