@@ -31,12 +31,12 @@ describe('URLRule tests', () => {
   })
 
   it('can get all rules for a site', () => {
-    scope.get(`${api_path}${site_name}/urlrules`).reply(200)
+    scope.get(`${api_path}${site_name}/urlrules`).reply(200, response)
     duda.urlRules.getAll({ site_name })
   })
 
   it('can get a rule by id', () => {
-    scope.get(`${api_path}${site_name}/urlrules/${rule_id}`).reply(200)
+    scope.get(`${api_path}${site_name}/urlrules/${rule_id}`).reply(200, response)
     duda.urlRules.get({ site_name, id: rule_id })
   })
 
