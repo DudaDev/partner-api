@@ -40,7 +40,6 @@ describe('Other tests', () => {
             name: 'test_name'
         })
     })
-    // dev docs incorrectly list command as create not restore
     it('can restore a backup for a site', () => {
         scope.post('/api/sites/multiscreen/backups/test_site/restore/test_backup').reply(204)
         return duda.other.backups.restore({
