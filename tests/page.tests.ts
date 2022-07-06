@@ -13,15 +13,15 @@ describe('Page tests', () => {
         title: "string",
         path: "string",
         header_html: "string"
-    }
+    };
 
     const response = {
         result: [
             page
         ]
-    }
+    };
 
-    const { uuid: page_uuid, title, path, header_html } = page
+    const { uuid: page_uuid, title, path, header_html } = page;
 
     before(() => {
         duda = new Duda({
