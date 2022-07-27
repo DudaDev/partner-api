@@ -11,9 +11,9 @@ describe('Plan tests', () => {
         planID: 1,
         planName: 'test'
     };
-    // const response = [
-    //     plan
-    // ];
+    const response = [
+        plan
+    ];
     const { planID: plan_id } = plan
     before(() => {
         duda = new Duda({
@@ -24,11 +24,10 @@ describe('Plan tests', () => {
 
         scope = nock('https://api.duda.co')
     })
-    // No Match for request issue?
-    // it('can get available site plans', () => {
-    //     scope.get(`${api_path}/plans`).reply(200, response)
-    //     duda.plans.list()
-    // })
+    it('can get available site plans', () => {
+        scope.get(`${api_path}plans`).reply(200, response)
+        duda.plans.list()
+    })
     it('can get a site plan by site name', () => {
         scope.get(`${api_path}${site_name}/plan`).reply(200, plan)
         duda.plans.get({ site_name: site_name })
