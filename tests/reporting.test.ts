@@ -103,7 +103,7 @@ describe('Reporting tests', () => {
         })
     })
     // Frequency param is required here, not listed at all in Dev Docs
-    it('can subscribe a customer to a site', () => {
+    it('can unsubscribe a customer to a site', () => {
         scope.delete(`/api/accounts/${account_name}/sites/${site_name}/stats-email`).reply(204)
         duda.reporting.emailSettings.unsubscribe({
             account_name: account_name,
