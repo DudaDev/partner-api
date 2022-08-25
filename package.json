@@ -10,7 +10,7 @@
   "license": "MIT",
   "description": "Provides convenient access to Duda's public APIs from applications written in server-side Javascript.",
   "repository": "https://github.com/DudaDev/partner-api",
-  "author": "Everett Morgan",
+  "author": "DudaDev",
   "scripts": {
     "tsc": "./node_modules/typescript/bin/tsc",
     "test": "yarn linter && yarn tests",
