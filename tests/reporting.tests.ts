@@ -107,8 +107,7 @@ describe('Reporting tests', () => {
         scope.delete(`/api/accounts/${account_name}/sites/${site_name}/stats-email`).reply(204)
         duda.reporting.emailSettings.unsubscribe({
             account_name: account_name,
-            site_name: site_name,
-            frequency: frequency
+            site_name: site_name
         })
     })
     it('can get email settings for an account', () => {

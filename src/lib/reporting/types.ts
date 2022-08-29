@@ -47,8 +47,7 @@ export interface SubscribeCustomerPayload {
 
 export interface UnsubscribeCustomerPayload {
   account_name: string,
-  site_name: string,
-  frequency: 'WEEKLY' | 'MONTHLY' | 'YEARLY',
+  site_name: string
 }
 
 type ActivityType =
