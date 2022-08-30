@@ -59,10 +59,10 @@ export interface UpdateCollectionPayload {
   name: string,
   site_name: string,
   current_collection_name: string,
-  external_details: {
+  external_details?: {
     enabled?: boolean,
-    external_id: string,
-    external_endpoint: string,
+    external_id?: string,
+    external_endpoint?: string,
     page_item_url_field?: string,
     collection_data_json_path?: string,
     authorization_header_value?: string,
