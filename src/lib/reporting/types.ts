@@ -90,7 +90,6 @@ export interface GetAnalyticsHistoryPayload {
   to?: string,
   result?: string,
   dimension?: 'system' | 'geo',
-  date_granularity?: string,
   dateGranularity?: string,
 }
 
