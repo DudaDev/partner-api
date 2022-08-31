@@ -90,7 +90,6 @@ describe('Reporting tests', () => {
         }).reply(200, form)
         duda.reporting.forms.submissions({ site_name: site_name, from: from, to: to })
     })
-    // Frequency param is required here, but not in Dev Docs
     it('can subscribe a customer to a site', () => {
         scope.post(`/api/accounts/${account_name}/sites/${site_name}/stats-email`, (body) => {
             expect(body).to.eql({ frequency: frequency })
@@ -102,13 +101,11 @@ describe('Reporting tests', () => {
             frequency: frequency
         })
     })
-    // Frequency param is required here, not listed at all in Dev Docs
     it('can unsubscribe a customer to a site', () => {
         scope.delete(`/api/accounts/${account_name}/sites/${site_name}/stats-email`).reply(204)
         duda.reporting.emailSettings.unsubscribe({
             account_name: account_name,
-            site_name: site_name,
-            frequency: frequency
+            site_name: site_name
         })
     })
     it('can get email settings for an account', () => {
