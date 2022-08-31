@@ -13,7 +13,7 @@ describe('Account tests', () => {
     lang: 'en',
     email: 'foo@example.org'
   }
-  const permissions = ['EDIT']
+  const permissions = ['LIMITED_EDITING']
   const sites = [{ site_name:'test_site' }]
   const groups = [
     {
@@ -85,7 +85,7 @@ describe('Account tests', () => {
       return duda.accounts.permissions.grantSiteAccess({
         account_name: 'test_account',
         site_name: 'test_site',
-        permissions: ['EDIT']
+        permissions: ['LIMITED_EDITING']
       })
     })
     it('can get all permissions', () => {
@@ -121,7 +121,7 @@ describe('Account tests', () => {
   })
   describe('authentication', () => {
     // Uncomment in next major release
-    // it('can grant site access for an account by name', () => {
+    // it('can grant single sign-on site access for an account by name', () => {
     //   scope.get('/api/accounts/sso/test_account/link?site_name=test_site&target=STATS').reply(200, sso_url)
 
     //   return duda.accounts.authentication.getSSOLink({
