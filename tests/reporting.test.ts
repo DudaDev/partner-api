@@ -127,6 +127,14 @@ describe('Reporting tests', () => {
                 })
                 return query
             }).reply(200, analytics)
+            duda.reporting.analytics.get({
+                site_name: site_name,
+                from: from,
+                to: to,
+                dimension: dimension,
+                result: result,
+                dateGranularity: dateGranularity
+            })
         })
     })
     describe('activities', () => {

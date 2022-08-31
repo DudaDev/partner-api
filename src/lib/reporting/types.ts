@@ -88,13 +88,13 @@ export interface GetAnalyticsHistoryPayload {
   site_name: string,
   from?: string,
   to?: string,
-  result?: string,
+  result?: 'traffic' | 'activities',
   dimension?: 'system' | 'geo',
-  dateGranularity?: string,
+  dateGranularity?: 'DAYS' | 'WEEKS' | 'MONTHS' | 'YEARS',
 }
 
 export interface GetAnalyticsHistoryTraffic {
-  UNIQUE_VISITORS: number,
+  VISITORS: number,
   VISITS: number,
   PAGE_VIEWS: number,
 }
