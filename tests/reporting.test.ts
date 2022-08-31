@@ -9,7 +9,7 @@ describe('Reporting tests', () => {
     const site_name = 'test_site';
     const account_name = 'test_account';
 
-    const lastDays = 1;
+    const lastDays = '1';
     const from = '0';
     const to = '1';
     const list = ['test_site'];
@@ -60,21 +60,19 @@ describe('Reporting tests', () => {
 
         scope = nock('https://api.duda.co')
     })
-    // lastDays query type string in Dev docs, type number in types.ts
     it('can get a list of recently published sites', () => {
         scope.get(`${api_path}published`, (query) => {
             expect(query).to.eql({ lastDays: lastDays })
             return query
         }).reply(200, list)
-        duda.reporting.sites.published({ lastDays: 1 })
+        duda.reporting.sites.published({ lastDays: lastDays})
     })
-    // lastDays query type string in Dev docs, type number in types.ts
     it('can get a list of recently unpublished sites', () => {
         scope.get(`${api_path}unpublished`, (query) => {
             expect(query).to.eql({ lastDays: lastDays })
             return query
         }).reply(200, list)
-        duda.reporting.sites.unpublished({ lastDays: 1 })
+        duda.reporting.sites.unpublished({ lastDays: lastDays })
     })
     it('can get a list of created sites', () => {
         scope.get(`${api_path}created`, (query) => {

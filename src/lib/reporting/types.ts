@@ -12,11 +12,11 @@ export type GetPublishedResponse = Array<string>;
 export type GetUnpublishedResponse = Array<string>;
 
 export interface GetPublishedPayload {
-  lastDays?: number,
+  lastDays?: string | number,
 }
 
 export interface GetUnpublishedPayload {
-  lastDays?: number,
+  lastDays?: string | number,
 }
 
 export type GetSitesCreatedResponse = Array<string>;
