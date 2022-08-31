@@ -66,9 +66,22 @@ describe('Content tests', () => {
   }
   const injected_content = [
     {
-      type: 'INNERHTML',
-      key: 'test',
-      value: 'testval'
+      type: "INNERHTML",
+      key: "my-key-email",
+      value: "newEmail@domain.com"
+    },
+    {
+      type: "DOMATTR",
+      key: "my-key-email",
+      value: "mailto:newEmail@domain.com",
+      refs: ["href"]
+    },
+    {
+      type: "CSS",
+      key: "email-css",
+      value: "#000000",
+      refs: ["color"],
+      important: false
     }
   ]
   const injected_query = [
