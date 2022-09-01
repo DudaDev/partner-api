@@ -48,55 +48,60 @@ export type CreateAccountResponse = void;
 export type UpdateAccountResponse = void;
 export type DeleteAccountResponse = void;
 
-// export type Permissions = 
-//   ('REPUBLISH' & 'LIMITED_EDITING') |
+type newPermission = 'REPUBLISH' & 'LIMITED_EDITING'
+
+// export type Permissions = {
+//   'REPUBLISH', 
+// } | {
 //   'LIMITED_EDITING'
+// }
 
 // Included Missing Permissions
-export type Permissions =
-  'STATS_TAB' |
-  'EDIT' |
-  'ADD_FLEX' |
-  'E_COMMERCE' |
-  'PUBLISH' |
-  'REPUBLISH' |
-  'DEV_MODE' |
-  'INSITE' |
-  'SEO' |
-  'BACKUPS' |
-  'CUSTOM_DOMAIN' |
-  'RESET' |
-  'BLOG' |
-  'PUSH_NOTIFICATIONS' |
-  'LIMITED_EDITING' |
-  'SITE_COMMENTS' |
-  'CONTENT_LIBRARY' |
-  'EDIT_CONNECTED_DATA' |
-  'MANAGE_CONNECTED_DATA' |
-  'USE_APP' |
-  'CLIENT_MANAGE_FREE_APPS';
+// export type Permissions =
+//   'STATS_TAB' |
+//   'EDIT' |
+//   'ADD_FLEX' |
+//   'E_COMMERCE' |
+//   'PUBLISH' |
+//   'REPUBLISH' |
+//   'DEV_MODE' |
+//   'INSITE' |
+//   'SEO' |
+//   'BACKUPS' |
+//   'CUSTOM_DOMAIN' |
+//   'RESET' |
+//   'BLOG' |
+//   'PUSH_NOTIFICATIONS' |
+//   'LIMITED_EDITING' |
+//   'SITE_COMMENTS' |
+//   'CONTENT_LIBRARY' |
+//   'EDIT_CONNECTED_DATA' |
+//   'MANAGE_CONNECTED_DATA' |
+//   'USE_APP' |
+//   'CLIENT_MANAGE_FREE_APPS';
 
-function permissionsGrouper(permissionsArray: Array<Permissions>): void {
-  if (permissionsArray.includes('REPUBLISH') ||
-  permissionsArray.includes('DEV_MODE') ||
-  permissionsArray.includes('SEO') ||
-  permissionsArray.includes('BACKUPS') ||
-  permissionsArray.includes('RESET') ||
-  permissionsArray.includes('CONTENT_LIBRARY') ||
-  permissionsArray.includes('USE_APP') ||
-  permissionsArray.includes('CLIENT_MANAGE_FREE_APPS')){
+// function permissionsGrouper(permissionsArray: Array<Permissions>): Array<string> {
+//   if (permissionsArray.includes('REPUBLISH') ||
+//   permissionsArray.includes('DEV_MODE') ||
+//   permissionsArray.includes('SEO') ||
+//   permissionsArray.includes('BACKUPS') ||
+//   permissionsArray.includes('RESET') ||
+//   permissionsArray.includes('CONTENT_LIBRARY') ||
+//   permissionsArray.includes('USE_APP') ||
+//   permissionsArray.includes('CLIENT_MANAGE_FREE_APPS')){
 
-  }
-  else if (permissionsArray.includes('PUBLISH' ||
-  permissionsArray.includes('CUSTOM_DOMAIN'))){
+//   }
+//   else if (permissionsArray.includes('PUBLISH' ||
+//   permissionsArray.includes('CUSTOM_DOMAIN'))){
 
-  }
-  else if (permissionsArray.includes('INSITE') ||
-  permissionsArray.includes('PUSH_NOTIFICATIONS') ||
-  permissionsArray.includes('ADD_FLEX')){
+//   }
+//   else if (permissionsArray.includes('INSITE') ||
+//   permissionsArray.includes('PUSH_NOTIFICATIONS') ||
+//   permissionsArray.includes('ADD_FLEX')){
 
-  }
-}
+//   }
+//   return []
+// }
 
 export type GetPermissionsResponse = Array<Permissions>;
 
