@@ -48,14 +48,6 @@ export type CreateAccountResponse = void;
 export type UpdateAccountResponse = void;
 export type DeleteAccountResponse = void;
 
-type newPermission = 'REPUBLISH' & 'LIMITED_EDITING'
-
-// export type Permissions = {
-//   'REPUBLISH', 
-// } | {
-//   'LIMITED_EDITING'
-// }
-
 // Included Missing Permissions
 // export type Permissions =
 //   'STATS_TAB' |
@@ -80,28 +72,56 @@ type newPermission = 'REPUBLISH' & 'LIMITED_EDITING'
 //   'USE_APP' |
 //   'CLIENT_MANAGE_FREE_APPS';
 
-// function permissionsGrouper(permissionsArray: Array<Permissions>): Array<string> {
-//   if (permissionsArray.includes('REPUBLISH') ||
-//   permissionsArray.includes('DEV_MODE') ||
-//   permissionsArray.includes('SEO') ||
-//   permissionsArray.includes('BACKUPS') ||
-//   permissionsArray.includes('RESET') ||
-//   permissionsArray.includes('CONTENT_LIBRARY') ||
-//   permissionsArray.includes('USE_APP') ||
-//   permissionsArray.includes('CLIENT_MANAGE_FREE_APPS')){
+// const republish: Permissions[] = ['REPUBLISH', 'LIMITED_EDITING'];
+// const devMode: Permissions[] = ['DEV_MODE', 'LIMITED_EDITING'];
+// const seo: Permissions[] = ['SEO', 'LIMITED_EDITING'];
+// const backups: Permissions[] = ['BACKUPS', 'LIMITED_EDITING'];
+// const reset: Permissions[] = ['RESET', 'LIMITED_EDITING'];
+// const contentLibrary: Permissions[] = ['CONTENT_LIBRARY', 'LIMITED_EDITING'];
+// const useApp: Permissions[] = ['USE_APP', 'LIMITED_EDITING'];
+// const clientMangeFreeApps: Permissions[] = ['CLIENT_MANAGE_FREE_APPS', 'LIMITED_EDITING'];
 
-//   }
-//   else if (permissionsArray.includes('PUBLISH' ||
-//   permissionsArray.includes('CUSTOM_DOMAIN'))){
+// const publish: Permissions[] = ['PUBLISH', 'LIMITED_EDITING', 'REPUBLISH'];
+// const customDomain: Permissions[] = ['CUSTOM_DOMAIN', 'LIMITED_EDITING', 'REPUBLISH'];
 
-//   }
-//   else if (permissionsArray.includes('INSITE') ||
-//   permissionsArray.includes('PUSH_NOTIFICATIONS') ||
-//   permissionsArray.includes('ADD_FLEX')){
+// const insite: Permissions[] = ['INSITE', 'EDIT'];
+// const pushNotifications: Permissions[] = ['PUSH_NOTIFICATIONS', 'EDIT'];
+// const addFlex: Permissions[] = ['ADD_FLEX', 'EDIT'];
 
-//   }
-//   return []
-// }
+// export type FullPermissions =
+//   'STATS_TAB' |
+//   'EDIT' |
+//   typeof addFlex |
+//   'E_COMMERCE' |
+//   typeof publish |
+//   typeof republish |
+//   typeof devMode |
+//   typeof insite |
+//   typeof seo |
+//   typeof backups |
+//   typeof customDomain |
+//   typeof reset |
+//   'BLOG' |
+//   typeof pushNotifications |
+//   'LIMITED_EDITING' |
+//   'SITE_COMMENTS' |
+//   typeof contentLibrary |
+//   'EDIT_CONNECTED_DATA' |
+//   'MANAGE_CONNECTED_DATA' |
+//   typeof useApp |
+//   typeof clientMangeFreeApps
+
+export type Permissions =
+  'LIMITED_EDITING' |
+  'REPUBLISH'
+
+const republish = ['REPUBLISH'];
+const limitedEditing = ['LIMITED_EDITING'];
+const combo = [...limitedEditing, ...republish];
+
+export type FullPermissions =
+  ['LIMITED_EDITING'] |
+  typeof combo;
 
 export type GetPermissionsResponse = Array<Permissions>;
 
@@ -121,7 +141,8 @@ export interface GetPermissionsPayload {
 export interface GrantSiteAccessPayload {
   site_name: string;
   account_name: string;
-  permissions: Array<Permissions>;
+  // permissions: Array<Permissions>;
+  permissions: Array<FullPermissions>;
 }
 
 export type SSOLinkTargets = 'STATS' | 'EDITOR' | 'RESET_SITE';
