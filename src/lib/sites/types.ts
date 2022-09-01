@@ -93,29 +93,37 @@ export interface SwitchTemplatePayload extends SiteNamedPayload {
   template_id: string | number,
 }
 
-export interface UpdateSitePayload {
-  site_name: string,
-  site_domain?: string,
-  default_domain_prefix?: string,
-  external_uid?: string,
-  lang?: string,
-  site_alternate_domains?: {
+type FirstPartialUpdateSitePayload = {
+  site_name: string
+}
+
+type SecondPartialUpdateSitePayload = {
+  site_domain: string,
+  default_domain_prefix: string,
+  external_uid: string,
+  lang: string,
+  site_alternate_domains: {
     domains?: Array<string>,
     is_redirect?: boolean
   },
-  force_https?: boolean,
-  site_seo?: {
+  force_https: boolean,
+  site_seo: {
     og_image?: string,
     title?: string,
     description?: string
   },
-  schemas?: {
+  schemas: {
     local_business?: {
       enabled?: boolean
     }
   },
-  fav_icon?: string,
+  fav_icon: string,
 }
+
+type AtLeastOne<T, U = {[K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U]
+
+export type UpdateSitePayload = FirstPartialUpdateSitePayload
+& AtLeastOne<SecondPartialUpdateSitePayload>
 
 export type GetSiteByNamePayload = {
   site_name: string,

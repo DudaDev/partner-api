@@ -64,13 +64,26 @@ describe('Content tests', () => {
       }
     ]
   }
-  // const injected_content = [
-  //   {
-  //     type: 'INNERHTML',
-  //     key: 'test',
-  //     value: 'testval'
-  //   }
-  // ]
+  const injected_content = [
+    {
+      type: "INNERHTML",
+      key: "my-key-email",
+      value: "newEmail@domain.com"
+    },
+    {
+      type: "DOMATTR",
+      key: "my-key-email",
+      value: "mailto:newEmail@domain.com",
+      refs: ["href"]
+    },
+    {
+      type: "CSS",
+      key: "email-css",
+      value: "#000000",
+      refs: ["color"],
+      important: false
+    }
+  ]
   const injected_query = [
     {
       key: 'test',
@@ -161,31 +174,29 @@ describe('Content tests', () => {
           ]
         })
       })
-
-      // issues with injected content raw_body formatting, maybe check?
+      
       it('can inject content into a site', () => {
         scope.post('/api/sites/multiscreen/inject-content/test_site', (body) => {
-          expect(body).to.eql([])
+          expect(body).to.eql(injected_content)
           return body
         }).reply(204)
 
         return duda.content.injectedContent.create({
           site_name:'test_site',
-          raw_body: []
+          raw_body: injected_content
         })
       })
 
-      // same deal here as with injected content call
       it('can inject content into a specific page of a site', () => {
         scope.post('/api/sites/multiscreen/inject-content/test_site/pages/test_page', (body) => {
-          expect(body).to.eql([])
+          expect(body).to.eql(injected_content)
           return body
         }).reply(204)
 
         return duda.content.injectedContent.createSPA({
           site_name: 'test_site',
           page_name: 'test_page',
-          raw_body: []
+          raw_body: injected_content
         })
       })
 

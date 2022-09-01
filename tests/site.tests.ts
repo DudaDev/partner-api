@@ -42,7 +42,6 @@ describe('Site tests', () => {
         scope.get(`${api_path}${site_name}`).reply(200, get_response)
         duda.sites.get({ site_name:site_name })
     })
-    // Doesn't require passing body params in Partner-API, at least one body param input required to use command (500)
     it('can update a site', () => {
         scope.post(`${api_path}update/${site_name}`, (body) => {
             expect(body).to.eql({ external_uid:external_uid })
