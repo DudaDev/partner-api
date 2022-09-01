@@ -59,6 +59,7 @@ export interface UpdateCollectionPayload {
   name: string,
   site_name: string,
   current_collection_name: string,
+  customer_lock?: 'unlocked' | 'structure_locked' | 'locked',
   external_details?: {
     enabled?: boolean,
     external_id?: string,

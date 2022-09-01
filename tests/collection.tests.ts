@@ -44,6 +44,7 @@ describe('Collection tests', () => {
     const collection_name = 'new_collection_name'
     const update_collection_payload = {
       name: collection_name,
+      customer_lock: 'unlocked',
       external_details: external_details
     }
 
@@ -125,6 +126,7 @@ describe('Collection tests', () => {
         name: collection_name,
         site_name: 'test_site',
         current_collection_name: 'test_collection',
+        customer_lock: 'unlocked',
         external_details: { ...external_details }
       })
     })
