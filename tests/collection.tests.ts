@@ -33,20 +33,19 @@ describe('Collection tests', () => {
         }
       ]
     }
-    // const collection_name = 'new_collection_name'
-    // const update_collection_payload = {
-    //   name: collection_name,
-    //   site_name: 'test_site',
-    //   current_collection_name: 'test_collection',
-    //   external_details: {
-    //     enabled: true,
-    //     external_id: '1',
-    //     external_endpoint: '2',
-    //     page_item_url_field: '3',
-    //     collection_data_json_path: '4',
-    //     authorization_header_value: '5',
-    //   }
-    // }
+    const external_details = {
+      enabled: true,
+      external_id: '1',
+      external_endpoint: '2',
+      page_item_url_field: '3',
+      collection_data_json_path: '4',
+      authorization_header_value: '5',
+    }
+    const collection_name = 'new_collection_name'
+    const update_collection_payload = {
+      name: collection_name,
+      external_details: external_details
+    }
 
     const row_data = [
       {
@@ -117,26 +116,18 @@ describe('Collection tests', () => {
       })
     })
 
-    // external_details listed as required, but not in dev docs needs fixing
-    // it('can successfully update a specific collection', () => {
-    //   scope.put('/api/sites/multiscreen/test_site/collection/test_collection', (body) => {
-    //     expect(body).to.eql(update_collection_payload)
-    //     return body
-    //   }).reply(204)
-    //   return duda.collections.update({
-    //     name: collection_name,
-    //     site_name: 'test_site',
-    //     current_collection_name: 'test_collection',
-    //     external_details: {
-    //       enabled: true,
-    //       external_id: '1',
-    //       external_endpoint: '2',
-    //       page_item_url_field: '3',
-    //       collection_data_json_path: '4',
-    //       authorization_header_value: '5'
-    //     }
-    //   })
-    // })
+    it('can successfully update a specific collection', () => {
+      scope.put('/api/sites/multiscreen/test_site/collection/test_collection', (body) => {
+        expect(body).to.eql(update_collection_payload)
+        return body
+      }).reply(204)
+      return duda.collections.update({
+        name: collection_name,
+        site_name: 'test_site',
+        current_collection_name: 'test_collection',
+        external_details: { ...external_details }
+      })
+    })
 
     it('can clear cache for a specific collection',() => {
       scope.post('/api/sites/multiscreen/test_site/collection/test_collection/revalidate').reply(200)
