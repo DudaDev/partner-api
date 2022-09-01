@@ -111,7 +111,6 @@ describe('Reporting tests', () => {
         duda.reporting.emailSettings.get({ account_name: account_name, site_name: site_name })
     })
     describe('analytics', () => {
-        // No limitation on results and dateGranularity inputs, but restriction in Dev Docs
         it('can get analytics history for a site', () => {
             scope.get(`/api/analytics/site/${site_name}`, (query) => {
                 expect(query).to.eql({
@@ -123,6 +122,14 @@ describe('Reporting tests', () => {
                 })
                 return query
             }).reply(200, analytics)
+            duda.reporting.analytics.get({
+                site_name: site_name,
+                from: from,
+                to: to,
+                dimension: dimension,
+                result: result,
+                dateGranularity: dateGranularity
+            })
         })
     })
     describe('activities', () => {
