@@ -33,18 +33,19 @@ describe('Collection tests', () => {
         }
       ]
     }
+    const external_details = {
+      enabled: true,
+      external_id: '1',
+      external_endpoint: '2',
+      page_item_url_field: '3',
+      collection_data_json_path: '4',
+      authorization_header_value: '5',
+    }
     const collection_name = 'new_collection_name'
     const update_collection_payload = {
       name: collection_name,
       customer_lock: 'unlocked',
-      external_details: {
-        enabled: true,
-        external_id: '1',
-        external_endpoint: '2',
-        page_item_url_field: '3',
-        collection_data_json_path: '4',
-        authorization_header_value: '5',
-      }
+      external_details: external_details
     }
 
     const row_data = [
@@ -127,14 +128,7 @@ describe('Collection tests', () => {
         site_name: 'test_site',
         current_collection_name: 'test_collection',
         customer_lock: 'unlocked',
-        external_details: {
-          enabled: true,
-          external_id: '1',
-          external_endpoint: '2',
-          page_item_url_field: '3',
-          collection_data_json_path: '4',
-          authorization_header_value: '5'
-        }
+        external_details: { ...external_details }
       })
     })
 
