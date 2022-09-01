@@ -55,20 +55,17 @@ describe('Other tests', () => {
         })
     })
     describe('ssl', () => {
-        // post request in dev docs, get request in partner-api (should be post request)
-        // it('can generate an ssl cert for a site', () => {
-        //     scope.post('/api/sites/multiscreen/test_site/certificate').reply(204)
-        //     return duda.other.ssl.create({ site_name:'test_site' })
-        // })
-        // post request in dev docs, get request in partner-api (should be post request)
-        // it('can renew an ssl cert for a site', () => {
-        //     scope.post('/api/sites/multiscreen/rest_site/certificate/renew').reply(204)
-        //     return duda.other.ssl.renew({ site_name:'test_site' })
-        // })
-        // delete request in dev docs, get request in partner-api (should be post request)
-        // it('can delete an ssl cert for a site', () => {
-        //     scope.delete('/api/sites/multiscreen/test_site/certificate').reply(204)
-        //     return duda.other.ssl.delete({ site_name:'test_site' })
-        // })
+        it('can generate an ssl cert for a site', () => {
+            scope.post('/api/sites/multiscreen/test_site/certificate').reply(204)
+            return duda.other.ssl.create({ site_name:'test_site' })
+        })
+        it('can renew an ssl cert for a site', () => {
+            scope.post('/api/sites/multiscreen/test_site/certificate/renew').reply(204)
+            return duda.other.ssl.renew({ site_name:'test_site' })
+        })
+        it('can delete an ssl cert for a site', () => {
+            scope.delete('/api/sites/multiscreen/test_site/certificate').reply(204)
+            return duda.other.ssl.delete({ site_name:'test_site' })
+        })
     })
 })

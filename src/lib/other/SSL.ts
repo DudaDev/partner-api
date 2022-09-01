@@ -5,7 +5,7 @@ import { APIEndpoint } from '../APIEndpoint';
 
 class SSL extends Resource {
   create = APIEndpoint<Types.GenerateSSLPayload, Types.GenerateSSLResponse>({
-    method: 'get',
+    method: 'post',
     path: '/api/sites/multiscreen/{site_name}/certificate',
     defaults: {
       host: 'api.duda.co',
@@ -13,7 +13,7 @@ class SSL extends Resource {
   });
 
   renew = APIEndpoint<Types.RenewSSLPayload, Types.RenewSSLResponse>({
-    method: 'get',
+    method: 'post',
     path: '/api/sites/multiscreen/{site_name}/certificate/renew',
     defaults: {
       host: 'api.duda.co',
@@ -21,7 +21,7 @@ class SSL extends Resource {
   });
 
   delete = APIEndpoint<Types.DeleteSSLPayload, Types.DeleteSSLResponse>({
-    method: 'get',
+    method: 'delete',
     path: '/api/sites/multiscreen/{site_name}/certificate',
     defaults: {
       host: 'api.duda.co',

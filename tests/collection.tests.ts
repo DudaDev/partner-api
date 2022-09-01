@@ -117,7 +117,6 @@ describe('Collection tests', () => {
       })
     })
 
-    // external_details listed as required, but not in dev docs needs fixing
     it('can successfully update a specific collection', () => {
       scope.put('/api/sites/multiscreen/test_site/collection/test_collection', (body) => {
         expect(body).to.eql(update_collection_payload)
