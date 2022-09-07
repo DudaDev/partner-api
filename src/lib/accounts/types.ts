@@ -48,80 +48,28 @@ export type CreateAccountResponse = void;
 export type UpdateAccountResponse = void;
 export type DeleteAccountResponse = void;
 
-// Included Missing Permissions
-// export type Permissions =
-//   'STATS_TAB' |
-//   'EDIT' |
-//   'ADD_FLEX' |
-//   'E_COMMERCE' |
-//   'PUBLISH' |
-//   'REPUBLISH' |
-//   'DEV_MODE' |
-//   'INSITE' |
-//   'SEO' |
-//   'BACKUPS' |
-//   'CUSTOM_DOMAIN' |
-//   'RESET' |
-//   'BLOG' |
-//   'PUSH_NOTIFICATIONS' |
-//   'LIMITED_EDITING' |
-//   'SITE_COMMENTS' |
-//   'CONTENT_LIBRARY' |
-//   'EDIT_CONNECTED_DATA' |
-//   'MANAGE_CONNECTED_DATA' |
-//   'USE_APP' |
-//   'CLIENT_MANAGE_FREE_APPS';
-
-// const republish: Permissions[] = ['REPUBLISH', 'LIMITED_EDITING'];
-// const devMode: Permissions[] = ['DEV_MODE', 'LIMITED_EDITING'];
-// const seo: Permissions[] = ['SEO', 'LIMITED_EDITING'];
-// const backups: Permissions[] = ['BACKUPS', 'LIMITED_EDITING'];
-// const reset: Permissions[] = ['RESET', 'LIMITED_EDITING'];
-// const contentLibrary: Permissions[] = ['CONTENT_LIBRARY', 'LIMITED_EDITING'];
-// const useApp: Permissions[] = ['USE_APP', 'LIMITED_EDITING'];
-// const clientMangeFreeApps: Permissions[] = ['CLIENT_MANAGE_FREE_APPS', 'LIMITED_EDITING'];
-
-// const publish: Permissions[] = ['PUBLISH', 'LIMITED_EDITING', 'REPUBLISH'];
-// const customDomain: Permissions[] = ['CUSTOM_DOMAIN', 'LIMITED_EDITING', 'REPUBLISH'];
-
-// const insite: Permissions[] = ['INSITE', 'EDIT'];
-// const pushNotifications: Permissions[] = ['PUSH_NOTIFICATIONS', 'EDIT'];
-// const addFlex: Permissions[] = ['ADD_FLEX', 'EDIT'];
-
-// export type FullPermissions =
-//   'STATS_TAB' |
-//   'EDIT' |
-//   typeof addFlex |
-//   'E_COMMERCE' |
-//   typeof publish |
-//   typeof republish |
-//   typeof devMode |
-//   typeof insite |
-//   typeof seo |
-//   typeof backups |
-//   typeof customDomain |
-//   typeof reset |
-//   'BLOG' |
-//   typeof pushNotifications |
-//   'LIMITED_EDITING' |
-//   'SITE_COMMENTS' |
-//   typeof contentLibrary |
-//   'EDIT_CONNECTED_DATA' |
-//   'MANAGE_CONNECTED_DATA' |
-//   typeof useApp |
-//   typeof clientMangeFreeApps
-
 export type Permissions =
+  'STATS_TAB' |
+  'EDIT' |
+  'ADD_FLEX' |
+  'E_COMMERCE' |
+  'PUBLISH' |
+  'REPUBLISH' |
+  'DEV_MODE' |
+  'INSITE' |
+  'SEO' |
+  'BACKUPS' |
+  'CUSTOM_DOMAIN' |
+  'RESET' |
+  'BLOG' |
+  'PUSH_NOTIFICATIONS' |
   'LIMITED_EDITING' |
-  'REPUBLISH'
-
-const republish = ['REPUBLISH'];
-const limitedEditing = ['LIMITED_EDITING'];
-const combo = [...limitedEditing, ...republish];
-
-export type FullPermissions =
-  ['LIMITED_EDITING'] |
-  typeof combo;
+  'SITE_COMMENTS' |
+  'CONTENT_LIBRARY' |
+  'EDIT_CONNECTED_DATA' |
+  'MANAGE_CONNECTED_DATA' |
+  'USE_APP' |
+  'CLIENT_MANAGE_FREE_APPS';
 
 export type GetPermissionsResponse = Array<Permissions>;
 
@@ -141,8 +89,7 @@ export interface GetPermissionsPayload {
 export interface GrantSiteAccessPayload {
   site_name: string;
   account_name: string;
-  // permissions: Array<Permissions>;
-  permissions: Array<FullPermissions>;
+  permissions: Array<Permissions>;
 }
 
 export type SSOLinkTargets = 'STATS' | 'EDITOR' | 'RESET_SITE';

@@ -85,7 +85,7 @@ describe('Account tests', () => {
       return duda.accounts.permissions.grantSiteAccess({
         account_name: 'test_account',
         site_name: 'test_site',
-        permissions: [['REPUBLISH']]
+        permissions: ['EDIT']
       })
     })
     it('can get all permissions', () => {
