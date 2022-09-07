@@ -13,7 +13,7 @@ describe('Account tests', () => {
     lang: 'en',
     email: 'foo@example.org'
   }
-  const permissions = ['LIMITED_EDITING']
+  const permissions = ['EDIT']
   const sites = [{ site_name:'test_site' }]
   const groups = [
     {
