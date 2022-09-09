@@ -24,10 +24,10 @@ describe('Account tests', () => {
     }
   ]
   const url = 'test_url.com'
-  // Uncomment in next major release
-  // const sso_url = {
-  //   url: url
-  // }
+  const sso_url = {
+    url: url
+  }
+
   const rest_url = {
     reset_url: url
   }
@@ -120,16 +120,16 @@ describe('Account tests', () => {
     })
   })
   describe('authentication', () => {
-    // Uncomment in next major release
-    // it('can grant single sign-on site access for an account by name', () => {
-    //   scope.get('/api/accounts/sso/test_account/link?site_name=test_site&target=STATS').reply(200, sso_url)
+    it('can grant single sign-on access for an account by name', () => {
+      scope.get('/api/accounts/sso/test_account/link?site_name=test_site&target=STATS').reply(200, sso_url)
 
-    //   return duda.accounts.authentication.getSSOLink({
-    //     account_name: 'test_account',
-    //     site_name: 'test_site',
-    //     target: 'STATS'
-    //   }).then(res => expect(res).to.eql(sso_url))
-    // })
+      return duda.accounts.authentication.getSSOLink({
+        account_name: 'test_account',
+        site_name: 'test_site',
+        target: 'STATS'
+      }).then(res => expect(res).to.eql(sso_url))
+    })
+
     it('can reset a password for an account by name', () => {
       scope.post('/api/accounts/reset-password/test_account').reply(200, rest_url)
       return duda.accounts.authentication.getResetPasswordLink({ account_name:'test_account' })
