@@ -92,7 +92,7 @@ export interface GrantSiteAccessPayload {
   permissions: Array<Permissions>;
 }
 
-export type SSOLinkTargets = 'STATS' | 'EDITOR' | 'RESET_SITE';
+export type SSOLinkTargets = 'STATS' | 'EDITOR' | 'RESET_SITE' | 'SWITCH_TEMPLATE' | 'RESET_BASIC';
 
 export type GrantSiteAccessResponse = void;
 export type RemoveSiteAccessResponse = void;
@@ -105,7 +105,7 @@ export interface RemoveSiteAccessPayload {
 export interface GetSSOLinkPayload {
   account_name: string;
   site_name?: string;
-  target: SSOLinkTargets;
+  target?: SSOLinkTargets;
 }
 
 export interface GetSSOLinkResponse {
