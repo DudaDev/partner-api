@@ -64,11 +64,8 @@ describe('Collection tests', () => {
         }
       }
     ]
-    // const row_delete = [
-    //   {
-    //     id: '1'
-    //   }
-    // ]
+
+    const row_delete = ['123','456']
 
     const field = [
       {
@@ -179,20 +176,20 @@ describe('Collection tests', () => {
         })
       })
 
-      // raw_body listed as array of objects with id param, in dev docs it's just an array of strings needs fixing
-      // it('can delete a row from a collection', () => {
-      //   scope.delete('/api/sites/multiscreen/test_site/collection/test_collection/row', (body) => {
-      //     expect(body).to.eql(row_delete)
-      //     return body
-      //   }).reply(204)
+      it('can delete a row from a collection', () => {
+        scope.delete('/api/sites/multiscreen/test_site/collection/test_collection/row', (body) => {
+          expect(body).to.eql(row_delete)
+          return body
+        }).reply(204)
 
-      //   return duda.collections.rows.delete({
-      //     site_name: 'test_site',
-      //     collection_name: 'test_collection',
-      //     raw_body: row_delete
-      //   })
-      // })
+        return duda.collections.rows.delete({
+          site_name: 'test_site',
+          collection_name: 'test_collection',
+          raw_body: row_delete
+        })
+      })
     })
+
     describe('fields', () => {
       it('can add a field to a collection', () => {
         scope.post('/api/sites/multiscreen/test_site/collection/test_collection/field', (body) => {

@@ -110,9 +110,7 @@ export interface UpdateRowPayload {
 export interface DeleteRowPayload {
   site_name: string,
   collection_name: string,
-  raw_body: Array<{
-    id: string,
-  }>
+  raw_body: Array<string>
 }
 
 export interface AddFieldPayload {
