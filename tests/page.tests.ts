@@ -9,23 +9,25 @@ describe('Page tests', () => {
     const site_name = 'test_site';
 
     const page = {
-        uuid: "string",
-        title: "string",
-        path: "string",
-        header_html: "string"
+        uuid: "abc123",
+        title: "My Title",
+        path: "/test",
+        header_html: "<b>Some HTML</b>"
     };
-    // const seo = {
-    //     title: "string",
-    //     description: "string",
-    //     no_index: true
-    // };
+
+    const seo = {
+        title: "My SEO Title",
+        description: "SEO description of the page",
+        no_index: false
+    };
+
     const response = {
         result: [
             page
         ]
     };
-    const { uuid: page_uuid, title } = page;
-    // const { uuid: page_uuid, title, path, header_html } = page;
+
+    const { uuid: page_uuid, title, path, header_html } = page;
 
     before(() => {
         duda = new Duda({
@@ -44,20 +46,22 @@ describe('Page tests', () => {
         scope.get(`${api_path}${site_name}/pages/${page_uuid}`).reply(200, page)
         duda.pages.v2.get({ site_name, page_uuid })
     })
-    // Issue with header_html and seo not being passed/recognized
-    // it('can update a page by name', () => {
-    //     scope.put(`${api_path}${site_name}/pages/${page_uuid}`, (body) => {
-    //         expect(body).to.eql({ title: title, path: path })
-    //         return body
-    //     }).reply(204)
-    //     duda.pages.v2.update({
-    //         site_name: site_name,
-    //         page_uuid: page_uuid,
-    //         title: title,
-    //         path: path,
-    //         header_html: header_html
-    //     })
-    // })
+
+    it('can update a page by uuid', () => {
+        scope.put(`${api_path}${site_name}/pages/${page_uuid}`, (body) => {
+            expect(body).to.eql({ title, path, header_html, seo: { ...seo } })
+            return body
+        }).reply(204)
+        duda.pages.v2.update({
+            site_name,
+            page_uuid,
+            title,
+            path,
+            seo,
+            header_html
+        })
+    })
+
     it('can duplicate a page by name', () => {
         scope.post(`${api_path}${site_name}/pages/${page_uuid}/duplicate`, (body) => {
             expect(body).to.eql({ title: title })
