@@ -134,7 +134,7 @@ export type GetSiteByExtIDPayload = {
 }
 
 export interface CreateSitePayload {
-  template_id: number,
+  template_id: number | string,
   fav_icon?: string,
   default_domain_prefix?: string,
   lang?: string,
