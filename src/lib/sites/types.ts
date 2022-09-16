@@ -83,9 +83,9 @@ export interface DuplicateSitePayload extends SiteNamedPayload {
 }
 
 export interface ResetSitePayload extends SiteNamedPayload {
-  template_id?: string | number,
+  template_id: string | number,
   site_data?: {
-    remove_biz_infos?: boolean,
+    removeBizInfos?: boolean,
   }
 }
 
