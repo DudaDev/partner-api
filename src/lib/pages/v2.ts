@@ -39,6 +39,10 @@ class Pages extends Resource {
         type: 'object',
         required: false,
       },
+      header_html: {
+        type: 'string',
+        required: false,
+      },
     },
   });
 
