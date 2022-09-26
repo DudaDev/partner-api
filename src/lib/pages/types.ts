@@ -83,7 +83,7 @@ export namespace V2 {
     seo?: {
       title?: string,
       description?: string,
-      no_index?: string,
+      no_index?: boolean,
     },
     header_html?: string,
   }

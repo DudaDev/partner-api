@@ -59,10 +59,11 @@ export interface UpdateCollectionPayload {
   name: string,
   site_name: string,
   current_collection_name: string,
-  external_details: {
+  customer_lock?: 'unlocked' | 'structure_locked' | 'locked',
+  external_details?: {
     enabled?: boolean,
-    external_id: string,
-    external_endpoint: string,
+    external_id?: string,
+    external_endpoint?: string,
     page_item_url_field?: string,
     collection_data_json_path?: string,
     authorization_header_value?: string,
@@ -109,9 +110,7 @@ export interface UpdateRowPayload {
 export interface DeleteRowPayload {
   site_name: string,
   collection_name: string,
-  raw_body: Array<{
-    id: string,
-  }>
+  raw_body: Array<string>
 }
 
 export interface AddFieldPayload {

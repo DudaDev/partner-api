@@ -42,7 +42,6 @@ describe('Site tests', () => {
         scope.get(`${api_path}${site_name}`).reply(200, get_response)
         duda.sites.get({ site_name:site_name })
     })
-    // Doesn't require passing body params in Partner-API, at least one body param input required to use command (500)
     it('can update a site', () => {
         scope.post(`${api_path}update/${site_name}`, (body) => {
             expect(body).to.eql({ external_uid:external_uid })
@@ -69,15 +68,16 @@ describe('Site tests', () => {
         }).reply(200, create_response)
         duda.sites.duplicate({ site_name:site_name, new_default_domain_prefix:new_default_domain_prefix })
     })
-    // Dev Docs List template_id as string, can be either number or string
-    // template_id not required in Partner-API or Dev Docs, required to execute command (500)
+
     it('can reset a site', () => {
+      const site_data = { removeBizInfos: true };
         scope.post(`${api_path}reset/${site_name}`, (body) => {
-            expect(body).to.eql({ template_id:template_id })
+            expect(body).to.eql({ template_id, site_data })
             return body
         }).reply(204)
-        duda.sites.reset({ site_name:site_name, template_id:template_id })
+        duda.sites.reset({ site_name, template_id, site_data})
     })
+
     // Dev Docs List template_id as string, can be either number or string
     // template_id not required Dev Docs, required to execute command (500)
     it('can switch the template of a site', () => {

@@ -11,10 +11,14 @@ class Authentication extends Resource {
     defaults: {
       host: 'api.duda.co',
     },
-    bodyParams: {
+    queryParams: {
       site_name: {
         type: 'string',
-        required: true,
+        required: false,
+      },
+      target: {
+        type: 'string',
+        required: false,
       },
     },
   });
