@@ -39,6 +39,16 @@ describe('Reporting tests', () => {
         PAGE_VIEWS: 0,
     }
 
+    const analyticsResponse = [
+        {
+            dimension: {
+                browser: 'browser',
+                os: 'os'
+            },
+            data: analytics
+        }
+    ]
+
     const activities_response = {
         site_name: site_name,
         results: [
@@ -127,7 +137,15 @@ describe('Reporting tests', () => {
                     dateGranularity: dateGranularity
                 })
                 return query
-            }).reply(200, analytics)
+            }).reply(200, analyticsResponse)
+            duda.reporting.analytics.get({
+                site_name: site_name,
+                from: from,
+                to: to,
+                dimension: dimension,
+                result: result,
+                dateGranularity: dateGranularity
+            })
         })
     })
     describe('activities', () => {
