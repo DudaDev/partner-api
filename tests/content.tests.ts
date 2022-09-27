@@ -22,13 +22,11 @@ describe('Content tests', () => {
         ],
         label:"test",
         social_accounts:{},
-        address:{},
-        address_geolocation:"test_location",
+        address:{}
       }
   }
 
   const location = {
-    uuid:"123",
     phones: [
       {
         phoneNumber: "1",
@@ -113,7 +111,8 @@ describe('Content tests', () => {
         return body
       }).reply(204)
 
-      return duda.content.update({ site_name:'test_site', ...content })
+      return duda.content.update({ ...content, site_name:'test_site' })
+      
     })
 
     it('can publish the content library of a site', () => {
@@ -128,7 +127,7 @@ describe('Content tests', () => {
           return body
         }).reply(200, location)
 
-        return duda.content.multilocation.create({ site_name:'test_site', ...location })
+        return duda.content.multilocation.create({ ...location, site_name:'test_site' })
       })
 
       it('can get specific location data for a site', () => {
@@ -145,7 +144,7 @@ describe('Content tests', () => {
           return body
         }).reply(204)
 
-        return duda.content.multilocation.update({ site_name:'test_site', location_id:'123', ...location })
+        return duda.content.multilocation.update({ ...location, site_name:'test_site', location_id:'123' })
       })
 
       it('can delete a location for a site', () => {
