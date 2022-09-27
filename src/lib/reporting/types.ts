@@ -103,4 +103,32 @@ export interface GetAnalyticsHistoryActivity {
   CLICK_TO_CALL: number,
 }
 
-export type GetAnalyticsHistoryResponse = GetAnalyticsHistoryTraffic | GetAnalyticsHistoryActivity;
+export interface AnalyticsHistoryTrafficGeo {
+  data: GetAnalyticsHistoryTraffic,
+  dimension: {
+    country: string,
+    region: string
+  }
+}
+
+export interface AnalyticsHistoryTrafficSystem {
+  data: GetAnalyticsHistoryTraffic,
+  dimension: {
+    browser: string,
+    os: string
+  }
+}
+
+export interface GetAnalyticsHistoryTrafficGeo {
+  result: Array<AnalyticsHistoryTrafficGeo>
+}
+
+export interface GetAnalyticsHistoryTrafficSystem {
+  result: Array<AnalyticsHistoryTrafficSystem>
+}
+
+export type GetAnalyticsHistoryResponse =
+  GetAnalyticsHistoryTraffic
+  | GetAnalyticsHistoryActivity
+  | GetAnalyticsHistoryTrafficGeo
+  | GetAnalyticsHistoryTrafficSystem;
