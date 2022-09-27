@@ -59,7 +59,7 @@ export interface SiteTexts {
   about_us: string,
   custom: Array<{
     label: string,
-    value: string,
+    text: string,
   }>,
 }
 
