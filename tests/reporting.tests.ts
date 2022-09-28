@@ -9,7 +9,7 @@ describe('Reporting tests', () => {
     const site_name = 'test_site';
     const account_name = 'test_account';
 
-    const lastDays = 1;
+    const lastDays = '1';
     const from = '0';
     const to = '1';
     const list = ['test_site'];
@@ -39,6 +39,16 @@ describe('Reporting tests', () => {
         PAGE_VIEWS: 0,
     }
 
+    const analyticsResponse = [
+        {
+            dimension: {
+                browser: 'browser',
+                os: 'os'
+            },
+            data: analytics
+        }
+    ]
+
     const activities_response = {
         site_name: site_name,
         results: [
@@ -60,21 +70,19 @@ describe('Reporting tests', () => {
 
         scope = nock('https://api.duda.co')
     })
-    // lastDays query type string in Dev docs, type number in types.ts
     it('can get a list of recently published sites', () => {
         scope.get(`${api_path}published`, (query) => {
             expect(query).to.eql({ lastDays: lastDays })
             return query
         }).reply(200, list)
-        duda.reporting.sites.published({ lastDays: 1 })
+        duda.reporting.sites.published({ lastDays: lastDays})
     })
-    // lastDays query type string in Dev docs, type number in types.ts
     it('can get a list of recently unpublished sites', () => {
         scope.get(`${api_path}unpublished`, (query) => {
             expect(query).to.eql({ lastDays: lastDays })
             return query
         }).reply(200, list)
-        duda.reporting.sites.unpublished({ lastDays: 1 })
+        duda.reporting.sites.unpublished({ lastDays: lastDays })
     })
     it('can get a list of created sites', () => {
         scope.get(`${api_path}created`, (query) => {
@@ -90,7 +98,6 @@ describe('Reporting tests', () => {
         }).reply(200, form)
         duda.reporting.forms.submissions({ site_name: site_name, from: from, to: to })
     })
-    // Frequency param is required here, but not in Dev Docs
     it('can subscribe a customer to a site', () => {
         scope.post(`/api/accounts/${account_name}/sites/${site_name}/stats-email`, (body) => {
             expect(body).to.eql({ frequency: frequency })
@@ -102,13 +109,11 @@ describe('Reporting tests', () => {
             frequency: frequency
         })
     })
-    // Frequency param is required here, not listed at all in Dev Docs
     it('can unsubscribe a customer to a site', () => {
         scope.delete(`/api/accounts/${account_name}/sites/${site_name}/stats-email`).reply(204)
         duda.reporting.emailSettings.unsubscribe({
             account_name: account_name,
-            site_name: site_name,
-            frequency: frequency
+            site_name: site_name
         })
     })
     it('can get email settings for an account', () => {
@@ -116,7 +121,6 @@ describe('Reporting tests', () => {
         duda.reporting.emailSettings.get({ account_name: account_name, site_name: site_name })
     })
     describe('analytics', () => {
-        // No limitation on results and dateGranularity inputs, but restriction in Dev Docs
         it('can get analytics history for a site', () => {
             scope.get(`/api/analytics/site/${site_name}`, (query) => {
                 expect(query).to.eql({
@@ -127,7 +131,15 @@ describe('Reporting tests', () => {
                     dateGranularity: dateGranularity
                 })
                 return query
-            }).reply(200, analytics)
+            }).reply(200, analyticsResponse)
+            duda.reporting.analytics.get({
+                site_name: site_name,
+                from: from,
+                to: to,
+                dimension: dimension,
+                result: result,
+                dateGranularity: dateGranularity
+            })
         })
     })
     describe('activities', () => {

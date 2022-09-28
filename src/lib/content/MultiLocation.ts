@@ -4,7 +4,7 @@ import Resource from '../base';
 import { APIEndpoint } from '../APIEndpoint';
 
 class MultiLocation extends Resource {
-  get = APIEndpoint<Types.GetLocationPayload, Types.Location>({
+  get = APIEndpoint<Types.GetLocationPayload, Types.GetLocationResponse>({
     method: 'get',
     path: '/api/sites/multiscreen/{site_name}/content/location/{location_id}',
     defaults: {
@@ -12,7 +12,7 @@ class MultiLocation extends Resource {
     },
   });
 
-  create = APIEndpoint<Types.CreateLocationPayload, Types.Location>({
+  create = APIEndpoint<Types.CreateLocationPayload, Types.CreateLocationResponse>({
     method: 'post',
     path: '/api/sites/multiscreen/{site_name}/content/location',
     defaults: {

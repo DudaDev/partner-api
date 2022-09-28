@@ -39,6 +39,10 @@ class Pages extends Resource {
         type: 'object',
         required: false,
       },
+      header_html: {
+        type: 'string',
+        required: false,
+      },
     },
   });
 
@@ -50,6 +54,18 @@ class Pages extends Resource {
     },
     bodyParams: {
       title: {
+        type: 'string',
+        required: false,
+      },
+      path: {
+        type: 'string',
+        required: false,
+      },
+      seo: {
+        type: 'object',
+        required: false,
+      },
+      header_html: {
         type: 'string',
         required: false,
       },

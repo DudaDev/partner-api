@@ -12,13 +12,11 @@ export type GetPublishedResponse = Array<string>;
 export type GetUnpublishedResponse = Array<string>;
 
 export interface GetPublishedPayload {
-  last_days?: number,
-  lastDays?: number,
+  lastDays?: string | number,
 }
 
 export interface GetUnpublishedPayload {
-  last_days?: number,
-  lastDays?: number,
+  lastDays?: string | number,
 }
 
 export type GetSitesCreatedResponse = Array<string>;
@@ -47,8 +45,7 @@ export interface SubscribeCustomerPayload {
 
 export interface UnsubscribeCustomerPayload {
   account_name: string,
-  site_name: string,
-  frequency: 'WEEKLY' | 'MONTHLY' | 'YEARLY',
+  site_name: string
 }
 
 type ActivityType =
@@ -88,14 +85,13 @@ export interface GetAnalyticsHistoryPayload {
   site_name: string,
   from?: string,
   to?: string,
-  result?: string,
+  result?: 'traffic' | 'activities',
   dimension?: 'system' | 'geo',
-  date_granularity?: string,
-  dateGranularity?: string,
+  dateGranularity?: 'DAYS' | 'WEEKS' | 'MONTHS' | 'YEARS',
 }
 
 export interface GetAnalyticsHistoryTraffic {
-  UNIQUE_VISITORS: number,
+  VISITORS: number,
   VISITS: number,
   PAGE_VIEWS: number,
 }
@@ -107,4 +103,32 @@ export interface GetAnalyticsHistoryActivity {
   CLICK_TO_CALL: number,
 }
 
-export type GetAnalyticsHistoryResponse = GetAnalyticsHistoryTraffic | GetAnalyticsHistoryActivity;
+export interface AnalyticsHistoryTrafficGeo {
+  data: GetAnalyticsHistoryTraffic,
+  dimension: {
+    country: string,
+    region: string
+  }
+}
+
+export interface AnalyticsHistoryTrafficSystem {
+  data: GetAnalyticsHistoryTraffic,
+  dimension: {
+    browser: string,
+    os: string
+  }
+}
+
+export interface GetAnalyticsHistoryTrafficGeo {
+  result: Array<AnalyticsHistoryTrafficGeo>
+}
+
+export interface GetAnalyticsHistoryTrafficSystem {
+  result: Array<AnalyticsHistoryTrafficSystem>
+}
+
+export type GetAnalyticsHistoryResponse =
+  GetAnalyticsHistoryTraffic
+  | GetAnalyticsHistoryActivity
+  | GetAnalyticsHistoryTrafficGeo
+  | GetAnalyticsHistoryTrafficSystem;

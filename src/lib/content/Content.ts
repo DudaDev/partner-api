@@ -10,7 +10,7 @@ class Content extends Resource {
 
   injectedContent = new InjectedContent(this.config);
 
-  get = APIEndpoint<Types.GetContentPayload, Types.ContentLibrary>({
+  get = APIEndpoint<Types.GetContentPayload, Types.ContentLibraryResponse>({
     method: 'get',
     path: '/api/sites/multiscreen/{site_name}/content',
     defaults: {

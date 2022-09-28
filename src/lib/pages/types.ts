@@ -9,8 +9,8 @@ export namespace V1 {
     }
   }
 
-  export type UpdatePageResponse = void;
-  export type DuplicatePageResponse = void;
+  export type UpdatePageResponse = Page;
+  export type DuplicatePageResponse = Page;
   export type DeletePageResponse = void;
   export type GetPageResponse = Page;
   export type ListPagesResponse = Array<Page>;
@@ -49,14 +49,17 @@ export namespace V1 {
 }
 
 export namespace V2 {
+  export interface Seo {
+    title?: string,
+    description?: string,
+    no_index?: boolean,
+    og_image?: string
+  }
+
   export interface Page {
     title?: string,
     path?: string,
-    seo?: {
-      title?: string,
-      description?: string,
-      no_index?: boolean
-    },
+    seo?: Seo
     header_html?: string,
   }
 
@@ -75,23 +78,14 @@ export namespace V2 {
     site_name: string,
   }
 
-  export interface UpdatePagePayload {
+  export interface UpdatePagePayload extends Page {
     site_name: string,
     page_uuid: string,
-    title?: string,
-    path?: string,
-    seo?: {
-      title?: string,
-      description?: string,
-      no_index?: string,
-    },
-    header_html?: string,
   }
 
-  export interface DuplicatePagePayload {
+  export interface DuplicatePagePayload extends Page {
     site_name: string,
     page_uuid: string,
-    title: string,
   }
 
   export interface DeletePagePayload {

@@ -6,26 +6,27 @@ describe('Page tests', () => {
     let duda: Duda;
     let scope: nock.Scope;
     const api_path = '/api/sites/multiscreen/';
+    const api_segment = '/pages';
     const site_name = 'test_site';
 
+    const seo = {
+        title: "My SEO Title",
+        description: "SEO description of the page",
+        no_index: false,
+        og_image: "https://example.org/path/to/image.png"
+    };
+
     const page = {
-        uuid: "string",
-        title: "string",
-        path: "string",
-        header_html: "string"
+        title: "My Title",
+        path: "/test",
+        seo,
+        header_html: "<b>Some HTML</b>"
     };
-    // const seo = {
-    //     title: "string",
-    //     description: "string",
-    //     no_index: true
-    // };
-    const response = {
-        result: [
-            page
-        ]
-    };
-    const { uuid: page_uuid, title } = page;
-    // const { uuid: page_uuid, title, path, header_html } = page;
+
+    const page_uuid = '123abc';
+
+    const response = { ...page, uuid: page_uuid };
+    const list = { results: [response] };
 
     before(() => {
         duda = new Duda({
@@ -36,37 +37,43 @@ describe('Page tests', () => {
 
         scope = nock('https://api.duda.co')
     })
+    
     it('can get all pages for a site name', () => {
-        scope.get(`${api_path}${site_name}/pages`).reply(200, response)
+        scope.get(`${api_path}${site_name}${api_segment}`).reply(200, list)
         duda.pages.v2.list({ site_name })
     })
+
     it('can get a page by name', () => {
-        scope.get(`${api_path}${site_name}/pages/${page_uuid}`).reply(200, page)
+        scope.get(`${api_path}${site_name}${api_segment}/${page_uuid}`).reply(200, response)
         duda.pages.v2.get({ site_name, page_uuid })
     })
-    // Issue with header_html and seo not being passed/recognized
-    // it('can update a page by name', () => {
-    //     scope.put(`${api_path}${site_name}/pages/${page_uuid}`, (body) => {
-    //         expect(body).to.eql({ title: title, path: path })
-    //         return body
-    //     }).reply(204)
-    //     duda.pages.v2.update({
-    //         site_name: site_name,
-    //         page_uuid: page_uuid,
-    //         title: title,
-    //         path: path,
-    //         header_html: header_html
-    //     })
-    // })
-    it('can duplicate a page by name', () => {
-        scope.post(`${api_path}${site_name}/pages/${page_uuid}/duplicate`, (body) => {
-            expect(body).to.eql({ title: title })
+
+    it('can update a page by uuid', () => {
+        scope.put(`${api_path}${site_name}${api_segment}/${page_uuid}`, (body) => {
+            expect(body).to.eql(page)
             return body
-        }).reply(204)
-        duda.pages.v2.duplicate({ site_name, page_uuid, title: title })
+        }).reply(200, response)
+        duda.pages.v2.update({
+            ...page,
+            site_name,
+            page_uuid,
+        })
     })
+
+    it('can duplicate a page by name', () => {
+        scope.post(`${api_path}${site_name}${api_segment}/${page_uuid}/duplicate`, (body) => {
+            expect(body).to.eql(page)
+            return body
+        }).reply(200, response)
+        duda.pages.v2.duplicate({
+          ...page,
+          site_name,
+          page_uuid,
+        })
+    })
+
     it('can delete a page by name', () => {
-        scope.delete(`${api_path}${site_name}/pages/${page_uuid}`).reply(204)
+        scope.delete(`${api_path}${site_name}${api_segment}/${page_uuid}`).reply(204)
         duda.pages.v2.delete({ site_name, page_uuid })
     })
 })

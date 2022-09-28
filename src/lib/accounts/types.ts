@@ -51,6 +51,7 @@ export type DeleteAccountResponse = void;
 export type Permissions =
   'STATS_TAB' |
   'EDIT' |
+  'ADD_FLEX' |
   'E_COMMERCE' |
   'PUBLISH' |
   'REPUBLISH' |
@@ -65,6 +66,8 @@ export type Permissions =
   'LIMITED_EDITING' |
   'SITE_COMMENTS' |
   'CONTENT_LIBRARY' |
+  'EDIT_CONNECTED_DATA' |
+  'MANAGE_CONNECTED_DATA' |
   'USE_APP' |
   'CLIENT_MANAGE_FREE_APPS';
 
@@ -89,7 +92,7 @@ export interface GrantSiteAccessPayload {
   permissions: Array<Permissions>;
 }
 
-export type SSOLinkTargets = 'STATS' | 'EDITOR' | 'RESET_SITE';
+export type SSOLinkTargets = 'STATS' | 'EDITOR' | 'RESET_SITE' | 'SWITCH_TEMPLATE' | 'RESET_BASIC';
 
 export type GrantSiteAccessResponse = void;
 export type RemoveSiteAccessResponse = void;
@@ -102,7 +105,7 @@ export interface RemoveSiteAccessPayload {
 export interface GetSSOLinkPayload {
   account_name: string;
   site_name?: string;
-  target: SSOLinkTargets;
+  target?: SSOLinkTargets;
 }
 
 export interface GetSSOLinkResponse {

@@ -42,6 +42,16 @@ class Sites extends Resource {
     defaults: {
       host: 'api.duda.co',
     },
+    bodyParams: {
+      template_id: {
+        type: 'string',
+        required: true,
+      },
+      site_data: {
+        type: 'object',
+        required: false,
+      },
+    },
   });
 
   switchTemplate = APIEndpoint<Types.SwitchTemplatePayload, Types.SwitchTemplateResponse>({
