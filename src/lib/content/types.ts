@@ -97,7 +97,6 @@ export interface GetLocationResponse {
 
 export interface MainLocationResponse extends GetLocationResponse {
   schema?: Schema,
-  address_geolocation: string,
 }
 
 export interface ContentLibraryResponse {
