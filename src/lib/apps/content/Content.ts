@@ -9,7 +9,7 @@ class AppsContent extends SubResource {
 
   locations = new AppsContentLocation(this.base);
 
-  get = APIEndpoint<TokenRequest<Types.GetContentPayload>, Types.ContentLibrary>({
+  get = APIEndpoint<TokenRequest<Types.GetContentPayload>, Types.ContentLibraryResponse>({
     method: 'get',
     path: '/site/{site_name}/content',
     defaults: {

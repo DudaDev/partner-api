@@ -1,124 +1,124 @@
-export interface Location {
-  uuid?: string,
-  phones?: Array<{
-    phoneNumber?: string,
-    label?: string,
-  }>
-  emails?: Array<{
-    emailAddress?: string,
-    label?: string,
-  }>
-  labels?: string,
-  social_accounts?: {
-    facebook?: string,
-    twitter?: string,
-    yelp?: string,
-    foursquare?: string,
-    google_plus?: string,
-    instagram?: string,
-    youtube?: string,
-    linkedin?: string,
-    pinterest?: string,
-    vimeo?: string,
-    rss?: string,
-    reddit?: string,
-    trip_advisor?: string,
-    snapchat?: string,
-  },
-  address?: {
-    street_address?: string,
-    postal_code?: string,
-    region?: string,
-    city?: string,
-  },
-  geo?: {
-    longitude?: string,
-    latitude?: string
-  },
-  logo_url?: string,
-  business_hours?: Array<{
-    days?: Array<string>,
-    open?: string,
-    close?: string
+type Days = 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN'
+
+export interface Schema {
+  type: string,
+  custom_fields?: Array<{
+    name: string,
+    value: string,
   }>
 }
 
-export interface ContentLibrary {
-  location_data?: {
-    phones?: Array<{
-      phoneNumber: string,
-      label: string
-    }>,
-    emails?: Array<{
-      emailAddress: string,
-      label: string
-    }>,
-    label?: string,
-    social_accounts?: {
-      tripadvisor?: string,
-      youtube?: string,
-      facebook?: string,
-      yelp?: string,
-      pinterest?: string,
-      google_plus?: string,
-      linkedin?: string,
-      instagram?: string,
-      snapchat?: string,
-      twitter?: string,
-      rss?: string,
-      vimeo?: string,
-      reddit?: string
-    },
-    address?: {
-      streetAddress?: string,
-      postalCode?: string,
-      region?: string,
-      city?: string,
-      country?: string,
-    },
-    address_geolocation?: string,
-    geo?: {
-      longitude?: string,
-      latitude?: string
-    },
-    logo_url?: string,
-    business_hours?: Array<{
-      days?: Array<string>,
-      open?: string,
-      close?: string,
-    }>
+export interface Phone {
+  phoneNumber: string,
+  label: string,
+}
+
+export interface Email {
+  emailAddress: string,
+  label: string,
+}
+
+export interface SocialAccounts {
+  facebook?: string,
+  twitter?: string,
+  yelp?: string,
+  foursquare?: string,
+  instagram?: string,
+  youtube?: string,
+  linkedin?: string,
+  pinterest?: string,
+  vimeo?: string,
+  rss?: string,
+  reddit?: string,
+  tripadvisor?: string,
+  snapchat?: string,
+}
+
+export interface Address {
+  streetAddress?: string,
+  postalCode?: string,
+  region?: string,
+  city?: string,
+  country?: string,
+}
+
+export interface Geo {
+  longitude?: string | null,
+  latitude?: string | null,
+}
+
+export interface BusinessHours {
+  days: Days[],
+  open: string,
+  close: string,
+}
+
+export interface SiteTexts {
+  overview: string,
+  services: string,
+  about_us: string,
+  custom: Array<{
+    label: string,
+    text: string,
+  }>,
+}
+
+export interface CreateLocationResponse {
+  uuid: string,
+  phones: Phone[] | null,
+  emails: Email[] | null,
+  social_accounts: {
+    socialAccounts: SocialAccounts
+  } | null,
+  address: Address | null,
+  geo: Geo | null
+  label: string | null,
+  logo_url: string | null,
+  business_hours: BusinessHours[] | null,
+}
+
+export interface GetLocationResponse {
+  uuid: string,
+  phones: Phone[],
+  emails: Email[],
+  social_accounts: {
+    socialAccounts: SocialAccounts
+  }
+  address_geolocation: string,
+  geo: {
+    longitude: string | null,
+    latitude: string | null
   },
-  additional_locations?: Array<Location>,
-  site_texts?: {
-    overview?: string,
-    services?: string,
-    custom?: Array<{
-      label?: string,
-      text?: string,
-    }>,
-    about_us?: string
+  logo_url: string | null,
+  business_hours: BusinessHours[],
+  label: string | null,
+  address: Address
+}
+
+export interface MainLocationResponse extends GetLocationResponse {
+  schema?: Schema,
+}
+
+export interface ContentLibraryResponse {
+  location_data: MainLocationResponse,
+  additional_locations?: GetLocationResponse[],
+  site_texts: SiteTexts,
+  business_data: {
+    name: string | null,
+    logo_url: string | null,
+    data_controller: string | null,
   },
-  business_data?: {
-    name?: string,
-    logo_url?: string,
-  },
-  site_images?: [
+  site_images: Array<
     {
-      label?: string,
-      url?: string,
-      alt?: string,
-    },
-    {
-      label?: string,
-      url?: string,
-      alt?: string,
+      label: string,
+      url: string,
+      alt: string,
     }
-  ]
+  >,
 }
 
 export type UpdateContentResponse = void;
 export type PublishContentResponse = void;
-export type CreateLocationResponse = void;
 export type UpdateLocationResponse = void;
 export type DeleteLocationResponse = void;
 export type InjectContentResponse = void;
@@ -131,8 +131,72 @@ export interface PublishContentPayload {
   site_name: string,
 }
 
-export interface UpdateContentPayload extends ContentLibrary {
+export interface LocationPayload {
+  phones?: Array<{
+    phoneNumber?: string,
+    label?: string,
+  }>,
+  emails?: Array<{
+    emailAddress?: string,
+    label?: string
+  }>,
+  social_accounts?: SocialAccounts,
+  address?: Address,
+  geo?: {
+    latitude?: string,
+    longitude?: string
+  },
+  label?: string,
+  logo_url?: string,
+  business_hours?: BusinessHours[],
+}
+
+export interface UpdateContentPayload {
   site_name: string,
+  location_data?: {
+    phones?: Array<{
+      phoneNumber?: string,
+      label?: string,
+    }>,
+    emails?: Array<{
+      emailAddress?: string,
+      label?: string,
+    }>,
+    schema?: {
+      type?: string,
+      custom_fields?: Array<{
+        name: string,
+        value?: string,
+      }>
+    },
+    label?: string,
+    social_accounts?: SocialAccounts,
+    address?: Address,
+    geo?: {
+      latitude?: string,
+      longitude?: string
+    },
+    logo_url?: string,
+    business_hours?: BusinessHours,
+  },
+  site_texts?: {
+    overview?: string,
+    about_us?: string,
+    services?: string,
+    custom?: Array<{
+      label: string,
+      text: string,
+    }>,
+  },
+  business_data?: {
+    name?: string,
+    logo_url?: string,
+  },
+  site_images?: Array<{
+    label: string,
+    url?: string,
+    alt?: string,
+  }>,
 }
 
 export interface GetLocationPayload {
@@ -140,11 +204,11 @@ export interface GetLocationPayload {
   location_id: string,
 }
 
-export interface CreateLocationPayload extends Location {
+export interface CreateLocationPayload extends LocationPayload {
   site_name: string,
 }
 
-export interface UpdateLocationPayload extends Location {
+export interface UpdateLocationPayload extends LocationPayload {
   site_name: string,
   location_id: string,
 }
