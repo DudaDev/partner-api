@@ -1,6 +1,6 @@
 {
   "name": "@dudadev/partner-api",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "files": [
     "dist",
     "src"
@@ -10,6 +10,7 @@
   "license": "MIT",
   "description": "Provides convenient access to Duda's public APIs from applications written in server-side Javascript.",
   "repository": "https://github.com/DudaDev/partner-api",
+  "homepage": "https://github.com/DudaDev/partner-api#readme",
   "author": "DudaDev",
   "scripts": {
     "tsc": "./node_modules/typescript/bin/tsc",
@@ -18,7 +19,7 @@
     "tests": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' node ./node_modules/mocha/bin/mocha -r ./node_modules/ts-node/register/index.js 'tests/**/*.ts'",
     "test:file": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' node ./node_modules/mocha/bin/mocha -r ./node_modules/ts-node/register/index.js \"tests/**/$FILENAME.ts\"",
     "test-publish": "npm publish --dry-run",
-    "publish": "npm publish",
+    "publish": "npm run tsc && npm publish",
     "prepublishOnly": "npm run test",
     "preversion": "npm run test"
   },
