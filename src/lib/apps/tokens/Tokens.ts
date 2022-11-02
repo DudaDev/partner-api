@@ -3,7 +3,7 @@ import { SubResource } from '../../base';
 import { APIEndpoint } from '../../APIEndpoint';
 
 class AppsTokens extends SubResource {
-  refresh = APIEndpoint<Types.RefreshTokenPayload, Types.RefreshTokenPayload>({
+  refresh = APIEndpoint<Types.RefreshTokenPayload, Types.RefreshTokenResponse>({
     method: 'post',
     path: '/{app_uuid}/token/refresh',
     defaults: {
