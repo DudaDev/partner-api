@@ -89,6 +89,18 @@ class Sites extends Resource {
         type: 'string',
         required: true,
       },
+      default_domain_prefix: {
+        type: 'string',
+        required: false,
+      },
+      lang: {
+        type: 'string',
+        required: false,
+      },
+      site_data: {
+        type: 'object',
+        required: false,
+      },
     },
   });
 
