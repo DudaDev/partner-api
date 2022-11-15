@@ -140,6 +140,16 @@ export interface CreateSitePayload {
   lang?: string,
   site_data?: {
     external_uid?: string,
+    site_domain?: string,
+    site_alternate_domains?: {
+      domains?: Array<string>,
+      is_redirect?: boolean
+    },
+    site_seo?: {
+      og_image?: string,
+      title?: string,
+      description?: string
+    },
     site_business_info?: {
       business_name?: string,
       address?: {
@@ -152,15 +162,6 @@ export interface CreateSitePayload {
       phone_number?: string,
       email?: string,
       opentable_info?: Array<any>
-    },
-    site_alternate_domains?: {
-      domains?: Array<string>,
-      is_redirect?: boolean
-    },
-    site_seo?: {
-      og_image?: string,
-      title?: string,
-      description?: string
     },
     schemas?: {
       local_business?: {

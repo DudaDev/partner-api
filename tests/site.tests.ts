@@ -1,6 +1,7 @@
 import { expect } from "chai"
 import nock from "nock"
 import { Duda } from "../src/index"
+import { CreateSitePayload } from "../src/lib/sites/types"
 
 describe('Site tests', () => {
     let duda: Duda;
@@ -12,7 +13,38 @@ describe('Site tests', () => {
     const template_id = 1;
     const site_domain = 'test.com';
     const new_default_domain_prefix = 'test_prefix';
-    
+
+    const site_obj: CreateSitePayload = {
+      template_id,
+      default_domain_prefix: new_default_domain_prefix,
+      lang: 'en',
+      site_data: {
+        external_uid,
+        site_domain: 'example.org',
+        site_alternate_domains: {
+          domains: ['example2.org', 'example3.org'],
+          is_redirect: true
+        },
+        site_seo: {
+          og_image: 'https://example.org/path/to/image.png',
+          title: 'My Title',
+          description: 'My long description'
+        },
+        site_business_info: {
+          email: 'me@example.org',
+          phone_number: '555-123-4567',
+          business_name: 'My Business',
+          address: {
+            country: 'US',
+            city: 'Louisville',
+            state: 'CO',
+            street: 'Canon St',
+            zip_code: '80027'
+          }
+        }
+      }
+    }
+
     const create_response = { site_name: site_name };
     const get_response = {
         account_name: account_name,
@@ -31,12 +63,19 @@ describe('Site tests', () => {
         scope = nock('https://api.duda.co')
     })
     // Requires number in Partner-API, string in Dev Docs, can take either input when executing either command
-    it('can create a site', () => {
+    it('can create a site', async () => {
         scope.post(`${api_path}create`, (body) => {
             expect(body).to.eql({ template_id:template_id })
             return body
         }).reply(200, create_response)
-        duda.sites.create({ template_id: 1})
+        await duda.sites.create({ template_id: 1})
+    })
+    it('can create a site with a full site object', async () => {
+        scope.post(`${api_path}create`, (body) => {
+            expect(body).to.eql({ ...site_obj })
+            return body
+        }).reply(200, create_response)
+        await duda.sites.create({ ...site_obj })
     })
     it('can get a site by name', () => {
         scope.get(`${api_path}${site_name}`).reply(200, get_response)
@@ -63,10 +102,10 @@ describe('Site tests', () => {
     })
     it('can duplicate a site', () => {
         scope.post(`${api_path}duplicate/${site_name}`, (body) => {
-            expect(body).to.eql({ new_default_domain_prefix:new_default_domain_prefix })
+            expect(body).to.eql({ new_default_domain_prefix })
             return body
         }).reply(200, create_response)
-        duda.sites.duplicate({ site_name:site_name, new_default_domain_prefix:new_default_domain_prefix })
+        duda.sites.duplicate({ site_name, new_default_domain_prefix })
     })
 
     it('can reset a site', () => {
