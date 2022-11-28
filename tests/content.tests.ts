@@ -100,19 +100,28 @@ describe('Content tests', () => {
 
       scope = nock('https://api.duda.co')
     })
-    it('can get the content library for a site', () => {
+    it('can get the content library for a site', async () => {
       scope.get('/api/sites/multiscreen/test_site/content').reply(200, content)
-      return duda.content.get({ site_name:'test_site' })
+      return await duda.content.get({ site_name:'test_site' })
     })
 
-    it('can update the content of a site', () => {
+    it('can update the content of a site', async () => {
       scope.post('/api/sites/multiscreen/test_site/content', (body) => {
         expect(body).to.eql(content)
         return body
       }).reply(204)
 
-      return duda.content.update({ ...content, site_name:'test_site' })
-      
+      return await duda.content.update({ ...content, site_name:'test_site' })
+    })
+
+    it('can update the content of a site with special chars', async () => {
+      const location_data = { ...content.location_data, site_texts: { about_us: "’", }}
+      scope.post('/api/sites/multiscreen/test_site/content', (body) => {
+        expect(body).to.eql({ location_data })
+        return body
+      }).reply(204)
+
+      return await duda.content.update({ location_data, site_name: 'test_site', })
     })
 
     it('can publish the content library of a site', () => {

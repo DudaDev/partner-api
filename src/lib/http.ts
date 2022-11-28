@@ -87,7 +87,6 @@ async function makeRequest<Return>(
         Accept: 'application/json',
         'Content-Type': 'application/json',
         'User-Agent': 'd-node-api-library',
-        ...(body && { 'Content-Length': body.length }),
         ...req.headers,
       },
 
