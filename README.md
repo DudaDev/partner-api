@@ -88,15 +88,26 @@ const duda = new Duda({
 - `Duda.Envs.direct`: api.duda.co
 - `Duda.Envs.sandbox`: api-sandbox.duda.co
 
-### Network Retries
+### Request Timeout
 
-Automatic network retries can be enabled with the maxNetworkRetries config option. This will retry requests n times with
-exponential backoff if they fail due to an intermittent network problem.
+The request timeout limit. The maximum number of milliseconds before a request is considered to be timed out. This will trigger a timeout event handler and reject the promise with an `ECONNRESET` error code. This option defaults to 2000ms.
 
 ```typescript
 const duda = new Duda({
   ...,
-  maxNetworkRetries: 2
+  timeout: 1000
+});
+```
+
+### Network Retries
+
+Automatic network retries can be enabled with the maxNetworkRetries config option. This will retry requests n times with exponential backoff if they fail due to an intermittent network problem. It's recommended you also set the `timeout` config option when enabling retries. Keep in mind that the timeout config is related to the timeout of the request, it does not affect the timing of the exponential backoff.
+
+```typescript
+const duda = new Duda({
+  ...,
+  maxNetworkRetries: 2,
+  timeout: 1000
 });
 ```
 
