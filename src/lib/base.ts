@@ -12,6 +12,8 @@ class Config {
 
   maxNetworkRetries?: number;
 
+  timeout?: number;
+
   logger?: {
     (message?: any, ...optionalParams: any[]): void
   };
@@ -25,6 +27,7 @@ class Config {
     this.logger = opts.logger;
     this.logLevel = opts.logLevel;
     this.maxNetworkRetries = opts.maxNetworkRetries;
+    this.timeout = opts.timeout;
   }
 }
 

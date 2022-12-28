@@ -90,6 +90,7 @@ function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
 
     const [error, response] = await makeRequest<Return>(builtRequest ?? request, {
       maxNetworkRetries: (this.config as any).maxNetworkRetries!,
+      timeout: (this.config as any).timeout!,
     });
 
     const finalResponse = def.afterRequest?.(error, response ?? {} as Return) ?? response;
