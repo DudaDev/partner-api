@@ -35,6 +35,7 @@ async function makeRequest<Return>(
   req: RequestOptions,
   opts: {
     maxNetworkRetries?: number;
+    timeout?: number;
   },
 ): Promise<[ErrorResponse | null, Return]> {
   const logger = log.trace();
@@ -82,6 +83,8 @@ async function makeRequest<Return>(
       host: req.host,
 
       agent: req.agent ?? agent,
+
+      timeout: opts.timeout ?? 10000,
 
       headers: {
         Accept: 'application/json',
@@ -150,6 +153,19 @@ async function makeRequest<Return>(
       logger.debug(`request body: body=${body}`);
       request.write(body);
     }
+
+    request.on('timeout', () => {
+      request.destroy();
+    });
+
+    request.on('error', (e: NodeJS.ErrnoException) => {
+      if (opts.maxNetworkRetries && retry.attempts < opts.maxNetworkRetries) {
+        resolve(retry.reschedule(2000));
+      } else {
+        logger.error(`request error: message=${e.code}`);
+        reject(e);
+      }
+    });
 
     request.end();
   });
