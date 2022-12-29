@@ -84,7 +84,7 @@ async function makeRequest<Return>(
 
       agent: req.agent ?? agent,
 
-      timeout: opts.timeout ?? 2000,
+      timeout: opts.timeout ?? 10000,
 
       headers: {
         Accept: 'application/json',
