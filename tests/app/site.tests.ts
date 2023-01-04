@@ -29,7 +29,7 @@ describe('App tests', () => {
 
   it('should get site details', async () => {
     scope.get(`${base_path}/site/${site_name}`).reply(204)
-    await duda.appstore.sites.get({
+    return await duda.appstore.sites.get({
       site_name,
       token
     })
@@ -37,11 +37,7 @@ describe('App tests', () => {
 
   it('should get site branding', async () => {
     scope.get(`${base_path}/site/${site_name}/branding`).reply(204)
-    await duda.appstore.sites.getBrandingDetails({ site_name, token })
-  })
-
-  it('should update site details', async () => {
-    scope.post(`${base_path}/site/${site_name}`)
+    return await duda.appstore.sites.getBrandingDetails({ site_name, token })
   })
 
   it('should upload resources to a site', async () => {

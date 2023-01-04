@@ -30,31 +30,31 @@ describe('URLRule tests', () => {
     scope = nock('https://api.duda.co')
   })
 
-  it('can get all rules for a site', () => {
+  it('can get all rules for a site', async () => {
     scope.get(`${api_path}${site_name}/urlrules`).reply(200, response)
-    duda.urlRules.getAll({ site_name })
+    return await duda.urlRules.getAll({ site_name })
   })
 
-  it('can get a rule by id', () => {
+  it('can get a rule by id', async () => {
     scope.get(`${api_path}${site_name}/urlrules/${rule_id}`).reply(200, response)
-    duda.urlRules.get({ site_name, id: rule_id })
+    return await duda.urlRules.get({ site_name, id: rule_id })
   })
 
-  it('can create a rule for a site', () => {
+  it('can create a rule for a site', async () => {
     scope.post(`${api_path}${site_name}/urlrules`, (body) => {
       expect(body).to.eql({ source, target, response_code })
       return body
     }).reply(200, response)
-    duda.urlRules.create({ site_name, source, target, response_code })
+    return await duda.urlRules.create({ site_name, source, target, response_code })
   })
 
-  it('can update a rule by id', () => {
+  it('can update a rule by id', async () => {
     scope.put(`${api_path}${site_name}/urlrules/${rule_id}`).reply(200, response)
-    duda.urlRules.update({ id: rule_id, target, source, site_name, response_code })
+    return await duda.urlRules.update({ id: rule_id, target, source, site_name, response_code })
   })
 
-  it('can delete a rule for a site', () => {
+  it('can delete a rule for a site', async () => {
     scope.delete(`${api_path}${site_name}/urlrules/${rule_id}`).reply(204)
-    duda.urlRules.delete({ id: rule_id, site_name })
+    return await duda.urlRules.delete({ id: rule_id, site_name })
   })
 })

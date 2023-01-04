@@ -68,66 +68,66 @@ describe('Site tests', () => {
             expect(body).to.eql({ template_id:template_id })
             return body
         }).reply(200, create_response)
-        await duda.sites.create({ template_id: 1})
+        return await duda.sites.create({ template_id: 1})
     })
     it('can create a site with a full site object', async () => {
         scope.post(`${api_path}create`, (body) => {
             expect(body).to.eql({ ...site_obj })
             return body
         }).reply(200, create_response)
-        await duda.sites.create({ ...site_obj })
+        return await duda.sites.create({ ...site_obj })
     })
-    it('can get a site by name', () => {
+    it('can get a site by name', async () => {
         scope.get(`${api_path}${site_name}`).reply(200, get_response)
-        duda.sites.get({ site_name:site_name })
+        return await duda.sites.get({ site_name:site_name })
     })
-    it('can update a site', () => {
+    it('can update a site', async () => {
         scope.post(`${api_path}update/${site_name}`, (body) => {
             expect(body).to.eql({ external_uid:external_uid })
             return body
         }).reply(204)
-        duda.sites.update({ site_name:site_name, external_uid:external_uid })
+        return await duda.sites.update({ site_name:site_name, external_uid:external_uid })
     })
-    it('can get a site by external id', () => {
+    it('can get a site by external id', async () => {
         scope.get(`${api_path}byexternalid/${external_uid}`).reply(200, get_array_response)
-        duda.sites.getByExternalID({ external_uid:external_uid })
+       return await duda.sites.getByExternalID({ external_uid:external_uid })
     })
-    it('can publish a site', () => {
+    it('can publish a site', async () => {
         scope.post(`${api_path}publish/${site_name}`).reply(204)
-        duda.sites.publish({ site_name:site_name })
+        return await duda.sites.publish({ site_name:site_name })
     })
-    it('can unpublish a site', () => {
+    it('can unpublish a site', async () => {
         scope.post(`${api_path}unpublish/${site_name}`).reply(204)
-        duda.sites.unpublish({ site_name:site_name })
+        return await duda.sites.unpublish({ site_name:site_name })
     })
-    it('can duplicate a site', () => {
+    it('can duplicate a site', async () => {
         scope.post(`${api_path}duplicate/${site_name}`, (body) => {
             expect(body).to.eql({ new_default_domain_prefix })
             return body
         }).reply(200, create_response)
-        duda.sites.duplicate({ site_name, new_default_domain_prefix })
+        return await duda.sites.duplicate({ site_name, new_default_domain_prefix })
     })
 
-    it('can reset a site', () => {
+    it('can reset a site', async () => {
       const site_data = { removeBizInfos: true };
         scope.post(`${api_path}reset/${site_name}`, (body) => {
             expect(body).to.eql({ template_id, site_data })
             return body
         }).reply(204)
-        duda.sites.reset({ site_name, template_id, site_data})
+        return await duda.sites.reset({ site_name, template_id, site_data})
     })
 
     // Dev Docs List template_id as string, can be either number or string
     // template_id not required Dev Docs, required to execute command (500)
-    it('can switch the template of a site', () => {
+    it('can switch the template of a site', async () => {
         scope.post(`${api_path}switchTemplate/${site_name}`, (body) => {
             expect(body).to.eql({ template_id:template_id })
             return body
         }).reply(204)
-        duda.sites.switchTemplate({ site_name:site_name, template_id:template_id })
+        return await duda.sites.switchTemplate({ site_name:site_name, template_id:template_id })
     })
-    it('can delete a site', () => {
+    it('can delete a site', async () => {
         scope.delete(`${api_path}${site_name}`).reply(204)
-        duda.sites.delete({ site_name:site_name })
+        return await duda.sites.delete({ site_name:site_name })
     })
 })

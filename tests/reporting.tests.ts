@@ -70,58 +70,58 @@ describe('Reporting tests', () => {
 
         scope = nock('https://api.duda.co')
     })
-    it('can get a list of recently published sites', () => {
+    it('can get a list of recently published sites', async () => {
         scope.get(`${api_path}published`, (query) => {
             expect(query).to.eql({ lastDays: lastDays })
             return query
         }).reply(200, list)
-        duda.reporting.sites.published({ lastDays: lastDays})
+        return await duda.reporting.sites.published({ lastDays: lastDays})
     })
-    it('can get a list of recently unpublished sites', () => {
+    it('can get a list of recently unpublished sites', async () => {
         scope.get(`${api_path}unpublished`, (query) => {
             expect(query).to.eql({ lastDays: lastDays })
             return query
         }).reply(200, list)
-        duda.reporting.sites.unpublished({ lastDays: lastDays })
+        return await duda.reporting.sites.unpublished({ lastDays: lastDays })
     })
-    it('can get a list of created sites', () => {
+    it('can get a list of created sites', async () => {
         scope.get(`${api_path}created`, (query) => {
             expect(query).to.eql({ from: from, to: to })
             return query
         }).reply(200, list)
-        duda.reporting.sites.created({ from: from, to: to })
+        return await duda.reporting.sites.created({ from: from, to: to })
     })
-    it('can get a list of form submissions', () => {
+    it('can get a list of form submissions', async () => {
         scope.get(`${api_path}get-forms/${site_name}`, (query) => {
             expect(query).to.eql({ from: from, to: to })
             return query
         }).reply(200, form)
-        duda.reporting.forms.submissions({ site_name: site_name, from: from, to: to })
+        return await duda.reporting.forms.submissions({ site_name: site_name, from: from, to: to })
     })
-    it('can subscribe a customer to a site', () => {
+    it('can subscribe a customer to a site', async () => {
         scope.post(`/api/accounts/${account_name}/sites/${site_name}/stats-email`, (body) => {
             expect(body).to.eql({ frequency: frequency })
             return body
         }).reply(204)
-        duda.reporting.emailSettings.subscribe({
+        return await duda.reporting.emailSettings.subscribe({
             account_name: account_name,
             site_name: site_name,
             frequency: frequency
         })
     })
-    it('can unsubscribe a customer to a site', () => {
+    it('can unsubscribe a customer to a site', async () => {
         scope.delete(`/api/accounts/${account_name}/sites/${site_name}/stats-email`).reply(204)
-        duda.reporting.emailSettings.unsubscribe({
+        return await duda.reporting.emailSettings.unsubscribe({
             account_name: account_name,
             site_name: site_name
         })
     })
-    it('can get email settings for an account', () => {
+    it('can get email settings for an account', async () => {
         scope.get(`/api/accounts/${account_name}/sites/${site_name}/stats-email`).reply(200, email)
-        duda.reporting.emailSettings.get({ account_name: account_name, site_name: site_name })
+        return await duda.reporting.emailSettings.get({ account_name: account_name, site_name: site_name })
     })
-    describe('analytics', () => {
-        it('can get analytics history for a site', () => {
+    describe('analytics', async () => {
+        it('can get analytics history for a site', async () => {
             scope.get(`/api/analytics/site/${site_name}`, (query) => {
                 expect(query).to.eql({
                     from: from,
@@ -132,7 +132,7 @@ describe('Reporting tests', () => {
                 })
                 return query
             }).reply(200, analyticsResponse)
-            duda.reporting.analytics.get({
+            return await duda.reporting.analytics.get({
                 site_name: site_name,
                 from: from,
                 to: to,
@@ -143,7 +143,7 @@ describe('Reporting tests', () => {
         })
     })
     describe('activities', () => {
-        it('can get the activity log for a site', () => {
+        it('can get the activity log for a site', async () => {
             scope.get(`${api_path}${site_name}/activities`, (query) => {
                 expect(query).to.eql({
                     limit: limit,
@@ -154,7 +154,7 @@ describe('Reporting tests', () => {
                 })
                 return query
             }).reply(200, activities_response)
-            duda.reporting.activities.get({
+            return await duda.reporting.activities.get({
                 site_name: site_name,
                 limit: limit,
                 offset: offset,
