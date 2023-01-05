@@ -38,47 +38,47 @@ describe('Template tests', () => {
     scope = nock('https://api.duda.co')
   })
 
-  it('can list all templates', () => {
+  it('can list all templates', async () => {
     scope.get(`${api_path}`).reply(200, response)
-    duda.templates.list()
+    return await duda.templates.list()
   })
 
-  it('can list all templates of a specific language', () => {
+  it('can list all templates of a specific language', async () => {
     scope.get(`${api_path}?lang=${lang}`).reply(200, response)
-    duda.templates.list({ lang })
+    return await duda.templates.list({ lang })
   })
 
-  it('can get a template by id', () => {
+  it('can get a template by id', async () => {
     scope.get(`${api_path}/${template_id}`).reply(200, response[0])
-    duda.templates.get({ template_id })
+    return await duda.templates.get({ template_id })
   })
 
-  it('can update a template', () => {
+  it('can update a template', async () => {
     scope.post(`${api_path}/${template_id}`, (body) => {
       expect(body).to.eql({ new_name })
       return body
     }).reply(204)
-    duda.templates.update({ new_name, template_id })
+    return await duda.templates.update({ new_name, template_id })
   })
 
-  it('can create a template from a site', () => {
+  it('can create a template from a site', async () => {
     scope.post(`${api_path}/fromsite`, (body) => {
       expect(body).to.eql({ site_name, new_template_name: new_name })
       return body
     }).reply(200, response)
-    duda.templates.createFromSite({ site_name, new_template_name: new_name })
+    return await duda.templates.createFromSite({ site_name, new_template_name: new_name })
   })
 
-  it('can create a template from a template', () => {
+  it('can create a template from a template', async () => {
     scope.post(`${api_path}/fromtemplate`, (body) => {
       expect(body).to.eql({ template_id, new_template_name: new_name })
       return body
     }).reply(200, response)
-    duda.templates.createFromTemplate({ template_id, new_template_name: new_name })
+    return await duda.templates.createFromTemplate({ template_id, new_template_name: new_name })
   })
 
-  it('can delete a template', () => {
+  it('can delete a template', async () => {
     scope.delete(`${api_path}/${template_id}`).reply(204)
-    duda.templates.delete({ template_id })
+    return await duda.templates.delete({ template_id })
   })
 })

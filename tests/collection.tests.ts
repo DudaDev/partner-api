@@ -83,13 +83,13 @@ describe('Collection tests', () => {
 
         scope = nock('https://api.duda.co')
     })
-    it('can create a collection', () => {
+    it('can create a collection', async () => {
       scope.post('/api/sites/multiscreen/test_site/collection', (body) => {
         expect(body).to.eql(collection_info)
         return body
       }).reply(204)
       
-      return duda.collections.create({
+      return await duda.collections.create({
         site_name:'test_site',
         name: 'test_collection',
         fields: [
@@ -101,25 +101,25 @@ describe('Collection tests', () => {
       })
     })
 
-    it('can list all collections', () => {
+    it('can list all collections', async () => {
       scope.get('/api/sites/multiscreen/test_site/collection').reply(200, collection_output)
-      return duda.collections.list({ site_name:'test_site' })
+      return await duda.collections.list({ site_name:'test_site' })
     })
 
-    it('can get a specific collection', () => {
+    it('can get a specific collection', async () => {
       scope.get('/api/sites/multiscreen/test_site/collection/test_collection').reply(200, collection_output)
-      return duda.collections.get({
+      return await duda.collections.get({
         site_name: 'test_site',
         collection_name: 'test_collection'
       })
     })
 
-    it('can successfully update a specific collection', () => {
+    it('can successfully update a specific collection', async () => {
       scope.put('/api/sites/multiscreen/test_site/collection/test_collection', (body) => {
         expect(body).to.eql(update_collection_payload)
         return body
       }).reply(204)
-      return duda.collections.update({
+      return await duda.collections.update({
         name: collection_name,
         site_name: 'test_site',
         current_collection_name: 'test_collection',
@@ -128,61 +128,61 @@ describe('Collection tests', () => {
       })
     })
 
-    it('can clear cache for a specific collection',() => {
+    it('can clear cache for a specific collection', async () => {
       scope.post('/api/sites/multiscreen/test_site/collection/test_collection/revalidate').reply(200)
-      return duda.collections.clearCache({
+      return await duda.collections.clearCache({
         site_name: 'test_site',
         collection_name: 'test_collection'
       })
     })
 
-    it('can clear cache for specific collections by external_id', () => {
+    it('can clear cache for specific collections by external_id', async () => {
       scope.post('/api/sites/multiscreen/collections/revalidate/test_id').reply(200)
-      return duda.collections.clearCacheByExtID({ external_id:'test_id' })
+      return await duda.collections.clearCacheByExtID({ external_id:'test_id' })
     })
 
-    it('can delete a collection', () => {
+    it('can delete a collection', async () => {
       scope.delete('/api/sites/multiscreen/test_site/collection/test_collection').reply(204)
-      return duda.collections.delete({
+      return await duda.collections.delete({
         site_name: 'test_site',
         collection_name: 'test_collection'
       })
     })
 
     describe('rows', () => {
-      it('can add a row to a collection', () => {
+      it('can add a row to a collection', async () => {
         scope.post('/api/sites/multiscreen/test_site/collection/test_collection/row', (body) => {
           expect(body).to.eql(row_data)
           return body
         }).reply(200, row_output)
         
-        return duda.collections.rows.create({
+        return await duda.collections.rows.create({
           site_name: 'test_site',
           collection_name: 'test_collection',
           raw_body: row_data
         })
       })
 
-      it('can update a row in a collection', () => {
+      it('can update a row in a collection', async () => {
         scope.put('/api/sites/multiscreen/test_site/collection/test_collection/row', (body) => {
           expect(body).to.eql(row_update)
           return body
         }).reply(204)
 
-        return duda.collections.rows.update({
+        return await duda.collections.rows.update({
           site_name: 'test_site',
           collection_name: 'test_collection',
           raw_body: row_update
         })
       })
 
-      it('can delete a row from a collection', () => {
+      it('can delete a row from a collection', async () => {
         scope.delete('/api/sites/multiscreen/test_site/collection/test_collection/row', (body) => {
           expect(body).to.eql(row_delete)
           return body
         }).reply(204)
 
-        return duda.collections.rows.delete({
+        return await duda.collections.rows.delete({
           site_name: 'test_site',
           collection_name: 'test_collection',
           raw_body: row_delete
@@ -191,26 +191,26 @@ describe('Collection tests', () => {
     })
 
     describe('fields', () => {
-      it('can add a field to a collection', () => {
+      it('can add a field to a collection', async () => {
         scope.post('/api/sites/multiscreen/test_site/collection/test_collection/field', (body) => {
           expect(body).to.eql(field)
           return body
         }).reply(204)
 
-        return duda.collections.fields.create({
+        return await duda.collections.fields.create({
           site_name: 'test_site',
           collection_name: 'test_collection',
           raw_body: field
         })
       })
 
-      it('can update a field in a collection', () => {
+      it('can update a field in a collection', async () => {
         scope.put('/api/sites/multiscreen/test_site/collection/test_collection/field/test_field', (body) => {
           expect(body).to.eql({ name:'new_name' })
           return body
         }).reply(204)
 
-        return duda.collections.fields.update({
+        return await duda.collections.fields.update({
           site_name: 'test_site',
           collection_name: 'test_collection',
           field_name: 'test_field',
@@ -218,9 +218,9 @@ describe('Collection tests', () => {
         })
       })
 
-      it('can delete a field in a collection', () => {
+      it('can delete a field in a collection', async () => {
         scope.delete('/api/sites/multiscreen/test_site/collection/test_collection/field/test_field').reply(204)
-        return duda.collections.fields.delete({
+        return await duda.collections.fields.delete({
           site_name: 'test_site',
           collection_name: 'test_collection',
           field_name: 'test_field'
