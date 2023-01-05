@@ -56,7 +56,7 @@ export type ListCollectionsResponse = Array<Collection>;
 export type GetCollectionResponse = Collection | Array<Collection>;
 
 export interface UpdateCollectionPayload {
-  name: string,
+  name?: string,
   site_name: string,
   current_collection_name: string,
   customer_lock?: 'unlocked' | 'structure_locked' | 'locked',

@@ -124,55 +124,54 @@ describe('Content tests', () => {
       return await duda.content.update({ location_data, site_name: 'test_site', })
     })
 
-    it('can publish the content library of a site', () => {
+    it('can publish the content library of a site', async () => {
       scope.post('/api/sites/multiscreen/test_site/content/publish').reply(204)
-      return duda.content.publish({ site_name:'test_site' })
+      return await duda.content.publish({ site_name:'test_site' })
     })
 
     describe('multilocation', () => {
-      it('can create a new location for a site', () => {
+      it('can create a new location for a site', async () => {
         scope.post('/api/sites/multiscreen/test_site/content/location', (body) => {
           expect(body).to.eql(location)
           return body
         }).reply(200, location)
 
-        return duda.content.multilocation.create({ ...location, site_name:'test_site' })
+        return await duda.content.multilocation.create({ ...location, site_name:'test_site' })
       })
 
-      it('can get specific location data for a site', () => {
+      it('can get specific location data for a site', async () => {
         scope.get('/api/sites/multiscreen/test_site/content/location/123').reply(200, location)
-        return duda.content.multilocation.get({
+        return await duda.content.multilocation.get({
           site_name: 'test_site',
           location_id: '123'
         })
       })
 
-      it('can update a location for a site', () => {
+      it('can update a location for a site', async () => {
         scope.post('/api/sites/multiscreen/test_site/content/location/123', (body) => {
           expect(body).to.eql(location)
           return body
         }).reply(204)
 
-        return duda.content.multilocation.update({ ...location, site_name:'test_site', location_id:'123' })
+        return await duda.content.multilocation.update({ ...location, site_name:'test_site', location_id:'123' })
       })
 
-      it('can delete a location for a site', () => {
+      it('can delete a location for a site', async () => {
         scope.delete('/api/sites/multiscreen/test_site/content/location/123').reply(204)
-        return duda.content.multilocation.delete({
+        return await duda.content.multilocation.delete({
           site_name: 'test_site',
           location_id: '123'
         })
       })
     })
     describe('other', () => {
-      // resource type can only be image, why do we need to specify then?
-      it('can upload a resource to a site\'s content library', () => {
+      it('can upload a resource to a site\'s content library', async () => {
         scope.post('/api/sites/multiscreen/resources/test_site/upload', (body) => {
           expect(body).to.eql(resource_payload)
           return body
         }).reply(200, resource_output)
 
-        return duda.content.uploadResource({
+        return await duda.content.uploadResource({
           site_name:'test_site',
           raw_body: [
             {
@@ -183,38 +182,38 @@ describe('Content tests', () => {
         })
       })
       
-      it('can inject content into a site', () => {
+      it('can inject content into a site', async () => {
         scope.post('/api/sites/multiscreen/inject-content/test_site', (body) => {
           expect(body).to.eql(injected_content)
           return body
         }).reply(204)
 
-        return duda.content.injectedContent.create({
+        return await duda.content.injectedContent.create({
           site_name:'test_site',
           raw_body: injected_content
         })
       })
 
-      it('can inject content into a specific page of a site', () => {
+      it('can inject content into a specific page of a site', async () => {
         scope.post('/api/sites/multiscreen/inject-content/test_site/pages/test_page', (body) => {
           expect(body).to.eql(injected_content)
           return body
         }).reply(204)
 
-        return duda.content.injectedContent.createSPA({
+        return await duda.content.injectedContent.createSPA({
           site_name: 'test_site',
           page_name: 'test_page',
           raw_body: injected_content
         })
       })
 
-      it('can get injected content from a site', () => {
+      it('can get injected content from a site', async () => {
         scope.get('/api/sites/multiscreen/inject-content/test_site', (body) => {
           expect(body).to.eql({ key:'test', type:'CSS', ref: 'test'})
           return body
         }).reply(200, injected_query)
 
-        return duda.content.injectedContent.get({
+        return await duda.content.injectedContent.get({
           site_name: 'test_site',
           key: 'test',
           type: 'CSS',

@@ -90,7 +90,7 @@ const duda = new Duda({
 
 ### Request Timeout
 
-The request timeout limit. The maximum number of milliseconds before a request is considered to be timed out. This will trigger a timeout event handler and reject the promise with an `ECONNRESET` error code. This option defaults to 2000ms.
+The request timeout limit. The maximum number of milliseconds before a request is considered to be timed out. This will trigger a timeout event handler and reject the promise with an `ECONNRESET` error code. This option defaults to 10000ms.
 
 ```typescript
 const duda = new Duda({

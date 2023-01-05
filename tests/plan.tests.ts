@@ -24,16 +24,16 @@ describe('Plan tests', () => {
 
         scope = nock('https://api.duda.co')
     })
-    it('can get available site plans', () => {
+    it('can get available site plans', async () => {
         scope.get(`${api_path}plans`).reply(200, response)
-        duda.plans.list()
+        return await duda.plans.list()
     })
-    it('can get a site plan by site name', () => {
+    it('can get a site plan by site name', async () => {
         scope.get(`${api_path}${site_name}/plan`).reply(200, plan)
-        duda.plans.get({ site_name: site_name })
+        return await duda.plans.get({ site_name: site_name })
     })
-    it('can update site plan', () => {
+    it('can update site plan', async () => {
         scope.post(`${api_path}${site_name}/plan/${plan_id}`).reply(200, plan)
-        duda.plans.update({ site_name: site_name, plan_id: plan_id })
+        return await duda.plans.update({ site_name: site_name, plan_id: plan_id })
     })
 })
