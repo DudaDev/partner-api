@@ -23,9 +23,17 @@ class Authentication extends Resource {
     },
   });
 
-  getResetPasswordLink = APIEndpoint<Types.GetResetPwdLinkPayload, Types.GetResetPwdLinkResponse>({
+  getResetPasswordLink = APIEndpoint<Types.GetPwdLinkPayload, Types.GetPwdLinkResponse>({
     method: 'post',
     path: '/api/accounts/reset-password/{account_name}',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  getWelcomeLink = APIEndpoint<Types.GetPwdLinkPayload, Types.GetPwdLinkResponse>({
+    method: 'post',
+    path: '/api/accounts/{account_name}/welcome',
     defaults: {
       host: 'api.duda.co',
     },

@@ -112,11 +112,11 @@ export interface GetSSOLinkResponse {
   url: string;
 }
 
-export interface GetResetPwdLinkPayload {
+export interface GetPwdLinkPayload {
   account_name: string;
 }
 
-export interface GetResetPwdLinkResponse {
+export interface GetPwdLinkResponse {
   reset_url: string;
 }
 
