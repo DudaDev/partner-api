@@ -32,6 +32,10 @@ describe('Account tests', () => {
     reset_url: url
   }
 
+  const welcome_url = {
+    welcome_url: url
+  }
+
   before(() => {
     duda = new Duda({
       user: 'testuser',
@@ -130,9 +134,14 @@ describe('Account tests', () => {
       }).then(res => expect(res).to.eql(sso_url))
     })
 
-    it('can reset a password for an account by name', async () => {
+    it('can create a reset paassword link for an account by name', async () => {
       scope.post('/api/accounts/reset-password/test_account').reply(200, rest_url)
       return await duda.accounts.authentication.getResetPasswordLink({ account_name:'test_account' })
+    })
+
+    it('can create a welcome link for an account by name', async () => {
+      scope.post('/api/accounts/test_account/welcome').reply(200, welcome_url)
+      return await duda.accounts.authentication.getWelcomeLink({ account_name:'test_account' })
     })
   })
 })
