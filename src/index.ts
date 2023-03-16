@@ -3,17 +3,18 @@ import/no-unresolved,
 import/extensions,
 import/prefer-default-export
 */
-import Apps from './lib/apps/Apps';
-import Other from './lib/other/Other';
-import Content from './lib/content/Content';
-import Reporting from './lib/reporting/Reporting';
 import Accounts from './lib/accounts/Accounts';
+import Apps from './lib/apps/Apps';
 import Collections from './lib/collections/Collections';
-import Plans from './lib/plans/Plans';
-import Urlrules from './lib/urlrules/Urlrules';
+import Content from './lib/content/Content';
+import Ecomm from './lib/ecomm/Ecomm';
+import Other from './lib/other/Other';
 import Pages from './lib/pages/Pages';
+import Plans from './lib/plans/Plans';
+import Reporting from './lib/reporting/Reporting';
 import Sites from './lib/sites/Sites';
 import Templates from './lib/templates/Templates';
+import Urlrules from './lib/urlrules/Urlrules';
 import { Config } from './lib/base';
 
 const envs = {
@@ -31,27 +32,29 @@ class Duda {
 
   // new:resource::type
 
-  appstore: Apps;
-
-  other: Other;
-
-  content: Content;
-
-  reporting: Reporting;
-
   accounts: Accounts;
+
+  appstore: Apps;
 
   collections: Collections;
 
-  plans: Plans;
+  content: Content;
 
-  urlRules: Urlrules;
+  ecomm: Ecomm;
+
+  other: Other;
 
   pages: Pages;
+
+  plans: Plans;
+
+  reporting: Reporting;
 
   sites: Sites;
 
   templates: Templates;
+
+  urlRules: Urlrules;
 
   constructor(opts: DudaConfig) {
     const config = new Config({
@@ -61,16 +64,17 @@ class Duda {
 
     // new:resource::hook
     this.appstore = new Apps(config);
-    this.other = new Other(config);
-    this.content = new Content(config);
-    this.reporting = new Reporting(config);
     this.accounts = new Accounts(config);
     this.collections = new Collections(config);
-    this.plans = new Plans(config);
-    this.urlRules = new Urlrules(config);
+    this.content = new Content(config);
+    this.ecomm = new Ecomm(config);
+    this.other = new Other(config);
     this.pages = new Pages(config);
+    this.plans = new Plans(config);
+    this.reporting = new Reporting(config);
     this.sites = new Sites(config);
     this.templates = new Templates(config);
+    this.urlRules = new Urlrules(config);
   }
 }
 
