@@ -3,6 +3,28 @@ import Resource from '../base';
 import { APIEndpoint } from '../APIEndpoint';
 
 class Products extends Resource {
+  list = APIEndpoint<Types.ListProductsPayload, Types.ListProductsResponse>({
+    method: 'get',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/products',
+    defaults: {
+      host: 'api.duda.co',
+    },
+    queryParams: {
+      offset: {
+        type: 'number',
+        required: false,
+      },
+      limit: {
+        type: 'number',
+        required: false,
+      },
+      sort: {
+        type: 'array',
+        required: false,
+      },
+    },
+  });
+
   get = APIEndpoint<Types.GetProductPayload, Types.GetProductResponse>({
     method: 'get',
     path: '/api/sites/multiscreen/{site_name}/ecommerce/products/{product_id}',

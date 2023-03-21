@@ -40,6 +40,11 @@ describe('Ecomm tests', () => {
     scope = nock('https://api.duda.co')
   })
 
+  it('can list all products', async () => {
+    scope.get(`/api/sites/multiscreen/test_site/ecommerce/products`).reply(200, product)
+    return await duda.ecomm.products.list({ site_name: "test_site" })
+  })
+
   it('can create a product', async () => {
     scope.post('/api/sites/multiscreen/test_site/ecommerce/products', (body) => {
       expect(body).to.eql({ ...product })
