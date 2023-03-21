@@ -23,6 +23,21 @@ export interface Product {
   }
 }
 
+export interface ListProductsPayload {
+  site_name: string,
+  offset?: number,
+  limit?: number,
+  sort?: Array<string>
+}
+
+export interface ListProductsResponse {
+  limit: string,
+  offset: string,
+  results: Array<Product>,
+  site_name: string,
+  total_responses: number
+}
+
 export interface GetProductPayload {
   site_name: string,
   product_id: string
