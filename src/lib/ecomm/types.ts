@@ -23,6 +23,15 @@ export interface Product {
   }
 }
 
+export interface GetProductPayload {
+  site_name: string,
+  product_id: string
+}
+
+export interface GetProductResponse extends Product {
+  id: string
+}
+
 export interface CreateProductPayload extends Product {
   site_name: string
 }
