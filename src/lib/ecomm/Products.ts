@@ -11,6 +11,14 @@ class Products extends Resource {
     },
   });
 
+  update = APIEndpoint<Types.UpdateProductPayload, Types.UpdateProductResponse>({
+    method: 'patch',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/products/{product_id}',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
   delete = APIEndpoint<Types.DeleteProductPayload, Types.DeleteProductResponse>({
     method: 'delete',
     path: '/api/sites/multiscreen/{site_name}/ecommerce/products/{product_id}',
