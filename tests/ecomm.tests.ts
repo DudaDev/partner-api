@@ -49,6 +49,15 @@ describe('Ecomm tests', () => {
     return await duda.ecomm.products.create({ site_name: "test_site", ...product })
   })
 
+  it('can get a product', async () => {
+    scope.get((path: string) => {
+      return path === '/api/sites/multiscreen/test_site/ecommerce/products/test_product'
+  }).reply(200, product)
+
+    return await duda.ecomm.products.get({ site_name: "test_site", product_id: "test_product" })
+      .then(res => expect(res).to.eql({ ...product }))
+  })
+
   it('can update a product', async () => {
     scope.patch('/api/sites/multiscreen/test_site/ecommerce/products/test_product', (body) => {
       expect(body).to.eql({ ...product})
