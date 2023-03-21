@@ -31,6 +31,15 @@ export interface CreateProductResponse extends Product {
   id: string
 }
 
+export interface UpdateProductPayload extends Product {
+  site_name: string,
+  product_id: string
+}
+
+export interface UpdateProductResponse extends Product {
+  id: string
+}
+
 export interface DeleteProductPayload {
   site_name: string,
   product_id: string
