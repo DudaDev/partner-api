@@ -10,6 +10,14 @@ class Products extends Resource {
       host: 'api.duda.co',
     },
   });
+
+  delete = APIEndpoint<Types.DeleteProductPayload, Types.DeleteProductResponse>({
+    method: 'delete',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/products/{product_id}',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
 }
 
 export default Products;

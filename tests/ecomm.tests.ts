@@ -48,4 +48,9 @@ describe('Ecomm tests', () => {
 
     return await duda.ecomm.products.create({ site_name: "test_site", ...product })
   })
+
+  it('can delete a product', async () => {
+    scope.delete('/api/sites/multiscreen/test_site/ecommerce/products/test_product').reply(204)
+    return await duda.ecomm.products.delete({ site_name: "test_site", product_id: "test_product" })
+  })
 })
