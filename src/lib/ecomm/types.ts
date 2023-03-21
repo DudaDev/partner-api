@@ -9,12 +9,11 @@ interface Prices {
   price: string
 }
 
-
 export interface Product {
   description?: string,
   name: string,
   sku?: string,
-  status?: "ACTIVE" | "HIDDEN", 
+  status?: 'ACTIVE' | 'HIDDEN',
   images?: Array<Images>,
   prices?: Array<Prices>,
   seo?: {
@@ -31,3 +30,10 @@ export interface CreateProductPayload extends Product {
 export interface CreateProductResponse extends Product {
   id: string
 }
+
+export interface DeleteProductPayload {
+  site_name: string,
+  product_id: string
+}
+
+export type DeleteProductResponse = void;
