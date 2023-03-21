@@ -17,7 +17,7 @@ import {
 import Resource from './base';
 
 interface APIEndpointDefinition<Opts, Return> {
-  method: 'get' | 'put' | 'post' | 'delete';
+  method: 'get' | 'put' | 'post' | 'patch' | 'delete';
 
   path: string;
 
