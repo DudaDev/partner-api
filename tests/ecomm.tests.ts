@@ -60,11 +60,6 @@ describe('Ecomm tests', () => {
     }).then(res => expect(res).to.eql(list_product))
   })
 
-  // it('can list all products', async () => {
-  //   scope.get(`/api/sites/multiscreen/test_site/ecommerce/products`).reply(200, product)
-  //   return await duda.ecomm.products.list({ site_name: site_name })
-  // })
-
   it('can create a product', async () => {
     scope.post('/api/sites/multiscreen/test_site/ecommerce/products', (body) => {
       expect(body).to.eql({ ...product })
