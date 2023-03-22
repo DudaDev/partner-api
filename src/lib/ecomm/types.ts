@@ -80,6 +80,11 @@ export interface CreateGatewayPayload extends Gateway {
   site_name: string
 }
 
-export interface CreateGatewayResponse extends Gateway {
+export interface GatewayResponse extends Gateway {
   id: string
+}
+
+export interface GetGatewayPayload {
+  site_name: string,
+  gateway_id: string
 }
