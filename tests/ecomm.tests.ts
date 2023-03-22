@@ -41,6 +41,11 @@ describe('Ecomm tests', () => {
     "total_responses": 0
   }
 
+  const gateway = {
+    live_payment_methods_url: 'https://example.org/path/to/gateway',
+    test_payment_methods_url: 'https://test.example.org/path/to/gateway'
+  }
+
   before(() => {
     duda = new Duda({
       user: 'testuser',
@@ -90,5 +95,14 @@ describe('Ecomm tests', () => {
   it('can delete a product', async () => {
     scope.delete('/api/sites/multiscreen/test_site/ecommerce/products/test_product').reply(204)
     return await duda.ecomm.products.delete({ site_name: site_name, product_id: product_id })
+  })
+
+  it('can create a gateway', async () => {
+    scope.post('/api/sites/multiscreen/test_site/ecommerce/payment-gateways', (body) => {
+      expect(body).to.eql({ ...gateway })
+      return body
+    }).reply(201, { id: 'abc123', ...gateway })
+
+    return await duda.ecomm.gateways.create({ site_name: site_name, ...gateway })
   })
 })

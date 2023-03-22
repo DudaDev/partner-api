@@ -70,3 +70,16 @@ export interface DeleteProductPayload {
 }
 
 export type DeleteProductResponse = void;
+
+export interface Gateway {
+  live_payment_methods_url: string,
+  test_payment_methods_url?: string
+}
+
+export interface CreateGatewayPayload extends Gateway {
+  site_name: string
+}
+
+export interface CreateGatewayResponse extends Gateway {
+  id: string
+}
