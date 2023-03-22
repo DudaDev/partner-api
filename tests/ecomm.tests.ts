@@ -8,6 +8,7 @@ describe('Ecomm tests', () => {
 
   const site_name = "test_site";
   const product_id = "test_product";
+  const gateway_id = "test_gateway";
 
   const product = {
     "description": "The most amazing t shirt ever sold",
@@ -57,7 +58,7 @@ describe('Ecomm tests', () => {
   })
 
   it('can list all products', async () => {
-    scope.get(`/api/sites/multiscreen/test_site/ecommerce/products?limit=0&offset=0`).reply(200, list_product)
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/products?limit=0&offset=0`).reply(200, list_product)
     return await duda.ecomm.products.list({
       site_name: site_name,
       limit: 0,
@@ -66,43 +67,48 @@ describe('Ecomm tests', () => {
   })
 
   it('can create a product', async () => {
-    scope.post('/api/sites/multiscreen/test_site/ecommerce/products', (body) => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/products`, (body) => {
       expect(body).to.eql({ ...product })
       return body
     }).reply(200, product)
 
-    return await duda.ecomm.products.create({ site_name: site_name, ...product })
+    return await duda.ecomm.products.create({ site_name, ...product })
   })
 
   it('can get a product', async () => {
-    scope.get((path: string) => {
-      return path === '/api/sites/multiscreen/test_site/ecommerce/products/test_product'
-  }).reply(200, product)
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/products/${product_id}`).reply(200, product)
 
-    return await duda.ecomm.products.get({ site_name: site_name, product_id: product_id })
+    return await duda.ecomm.products.get({ site_name, product_id })
       .then(res => expect(res).to.eql({ ...product }))
   })
 
   it('can update a product', async () => {
-    scope.patch('/api/sites/multiscreen/test_site/ecommerce/products/test_product', (body) => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/products/${product_id}`, (body) => {
       expect(body).to.eql({ ...product})
       return body
     }).reply(200, product)
 
-    return await duda.ecomm.products.update({ site_name: site_name, product_id: product_id, ...product })
+    return await duda.ecomm.products.update({ site_name, product_id, ...product })
   })
 
   it('can delete a product', async () => {
-    scope.delete('/api/sites/multiscreen/test_site/ecommerce/products/test_product').reply(204)
-    return await duda.ecomm.products.delete({ site_name: site_name, product_id: product_id })
+    scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/products/${product_id}`).reply(204)
+    return await duda.ecomm.products.delete({ site_name, product_id })
   })
 
   it('can create a gateway', async () => {
-    scope.post('/api/sites/multiscreen/test_site/ecommerce/payment-gateways', (body) => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/payment-gateways`, (body) => {
       expect(body).to.eql({ ...gateway })
       return body
     }).reply(201, { id: 'abc123', ...gateway })
 
-    return await duda.ecomm.gateways.create({ site_name: site_name, ...gateway })
+    return await duda.ecomm.gateways.create({ site_name, ...gateway })
+  })
+
+  it('can get a gateway', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/payment-gateways/${gateway_id}`)
+      .reply(200, { gateway_id, ...gateway })
+
+    return await duda.ecomm.gateways.get({ site_name, gateway_id })
   })
 })
