@@ -111,4 +111,11 @@ describe('Ecomm tests', () => {
 
     return await duda.ecomm.gateways.get({ site_name, gateway_id })
   })
+
+  it('can list all gateways', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/payment-gateways`)
+      .reply(200, [ {gateway_id, ...gateway} ])
+
+    return await duda.ecomm.gateways.list({ site_name })
+  })
 })
