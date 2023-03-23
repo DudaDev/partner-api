@@ -127,4 +127,9 @@ describe('Ecomm tests', () => {
 
     return await duda.ecomm.gateways.update({ site_name, gateway_id, ...gateway })
   })
+
+  it('can delete a gateway', async () => {
+    scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/payment-gateways/${gateway_id}`).reply(204);
+    return await duda.ecomm.gateways.delete({ site_name, gateway_id });
+  })
 })

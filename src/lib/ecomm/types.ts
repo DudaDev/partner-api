@@ -106,3 +106,8 @@ export interface UpdateGatewayPayload {
   live_payment_methods_url: string,
   test_payment_methods_url?: string
 }
+
+export interface DeleteGatewayPayload {
+  site_name: string,
+  gateway_id: string
+}
