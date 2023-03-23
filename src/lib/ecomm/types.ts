@@ -111,3 +111,27 @@ export interface DeleteGatewayPayload {
   site_name: string,
   gateway_id: string
 }
+
+interface BusinessAddress {
+  address_1: string,
+  address_2?: string,
+  city: string,
+  region?: string,
+  country: string,
+  postal_code?: string
+}
+
+interface Ecomm {
+  default_currency?: string,
+  business_name?: string,
+  business_address?: BusinessAddress,
+  time_zone?: string,
+  enabled_countries?: Array<string>,
+  send_email_notifications?: boolean
+}
+
+export interface UpdateEcommPayload extends Ecomm {
+  site_name: string
+}
+
+export interface UpdateEcommResponse extends Ecomm {}

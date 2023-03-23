@@ -10,6 +10,21 @@ describe('Ecomm tests', () => {
   const product_id = "test_product";
   const gateway_id = "test_gateway";
 
+  const settings = {
+    default_currency: 'USD',
+    business_name: 'My Great Company',
+    business_address: {
+      address_1: '123 Main St',
+      city: 'Louisville',
+      region: 'Colorado',
+      country: 'US',
+      postal_code: '80027'
+    },
+    time_zone: 'Mountain',
+    enabled_countries: ['US'],
+    send_email_notifications: true
+  };
+
   const product = {
     "description": "The most amazing t shirt ever sold",
     "images": [
@@ -131,5 +146,14 @@ describe('Ecomm tests', () => {
   it('can delete a gateway', async () => {
     scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/payment-gateways/${gateway_id}`).reply(204);
     return await duda.ecomm.gateways.delete({ site_name, gateway_id });
+  })
+
+  it('can update the ecomm settings', async () => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce`, (body) => {
+      expect(body).to.eql(settings)
+      return body
+    }).reply(200, settings)
+
+    return await duda.ecomm.update({ site_name, ...settings });
   })
 })
