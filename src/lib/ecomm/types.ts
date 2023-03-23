@@ -99,3 +99,10 @@ export interface GetGatewayPayload {
   site_name: string,
   gateway_id: string
 }
+
+export interface UpdateGatewayPayload {
+  site_name: string,
+  gateway_id: string,
+  live_payment_methods_url: string,
+  test_payment_methods_url?: string
+}
