@@ -118,4 +118,13 @@ describe('Ecomm tests', () => {
 
     return await duda.ecomm.gateways.list({ site_name })
   })
+
+  it('can update a gateway', async () => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/payment-gateways/${gateway_id}`, (body) => {
+      expect(body).to.eql(gateway)
+      return body
+    }).reply(200, gateway)
+
+    return await duda.ecomm.gateways.update({ site_name, gateway_id, ...gateway })
+  })
 })
