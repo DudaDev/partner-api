@@ -84,6 +84,17 @@ export interface GatewayResponse extends Gateway {
   id: string
 }
 
+export interface ListGatewaysPayload {
+  site_name: string
+}
+
+export interface ListGatewaysResponse {
+  offset: number,
+  limit: number,
+  total_responses: number,
+  results: Array<GatewayResponse>
+}
+
 export interface GetGatewayPayload {
   site_name: string,
   gateway_id: string
