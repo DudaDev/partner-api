@@ -26,6 +26,14 @@ class Gateways extends Resource {
       host: 'api.duda.co',
     },
   });
+
+  update = APIEndpoint<Types.UpdateGatewayPayload, Types.GatewayResponse>({
+    method: 'patch',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/payment-gateways/{gateway_id}',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
 }
 
 export default Gateways;
