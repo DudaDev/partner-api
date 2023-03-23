@@ -34,6 +34,14 @@ class Gateways extends Resource {
       host: 'api.duda.co',
     },
   });
+
+  delete = APIEndpoint<Types.DeleteGatewayPayload, void>({
+    method: 'delete',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/payment-gateways/{gateway_id}',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
 }
 
 export default Gateways;
