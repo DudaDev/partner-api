@@ -49,12 +49,23 @@ export interface Site {
   store_status?: 'NONE' | 'ACTIVE' | 'SUSPENDED'
 }
 
+export type SiteThemeColor = {
+  id: string,
+  value: string,
+  label: string,
+}
+
 export interface SiteNamedPayload {
   site_name: string;
 }
 
 export interface SiteNamedResponse {
   site_name: string;
+}
+
+export interface UpdateSiteThemePayload {
+  site_name: string,
+  colors: Array<SiteThemeColor>,
 }
 
 export type GetSiteResponse = Site;
@@ -67,6 +78,10 @@ export type PublishSiteResponse = void;
 export type UnPublishSiteResponse = void;
 export type ResetSiteResponse = void;
 export type SwitchTemplateResponse = void;
+
+export type UpdateSiteThemeResposne = {
+  colors: Array<SiteThemeColor>,
+}
 
 export interface PublishSitePayload extends SiteNamedPayload {
 }
