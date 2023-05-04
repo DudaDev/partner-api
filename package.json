@@ -16,6 +16,7 @@
     "tsc": "./node_modules/typescript/bin/tsc",
     "test": "npm run linter && nyc npm run tests",
     "linter": "eslint --ext .ts src/",
+    "linter-fix": "eslint --fix --ext .ts src/",
     "tests": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' node ./node_modules/mocha/bin/mocha -r ./node_modules/ts-node/register/index.js 'tests/**/*.ts'",
     "test:file": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' node ./node_modules/mocha/bin/mocha -r ./node_modules/ts-node/register/index.js \"tests/**/$FILENAME.ts\"",
     "test-publish": "npm publish --dry-run",
