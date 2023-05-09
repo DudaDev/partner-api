@@ -51,7 +51,7 @@ export interface Site {
 
 export type SiteThemeColor = {
   id: string,
-  value: string,
+  value?: string,
   label: string,
 }
 
@@ -79,7 +79,7 @@ export type UnPublishSiteResponse = void;
 export type ResetSiteResponse = void;
 export type SwitchTemplateResponse = void;
 
-export type UpdateSiteThemeResposne = {
+export type SiteThemeResponse = {
   colors: Array<SiteThemeColor>,
 }
 
@@ -90,6 +90,12 @@ export interface DeleteSitePayload extends SiteNamedPayload {
 }
 
 export interface UnPublishSitePayload extends SiteNamedPayload {
+}
+
+export interface GetSiteThemeResponse extends SiteThemeResponse {
+}
+
+export interface UpdateSiteThemeResponse extends SiteThemeResponse {
 }
 
 export interface DuplicateSitePayload extends SiteNamedPayload {
@@ -187,4 +193,8 @@ export interface CreateSitePayload {
       }
     },
   }
+}
+
+export type GetSiteThemePayload = {
+  site_name: string
 }

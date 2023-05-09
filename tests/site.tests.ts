@@ -136,8 +136,12 @@ describe('Site tests', () => {
         scope.delete(`${api_path}${site_name}`).reply(204)
         return await duda.sites.delete({ site_name:site_name })
     })
+    it('can get the site theme of a site', async () => {
+        scope.get(`${api_path}${site_name}/theme`).reply(200, get_response)
+        return await duda.sites.theme.get({ site_name:site_name })
+    })
     it('can update the site theme of a site', async () => {
-        scope.post(`${api_path}${site_name}/theme`, (body) => {
+        scope.put(`${api_path}${site_name}/theme`, (body) => {
             expect(body).to.eql({ colors: colors })
             return body
         }).reply(200, colors)
