@@ -5,15 +5,23 @@ import Resource from '../base';
 import { APIEndpoint } from '../APIEndpoint';
 
 class Theme extends Resource {
-  update = APIEndpoint<Types.UpdateSiteThemePayload, Types.UpdateSiteResponse>({
-    method: 'post',
+  get = APIEndpoint<Types.GetSiteThemePayload, Types.GetSiteThemeResponse>({
+    method: 'get',
+    path: '/api/sites/multiscreen/{site_name}/theme',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  update = APIEndpoint<Types.UpdateSiteThemePayload, Types.UpdateSiteThemeResponse>({
+    method: 'put',
     path: '/api/sites/multiscreen/{site_name}/theme',
     defaults: {
       host: 'api.duda.co',
     },
     bodyParams: {
       colors: {
-        type: 'object',
+        type: 'array',
         required: true,
       },
     },
