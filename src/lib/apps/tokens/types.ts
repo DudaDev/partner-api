@@ -1,5 +1,6 @@
 export interface RefreshTokenPayload {
   refresh_token: string;
+  app_uuid: string;
 }
 
 export interface RefreshTokenResponse {
