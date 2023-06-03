@@ -2,7 +2,7 @@ import nock from "nock"
 import { expect } from "chai"
 import { Duda } from "../../src/index"
 
-describe('App tests', () => {
+describe('App store site tests', () => {
   const base_path = '/api/integrationhub/application' 
   const site_name = 'test'
   const user = 'testuser'
