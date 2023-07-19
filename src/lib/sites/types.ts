@@ -51,7 +51,7 @@ export interface Site {
 
 export type SiteThemeColor = {
   id: string,
-  value?: string,
+  value: string,
   label: string,
 }
 
