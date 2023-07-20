@@ -1,8 +1,7 @@
 import { expect } from "chai"
 import nock from "nock"
 import { Duda } from "../src/index"
-import { CreateSitePayload } from "../src/lib/sites/types"
-
+import { CreateSitePayload, SiteThemeColor } from "../src/lib/sites/types"
 describe('Site tests', () => {
     let duda: Duda;
     let scope: nock.Scope;
@@ -44,6 +43,13 @@ describe('Site tests', () => {
         }
       }
     }
+
+    const colors_obj: SiteThemeColor = {
+        id: "color_1",
+        value: "xffffff",
+        label: "test_label"
+    }
+    const colors = [colors_obj]
 
     const create_response = { site_name: site_name };
     const get_response = {
@@ -129,5 +135,16 @@ describe('Site tests', () => {
     it('can delete a site', async () => {
         scope.delete(`${api_path}${site_name}`).reply(204)
         return await duda.sites.delete({ site_name:site_name })
+    })
+    it('can get the site theme of a site', async () => {
+        scope.get(`${api_path}${site_name}/theme`).reply(200, get_response)
+        return await duda.sites.theme.get({ site_name:site_name })
+    })
+    it('can update the site theme of a site', async () => {
+        scope.put(`${api_path}${site_name}/theme`, (body) => {
+            expect(body).to.eql({ colors: colors })
+            return body
+        }).reply(200, colors)
+        return await duda.sites.theme.update({ site_name:site_name, colors: colors })
     })
 })
