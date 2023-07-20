@@ -1,9 +1,12 @@
 import * as Types from './types';
 import Resource from '../base';
+import Theme from './Theme';
 
 import { APIEndpoint } from '../APIEndpoint';
 
 class Sites extends Resource {
+  theme = new Theme(this.config);
+
   get = APIEndpoint<Types.GetSiteByNamePayload, Types.GetSiteResponse>({
     method: 'get',
     path: '/api/sites/multiscreen/{site_name}',

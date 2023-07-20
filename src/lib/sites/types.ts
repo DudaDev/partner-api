@@ -49,12 +49,23 @@ export interface Site {
   store_status?: 'NONE' | 'ACTIVE' | 'SUSPENDED'
 }
 
+export type SiteThemeColor = {
+  id: string,
+  value: string,
+  label: string,
+}
+
 export interface SiteNamedPayload {
   site_name: string;
 }
 
 export interface SiteNamedResponse {
   site_name: string;
+}
+
+export interface UpdateSiteThemePayload {
+  site_name: string,
+  colors: Array<SiteThemeColor>,
 }
 
 export type GetSiteResponse = Site;
@@ -68,6 +79,10 @@ export type UnPublishSiteResponse = void;
 export type ResetSiteResponse = void;
 export type SwitchTemplateResponse = void;
 
+export type SiteThemeResponse = {
+  colors: Array<SiteThemeColor>,
+}
+
 export interface PublishSitePayload extends SiteNamedPayload {
 }
 
@@ -75,6 +90,12 @@ export interface DeleteSitePayload extends SiteNamedPayload {
 }
 
 export interface UnPublishSitePayload extends SiteNamedPayload {
+}
+
+export interface GetSiteThemeResponse extends SiteThemeResponse {
+}
+
+export interface UpdateSiteThemeResponse extends SiteThemeResponse {
 }
 
 export interface DuplicateSitePayload extends SiteNamedPayload {
@@ -172,4 +193,8 @@ export interface CreateSitePayload {
       }
     },
   }
+}
+
+export type GetSiteThemePayload = {
+  site_name: string
 }
