@@ -29,6 +29,7 @@ export interface CreateAccountPayload {
   last_name?: string;
   lang?: string;
   email?: string;
+  company_name?: string;
   account_type?: 'CUSTOMER' | 'STAFF';
 }
 
@@ -38,6 +39,7 @@ export interface UpdateAccountPayload {
   last_name?: string;
   lang?: string;
   email?: string;
+  company_name?: string;
 }
 
 export interface DeleteAccountPayload {
@@ -69,7 +71,8 @@ export type Permissions =
   'EDIT_CONNECTED_DATA' |
   'MANAGE_CONNECTED_DATA' |
   'USE_APP' |
-  'CLIENT_MANAGE_FREE_APPS';
+  'CLIENT_MANAGE_FREE_APPS' |
+  'AI_ASSISTANT';
 
 export type GetPermissionsResponse = Array<Permissions>;
 
