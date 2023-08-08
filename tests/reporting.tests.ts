@@ -121,17 +121,29 @@ describe('Reporting tests', () => {
         return await duda.reporting.emailSettings.get({ account_name: account_name, site_name: site_name })
     })
     describe('analytics', async () => {
+        // it('can get analytics history for a site', async () => {
+        //     scope.get(`/api/analytics/site/${site_name}`, (query) => {
+        //         expect(query).to.eql({
+        //             from: from,
+        //             to: to,
+        //             dimension: dimension,
+        //             result: result,
+        //             dateGranularity: dateGranularity
+        //         })
+        //         return query
+        //     }).reply(200, analyticsResponse)
+        //     return await duda.reporting.analytics.get({
+        //         site_name: site_name,
+        //         from: from,
+        //         to: to,
+        //         dimension: dimension,
+        //         result: result,
+        //         dateGranularity: dateGranularity
+        //     })
+        // })
         it('can get analytics history for a site', async () => {
-            scope.get(`/api/analytics/site/${site_name}`, (query) => {
-                expect(query).to.eql({
-                    from: from,
-                    to: to,
-                    dimension: dimension,
-                    result: result,
-                    dateGranularity: dateGranularity
-                })
-                return query
-            }).reply(200, analyticsResponse)
+            scope.get(`/api/analytics/site/${site_name}?from=${from}&to=${to}&dimension=${dimension}&result=${result}&dateGranularity=${dateGranularity}`).reply(200, analyticsResponse)
+      
             return await duda.reporting.analytics.get({
                 site_name: site_name,
                 from: from,
@@ -139,8 +151,8 @@ describe('Reporting tests', () => {
                 dimension: dimension,
                 result: result,
                 dateGranularity: dateGranularity
-            })
-        })
+            }).then(res => expect(res).to.eql(analyticsResponse))
+          })
     })
     describe('activities', () => {
         it('can get the activity log for a site', async () => {
