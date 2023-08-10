@@ -11,7 +11,7 @@ describe('Ecomm tests', () => {
   const gateway_id = "test_gateway";
   const cart_id = 'test_cart';
 
-  const settings = {
+  const updateSettings = {
     default_currency: 'USD',
     business_name: 'My Great Company',
     business_address: {
@@ -24,6 +24,29 @@ describe('Ecomm tests', () => {
     time_zone: 'Mountain',
     enabled_countries: ['US'],
     send_email_notifications: true
+  };
+
+  const cartSettings = {
+    "split_name_field": true,
+    "split_address_1_field": true,
+    "display_instruction_field": true,
+    "display_phone_field": true
+  };
+
+  const settings = {
+    default_currency: 'USD',
+    business_name: 'My Great Company',
+    business_address: {
+      address_1: '123 Main St',
+      city: 'Louisville',
+      region: 'Colorado',
+      country: 'US',
+      postal_code: '80027'
+    },
+    time_zone: 'Mountain',
+    enabled_countries: ['US'],
+    send_email_notifications: true,
+    cart_settings: cartSettings
   };
 
   const product = {
@@ -287,13 +310,22 @@ describe('Ecomm tests', () => {
     return await duda.ecomm.gateways.delete({ site_name, gateway_id });
   })
 
-  it('can update the ecomm settings', async () => {
-    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce`, (body) => {
+  it('can get the ecomm settings', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce`, (body) => {
       expect(body).to.eql(settings)
       return body
     }).reply(200, settings)
 
-    return await duda.ecomm.update({ site_name, ...settings });
+    return await duda.ecomm.get({ site_name, ...settings });
+  })
+
+  it('can update the ecomm settings', async () => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce`, (body) => {
+      expect(body).to.eql(updateSettings)
+      return body
+    }).reply(200, updateSettings)
+
+    return await duda.ecomm.update({ site_name, ...updateSettings });
   })
 
   it('can list all carts', async () => {

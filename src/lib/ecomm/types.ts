@@ -243,6 +243,13 @@ interface BusinessAddress {
   postal_code?: string
 }
 
+interface CartSettings {
+  split_name_field: boolean,
+  split_address_1_field: boolean,
+  display_instruction_field: boolean,
+  display_phone_field: boolean
+}
+
 interface Ecomm {
   default_currency?: string,
   business_name?: string,
@@ -252,8 +259,15 @@ interface Ecomm {
   send_email_notifications?: boolean
 }
 
+export interface GetEcommPayload {
+  site_name: string
+}
+
 export interface UpdateEcommPayload extends Ecomm {
   site_name: string
 }
 
+export interface GetEcommResponse extends Ecomm {
+  cart_settings: CartSettings
+}
 export interface UpdateEcommResponse extends Ecomm {}

@@ -12,6 +12,14 @@ class Ecomm extends Resource {
 
   products = new Products(this.config);
 
+  get = APIEndpoint<Types.UpdateEcommPayload, Types.UpdateEcommResponse>({
+    method: 'get',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
   update = APIEndpoint<Types.UpdateEcommPayload, Types.UpdateEcommResponse>({
     method: 'patch',
     path: '/api/sites/multiscreen/{site_name}/ecommerce',
