@@ -142,7 +142,7 @@ describe('Reporting tests', () => {
         //     })
         // })
         it('can get analytics history for a site', async () => {
-            scope.get(`/api/analytics/site/${site_name}?from=${from}&to=${to}&dimension=${dimension}&result=${result}&dateGranularity=${dateGranularity}`).reply(200, analyticsResponse)
+            scope.get(`/api/analytics/site/${site_name}?from=0&to=1&dimension=system&result=traffic&dateGranularity=WEEKS`).reply(200, analyticsResponse)
       
             return await duda.reporting.analytics.get({
                 site_name: site_name,
