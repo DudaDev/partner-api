@@ -12,7 +12,7 @@ class Ecomm extends Resource {
 
   products = new Products(this.config);
 
-  get = APIEndpoint<Types.UpdateEcommPayload, Types.UpdateEcommResponse>({
+  get = APIEndpoint<Types.GetEcommPayload, Types.GetEcommResponse>({
     method: 'get',
     path: '/api/sites/multiscreen/{site_name}/ecommerce',
     defaults: {
