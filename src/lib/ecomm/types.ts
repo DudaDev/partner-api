@@ -112,6 +112,19 @@ export interface DeleteGatewayPayload {
   gateway_id: string
 }
 
+export interface ListCartsPayload {
+  site_name: string,
+  status?: 'IN_PROGRESS' | 'ABANDONED',
+  mode?: 'LIVE' | 'TEST',
+  email?: string,
+  cursor?: string,
+  limit?: number
+}
+
+export interface ListCartsResponse {
+
+}
+
 interface BusinessAddress {
   address_1: string,
   address_2?: string,
