@@ -100,7 +100,7 @@ export interface GetAnalyticsHistoryActivity {
   CLICK_TO_EMAILS: number,
   FORM_SUBMITS: number,
   CLICK_TO_MAPS: number,
-  CLICK_TO_CALL: number,
+  CLICK_TO_CALLS: number,
 }
 
 export interface AnalyticsHistoryTrafficGeo {
