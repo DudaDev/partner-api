@@ -10,19 +10,18 @@ describe('Reporting tests', () => {
     const account_name = 'test_account';
 
     const lastDays = '1';
-    const from = '0';
-    const to = '1';
+    const from = '2021-01-01';
+    const to = '2021-12-01';
     const list = ['test_site'];
     const frequency = 'WEEKLY';
 
     const dimension = 'system';
     const result = 'traffic';
-    const dateGranularity = 'WEEKS';
+    const date_granularity = 'WEEKS';
 
     const limit = 1;
     const offset = 0;
     const activity = 'site_created';
-    const activities = [ activity ];
 
     const form = [
         {
@@ -49,7 +48,7 @@ describe('Reporting tests', () => {
         }
     ]
 
-    const activities_response = {
+    const activitiesResponse = {
         site_name: site_name,
         results: [
             {
@@ -122,46 +121,30 @@ describe('Reporting tests', () => {
     })
     describe('analytics', async () => {
         it('can get analytics history for a site', async () => {
-            scope.get(`/api/analytics/site/${site_name}`, (query) => {
-                expect(query).to.eql({
-                    from: from,
-                    to: to,
-                    dimension: dimension,
-                    result: result,
-                    dateGranularity: dateGranularity
-                })
-                return query
-            }).reply(200, analyticsResponse)
+            scope.get(`/api/analytics/site/${site_name}?from=${from}&to=${to}&dimension=${dimension}&result=${result}&dateGranularity=${date_granularity}`).reply(200, analyticsResponse)
+      
             return await duda.reporting.analytics.get({
                 site_name: site_name,
                 from: from,
                 to: to,
                 dimension: dimension,
                 result: result,
-                dateGranularity: dateGranularity
-            })
-        })
+                date_granularity: date_granularity
+            }).then(res => expect(res).to.eql(analyticsResponse))
+          })
     })
     describe('activities', () => {
-        it('can get the activity log for a site', async () => {
-            scope.get(`${api_path}${site_name}/activities`, (query) => {
-                expect(query).to.eql({
-                    limit: limit,
-                    offset: offset,
-                    from: from,
-                    to: to,
-                    activities: activities
-                })
-                return query
-            }).reply(200, activities_response)
+        it('can get activity history for a site', async () => {
+            scope.get(`${api_path}${site_name}/activities?limit=${limit}&offset=${offset}&from=${from}&to=${to}&activities=${activity}`).reply(200, activitiesResponse)
+      
             return await duda.reporting.activities.get({
                 site_name: site_name,
                 limit: limit,
                 offset: offset,
                 from: from,
                 to: to,
-                activities: [ activity ]
-            })
-        })
+                activities: [activity]
+            }).then(res => expect(res).to.eql(activitiesResponse))
+          })
     })
 })
