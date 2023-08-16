@@ -121,7 +121,7 @@ describe('Reporting tests', () => {
     })
     describe('analytics', async () => {
         it('can get analytics history for a site', async () => {
-            scope.get(`/api/analytics/site/${site_name}?from=2021-01-01&to=2021-12-01&dimension=system&result=traffic&dateGranularity=WEEKS`).reply(200, analyticsResponse)
+            scope.get(`/api/analytics/site/${site_name}?from=${from}&to=${to}&dimension=${dimension}&result=${result}&dateGranularity=${date_granularity}`).reply(200, analyticsResponse)
       
             return await duda.reporting.analytics.get({
                 site_name: site_name,
@@ -135,7 +135,7 @@ describe('Reporting tests', () => {
     })
     describe('activities', () => {
         it('can get activity history for a site', async () => {
-            scope.get(`${api_path}${site_name}/activities?limit=1&offset=0&from=2021-01-01&to=2021-12-01&activities=site_created`).reply(200, activitiesResponse)
+            scope.get(`${api_path}${site_name}/activities?limit=${limit}&offset=${offset}&from=${from}&to=${to}&activities=${activity}`).reply(200, activitiesResponse)
       
             return await duda.reporting.activities.get({
                 site_name: site_name,
