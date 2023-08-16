@@ -81,13 +81,17 @@ export interface GetActivityLogResponse {
   results: Array<ActivityLogEntry>,
 }
 
+export type analyticsResults = 'traffic' | 'activities';
+export type analyticsDimensions = 'system' | 'geo';
+export type analyticsDateGranularity = 'DAYS' | 'WEEKS' | 'MONTHS' | 'YEARS';
+
 export interface GetAnalyticsHistoryPayload {
   site_name: string,
   from?: string,
   to?: string,
-  result?: 'traffic' | 'activities',
-  dimension?: 'system' | 'geo',
-  dateGranularity?: 'DAYS' | 'WEEKS' | 'MONTHS' | 'YEARS',
+  result?: analyticsResults,
+  dimension?: analyticsDimensions,
+  date_granularity?: analyticsDateGranularity,
 }
 
 export interface GetAnalyticsHistoryTraffic {
