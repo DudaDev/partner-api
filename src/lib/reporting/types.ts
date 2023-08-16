@@ -91,7 +91,7 @@ export interface GetAnalyticsHistoryPayload {
   to?: string,
   result?: analyticsResults,
   dimension?: analyticsDimensions,
-  dateGranularity?: analyticsDateGranularity,
+  date_granularity?: analyticsDateGranularity,
 }
 
 export interface GetAnalyticsHistoryTraffic {

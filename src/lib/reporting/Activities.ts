@@ -10,6 +10,28 @@ class Activities extends Resource {
     defaults: {
       host: 'api.duda.co',
     },
+    queryParams: {
+      limit: {
+        type: 'number',
+        required: false,
+      },
+      offset: {
+        type: 'number',
+        required: false,
+      },
+      from: {
+        type: 'string',
+        required: false,
+      },
+      to: {
+        type: 'string',
+        required: false,
+      },
+      activities: {
+        type: 'string',
+        required: false,
+      },
+    },
   });
 }
 

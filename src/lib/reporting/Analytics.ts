@@ -27,9 +27,10 @@ class Analytics extends Resource {
         type: 'string',
         required: false,
       },
-      dateGranularity: {
+      date_granularity: {
         type: 'string',
         required: false,
+        properKey: 'dateGranularity',
       },
     },
   });
