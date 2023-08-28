@@ -245,3 +245,22 @@ function validateSSO(req: YourRequestObject): boolean {
 ## More Information
 
 - [REST API Reference](https://developer.duda.co/reference#getting-started-with-the-duda-api)
+
+
+# Sites
+
+## Get Site
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}`
+
+  curl --location 'https://api.duda.co/api/sites/multiscreen/{site_name}' \ --header 'Authorization: Basic <base64-token>' \
+
+### Response
+
+  
+
+### More Information
+
+[Get Site Reference](https://developer.duda.co/reference/sites-get-site)
