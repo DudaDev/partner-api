@@ -255,11 +255,15 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}`
 
+  ```bash
   curl --location 'https://api.duda.co/api/sites/multiscreen/{site_name}' \ --header 'Authorization: Basic <base64-token>' \
+  ```
 
 ### Response
 
-  
+  ```
+  Insert Response Body Here
+  ```
 
 ### More Information
 
