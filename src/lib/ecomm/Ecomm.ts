@@ -1,10 +1,13 @@
 import Resource from '../base';
+import Carts from './Carts';
 import Products from './Products';
 import Gateways from './Gateways';
 import * as Types from './types';
 import { APIEndpoint } from '../APIEndpoint';
 
 class Ecomm extends Resource {
+  carts = new Carts(this.config);
+
   gateways = new Gateways(this.config);
 
   products = new Products(this.config);
