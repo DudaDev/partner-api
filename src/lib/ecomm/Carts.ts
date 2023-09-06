@@ -32,6 +32,14 @@ class Carts extends Resource {
       },
     },
   });
+
+  get = APIEndpoint<Types.GetCartPayload, Types.GetCartResponse>({
+    method: 'get',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/carts/{cart_id}',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
 }
 
 export default Carts;
