@@ -125,7 +125,18 @@ export interface Taxes {
   amount: number
 }
 
-export interface Item {
+export interface UnitDimenions {
+  height: number,
+  width: number,
+  length: number
+}
+
+export interface ShippingMethod {
+  name: string,
+  cost: number
+}
+
+export interface CartItem {
   type: 'PHYSICAL_PRODUCT' | 'MEMBERSHIP' | 'SHIPPING' | 'DIGITAL_PRODUCT',
   id: string,
   added: string,
@@ -156,11 +167,7 @@ export interface Item {
   },
   unit_price: number,
   unit_weight: number,
-  unit_dimensions: {
-    height: number,
-    width: number,
-    length: number
-  },
+  unit_dimensions: UnitDimenions,
   discounts: Discount
   tax_code: string,
   taxes: Taxes
@@ -192,13 +199,10 @@ export interface Cart {
   language: string,
   email: string,
   currency: string,
-  items: Array<Item>,
+  items: Array<CartItem>,
   billing_address: Address,
   shipping_address: Address,
-  shipping_method: {
-    name: string,
-    cost: number
-  },
+  shipping_method: ShippingMethod,
   shipping_instructions: string,
   discounts: Discount,
   tax_provider: 'BUILT_IN' | 'AVALARA' | 'UNKNOWN',
@@ -231,6 +235,91 @@ export interface GetCartPayload {
   site_name: string,
   cart_id: string
 }
+
+export interface OrderOptions {
+  name: string,
+  value: string
+}
+
+export interface Payment {
+  transaction_id: string,
+  status: 'PAID' | 'DEFERRED' | 'PAID_DEFERRED' | 'CHARGED_BACK' | 'REFUNDED' | 'PAIDOUT' | 'PENDING' | 'FAILED' | 'EXPIRED' | 'CANCELLED' | 'OPEN' | 'AUTHORIZED',
+  currency: string,
+  method: string,
+  card_bramd: 'NULL' | 'VISA' | 'MASTERCARD' | 'AMEX' | 'DINERS_CLUB' | 'DISCOVER' | 'J_C_B' | 'CARD_BLEUE' | 'DANKORT' | 'CARTA_SI' | 'POSTEPAY' | 'MAESTRO' | 'LASER' | 'UNIOPAY' | 'OTHER',
+  card_last_4: string
+}
+
+export interface Refund {}
+
+export interface OrderItem {
+  id: string,
+  product_id: string,
+  variation_id: string,
+  external_product_id: string,
+  external_variation_id: string,
+  name: string,
+  image: string,
+  sku: string,
+  options: Array<OrderOptions>,
+  quantity: number,
+  shippable: boolean,
+  unit_price: number,
+  unit_weight: number,
+  unit_dimensions: UnitDimenions,
+  total: number,
+  combined_weight: number,
+  metadata: string
+}
+
+export interface Order {
+  source: 'CHECKOUT' | 'EXTERNAL' | 'SUBSCRIPTION_BILLING_ENGINE',
+  mode: 'LIVE' | 'TEST',
+  id: string,
+  external_id: string,
+  status: 'IN_PROGRESS' | 'PROCESSED' | 'DISPUTED' | 'SHIPPED' | 'DELIVERED' | 'PENDING' | 'CANCELLED' | 'DISPATCHED',
+  email: string,
+  invoice_number: string,
+  items: Array<OrderItem>,
+  billing_address: Address,
+  shipping_address: Address,
+  shipping_method: ShippingMethod,
+  shipping_instructions: string,
+  discounts: Array<Discount>,
+  taxes: Array<Taxes>,
+  subtotal: number,
+  total: number,
+  payment: Payment,
+  refunds: Array<Refund>,
+  tracking_url: string,
+  tracking_number: string,
+  created: string,
+  user_agent: string,
+  ip_address: string,
+  metadata: string
+}
+
+export interface ListOrdersPayload {
+  site_name: string,
+  offset?: number,
+  limit?: number,
+  sort?: string,
+  direction?: string
+}
+
+export interface ListOrdersResponse {
+  offset: number,
+  limit: number,
+  total_responses: number,
+  results: Array<Order>
+}
+
+export interface GetOrderPayload {
+  site_name: string,
+  order_id: string
+}
+
+export type GetOrderResponse = Order;
 
 export type GetCartResponse = Cart;
 
