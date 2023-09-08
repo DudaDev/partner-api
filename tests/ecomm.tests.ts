@@ -10,6 +10,7 @@ describe('Ecomm tests', () => {
   const product_id = "test_product";
   const gateway_id = "test_gateway";
   const cart_id = 'test_cart';
+  const order_id = 'test_order';
 
   const updateSettings = {
     default_currency: 'USD',
@@ -27,10 +28,10 @@ describe('Ecomm tests', () => {
   };
 
   const cartSettings = {
-    "split_name_field": true,
-    "split_address_1_field": true,
-    "display_instruction_field": true,
-    "display_phone_field": true
+    split_name_field: true,
+    split_address_1_field: true,
+    display_instruction_field: true,
+    display_phone_field: true
   };
 
   const settings = {
@@ -219,6 +220,126 @@ describe('Ecomm tests', () => {
     results: [cart]
   }
 
+  const offset = 0;
+  const sort = 'sort';
+  const direction = 'asc';
+
+  const order = {
+    source: "CHECKOUT",
+    mode: "LIVE",
+    id: "string",
+    external_id: "string",
+    status: "IN_PROGRESS",
+    email: "string",
+    invoice_number: "string",
+    items: [
+      {
+        id: "string",
+        product_id: "string",
+        variation_id: "string",
+        external_product_id: "string",
+        external_variation_id: "string",
+        name: "string",
+        image: "string",
+        sku: "string",
+        options: [
+          {
+            name: "string",
+            value: "string"
+          }
+        ],
+        quantity: 0,
+        shippable: true,
+        unit_price: 0,
+        unit_weight: 0,
+        unit_dimensions: {
+          height: 0,
+          width: 0,
+          length: 0
+        },
+        total: 0,
+        combined_weight: 0,
+        metadata: "string"
+      }
+    ],
+    billing_address: {
+      first_name: "string",
+      last_name: "string",
+      full_name: "string",
+      address_1: "string",
+      address_2: "string",
+      street_number: "string",
+      street_name: "string",
+      city: "string",
+      sub_locality: "string",
+      region: "string",
+      country: "string",
+      postal_code: "string",
+      phone: "string"
+    },
+    shipping_address: {
+      first_name: "string",
+      last_name: "string",
+      full_name: "string",
+      address_1: "string",
+      address_2: "string",
+      street_number: "string",
+      street_name: "string",
+      city: "string",
+      sub_locality: "string",
+      region: "string",
+      country: "string",
+      postal_code: "string",
+      phone: "string"
+    },
+    shipping_method: {
+      name: "string",
+      cost: 0
+    },
+    shipping_instructions: "string",
+    discounts: [
+      {
+        id: "string",
+        savings: 0,
+        name: "string",
+        type: "string"
+      }
+    ],
+    taxes: [
+      {
+        name: "string",
+        amount: 0,
+        rate: 0
+      }
+    ],
+    subtotal: 0,
+    total: 0,
+    payment: {
+      transaction_id: "string",
+      status: "PAID",
+      currency: "string",
+      method: "string",
+      card_brand: "NULL",
+      card_last_4: "string"
+    },
+    refunds: [
+      {}
+    ],
+    tracking_url: "string",
+    tracking_number: "string",
+    created: "2023-09-08T17:48:47.497Z",
+    user_agent: "string",
+    ip_address: "string",
+    metadata: "string"
+  }
+
+  const list_orders = {
+    offset: offset,
+    limit: limit,
+    total_response: 0,
+    results: [order]
+  }
+
   const gateway = {
     live_payment_methods_url: 'https://example.org/path/to/gateway',
     test_payment_methods_url: 'https://test.example.org/path/to/gateway'
@@ -344,5 +465,23 @@ describe('Ecomm tests', () => {
 
     return await duda.ecomm.carts.get({ site_name, cart_id })
       .then(res => expect(res).to.eql({ ...cart }))
+  })
+
+  it('can list all orders', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_orders)
+    return await duda.ecomm.orders.list({
+      site_name: site_name,
+      offset: offset,
+      limit: limit,
+      sort: sort,
+      direction: direction
+    }).then(res => expect(res).to.eql(list_orders))
+  })
+
+  it('can get a specific order', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}`).reply(200, order)
+
+    return await duda.ecomm.orders.get({ site_name, order_id })
+      .then(res => expect(res).to.eql({ ...order }))
   })
 })
