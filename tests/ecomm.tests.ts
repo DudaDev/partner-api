@@ -11,6 +11,7 @@ describe('Ecomm tests', () => {
   const gateway_id = "test_gateway";
   const cart_id = 'test_cart';
   const order_id = 'test_order';
+  const session_id = 'test_session';
 
   const updateSettings = {
     default_currency: 'USD',
@@ -345,6 +346,77 @@ describe('Ecomm tests', () => {
     test_payment_methods_url: 'https://test.example.org/path/to/gateway'
   }
 
+  const payment_session = {
+    id: "string",
+    mode: "LIVE",
+    cancel_url: "string",
+    invoice: {
+      purchase_id: "string",
+      purchase_type: "string",
+      email: "string",
+      language: "string",
+      currency: "string",
+      total: 0,
+      shipping_address: {
+        first_name: "string",
+        last_name: "string",
+        full_name: "string",
+        address_1: "string",
+        address_2: "string",
+        street_number: "string",
+        street_name: "string",
+        city: "string",
+        sub_locality: "string",
+        region: "string",
+        country: "string",
+        postal_code: "string",
+        phone: "string"
+      },
+      billing_address: {
+        first_name: "string",
+        last_name: "string",
+        full_name: "string",
+        address_1: "string",
+        address_2: "string",
+        street_number: "string",
+        street_name: "string",
+        city: "string",
+        sub_locality: "string",
+        region: "string",
+        country: "string",
+        postal_code: "string",
+        phone: "string"
+      },
+      items: [
+        {
+          type: "PHYSICAL",
+          name: "string",
+          unit_price: 0,
+          quantity: 0,
+          discount_amount: 0,
+          total: 0
+        }
+      ]
+    },
+    site_name: "string",
+    site_external_id: "string"
+  }
+
+  const confirmPaymentBody = {
+    state: "PROCESSED",
+    transaction_id: "string",
+    icon: "string",
+    name: "string",
+    instructions: "string",
+    links: {
+      refunds: "string"
+    },
+  }
+
+  const payment_url = {
+    return_url: "string"
+  }
+
   before(() => {
     duda = new Duda({
       user: 'testuser',
@@ -483,5 +555,33 @@ describe('Ecomm tests', () => {
 
     return await duda.ecomm.orders.get({ site_name, order_id })
       .then(res => expect(res).to.eql({ ...order }))
+  })
+
+  it('can get a payment session', async () => {
+    scope.get(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/payment-sessions/${session_id}`).reply(200, payment_session)
+    return await duda.ecomm.payments.get({
+      site_name: site_name,
+      session_id: session_id
+    }).then(res => expect(res).to.eql(payment_session))
+  })
+
+  it('can confirm the payment session', async () => {
+    scope.post(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/payment-sessions/${session_id}/confirm`, (body) => {
+      expect(body).to.eql({ ...confirmPaymentBody })
+      return body
+    }).reply(200, payment_url)
+
+    return await duda.ecomm.payments.confirm({
+      site_name: site_name,
+      session_id: session_id,
+      state: 'PROCESSED',
+      transaction_id: 'string',
+      icon: 'string',
+      name: 'string',
+      instructions: 'string',
+      links: {
+        refunds: "string"
+      }
+    })
   })
 })

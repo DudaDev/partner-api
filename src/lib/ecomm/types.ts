@@ -360,3 +360,63 @@ export interface GetEcommResponse extends Ecomm {
   cart_settings: CartSettings
 }
 export interface UpdateEcommResponse extends Ecomm {}
+
+export interface PaymentItem {
+  type: 'PHYSICAL' | 'DIGITAL' | 'TAX' | 'SHIPPING' | 'DISCOUNT',
+  name: string,
+  unit_price: number,
+  quantity: number,
+  discount_amount: number,
+  total: number
+}
+
+export interface Invoice {
+  purchase_id: string,
+  purchase_type: string,
+  email: string,
+  language: string,
+  currency: string,
+  total: number,
+  shipping_address: Address,
+  billing_address: Address,
+  items: Array<PaymentItem>
+}
+
+export interface PaymentLink {
+  refunds?: string
+}
+
+export interface PaymentError {
+  code: string,
+  message: string
+}
+
+export interface GetPaymentsPayload {
+  site_name: string,
+  session_id: string
+}
+
+export interface GetPaymentsResponse {
+  id: string,
+  mode: 'LIVE' | 'TEST',
+  cancel_url: string,
+  invoice: Invoice,
+  site_name: string,
+  site_external_id: string
+}
+
+export interface ConfirmPaymentsPayload {
+  site_name: string,
+  session_id: string,
+  state: 'PROCESSING' | 'PROCESSED' | 'INVALIDATED' | 'FAILED',
+  transaction_id?: string,
+  icon?: string,
+  name?: string,
+  instructions?: string,
+  links?: PaymentLink,
+  error?: PaymentError
+}
+
+export interface ConfirmPaymentsResponse {
+  return_url: string
+}
