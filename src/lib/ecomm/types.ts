@@ -420,3 +420,120 @@ export interface ConfirmPaymentsPayload {
 export interface ConfirmPaymentsResponse {
   return_url: string
 }
+
+export interface Category {
+  id: string,
+  title: string,
+  order: number,
+  parent_id: string,
+  products_count: number
+}
+
+export interface Subcategory {
+  id: string,
+  title: string,
+  order: number
+}
+
+export interface CategoryProductResponse {
+  id: string,
+  name: string,
+  order: number
+}
+
+export interface CategoryProductPayload {
+  id: string
+}
+
+export interface CategorySEO {
+  url: string,
+  title: string,
+  description: string
+}
+
+export interface ListCategoriesPaylaod {
+  site_name: string,
+  limit?: number,
+  offset?: number,
+  sort?: 'title' | string,
+  direction?: 'asc' | 'desc',
+  search?: string,
+  product_id?: string,
+  parent_id?: string
+}
+
+export interface ListCategoriesResponse {
+  offset: number,
+  limit: number,
+  total_responses: number,
+  site_name: string,
+  results: Array<Category>
+}
+
+export interface GetCategoryPayload {
+  site_name: string,
+  category_id: string
+}
+
+export interface GetCategoryResponse {
+  id: string,
+  title: string,
+  description: string,
+  parent_id: string,
+  image: Images,
+  seo: CategorySEO,
+  subcategories: Array<Subcategory>,
+  products: Array<CategoryProductResponse>
+}
+
+export interface CreateCategoryPayload {
+  site_name: string,
+  title?: string,
+  description?: string,
+  image?: Images,
+  seo?: CategorySEO,
+  parent_id?: string,
+  products: Array<CategoryProductPayload>,
+  subcategories?: Array<CategoryProductPayload>
+}
+
+export interface CreateCategoryResponse {
+  id: string,
+  title: string,
+  description: string,
+  parent_id: string,
+  image: Images,
+  seo: CategorySEO,
+  subcategories: Array<CategorySEO>,
+  products: Array<Subcategory>
+}
+
+export interface UpdateCategoryPayload {
+  site_name: string,
+  category_id: string,
+  title?: string,
+  description?: string,
+  image?: Images,
+  seo?: CategorySEO,
+  parent_id?: string,
+  products?: Array<CategoryProductPayload>,
+  subcategories?: Array<CategoryProductPayload>
+}
+
+export interface UpdateCategoryResponse {
+  id: string,
+  title: string,
+  description: string,
+  parent_id: string,
+  image: Images,
+  seo: CategorySEO,
+  subcategories: Array<Subcategory>,
+  products: Array<CategoryProductResponse>
+}
+
+export interface DeleteCategoryPayload {
+  site_name: string,
+  category_id: string
+}
+
+export type DeleteCategoryResponse = null;

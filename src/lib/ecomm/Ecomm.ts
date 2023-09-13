@@ -3,6 +3,7 @@ import Carts from './Carts';
 import Orders from './Orders';
 import Gateways from './Gateways';
 import Payments from './Payments';
+import Categories from './Categories';
 import Products from './Products';
 import * as Types from './types';
 import { APIEndpoint } from '../APIEndpoint';
@@ -15,6 +16,8 @@ class Ecomm extends Resource {
   gateways = new Gateways(this.config);
 
   payments = new Payments(this.config);
+
+  categories = new Categories(this.config);
 
   products = new Products(this.config);
 

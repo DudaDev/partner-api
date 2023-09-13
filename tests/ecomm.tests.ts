@@ -12,6 +12,7 @@ describe('Ecomm tests', () => {
   const cart_id = 'test_cart';
   const order_id = 'test_order';
   const session_id = 'test_session';
+  const category_id = 'test_category';
 
   const updateSettings = {
     default_currency: 'USD',
@@ -417,6 +418,77 @@ describe('Ecomm tests', () => {
     return_url: "string"
   }
 
+  const category = {
+    id: 'string',
+    title: 'string',
+    order: 0,
+    parent_id: 'string',
+    products_count: 'string'
+  }
+
+  const list_category_response = {
+    offset: 0,
+    limit: 0,
+    total_response: 0,
+    site_name: site_name,
+    results: [category]
+  }
+
+  const category_payload = {
+    description: 'description',
+    image: {
+      alt: 'string',
+      url: 'string'
+    },
+    parent_id: 'string',
+    products: [
+      {
+        id: 'string'
+      }
+    ],
+    seo: {
+      description: 'string',
+      title: 'string',
+      url: 'string'
+    },
+    subcategories: [
+      {
+        id: 'string'
+      }
+    ],
+    title: 'string'
+  }
+
+  const category_response = {
+    description: 'string',
+    id: 'string',
+    image: {
+      alt: 'string',
+      url: 'string'
+    },
+    parent_id: 'string',
+    products: [
+      {
+        id: 'string',
+        name: 'string',
+        order: 0
+      }
+    ],
+    seo: {
+      description: 'string',
+      title: 'string',
+      url: 'string'
+    },
+    subcategories: [
+      {
+        id: 'string',
+        order: 0,
+        title: 'string'
+      }
+    ],
+    title: 'string'
+  }
+
   before(() => {
     duda = new Duda({
       user: 'testuser',
@@ -583,5 +655,45 @@ describe('Ecomm tests', () => {
         refunds: "string"
       }
     })
+  })
+
+  it('can get all categories', async () => {
+    scope.get(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/categories?limit=0&offset=0&sort=title`).reply(200, list_category_response)
+    return await duda.ecomm.categories.list({
+      site_name: site_name,
+      limit: 0,
+      offset: 0,
+      sort: 'title'
+    }).then(res => expect(res).to.eql(list_category_response))
+  })
+
+  it('can create a category', async () => {
+    scope.post(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/categories`, (body) => {
+      expect(body).to.eql({ ...category_payload })
+      return body
+    }).reply(200, category_response)
+
+    return await duda.ecomm.categories.create({ site_name, ...category_payload })
+  })
+
+  it('can get a category', async () => {
+    scope.get(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/categories/${category_id}`).reply(200, category_response)
+
+    return await duda.ecomm.categories.get({ site_name, category_id })
+      .then(res => expect(res).to.eql({ ...category_response }))
+  })
+
+  it('can update a category', async () => {
+    scope.patch(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/categories/${category_id}`, (body) => {
+      expect(body).to.eql({ ...category_payload})
+      return body
+    }).reply(200, category_response)
+
+    return await duda.ecomm.categories.update({ site_name, category_id, ...category_payload })
+  })
+
+  it('can delete a category', async () => {
+    scope.delete(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/categories/${category_id}`).reply(200)
+    return await duda.ecomm.categories.delete({ site_name, category_id })
   })
 })
