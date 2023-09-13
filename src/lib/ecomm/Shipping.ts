@@ -5,7 +5,7 @@ import { APIEndpoint } from '../APIEndpoint';
 class Shipping extends Resource {
   list = APIEndpoint<Types.ListShippingProvidersPayload, Types.ListShippingProvidersResponse>({
     method: 'get',
-    path: '/api/sites/multiscreen/{siteAlias}/ecommerce/shipping-providers',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/shipping-providers',
     defaults: {
       host: 'api.duda.co',
     },
@@ -13,15 +13,15 @@ class Shipping extends Resource {
 
   get = APIEndpoint<Types.GetShippingProviderPayload, Types.GetShippingProviderResponse>({
     method: 'get',
-    path: '/api/sites/multiscreen/{siteAlias}/ecommerce/shipping-providers/{id}',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/shipping-providers/{id}',
     defaults: {
       host: 'api.duda.co',
     },
   });
 
-  create = APIEndpoint<Types.CreateCategoryPayload, Types.CreateCategoryResponse>({
+  create = APIEndpoint<Types.CreateShippingProviderPayload, Types.CreateShippingProviderResponse>({
     method: 'post',
-    path: '/api/sites/multiscreen/{siteAlias}/ecommerce/shipping-providers',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/shipping-providers',
     defaults: {
       host: 'api.duda.co',
     },
@@ -37,27 +37,27 @@ class Shipping extends Resource {
     },
   });
 
-  update = APIEndpoint<Types.UpdateCategoryPayload, Types.UpdateCategoryResponse>({
+  update = APIEndpoint<Types.UpdateShippingProviderPayload, Types.UpdateShippingProviderResponse>({
     method: 'patch',
-    path: '/api/sites/multiscreen/{siteAlias}/ecommerce/shipping-providers/{id}',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/shipping-providers/{id}',
     defaults: {
       host: 'api.duda.co',
     },
     bodyParams: {
-        live_shipping_rates_url: {
-          type: 'string',
-          required: false,
-        },
-        test_shipping_rates_url: {
-          type: 'string',
-          required: false,
-        },
+      live_shipping_rates_url: {
+        type: 'string',
+        required: false,
       },
+      test_shipping_rates_url: {
+        type: 'string',
+        required: false,
+      },
+    },
   });
 
-  delete = APIEndpoint<Types.DeleteCategoryPayload, Types.DeleteCategoryResponse>({
+  delete = APIEndpoint<Types.DeleteShippingProviderPayload, Types.DeleteShippingProviderResponse>({
     method: 'delete',
-    path: '/api/sites/multiscreen/{siteAlias}/ecommerce/shipping-providers/{id}',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/shipping-providers/{id}',
     defaults: {
       host: 'api.duda.co',
     },

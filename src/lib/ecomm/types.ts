@@ -569,3 +569,19 @@ export interface CreateShippingProviderPayload {
 }
 
 export interface CreateShippingProviderResponse extends ShippingProvider {}
+
+export interface UpdateShippingProviderPayload {
+  site_name: string,
+  id: string,
+  live_shipping_rates_url?: string,
+  test_shipping_rates_url?: string
+}
+
+export interface UpdateShippingProviderResponse extends ShippingProvider {}
+
+export interface DeleteShippingProviderPayload {
+  site_name: string,
+  id: string
+}
+
+export type DeleteShippingProviderResponse = null;
