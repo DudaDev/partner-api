@@ -585,3 +585,105 @@ export interface DeleteShippingProviderPayload {
 }
 
 export type DeleteShippingProviderResponse = null;
+
+export interface Choices {
+  id: string,
+  value: string
+}
+
+export interface ProductOption {
+  choices: Array<Choices>,
+  id: string,
+  name: string
+}
+
+export interface ListOptionsPayload {
+  site_name: string,
+  offset?: number,
+  limit?: number,
+  sort?: string,
+  direction?: 'asc' | 'desc'
+}
+
+export interface ListOptionsResponse {
+  limit: number,
+  offset: number,
+  results: Array<ProductOption>,
+  site_name: string,
+  total_responses: number
+}
+
+export interface GetOptionPayload {
+  site_name: string,
+  option_id: string
+}
+
+export interface GetOptionResponse {
+  choices: Array<Choices>,
+  id: string,
+  name: string
+}
+
+export interface CreateOptionPayload {
+  site_name: string,
+  choices: Array<string>,
+  name: string
+}
+
+export interface CreateOptionResponse {
+  choices: Array<Choices>,
+  id: string,
+  name: string
+}
+
+export interface UpdateOptionPayload {
+  site_name: string,
+  option_id: string,
+  name: string
+}
+
+export interface UpdateOptionResponse {
+  choices: Array<Choices>,
+  id: string,
+  name: string
+}
+
+export interface DeleteOptionPayload {
+  site_name: string,
+  option_id: string
+}
+
+export type DeleteOptionResponse = null;
+
+export interface CreateOptionChoicePayload {
+  site_name: string,
+  option_id: string,
+  value: string
+}
+
+export interface CreateOptionChoiceResponse {
+  choices: Array<Choices>,
+  id: string,
+  name: string
+}
+
+export interface UpdateOptionChoicePayload {
+  site_name: string,
+  option_id: string,
+  choice_id: string,
+  value: string
+}
+
+export interface UpdateOptionChoiceResponse {
+  choices: Array<Choices>,
+  id: string,
+  name: string
+}
+
+export interface DeleteOptionChoicePayload {
+  site_name: string,
+  option_id: string,
+  choice_id: string
+}
+
+export type DeleteOptionChoiceResponse = null;
