@@ -13,6 +13,7 @@ describe('Ecomm tests', () => {
   const order_id = 'test_order';
   const session_id = 'test_session';
   const category_id = 'test_category';
+  const shipping_id = 'test_shipping';
 
   const updateSettings = {
     default_currency: 'USD',
@@ -489,6 +490,24 @@ describe('Ecomm tests', () => {
     title: 'string'
   }
 
+  const shipping_provider = {
+    id: shipping_id,
+    live_shipping_rates_url: 'string',
+    test_shipping_rates_url: 'string'
+  }
+
+  const shipping_providers_list = {
+    offset: 0,
+    limit: 0,
+    total_responses: 0,
+    results: [shipping_provider]
+  }
+
+  const shipping_payload = {
+    live_shipping_rates_url: 'string',
+    test_shipping_rates_url: 'string'
+  }
+
   before(() => {
     duda = new Duda({
       user: 'testuser',
@@ -695,5 +714,42 @@ describe('Ecomm tests', () => {
   it('can delete a category', async () => {
     scope.delete(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/categories/${category_id}`).reply(200)
     return await duda.ecomm.categories.delete({ site_name, category_id })
+  })
+
+  it('can list all shipping providers', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-providers`).reply(200, shipping_providers_list)
+    return await duda.ecomm.shipping.list({
+      site_name: site_name
+    }).then(res => expect(res).to.eql(shipping_providers_list))
+  })
+
+  it('can create a shipping provider', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-providers`, (body) => {
+      expect(body).to.eql({ ...shipping_payload })
+      return body
+    }).reply(201, shipping_provider)
+
+    return await duda.ecomm.shipping.create({ site_name, ...shipping_payload })
+  })
+
+  it('can get a shipping provider', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-providers/${shipping_id}`).reply(200, shipping_provider)
+
+    return await duda.ecomm.shipping.get({ site_name, id: shipping_id })
+      .then(res => expect(res).to.eql({ ...shipping_provider }))
+  })
+
+  it('can update a shipping provider', async () => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-providers/${shipping_id}`, (body) => {
+      expect(body).to.eql({ ...shipping_payload})
+      return body
+    }).reply(200, shipping_provider)
+
+    return await duda.ecomm.shipping.update({ site_name, id: shipping_id, ...shipping_payload })
+  })
+
+  it('can delete a shipping provider', async () => {
+    scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-providers/${shipping_id}`).reply(204)
+    return await duda.ecomm.shipping.delete({ site_name, id: shipping_id })
   })
 })

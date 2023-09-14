@@ -537,3 +537,51 @@ export interface DeleteCategoryPayload {
 }
 
 export type DeleteCategoryResponse = null;
+
+export interface ShippingProvider {
+  id: string,
+  live_shipping_rates_url: string,
+  test_shipping_rates_url: string
+}
+
+export interface ListShippingProvidersPayload {
+  site_name: string
+}
+
+export interface ListShippingProvidersResponse {
+  offset: number,
+  limit: number,
+  total_responses: number,
+  results: Array<ShippingProvider>
+}
+
+export interface GetShippingProviderPayload {
+  site_name: string,
+  id: string
+}
+
+export interface GetShippingProviderResponse extends ShippingProvider {}
+
+export interface CreateShippingProviderPayload {
+  site_name: string,
+  live_shipping_rates_url: string,
+  test_shipping_rates_url?: string
+}
+
+export interface CreateShippingProviderResponse extends ShippingProvider {}
+
+export interface UpdateShippingProviderPayload {
+  site_name: string,
+  id: string,
+  live_shipping_rates_url?: string,
+  test_shipping_rates_url?: string
+}
+
+export interface UpdateShippingProviderResponse extends ShippingProvider {}
+
+export interface DeleteShippingProviderPayload {
+  site_name: string,
+  id: string
+}
+
+export type DeleteShippingProviderResponse = null;
