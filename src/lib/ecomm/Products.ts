@@ -19,7 +19,11 @@ class Products extends Resource {
         required: false,
       },
       sort: {
-        type: 'array',
+        type: 'string',
+        required: false,
+      },
+      direction: {
+        type: 'string',
         required: false,
       },
     },

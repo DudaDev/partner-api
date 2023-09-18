@@ -9,31 +9,88 @@ interface Prices {
   price: string
 }
 
-export interface Product {
+interface VariationProductOptions {
+  choice_id: string,
+  choice_value: string,
+  option_id: string,
+  option_name: string
+}
+
+interface Variations {
+  external_id: string,
+  id: string,
+  images: Array<Images>,
+  options: Array<VariationProductOptions>,
+  price_difference: string,
+  quantity: number,
+  sku: string,
+  status: 'HIDDEN' | 'ACTIVE' | string
+}
+
+interface ProductCustomFields {
+  id: string,
+  value: string
+}
+
+export interface Choices {
+  id: string,
+  value: string
+}
+
+export interface ProductOption {
+  choices: Array<Choices>,
+  id: string,
+  name: string
+}
+
+export interface ProductSEO {
   description?: string,
-  name: string,
-  sku?: string,
-  status?: 'ACTIVE' | 'HIDDEN',
+  product_url?: string,
+  title?: string
+}
+
+export interface Subcategory {
+  id: string,
+  title: string,
+  order: number
+}
+
+export interface Product {
+  custom_fields?: Array<ProductCustomFields>
+  description?: string,
+  external_id?: string,
   images?: Array<Images>,
+  managed_inventory?: boolean,
+  name: string,
+  options?: Array<ProductOption>,
   prices?: Array<Prices>,
-  seo?: {
-    description?: string,
-    product_url?: string,
-    title?: string
-  }
+  quantity?: number,
+  requires_shipping?: boolean,
+  seo?: ProductSEO,
+  sku?: string,
+  status?: 'ACTIVE' | 'HIDDEN' | string,
+  stock_status?: 'IN_STOCK' | 'OUT_OF_STOCK' | string,
+}
+
+export interface ProductResponse extends Product {
+  categories: Array<Subcategory>,
+  id: string,
+  type?: 'PHSYICAL' | 'DIGITAL' | 'SERVICE' | 'DONATION' | string,
+  variations: Array<Variations>
 }
 
 export interface ListProductsPayload {
   site_name: string,
   offset?: number,
   limit?: number,
-  sort?: Array<string>
+  sort?: string,
+  direction?: 'asc' | 'desc' | string
 }
 
 export interface ListProductsResponse {
-  limit: string,
-  offset: string,
-  results: Array<Product>,
+  limit: number,
+  offset: number,
+  results: Array<ProductResponse>,
   site_name: string,
   total_responses: number
 }
@@ -43,26 +100,21 @@ export interface GetProductPayload {
   product_id: string
 }
 
-export interface GetProductResponse extends Product {
-  id: string
-}
+export interface GetProductResponse extends ProductResponse {}
 
 export interface CreateProductPayload extends Product {
-  site_name: string
+  site_name: string,
+  type?: 'PHSYICAL' | 'DIGITAL' | 'SERVICE' | 'DONATION' | string
 }
 
-export interface CreateProductResponse extends Product {
-  id: string
-}
+export interface CreateProductResponse extends ProductResponse {}
 
 export interface UpdateProductPayload extends Product {
   site_name: string,
   product_id: string
 }
 
-export interface UpdateProductResponse extends Product {
-  id: string
-}
+export interface UpdateProductResponse extends ProductResponse {}
 
 export interface DeleteProductPayload {
   site_name: string,
@@ -429,12 +481,6 @@ export interface Category {
   products_count: number
 }
 
-export interface Subcategory {
-  id: string,
-  title: string,
-  order: number
-}
-
 export interface CategoryProductResponse {
   id: string,
   name: string,
@@ -585,17 +631,6 @@ export interface DeleteShippingProviderPayload {
 }
 
 export type DeleteShippingProviderResponse = null;
-
-export interface Choices {
-  id: string,
-  value: string
-}
-
-export interface ProductOption {
-  choices: Array<Choices>,
-  id: string,
-  name: string
-}
 
 export interface ListOptionsPayload {
   site_name: string,
