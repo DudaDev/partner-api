@@ -16,6 +16,7 @@ describe('Ecomm tests', () => {
   const shipping_id = 'test_shipping';
   const option_id = 'test_option';
   const choice_id = 'string';
+  const variation_id = 'test_variation';
 
   const updateSettings = {
     default_currency: 'USD',
@@ -406,8 +407,7 @@ describe('Ecomm tests', () => {
     site_external_id: "string"
   }
 
-  const confirmPaymentBody = {
-    state: "PROCESSED",
+  const confirm_payment_body = {
     transaction_id: "string",
     icon: "string",
     name: "string",
@@ -532,6 +532,42 @@ describe('Ecomm tests', () => {
   const create_product_option_payload = {
     choices: ['string'],
     name: 'string'
+  }
+
+  const variation_response = {
+    external_id: "KTP9XGbSg2",
+    id: "KTP9XGbSg2",
+    images: [
+      {
+        alt: "Image of fancy shirt",
+        url: "https://images.pexels.com/photos/1020585/pexels-photo-1020585.jpeg"
+      }
+    ],
+    options: [
+      {
+        choice_id: "db3je27rg7",
+        choice_value: "45",
+        option_id: "WMd1xylGrp",
+        option_name: "Shirt size"
+      }
+    ],
+    price_difference: "string",
+    quantity: 25,
+    sku: "UGG-BB-PUR-06",
+    status: "HIDDEN"
+  }
+
+  const update_variation_payload = {
+    external_id: "string",
+    images: [
+      {
+        alt: "Image of fancy shirt",
+        url: "https://images.pexels.com/photos/1020585/pexels-photo-1020585.jpeg"
+      }
+    ],
+    price_difference: "string",
+    quantity: 25,
+    sku: "UGG-BB-PUR-06",
   }
 
   before(() => {
@@ -684,22 +720,11 @@ describe('Ecomm tests', () => {
 
   it('can confirm the payment session', async () => {
     scope.post(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/payment-sessions/${session_id}/confirm`, (body) => {
-      expect(body).to.eql({ ...confirmPaymentBody })
+      expect(body).to.eql({ state: 'PROCESSED', ...confirm_payment_body })
       return body
     }).reply(200, payment_url)
 
-    return await duda.ecomm.payments.confirm({
-      site_name: site_name,
-      session_id: session_id,
-      state: 'PROCESSED',
-      transaction_id: 'string',
-      icon: 'string',
-      name: 'string',
-      instructions: 'string',
-      links: {
-        refunds: "string"
-      }
-    })
+    return await duda.ecomm.payments.confirm({ site_name, session_id, state: 'PROCESSED', ...confirm_payment_body })
   })
 
   it('can get all categories', async () => {
@@ -841,5 +866,21 @@ describe('Ecomm tests', () => {
   it('can delete a product option choice', async () => {
     scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/options/${option_id}/choices/${choice_id}`).reply(204)
     return await duda.ecomm.options.deleteChoice({ site_name, option_id, choice_id })
+  })
+
+  it('can get a product variation', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/products/${product_id}/variations/${variation_id}`).reply(200, variation_response)
+
+    return await duda.ecomm.variations.get({ site_name, product_id, variation_id })
+      .then(res => expect(res).to.eql({ ...variation_response }))
+  })
+
+  it('can update a product variation', async () => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/products/${product_id}/variations/${variation_id}`, (body) => {
+      expect(body).to.eql({ status: 'HIDDEN', ...update_variation_payload})
+      return body
+    }).reply(200, variation_response)
+
+    return await duda.ecomm.variations.update({ site_name, product_id, variation_id, status: 'HIDDEN', ...update_variation_payload })
   })
 })

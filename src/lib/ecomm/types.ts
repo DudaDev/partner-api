@@ -687,3 +687,43 @@ export interface DeleteOptionChoicePayload {
 }
 
 export type DeleteOptionChoiceResponse = null;
+
+export interface VariationOptions {
+  choice_id: string,
+  choice_value: string,
+  option_id: string,
+  option_name: string
+}
+
+export interface VariationsResponse {
+  external_id: string,
+  id: string,
+  images: Array<Images>
+  options: Array<VariationOptions>,
+  price_difference: string,
+  quantity: number,
+  sku: string,
+  status: 'HIDDEN' | 'ACTIVE'
+}
+
+export interface GetVariationPayload {
+  site_name: string,
+  product_id: string,
+  variation_id: string
+}
+
+export interface GetVariationResponse extends VariationsResponse {}
+
+export interface UpdateVariationPayload {
+  site_name: string,
+  product_id: string,
+  variation_id: string,
+  external_id?: string,
+  images?: Array<Images>,
+  price_difference?: string,
+  quantity?: number,
+  sku?: string,
+  status?: 'HIDDEN' | 'ACTIVE'
+}
+
+export interface UpdateVariationResponse extends VariationsResponse {}
