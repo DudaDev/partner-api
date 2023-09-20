@@ -568,7 +568,6 @@ describe('Ecomm tests', () => {
     price_difference: "string",
     quantity: 25,
     sku: "UGG-BB-PUR-06",
-    status: "HIDDEN"
   }
 
   before(() => {
@@ -878,10 +877,10 @@ describe('Ecomm tests', () => {
 
   it('can update a product variation', async () => {
     scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/products/${product_id}/variations/${variation_id}`, (body) => {
-      expect(body).to.eql({ ...update_variation_payload})
+      expect(body).to.eql({ status: 'HIDDEN', ...update_variation_payload})
       return body
     }).reply(200, variation_response)
 
-    return await duda.ecomm.variations.update({ site_name, product_id, variation_id, ...update_variation_payload })
+    return await duda.ecomm.variations.update({ site_name, product_id, variation_id, status: 'HIDDEN', ...update_variation_payload })
   })
 })

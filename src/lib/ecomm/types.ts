@@ -723,7 +723,7 @@ export interface UpdateVariationPayload {
   price_difference?: string,
   quantity?: number,
   sku?: string,
-  status?: 'HIDDEN' | 'ACTIVE' | string
+  status?: 'HIDDEN' | 'ACTIVE'
 }
 
 export interface UpdateVariationResponse extends VariationsResponse {}
