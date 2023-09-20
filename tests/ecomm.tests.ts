@@ -408,7 +408,6 @@ describe('Ecomm tests', () => {
   }
 
   const confirm_payment_body = {
-    state: "PROCESSED",
     transaction_id: "string",
     icon: "string",
     name: "string",
@@ -722,11 +721,11 @@ describe('Ecomm tests', () => {
 
   it('can confirm the payment session', async () => {
     scope.post(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/payment-sessions/${session_id}/confirm`, (body) => {
-      expect(body).to.eql({ ...confirm_payment_body })
+      expect(body).to.eql({ state: 'PROCESSED', ...confirm_payment_body })
       return body
     }).reply(200, payment_url)
 
-    return await duda.ecomm.payments.confirm({ site_name, session_id, ...confirm_payment_body })
+    return await duda.ecomm.payments.confirm({ site_name, session_id, state: 'PROCESSED', ...confirm_payment_body })
   })
 
   it('can get all categories', async () => {

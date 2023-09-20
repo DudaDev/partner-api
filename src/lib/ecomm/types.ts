@@ -408,7 +408,7 @@ export interface GetPaymentsResponse {
 export interface ConfirmPaymentsPayload {
   site_name: string,
   session_id: string,
-  state: 'PROCESSING' | 'PROCESSED' | 'INVALIDATED' | 'FAILED' | string,
+  state: 'PROCESSING' | 'PROCESSED' | 'INVALIDATED' | 'FAILED',
   transaction_id?: string,
   icon?: string,
   name?: string,
