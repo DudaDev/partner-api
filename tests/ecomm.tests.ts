@@ -100,9 +100,6 @@ describe('Ecomm tests', () => {
       title: "Amazing T-shirt"
     },
     sku: "UGG-BB-PUR-06",
-    status: "HIDDEN",
-    stock_status: "IN_STOCK, OUT_OF_STOCK",
-    type: "PHYSICAL"
   }
 
   const list_product = {
@@ -246,8 +243,6 @@ describe('Ecomm tests', () => {
       title: "Amazing T-shirt"
     },
     sku: "UGG-BB-PUR-06",
-    status: "HIDDEN",
-    stock_status: "IN_STOCK, OUT_OF_STOCK",
     variations: [
       {
         external_id: "KTP9XGbSg2",
@@ -779,11 +774,11 @@ describe('Ecomm tests', () => {
 
   it('can create a product', async () => {
     scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/products`, (body) => {
-      expect(body).to.eql({ ...product })
+      expect(body).to.eql({ status: 'HIDDEN', stock_status: 'IN_STOCK', type: 'PHYSICAL', ...product })
       return body
     }).reply(200, product_response)
 
-    return await duda.ecomm.products.create({ site_name, ...product })
+    return await duda.ecomm.products.create({ site_name, status: 'HIDDEN', stock_status: 'IN_STOCK', type: 'PHYSICAL', ...product })
   })
 
   it('can get a product', async () => {
@@ -795,11 +790,11 @@ describe('Ecomm tests', () => {
 
   it('can update a product', async () => {
     scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/products/${product_id}`, (body) => {
-      expect(body).to.eql({ ...update_product_payload})
+      expect(body).to.eql({ status: 'HIDDEN', stock_status: 'IN_STOCK', ...update_product_payload})
       return body
     }).reply(200, product_response)
 
-    return await duda.ecomm.products.update({ site_name, product_id, ...update_product_payload })
+    return await duda.ecomm.products.update({ site_name, product_id, status: 'HIDDEN', stock_status: 'IN_STOCK', ...update_product_payload })
   })
 
   it('can delete a product', async () => {

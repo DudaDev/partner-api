@@ -24,7 +24,7 @@ interface Variations {
   price_difference: string,
   quantity: number,
   sku: string,
-  status: 'HIDDEN' | 'ACTIVE' | string
+  status: 'HIDDEN' | 'ACTIVE'
 }
 
 interface ProductCustomFields {
@@ -68,14 +68,14 @@ export interface Product {
   requires_shipping?: boolean,
   seo?: ProductSEO,
   sku?: string,
-  status?: 'ACTIVE' | 'HIDDEN' | string,
-  stock_status?: 'IN_STOCK' | 'OUT_OF_STOCK' | string,
+  status?: 'ACTIVE' | 'HIDDEN',
+  stock_status?: 'IN_STOCK' | 'OUT_OF_STOCK',
 }
 
 export interface ProductResponse extends Product {
   categories: Array<Subcategory>,
   id: string,
-  type?: 'PHSYICAL' | 'DIGITAL' | 'SERVICE' | 'DONATION' | string,
+  type?: 'PHSYICAL' | 'DIGITAL' | 'SERVICE' | 'DONATION',
   variations: Array<Variations>
 }
 
@@ -84,7 +84,7 @@ export interface ListProductsPayload {
   offset?: number,
   limit?: number,
   sort?: string,
-  direction?: 'asc' | 'desc' | string
+  direction?: 'asc' | 'desc'
 }
 
 export interface ListProductsResponse {
@@ -104,7 +104,7 @@ export interface GetProductResponse extends ProductResponse {}
 
 export interface CreateProductPayload extends Product {
   site_name: string,
-  type?: 'PHSYICAL' | 'DIGITAL' | 'SERVICE' | 'DONATION' | string
+  type?: 'PHYSICAL' | 'DIGITAL' | 'SERVICE' | 'DONATION'
 }
 
 export interface CreateProductResponse extends ProductResponse {}
@@ -730,24 +730,13 @@ export interface VariationOptions {
   option_name: string
 }
 
-export interface VariationsResponse {
-  external_id: string,
-  id: string,
-  images: Array<Images>
-  options: Array<VariationOptions>,
-  price_difference: string,
-  quantity: number,
-  sku: string,
-  status: 'HIDDEN' | 'ACTIVE'
-}
-
 export interface GetVariationPayload {
   site_name: string,
   product_id: string,
   variation_id: string
 }
 
-export interface GetVariationResponse extends VariationsResponse {}
+export interface GetVariationResponse extends Variations {}
 
 export interface UpdateVariationPayload {
   site_name: string,
@@ -761,4 +750,4 @@ export interface UpdateVariationPayload {
   status?: 'HIDDEN' | 'ACTIVE'
 }
 
-export interface UpdateVariationResponse extends VariationsResponse {}
+export interface UpdateVariationResponse extends Variations {}
