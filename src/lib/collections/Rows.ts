@@ -26,6 +26,14 @@ class Rows extends Resource {
     },
   });
 
+  deleteRow = APIEndpoint<Types.DeleteSingleRowPayload, Types.DeleteSingleRowResponse>({
+    method: 'delete',
+    path: '/api/sites/multiscreen/{site_name}/collection/{collection_name}/row/{row_id}',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
   delete = APIEndpoint<Types.DeleteRowPayload, Types.DeleteRowResponse>({
     method: 'delete',
     path: '/api/sites/multiscreen/{site_name}/collection/{collection_name}/row',
