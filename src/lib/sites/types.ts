@@ -1,7 +1,82 @@
+export type Languages =
+  'en' |
+  'es' |
+  'ja' |
+  'pt' |
+  'fr' |
+  'de' |
+  'tr' |
+  'en-gb' |
+  'it' |
+  'nl' |
+  'ar' |
+  'be' |
+  'bg' |
+  'bs-ba' |
+  'ca' |
+  'cs' |
+  'da' |
+  'el' |
+  'en-au' |
+  'en-ca' |
+  'es-ar' |
+  'es-cl' |
+  'es-co' |
+  'es-cr' |
+  'es-mx' |
+  'et' |
+  'fa' |
+  'fi' |
+  'fr-ca' |
+  'he' |
+  'hi' |
+  'lv' |
+  'hu' |
+  'hy' |
+  'id' |
+  'is' |
+  'nb' |
+  'ar' |
+  'pa' |
+  'pl' |
+  'pt-br' |
+  'ro' |
+  'ru' |
+  'sk' |
+  'sl' |
+  'sq' |
+  'sv' |
+  'sw' |
+  'ta' |
+  'th' |
+  'uk' |
+  'vi' |
+  'zh' |
+  'cy' |
+  'tl' |
+  'zh-tw' |
+  'ka' |
+  'mr' |
+  'sr-rs' |
+  'gl' |
+  'eu' |
+  'az' |
+  'ps' |
+  'mi' |
+  'ko' |
+  'mn';
+
+export interface SiteLabel {
+  name: string
+}
+
 export interface Site {
   account_name?: string,
   fav_icon?: string,
   external_uid?: string,
+  google_tracking_id?: string,
+  googletagmanager_container_id?: Array<string>,
+  additionalLanguages?: Array<Languages>,
   site_domain?: string,
   lang?: string,
   site_business_info?: {
@@ -24,7 +99,8 @@ export interface Site {
   site_seo?: {
     og_image?: string,
     title?: string,
-    description?: string
+    description?: string,
+    no_index?: boolean
   },
   schemas?: {
     local_business?: {
@@ -38,6 +114,8 @@ export interface Site {
   template_id?: number,
   site_default_domain?: string,
   preview_site_url?: string,
+  overview_site_url?: string,
+  editor_site_url?: string,
   last_published_date?: string,
   first_published_date?: string,
   last_reset_by?: string,
@@ -46,7 +124,10 @@ export interface Site {
   creation_date?: string,
   publish_status?: 'PUBLISHED' | 'UNPUBLISHED' | 'NOT_PUBLISHED_YET',
   thumbnail_url?: string,
-  store_status?: 'NONE' | 'ACTIVE' | 'SUSPENDED'
+  canonical_url?: string,
+  store_status?: 'NONE' | 'ACTIVE' | 'SUSPENDED',
+  store_type?: 'NATIVE' | 'THIRDPARTY',
+  labels?: Array<SiteLabel>
 }
 
 export type SiteThemeColor = {

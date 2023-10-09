@@ -68,7 +68,6 @@ describe('Site tests', () => {
 
         scope = nock('https://api.duda.co')
     })
-    // Requires number in Partner-API, string in Dev Docs, can take either input when executing either command
     it('can create a site', async () => {
         scope.post(`${api_path}create`, (body) => {
             expect(body).to.eql({ template_id:template_id })
