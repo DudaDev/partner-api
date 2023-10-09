@@ -242,6 +242,1508 @@ function validateSSO(req: YourRequestObject): boolean {
 }
 ```
 
-## More Information
+# Sites
 
-- [REST API Reference](https://developer.duda.co/reference#getting-started-with-the-duda-api)
+## Get Site
+
+[Get Site Reference](https://developer.duda.co/reference/sites-get-site)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}`
+
+  ```typescript
+  duda.sites.get({ site_name: site_name });
+  ```
+
+## Get Site by External ID
+
+[Get Site by External ID Reference](https://developer.duda.co/reference/sites-get-sites-by-external-id)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/byexternalid/{external_uid}`
+
+  ```typescript
+  duda.sites.getByExternalID({ external_uid: external_uid })
+  ```
+
+## Create Site
+
+[Create Site Reference](https://developer.duda.co/reference/sites-create-site)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/create`
+
+  ```typescript
+  duda.sites.create({ template_id: template_id })
+  ```
+
+## Update Site
+
+[Update Site Reference](https://developer.duda.co/reference/sites-update-site)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/update/{site_name}`
+
+  ```typescript
+  duda.sites.update({ site_name: site_name })
+  ```
+
+## Duplicate Site
+
+[Duplicate Site Reference](https://developer.duda.co/reference/sites-duplicate-site)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/duplicate/{site_name}`
+
+  ```typescript
+  duda.sites.duplicate({ site_name: site_name, new_default_domain_prefix: new_default_domain_prefix })
+  ```
+
+## Publish Site
+
+[Publish Site Reference](https://developer.duda.co/reference/sites-publish-site)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/publish/{site_name}`
+
+  ```typescript
+  duda.sites.publish({ site_name: site_name })
+  ```
+
+## Unpublish Site
+
+[Unpublish Site Reference](https://developer.duda.co/reference/sites-unpublish-site)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/unpublish/{site_name}`
+
+  ```typescript
+  duda.sites.unpublish({ site_name: site_name })
+  ```
+
+## Reset Site
+
+[Reset Site Reference](https://developer.duda.co/reference/sites-reset-site)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/reset/{site_name}`
+
+  ```typescript
+  duda.sites.reset({ site_name: site_name, template_id: template_id })
+  ```
+
+## Switch Template
+
+[Switch Template Reference](https://developer.duda.co/reference/sites-switch-template)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/switchTemplate/{site_name}`
+
+  ```typescript
+  duda.sites.switchTemplate({ site_name: site_name, template_id: template_id })
+  ```
+
+## Delete Site
+
+[Delete Site Reference](https://developer.duda.co/reference/sites-delete-site)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}`
+
+  ```typescript
+  duda.sites.delete({ site_name: site_name })
+  ```
+
+## Get Site Theme
+
+[Get Site Theme Reference](https://developer.duda.co/reference/sites-get-site-theme)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/theme`
+
+  ```typescript
+  duda.sites.theme.get({ site_name: site_name })
+  ```
+
+## Update Site Theme
+
+[Update Site Theme Reference](https://developer.duda.co/reference/sites-update-site-theme)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/theme`
+
+  ```typescript
+  duda.sites.theme.update({ site_name: site_name })
+  ```
+
+# Templates
+
+## List Templates
+
+[List Templates Reference](https://developer.duda.co/reference/templates-list-templates)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/templates`
+
+  ```typescript
+  duda.templates.list();
+  ```
+
+## Get Template
+
+[Get Template Reference](https://developer.duda.co/reference/templates-get-template)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/templates/{template_id}`
+
+  ```typescript
+  duda.templates.get({ template_id: template_id });
+  ```
+
+## Update Template
+
+[Update Template Reference](https://developer.duda.co/reference/templates-update-template)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/templates/{template_id}`
+
+  ```typescript
+  duda.templates.update({ template_id: template_id });
+  ```
+
+## Create From Site
+
+[Create From Site Reference](https://developer.duda.co/reference/templates-create-from-site)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/templates/fromsite`
+
+  ```typescript
+  duda.templates.createFromSite({ site_name: site_name });
+  ```
+
+## Create From Template
+
+[Create From Template Reference](https://developer.duda.co/reference/templates-create-from-template)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/templates/fromtemplate`
+
+  ```typescript
+  duda.templates.createFromTemplate({ template_id: template_id });
+  ```
+
+## Delete Template
+
+[Delete Template Reference](https://developer.duda.co/reference/templates-delete-template)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/templates/{template_id}`
+
+  ```typescript
+  duda.templates.delete({ template_id: template_id });
+  ```
+
+# Pages v2
+
+## List Pages
+
+[List Pages Reference](https://developer.duda.co/reference/pages-v2-list-pages)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/pages`
+
+  ```typescript
+  duda.pages.v2.list({ site_name: site_name });
+  ```
+
+## Get Page
+
+[Get Page Reference](https://developer.duda.co/reference/pages-v2-get-page)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}`
+
+  ```typescript
+  duda.pages.v2.get({ site_name: site_name, page_uuid: page_uuid });
+  ```
+
+## Update Page
+
+[Update Page Reference](https://developer.duda.co/reference/pages-v2-update-page)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}`
+
+  ```typescript
+  duda.pages.v2.update({ site_name: site_name, page_uuid: page_uuid });
+  ```
+
+## Duplicate Page
+
+[Duplicate Page Reference](https://developer.duda.co/reference/pages-v2-duplicate-page)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}/duplicate`
+
+  ```typescript
+  duda.pages.v2.duplicate({ site_name: site_name, page_uuid: page_uuid });
+  ```
+
+## Delete Page
+
+[Delete Page Reference](https://developer.duda.co/reference/pages-v2-delete-page)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}`
+
+  ```typescript
+  duda.pages.v2.delete({ site_name: site_name, page_uuid: page_uuid });
+  ```
+
+# eComm
+
+## Get Settings
+
+[Get Settings Reference](https://developer.duda.co/reference/get-settings)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce`
+
+  ```typescript
+  duda.ecomm.get({ site_name: site_name });
+  ```
+
+## Update Settings
+
+[Update Settings Reference](https://developer.duda.co/reference/ecommerce-update-settings)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce`
+
+  ```typescript
+  duda.ecomm.update({ site_name: site_name });
+  ```
+
+# eComm Carts
+
+## List Carts
+
+[List Carts Reference](https://developer.duda.co/reference/ecommerce-list-carts)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/carts`
+
+  ```typescript
+  duda.ecomm.carts.list({ site_name: site_name });
+  ```
+
+## Get Cart
+
+[Get Cart Reference](https://developer.duda.co/reference/ecommerce-get-cart)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/carts/{cart_id}`
+
+  ```typescript
+  duda.ecomm.carts.get({ site_name: site_name, cart_id: cart_id });
+  ```
+
+# eComm Orders
+
+## List Orders
+
+[List Orders Reference](https://developer.duda.co/reference/ecommerce-list-orders)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders`
+
+  ```typescript
+  duda.ecomm.orders.list({ site_name: site_name });
+  ```
+
+## Get Order
+
+[Get Order Reference](https://developer.duda.co/reference/ecommerce-get-order)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}`
+
+  ```typescript
+  duda.ecomm.carts.get({ site_name: site_name, order_id: order_id });
+  ```
+
+# eComm Payment Gateways
+
+## List Payment Gateways
+
+[List Payment Gateways Reference](https://developer.duda.co/reference/ecommerce-list-payment-gateways)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/payment-gateways`
+
+  ```typescript
+  duda.ecomm.gateways.list({ site_name: site_name });
+  ```
+
+## Get Payment Gateway
+
+[Get Payment Gateway Reference](https://developer.duda.co/reference/ecommerce-get-payment-gateway)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/payment-gateways/{gateway_id}`
+
+  ```typescript
+  duda.ecomm.gateways.get({ site_name: site_name, gateway_id: gateway_id });
+  ```
+
+## Create Payment Gateway
+
+[Create Payment Gateway Reference](https://developer.duda.co/reference/ecommerce-create-payment-gateway)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/payment-gateways`
+
+  ```typescript
+  duda.ecomm.gateways.create({ site_name: site_name, live_payment_methods_url: live_payment_methods_url });
+  ```
+
+## Update Payment Gateway
+
+[Update Payment Gateway Reference](https://developer.duda.co/reference/ecommerce-update-payment-gateway)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/payment-gateways/{gateway_id}`
+
+  ```typescript
+  duda.ecomm.gateways.update({ site_name: site_name, gateway_id: gateway_id, live_payment_methods_url: live_payment_methods_url });
+  ```
+
+## Delete Payment Gateway
+
+[Delete Payment Gateway Reference](https://developer.duda.co/reference/ecommerce-delete-payment-gateway)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/payment-gateways/{gateway_id}`
+
+  ```typescript
+  duda.ecomm.gateways.delete({ site_name: site_name, gateway_id: gateway_id });
+  ```
+
+# eComm Payments
+
+## Get Payment Session
+
+[Get Payment Session Reference](https://developer.duda.co/reference/ecommerce-get-payment-session)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/payment-sessions/{session_id}`
+
+  ```typescript
+  duda.ecomm.payments.get({ site_name: site_name, session_id: session_id });
+  ```
+
+## Confirm Payment
+
+[Confirm Payment Reference](https://developer.duda.co/reference/ecommerce-confirm-payment)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/payment-sessions/{session_id}/confirm`
+
+  ```typescript
+  duda.ecomm.payments.confirm({ site_name: site_name, session_id: session_id, state: state });
+  ```
+
+# eComm Categories
+
+## Get Categories
+
+[Get Categories Reference](https://developer.duda.co/reference/ecommerce-get-categories)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories`
+
+  ```typescript
+  duda.ecomm.categories.list({ site_name: site_name });
+  ```
+
+## Get Category
+
+[Get Category Reference](https://developer.duda.co/reference/ecommerce-get-category)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories/{category_id}`
+
+  ```typescript
+  duda.ecomm.categories.get({ site_name: site_name, category_id: category_id });
+  ```
+
+## Create Category
+
+[Create Category Reference](https://developer.duda.co/reference/ecommerce-create-category)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories`
+
+  ```typescript
+  duda.ecomm.categories.create({ site_name: site_name });
+  ```
+
+## Update Category
+
+[Update Category Reference](https://developer.duda.co/reference/ecommerce-update-category)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories/{category_id}`
+
+  ```typescript
+  duda.ecomm.categories.update({ site_name: site_name, category_id: category_id });
+  ```
+
+## Delete Category
+
+[Delete Category Reference](https://developer.duda.co/reference/ecommerce-delete-category)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories/{category_id}`
+
+  ```typescript
+  duda.ecomm.categories.delete({ site_name: site_name, category_id: category_id });
+  ```
+
+# eComm Shipping Providers
+
+## List Shipping Providers
+
+[List Shipping Providers Reference](https://developer.duda.co/reference/ecommerce-list-shipping-providers)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/shipping-providers`
+
+  ```typescript
+  duda.ecomm.shipping.list({ site_name: site_name });
+  ```
+
+## Get Shipping Provider
+
+[Get Shipping Provider Reference](https://developer.duda.co/reference/ecommerce-get-shipping-provider)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{siteAlias}/ecommerce/shipping-providers/{id}`
+
+  ```typescript
+  duda.ecomm.shipping.get({ site_name: site_name, id: id });
+  ```
+
+## Create Shipping Provider
+
+[Create Shipping Provider Reference](https://developer.duda.co/reference/ecommerce-create-shipping-provider)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{siteAlias}/ecommerce/shipping-providers`
+
+  ```typescript
+  duda.ecomm.shipping.create({ site_name: site_name, live_shipping_rates_url: live_shipping_rates_url });
+  ```
+
+## Update Shipping Provider
+
+[Update Shipping Provider Reference](https://developer.duda.co/reference/ecommerce-update-shipping-provider)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{siteAlias}/ecommerce/shipping-providers/{id}`
+
+  ```typescript
+  duda.ecomm.shipping.update({ site_name: site_name, id: id });
+  ```
+
+## Delete Shipping Provider
+
+[Delete Shipping Provider Reference](https://developer.duda.co/reference/ecommerce-delete-shipping-provider)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{siteAlias}/ecommerce/shipping-providers/{id}`
+
+  ```typescript
+  duda.ecomm.shipping.delete({ site_name: site_name, id: id });
+  ```
+
+# eComm Products
+
+## List Products
+
+[List Products Reference](https://developer.duda.co/reference/ecommerce-list-products)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products`
+
+  ```typescript
+  duda.ecomm.products.list({ site_name: site_name });
+  ```
+
+## Get Product
+
+[Get Product Reference](https://developer.duda.co/reference/ecommerce-get-product)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products/{product_id}`
+
+  ```typescript
+  duda.ecomm.products.get({ site_name: site_name, product_id: product_id });
+  ```
+
+## Create Product
+
+[Create Product Reference](https://developer.duda.co/reference/ecommerce-create-product)
+
+### Request
+
+`CREATE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products`
+
+  ```typescript
+  duda.ecomm.products.create({ site_name: site_name });
+  ```
+
+## Update Product
+
+[Update Product Reference](https://developer.duda.co/reference/ecommerce-update-product)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products/{product_id}`
+
+  ```typescript
+  duda.ecomm.products.update({ site_name: site_name, product_id: product_id });
+  ```
+
+## Delete Product
+
+[Delete Product Reference](https://developer.duda.co/reference/ecommerce-delete-product)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products/{product_id}`
+
+  ```typescript
+  duda.ecomm.products.delete({ site_name: site_name, product_id: product_id });
+  ```
+
+## Get Product Variation
+
+[Get Product Variation Reference](https://developer.duda.co/reference/ecommerce-get-product-variation)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products/{product_id}/variations/{variation_id}`
+
+  ```typescript
+  duda.ecomm.variations.get({ site_name: site_name, product_id: product_id, variation_id: variation_id });
+  ```
+
+## Update Product Variation
+
+[Update Product Variation Reference](https://developer.duda.co/reference/ecommerce-update-product-variation)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products/{product_id}/variations/{variation_id}`
+
+  ```typescript
+  duda.ecomm.variations.update({ site_name: site_name, product_id: product_id, variation_id: variation_id });
+  ```
+
+# eComm Product Options
+
+## List Product Options
+
+[List Product Options Reference](https://developer.duda.co/reference/ecommerce-list-product-options)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options`
+
+  ```typescript
+  duda.ecomm.options.list({ site_name: site_name });
+  ```
+
+## Get Product Option
+
+[Get Product Option Reference](https://developer.duda.co/reference/ecommerce-get-product-option)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options/{option_id}`
+
+  ```typescript
+  duda.ecomm.options.get({ site_name: site_name, option_id: option_id });
+  ```
+
+## Create Product Option
+
+[Create Product Option Reference](https://developer.duda.co/reference/ecommerce-create-product-option)
+
+### Request
+
+`CREATE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options`
+
+  ```typescript
+  duda.ecomm.options.create({ site_name: site_name, choices: choices, name: name });
+  ```
+
+## Update Product Option
+
+[Update Product Option Reference](https://developer.duda.co/reference/ecommerce-update-product-option)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options/{option_id}`
+
+  ```typescript
+  duda.ecomm.options.update({ site_name: site_name, option_id: option_id, name: name });
+  ```
+
+## Delete Product Option
+
+[Delete Product Option Reference](https://developer.duda.co/reference/ecommerce-delete-product-option)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options/{option_id}`
+
+  ```typescript
+  duda.ecomm.options.delete({ site_name: site_name, option_id: option_id });
+  ```
+
+## Create Product Option Choice
+
+[Create Product Option Choice Reference](https://developer.duda.co/reference/ecommerce-create-product-option-choice)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options/{option_id}/choices`
+
+  ```typescript
+  duda.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, value: value });
+  ```
+
+## Update Product Option Choice
+
+[Update Product Option Choice Reference](https://developer.duda.co/reference/ecommerce-update-product-option-choice)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options/{option_id}/choices/{choice_id}`
+
+  ```typescript
+  duda.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, choice_id: choice_id, value: value });
+  ```
+
+## Delete Product Option Choice
+
+[Delete Product Option Choice Reference](https://developer.duda.co/reference/ecommerce-delete-product-option-choice)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options/{option_id}/choices/{choice_id}`
+
+  ```typescript
+  duda.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, choice_id: choice_id });
+  ```
+
+# URL Rules
+
+## List Rules
+
+[List Rules Reference](https://developer.duda.co/reference/url-rules-list-rules)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/site/{site_name}/urlrules`
+
+  ```typescript
+  duda.urlRules.list({ site_name: site_name });
+  ```
+
+## Get Rule
+
+[Get Rule Reference](https://developer.duda.co/reference/url-rules-get-rule)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/site/{site_name}/urlrules/{id}`
+
+  ```typescript
+  duda.urlRules.get({ site_name: site_name, id: id });
+  ```
+
+## Create Rule
+
+[Create Rule Reference](https://developer.duda.co/reference/url-rules-create-rule)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/site/{site_name}/urlrules`
+
+  ```typescript
+  duda.urlRules.create({ site_name: site_name });
+  ```
+
+## Update Rule
+
+[Update Rule Reference](https://developer.duda.co/reference/url-rules-update-rule)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/site/{site_name}/urlrules/{id}`
+
+  ```typescript
+  duda.urlRules.update({ site_name: site_name, id: id });
+  ```
+
+## Delete Rule
+
+[Delete Rule Reference](https://developer.duda.co/reference/url-rules-delete-rule)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/site/{site_name}/urlrules/{id}`
+
+  ```typescript
+  duda.urlRules.update({ site_name: site_name, id: id });
+  ```
+
+# Site Plans
+
+## List Site Plans
+
+[List Site Plans Reference](https://developer.duda.co/reference/site-plans-list-site-plans)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/plans`
+
+  ```typescript
+  duda.plans.list();
+  ```
+
+## Get Site Plan
+
+[Get Site Plan Reference](https://developer.duda.co/reference/site-plans-get-site-plan)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/plan`
+
+  ```typescript
+  duda.plans.get({ site_name: site_name });
+  ```
+
+## Update Site Plan
+
+[Update Site Plan Reference](https://developer.duda.co/reference/site-plans-update-site-plan)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/plan/{plan_id}`
+
+  ```typescript
+  duda.plans.update({ site_name: site_name, plan_id: plan_id });
+  ```
+
+# Accounts
+
+## Get Account
+
+[Get Account Reference](https://developer.duda.co/reference/accounts-get-account)
+
+### Request
+
+`GET https://api.duda.co/api/accounts/{account_name}`
+
+  ```typescript
+  duda.accounts.get({ account_name: account_name });
+  ```
+
+## Create Account
+
+[Create Account Reference](https://developer.duda.co/reference/accounts-create-account)
+
+### Request
+
+`POST https://api.duda.co/api/accounts/create`
+
+  ```typescript
+  duda.accounts.create({ account_name: account_name });
+  ```
+
+## Update Account
+
+[Update Account Reference](https://developer.duda.co/reference/accounts-update-account)
+
+### Request
+
+`POST https://api.duda.co/api/accounts/update/{account_name}`
+
+  ```typescript
+  duda.accounts.update({ account_name: account_name });
+  ```
+
+## Delete Account
+
+[Delete Account Reference](https://developer.duda.co/reference/accounts-delete-account)
+
+### Request
+
+`DELETE https://api.duda.co/api/accounts/{account_name}`
+
+  ```typescript
+  duda.accounts.delete({ account_name: account_name });
+  ```
+
+# Authentication
+
+## Get SSO Link
+
+[Get SSO Link Reference](https://developer.duda.co/reference/authentication-get-sso-link)
+
+### Request
+
+`GET https://api.duda.co/api/accounts/sso/{account_name}/link`
+
+  ```typescript
+  duda.accounts.authentication.getSSOLink({ account_name: account_name });
+  ```
+
+## Create Password Reset Link
+
+[Create Password Reset Link Reference](https://developer.duda.co/reference/authentication-create-reset-password-link)
+
+### Request
+
+`POST https://api.duda.co/api/accounts/reset-password/{account_name}`
+
+  ```typescript
+  duda.accounts.authentication.getResetPasswordLink({ account_name: account_name });
+  ```
+
+## Create Welcome Link
+
+[Create Welcome Link Reference](https://developer.duda.co/reference/authentication-create-welcome-link)
+
+### Request
+
+`POST https://api.duda.co/api/accounts/reset-password/{account_name}`
+
+  ```typescript
+  duda.accounts.authentication.getWelcomeLink({ account_name: account_name });
+  ```
+
+# Permissions
+
+## List Client Permissions
+
+[List Client Permissions Reference](https://developer.duda.co/reference/client-permissions-list-client-permissions)
+
+### Request
+
+`GET https://api.duda.co/api/accounts/permissions/multiscreen`
+
+  ```typescript
+  duda.accounts.permissions.list();
+  ```
+
+## Get Client Permissions
+
+[Get Client Permissions Reference](https://developer.duda.co/reference/client-permissions-get-client-permissions)
+
+### Request
+
+`GET https://api.duda.co/api/accounts/{account_name}/sites/{site_name}/permissions`
+
+  ```typescript
+  duda.accounts.permissions.get({ account_name: account_name, site_name: site_name });
+  ```
+
+## List Client Sites
+
+[List Client Sites Reference](https://developer.duda.co/reference/client-permissions-list-client-sites)
+
+### Request
+
+`GET https://api.duda.co/api/accounts/grant-access/{account_name}/sites/multiscreen`
+
+  ```typescript
+  duda.accounts.permissions.listAccessibleSites({ account_name: account_name });
+  ```
+
+## Grant Site Access
+
+[Grant Site Access Reference](https://developer.duda.co/reference/client-permissions-grant-site-access)
+
+### Request
+
+`POST https://api.duda.co/api/accounts/{account_name}/sites/{site_name}/permissions`
+
+  ```typescript
+  duda.accounts.permissions.grantSiteAccess({ account_name: account_name, site_name: site_name });
+  ```
+
+## Remove Site Access
+
+[Remove Site Access Reference](https://developer.duda.co/reference/client-permissions-remove-site-access)
+
+### Request
+
+`DELETE https://api.duda.co/api/accounts/{account_name}/sites/{site_name}/permissions`
+
+  ```typescript
+  duda.accounts.permissions.removeSiteAccess({ account_name: account_name, site_name: site_name });
+  ```
+
+# Content
+
+## Get Content Library
+
+[Get Content Library Reference](https://developer.duda.co/reference/site-content-get-content-library)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/content`
+
+  ```typescript
+  duda.content.get({ site_name: site_name });
+  ```
+
+## Update Content Library
+
+[Update Content Library Reference](https://developer.duda.co/reference/site-content-update-content-library)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/content`
+
+  ```typescript
+  duda.content.update({ site_name: site_name });
+  ```
+
+## Publish Content Library
+
+[Publish Content Library Reference](https://developer.duda.co/reference/site-content-publish-content-library)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/content/publish`
+
+  ```typescript
+  duda.content.publish({ site_name: site_name });
+  ```
+
+## Get Location
+
+[Get Location Reference](https://developer.duda.co/reference/site-content-get-location-data)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/content/location/{location_id}`
+
+  ```typescript
+  duda.content.multilocation.get({ site_name: site_name, location_id: location_id });
+  ```
+
+## Create Location
+
+[Create Location Reference](https://developer.duda.co/reference/site-content-create-location)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/content/location`
+
+  ```typescript
+  duda.content.multilocation.create({ site_name: site_name });
+  ```
+
+## Update Location
+
+[Update Location Reference](https://developer.duda.co/reference/site-content-update-location)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/content/location/{location_id}`
+
+  ```typescript
+  duda.content.multilocation.update({ site_name: site_name, location_id: location_id });
+  ```
+
+## Delete Location
+
+[Delete Location Reference](https://developer.duda.co/reference/site-content-delete-location)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/content/location/{location_id}`
+
+  ```typescript
+  duda.content.multilocation.delete({ site_name: site_name, location_id: location_id });
+  ```
+
+## Get Injected Content
+
+[Get Injected Content Reference](https://developer.duda.co/reference/site-content-get-injected-content)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/inject-content/{site_name}`
+
+  ```typescript
+  duda.content.injectedContent.get({ site_name: site_name });
+  ```
+
+## Create Injected Content
+
+[Create Injected Content Reference](https://developer.duda.co/reference/site-content-create-injected-content)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/inject-content/{site_name}`
+
+  ```typescript
+  duda.content.injectedContent.create({ site_name: site_name });
+  ```
+
+## Create Injected Content (Single Page)
+
+[Create Injected Content (Single Page) Reference](https://developer.duda.co/reference/site-content-create-injected-content)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/inject-content/{site_name}/pages/{page_name}`
+
+  ```typescript
+  duda.content.injectedContent.createSPA({ site_name: site_name, page_name: page_name });
+  ```
+
+## Upload Resource
+
+[Upload Resource Reference](https://developer.duda.co/reference/site-content-upload-resources)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/resources/{site_name}/upload`
+
+  ```typescript
+  duda.content.uploadResource({ site_name: site_name });
+  ```
+
+# Collections
+
+## List Collections
+
+[List Collections Reference](https://developer.duda.co/reference/collections-list-collections)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/collection`
+
+  ```typescript
+  duda.collections.list({ site_name: site_name });
+  ```
+
+## Get Collection
+
+[Get Collection Reference](https://developer.duda.co/reference/collections-get-collection)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}`
+
+  ```typescript
+  duda.collections.get({ site_name: site_name, collection_name: collection_name });
+  ```
+
+## Create Collection
+
+[Create Collection Reference](https://developer.duda.co/reference/collections-create-collection)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/collection`
+
+  ```typescript
+  duda.collections.create({ site_name: site_name, name: name });
+  ```
+
+## Update Collection
+
+[Update Collection Reference](https://developer.duda.co/reference/collections-update-collection)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{current_collection_name}`
+
+  ```typescript
+  duda.collections.update({ site_name: site_name, current_collection_name: current_collection_name });
+  ```
+
+## Delete Collection
+
+[Delete Collection Reference](https://developer.duda.co/reference/collections-delete-collection)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}`
+
+  ```typescript
+  duda.collections.delete({ site_name: site_name, collection_name: collection_name });
+  ```
+
+## Clear Cache
+
+[Clear Cache Reference](https://developer.duda.co/reference/collections-clear-cache)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/revalidate`
+
+  ```typescript
+  duda.collections.clearCache({ site_name: site_name, collection_name: collection_name });
+  ```
+
+## Clear Cache by External ID
+
+[Clear Cache by External ID Reference](https://developer.duda.co/reference/collections-clear-cache-by-external-id)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/collections/revalidate/{external_id}`
+
+  ```typescript
+  duda.collections.clearCacheByExtID({ external_id: external_id });
+  ```
+
+## Create Rows
+
+[Create Rows Reference](https://developer.duda.co/reference/collection-rows-create-rows)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/row`
+
+  ```typescript
+  duda.collections.rows.create({ site_name: site_name, collection_name: collection_name });
+  ```
+
+## Update Rows
+
+[Update Rows Reference](https://developer.duda.co/reference/collection-rows-update-rows)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/row`
+
+  ```typescript
+  duda.collections.rows.update({ site_name: site_name, collection_name: collection_name });
+  ```
+
+## Delete Row
+
+[Delete Row Reference](https://developer.duda.co/reference/collections-rows-delete-row)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/row/{row_id}`
+
+  ```typescript
+  duda.collections.rows.deleteRow({ site_name: site_name, collection_name: collection_name, row_id: row_id });
+  ```
+
+## Delete Rows
+
+[Delete Rows Reference](https://developer.duda.co/reference/collection-rows-delete-rows)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/row`
+
+  ```typescript
+  duda.collections.rows.delete({ site_name: site_name, collection_name: collection_name });
+  ```
+
+## Create Fields
+
+[Create Fields Reference](https://developer.duda.co/reference/collection-fields-create-fields)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/field`
+
+  ```typescript
+  duda.collections.fields.create({ site_name: site_name, collection_name: collection_name });
+  ```
+
+## Update Field
+
+[Update Field Reference](https://developer.duda.co/reference/collection-fields-update-field)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/field/{field_name}`
+
+  ```typescript
+  duda.collections.fields.update({ site_name: site_name, collection_name: collection_name, field_name: field_name });
+  ```
+
+## Delete Field
+
+[Delete Field Reference](https://developer.duda.co/reference/collection-fields-delete-field)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/field/{field_name}`
+
+  ```typescript
+  duda.collections.fields.delete({ site_name: site_name, collection_name: collection_name, field_name: field_name });
+  ```
+
+# Reporting
+
+## Site Created
+
+[Site Created Reference](https://developer.duda.co/reference/reporting-sites-created)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/created`
+
+  ```typescript
+  duda.reporting.sites.created();
+  ```
+
+## Sites Published
+
+[Sites Published Reference](https://developer.duda.co/reference/reporting-published-sites)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/published`
+
+  ```typescript
+  duda.reporting.sites.published();
+  ```
+
+## Sites Unpublished
+
+[Sites Unpublished Reference](https://developer.duda.co/reference/reporting-unpublished-sites)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/unpublished`
+
+  ```typescript
+  duda.reporting.sites.unpublished();
+  ```
+
+## Form Submissions
+
+[Form Submissions Reference](https://developer.duda.co/reference/reporting-form-submissions)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/get-forms/{site_name}`
+
+  ```typescript
+  duda.reporting.forms.submissions({ site_name: site_name });
+  ```
+
+## Activities
+
+[Activities Reference](https://developer.duda.co/reference/reporting-activity)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/activities`
+
+  ```typescript
+  duda.reporting.activities.get({ site_name: site_name });
+  ```
+
+## Analytics
+
+[Analytics Reference](https://developer.duda.co/reference/reporting-analytics)
+
+### Request
+
+`GET https://api.duda.co/api/analytics/site/{site_name}`
+
+  ```typescript
+  duda.reporting.analytics.get({ site_name: site_name });
+  ```
+
+## Get Client Settings
+
+[Get Client Settings Reference](https://developer.duda.co/reference/stats-email-get-client-settings)
+
+### Request
+
+`GET https://api.duda.co/api/accounts/{account_name}/sites/{site_name}/stats-email`
+
+  ```typescript
+  duda.reporting.emailSettings.get({ account_name: account_name, site_name: site_name });
+  ```
+
+## Create Subscription
+
+[Create Subscription Reference](https://developer.duda.co/reference/stats-email-create-subscription)
+
+### Request
+
+`POST https://api.duda.co/api/accounts/{account_name}/sites/{site_name}/stats-email`
+
+  ```typescript
+  duda.reporting.emailSettings.subscribe({ account_name: account_name, site_name: site_name, frequency: frequency });
+  ```
+
+## Unsubscribe
+
+[Unsubscribe Reference](https://developer.duda.co/reference/stats-email-delete-subscription)
+
+### Request
+
+`DELETE https://api.duda.co/api/accounts/{account_name}/sites/{site_name}/stats-email`
+
+  ```typescript
+  duda.reporting.emailSettings.unsubscribe({ account_name: account_name, site_name: site_name });
+  ```
+
+# Other
+
+## List Backups
+
+[List Backups Reference](https://developer.duda.co/reference/site-backups-list-backups)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/backups/{site_name}`
+
+  ```typescript
+  duda.other.backups.list({ site_name: site_name });
+  ```
+
+## Create Backup
+
+[Create Backup Reference](https://developer.duda.co/reference/site-backups-create-backup)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/backups/{site_name}/create`
+
+  ```typescript
+  duda.other.backups.create({ site_name: site_name });
+  ```
+
+## Restore Backup
+
+[Restore Backup Reference](https://developer.duda.co/reference/site-backups-restore-site)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/backups/{site_name}/restore/{backup_name}`
+
+  ```typescript
+  duda.other.backups.restore({ site_name: site_name, backup_name: backup_name });
+  ```
+
+## Delete Backup
+
+[Delete Backup Reference](https://developer.duda.co/reference/site-backups-delete-backup)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/backups/{site_name}/{backup_name}`
+
+  ```typescript
+  duda.other.backups.delete({ site_name: site_name, backup_name: backup_name });
+  ```
+
+## Create Certificate
+
+[Create Certificate Reference](https://developer.duda.co/reference/ssl-certificates-create-certificate)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/certificate`
+
+  ```typescript
+  duda.other.ssl.create({ site_name: site_name });
+  ```
+
+## Renew Certificate
+
+[Renew Certificate Reference](https://developer.duda.co/reference/ssl-certificates-renew-certificate)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/certificate/renew`
+
+  ```typescript
+  duda.other.ssl.renew({ site_name: site_name });
+  ```
+
+## Delete Certificate
+
+[Delete Certificate Reference](https://developer.duda.co/reference/ssl-certificates-delete-certificate)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/certificate`
+
+  ```typescript
+  duda.other.ssl.delete({ site_name: site_name });
+  ```
