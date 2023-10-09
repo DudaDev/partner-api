@@ -176,7 +176,16 @@ describe('Collection tests', () => {
         })
       })
 
-      it('can delete a row from a collection', async () => {
+      it('can delete a single row from a collection', async () => {
+        scope.delete('/api/sites/multiscreen/test_site/collection/test_collection/row/test_row').reply(204)
+        return await duda.collections.rows.deleteRow({
+          site_name: 'test_site',
+          collection_name: 'test_collection',
+          row_id: 'test_row'
+        })
+      })
+
+      it('can delete multiple rows from a collection', async () => {
         scope.delete('/api/sites/multiscreen/test_site/collection/test_collection/row', (body) => {
           expect(body).to.eql(row_delete)
           return body
