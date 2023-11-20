@@ -10,6 +10,7 @@ import AppsTokens from './tokens/Tokens';
 import AppsContent from './content/Content';
 import AppsManifest from './manifest/Manifest';
 import AppsAccounts from './accounts/Accounts';
+import AppsEcomm from './ecomm/Ecomm';
 import { RequestOptions } from '../http';
 
 class Apps extends Resource {
@@ -29,6 +30,8 @@ class Apps extends Resource {
   accounts = new AppsAccounts(this);
 
   sitewidehtml = new AppsSWH(this);
+
+  ecomm = new AppsEcomm(this);
 
   utils = Utils;
 
