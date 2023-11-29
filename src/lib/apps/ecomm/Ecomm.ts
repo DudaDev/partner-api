@@ -1,4 +1,5 @@
 import AppsProducts from './Products';
+import AppsOptions from './Options';
 import { SubResource } from '../../base';
 // import * as Types from './types';
 // import { APIEndpoint } from '../../APIEndpoint';
@@ -8,6 +9,8 @@ class AppsEcomm extends SubResource {
   basePath = '/application';
 
   products = new AppsProducts(this.base);
+
+  options = new AppsOptions(this.base);
 }
 
 export default AppsEcomm;
