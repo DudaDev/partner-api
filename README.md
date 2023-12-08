@@ -1845,3 +1845,101 @@ function validateSSO(req: YourRequestObject): boolean {
   ```typescript
   duda.appstore.ecomm.products.delete({ site_name: site_name, product_id: product_id });
   ```
+
+# Appstore eComm Product Options
+
+## List Product Options
+
+[List Product Options Reference](https://developer.duda.co/reference/app-ecommerce-list-product-options)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options`
+
+  ```typescript
+  duda.appstore.ecomm.options.list({ site_name: site_name });
+  ```
+
+## Get Product Option
+
+[Get Product Option Reference](https://developer.duda.co/reference/app-ecommerce-get-product-option)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}`
+
+  ```typescript
+  duda.appstore.ecomm.options.get({ site_name: site_name, option_id: option_id });
+  ```
+
+## Create Product Option
+
+[Create Product Option Reference](https://developer.duda.co/reference/app-ecommerce-create-product-option)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options`
+
+  ```typescript
+  duda.appstore.ecomm.options.create({ site_name: site_name, name: name, choices: choices });
+  ```
+
+## Update Product Option
+
+[Update Product Option Reference](https://developer.duda.co/reference/app-ecommerce-update-product-option)
+
+### Request
+
+`PUT https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}`
+
+  ```typescript
+  duda.appstore.ecomm.options.update({ site_name: site_name, option_id: option_id, name: name });
+  ```
+
+## Delete Product Option
+
+[Delete Product Option Reference](https://developer.duda.co/reference/app-ecommerce-delete-product-option)
+
+### Request
+
+`DELETE https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}`
+
+  ```typescript
+  duda.appstore.ecomm.options.delete({ site_name: site_name, option_id: option_id });
+  ```
+
+## Create Product Option Choice
+
+[Create Product Option Choice Reference](https://developer.duda.co/reference/app-ecommerce-create-product-option)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}/choices`
+
+  ```typescript
+  duda.appstore.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, value: value });
+  ```
+
+## Update Product Option Choice
+
+[Update Product Option Choice Reference](https://developer.duda.co/reference/app-ecommerce-update-product-option-choice)
+
+### Request
+
+`PUT https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}/choices/{choice_id}`
+
+  ```typescript
+  duda.appstore.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, choice_id: choice_id, value: value });
+  ```
+
+## Delete Product Option Choice
+
+[Delete Product Option Choice Reference](https://developer.duda.co/reference/app-ecommerce-delete-product-option-choice)
+
+### Request
+
+`DELETE https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}/choices/{choice_id}`
+
+  ```typescript
+  duda.appstore.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, choice_id: choice_id });
+  ```
