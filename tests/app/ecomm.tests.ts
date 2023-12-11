@@ -8,6 +8,13 @@ describe('App store ecomm tests', () => {
   const product_id = "test_product";
   const option_id = 'test_option';
   const choice_id = 'string';
+  const order_id = 'test_order';
+
+  const offset = 0;
+  const sort = 'sort';
+  const direction = 'asc';
+  const limit = 1;
+
   const user = 'testuser'
   const pass = 'testpass'
   const token = '123456'
@@ -249,6 +256,124 @@ describe('App store ecomm tests', () => {
     name: 'string'
   }
 
+  const address = {
+    first_name: "string",
+      last_name: "string",
+      full_name: "string",
+      address_1: "string",
+      address_2: "string",
+      street_number: "string",
+      street_name: "string",
+      city: "string",
+      sub_locality: "string",
+      region: "string",
+      country: "string",
+      postal_code: "string",
+      phone: "string"
+  }
+
+  const order = {
+    source: "CHECKOUT",
+    mode: "LIVE",
+    id: "string",
+    external_id: "string",
+    status: "IN_PROGRESS",
+    email: "string",
+    invoice_number: "string",
+    items: [
+      {
+        id: "string",
+        product_id: "string",
+        variation_id: "string",
+        external_product_id: "string",
+        external_variation_id: "string",
+        name: "string",
+        image: "string",
+        sku: "string",
+        options: [
+          {
+            name: "string",
+            value: "string"
+          }
+        ],
+        quantity: 0,
+        shippable: true,
+        unit_price: 0,
+        unit_weight: 0,
+        unit_dimensions: {
+          height: 0,
+          width: 0,
+          length: 0
+        },
+        total: 0,
+        combined_weight: 0,
+        metadata: "string"
+      }
+    ],
+    billing_address: address,
+    shipping_address: address,
+    shipping_method: {
+      name: "string",
+      cost: 0
+    },
+    shipping_instructions: "string",
+    discounts: [
+      {
+        id: "string",
+        savings: 0,
+        name: "string",
+        type: "string"
+      }
+    ],
+    taxes: [
+      {
+        name: "string",
+        amount: 0,
+        rate: 0
+      }
+    ],
+    subtotal: 0,
+    total: 0,
+    payment: {
+      transaction_id: "string",
+      status: "PAID",
+      currency: "string",
+      method: "string",
+      card_brand: "NULL",
+      card_last_4: "string"
+    },
+    refunds: [
+      {}
+    ],
+    tracking_url: "string",
+    tracking_number: "string",
+    created: "2023-09-08T17:48:47.497Z",
+    user_agent: "string",
+    ip_address: "string",
+    metadata: "string"
+  }
+
+  const list_orders = {
+    offset: offset,
+    limit: limit,
+    total_response: 0,
+    results: [order]
+  }
+
+  const update_order_item = {
+    id: "string",
+    metadata: "string"
+  }
+
+  const update_order_payload = {
+    email: "string",
+    items: [update_order_item],
+    billing_address: address,
+    shipping_address: address,
+    shipping_instructions: "string",
+    metadata: "string"
+  }
+
   let duda: Duda;
   let scope: nock.Scope;
 
@@ -292,7 +417,7 @@ describe('App store ecomm tests', () => {
 
   it('can update a product', async () => {
     scope.patch(`${base_path}/site/${site_name}/ecommerce/products/${product_id}`, (body) => {
-      expect(body).to.eql({ status: 'HIDDEN', stock_status: 'IN_STOCK', ...update_product_payload})
+      expect(body).to.eql({ status: 'HIDDEN', stock_status: 'IN_STOCK', ...update_product_payload })
       return body
     }).reply(200, product_response)
 
@@ -367,5 +492,33 @@ describe('App store ecomm tests', () => {
   it('can delete a product option choice', async () => {
     scope.delete(`${base_path}/site/${site_name}/ecommerce/options/${option_id}/choices/${choice_id}`).reply(204)
     return await duda.appstore.ecomm.options.deleteChoice({ site_name, option_id, choice_id, token })
+  })
+
+  it('can list all orders', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/orders?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_orders)
+    return await duda.appstore.ecomm.orders.list({
+      site_name: site_name,
+      offset: offset,
+      limit: limit,
+      sort: sort,
+      direction: direction,
+      token: token
+    }).then(res => expect(res).to.eql(list_orders))
+  })
+
+  it('can get a specific order', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/orders/${order_id}`).reply(200, order)
+
+    return await duda.appstore.ecomm.orders.get({ site_name, order_id, token })
+      .then(res => expect(res).to.eql({ ...order }))
+  })
+
+  it('can update an order', async () => {
+    scope.patch(`${base_path}/site/${site_name}/ecommerce/orders/${order_id}`, (body) => {
+      expect(body).to.eql({ status: 'IN_PROGRESS', ...update_order_payload })
+      return body
+    }).reply(200, order)
+
+    return await duda.appstore.ecomm.orders.update({ site_name, order_id, token, status: 'IN_PROGRESS', ...update_order_payload })
   })
 })

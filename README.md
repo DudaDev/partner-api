@@ -1943,3 +1943,41 @@ function validateSSO(req: YourRequestObject): boolean {
   ```typescript
   duda.appstore.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, choice_id: choice_id });
   ```
+
+# Appstore eComm Orders
+
+## List Orders
+
+[List Orders Reference](https://developer.duda.co/reference/app-list-orders)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders`
+
+  ```typescript
+  duda.appstore.ecomm.orders.list({ site_name: site_name });
+  ```
+
+## Get Order
+
+[Get Order Reference](https://developer.duda.co/reference/app-get-order)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}`
+
+  ```typescript
+  duda.appstore.ecomm.orders.get({ site_name: site_name, order_id: order_id });
+  ```
+
+## Update Order
+
+[Update Order Reference](https://developer.duda.co/reference/app-update-order)
+
+### Request
+
+`PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}`
+
+  ```typescript
+  duda.appstore.ecomm.orders.update({ site_name: site_name, order_id: order_id });
+  ```
