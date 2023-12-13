@@ -351,6 +351,11 @@ export interface Order {
   metadata: string
 }
 
+export interface UpdateOrderItem {
+  id: string,
+  metadata: string
+}
+
 export interface ListOrdersPayload {
   site_name: string,
   offset?: number,
@@ -372,6 +377,20 @@ export interface GetOrderPayload {
 }
 
 export type GetOrderResponse = Order;
+
+export interface UpdateOrderPayload {
+  site_name: string,
+  order_id: string,
+  status?: 'IN_PROGRESS' | 'PROCESSED' | 'DISPUTED' | 'SHIPPED' | 'DELIVERED' | 'PENDING' | 'CANCELLED' | 'DISPATCHED',
+  email?: string,
+  items?: Array<UpdateOrderItem>,
+  billing_address?: Address,
+  shipping_address?: Address,
+  shipping_instructions?: string,
+  metadata?: string
+}
+
+export interface UpdateOrderResponse extends Order {}
 
 export type GetCartResponse = Cart;
 
