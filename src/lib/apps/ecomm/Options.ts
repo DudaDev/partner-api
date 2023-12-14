@@ -10,6 +10,11 @@ class AppsOptions extends SubResource {
     defaults: {
       host: 'api.duda.co',
     },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
+    },
     queryParams: {
       offset: {
         type: 'number',
@@ -36,6 +41,11 @@ class AppsOptions extends SubResource {
     defaults: {
       host: 'api.duda.co',
     },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
+    },
   });
 
   create = APIEndpoint<TokenRequest<Types.CreateOptionPayload>, Types.CreateOptionResponse>({
@@ -43,6 +53,11 @@ class AppsOptions extends SubResource {
     path: '/site/{site_name}/ecommerce/options',
     defaults: {
       host: 'api.duda.co',
+    },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
     },
     bodyParams: {
       choices: {
@@ -61,6 +76,11 @@ class AppsOptions extends SubResource {
     path: '/site/{site_name}/ecommerce/options/{option_id}',
     defaults: {
       host: 'api.duda.co',
+    },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
     },
     bodyParams: {
       name: {
@@ -100,6 +120,11 @@ class AppsOptions extends SubResource {
     defaults: {
       host: 'api.duda.co',
     },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
+    },
     bodyParams: {
       value: {
         type: 'string',
@@ -114,6 +139,11 @@ class AppsOptions extends SubResource {
     path: '/site/{site_name}/ecommerce/options/{option_id}/choices/{choice_id}',
     defaults: {
       host: 'api.duda.co',
+    },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
     },
   });
 }

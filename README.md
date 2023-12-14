@@ -1981,3 +1981,29 @@ function validateSSO(req: YourRequestObject): boolean {
   ```typescript
   duda.appstore.ecomm.orders.update({ site_name: site_name, order_id: order_id });
   ```
+
+# Appstore eComm Payments
+
+## Get Payment Session
+
+[Get Payment Session Reference](https://developer.duda.co/reference/app-get-payment-session)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-sessions/{session_id}`
+
+  ```typescript
+  duda.appstore.ecomm.payments.get({ site_name: site_name, session_id: session_id });
+  ```
+
+## Confirm Payment
+
+[Confirm Payment Reference](https://developer.duda.co/reference/app-confirm-payment)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-sessions/{session_id}/confirm`
+
+  ```typescript
+  duda.appstore.ecomm.payments.confirm({ site_name: site_name, session_id: session_id });
+  ```

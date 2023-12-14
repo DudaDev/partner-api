@@ -9,6 +9,7 @@ describe('App store ecomm tests', () => {
   const option_id = 'test_option';
   const choice_id = 'string';
   const order_id = 'test_order';
+  const session_id = 'test_session';
 
   const offset = 0;
   const sort = 'sort';
@@ -374,6 +375,76 @@ describe('App store ecomm tests', () => {
     metadata: "string"
   }
 
+  const payment_session = {
+    id: "string",
+    mode: "LIVE",
+    cancel_url: "string",
+    invoice: {
+      purchase_id: "string",
+      purchase_type: "string",
+      email: "string",
+      language: "string",
+      currency: "string",
+      total: 0,
+      shipping_address: {
+        first_name: "string",
+        last_name: "string",
+        full_name: "string",
+        address_1: "string",
+        address_2: "string",
+        street_number: "string",
+        street_name: "string",
+        city: "string",
+        sub_locality: "string",
+        region: "string",
+        country: "string",
+        postal_code: "string",
+        phone: "string"
+      },
+      billing_address: {
+        first_name: "string",
+        last_name: "string",
+        full_name: "string",
+        address_1: "string",
+        address_2: "string",
+        street_number: "string",
+        street_name: "string",
+        city: "string",
+        sub_locality: "string",
+        region: "string",
+        country: "string",
+        postal_code: "string",
+        phone: "string"
+      },
+      items: [
+        {
+          type: "PHYSICAL",
+          name: "string",
+          unit_price: 0,
+          quantity: 0,
+          discount_amount: 0,
+          total: 0
+        }
+      ]
+    },
+    site_name: "string",
+    site_external_id: "string"
+  }
+
+  const confirm_payment_body = {
+    transaction_id: "string",
+    icon: "string",
+    name: "string",
+    instructions: "string",
+    links: {
+      refunds: "string"
+    },
+  }
+
+  const payment_url = {
+    return_url: "string"
+  }
+
   let duda: Duda;
   let scope: nock.Scope;
 
@@ -520,5 +591,23 @@ describe('App store ecomm tests', () => {
     }).reply(200, order)
 
     return await duda.appstore.ecomm.orders.update({ site_name, order_id, token, status: 'IN_PROGRESS', ...update_order_payload })
+  })
+
+  it('can get a payment session', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/payment-sessions/${session_id}`).reply(200, payment_session)
+    return await duda.appstore.ecomm.payments.get({
+      site_name: site_name,
+      session_id: session_id,
+      token: token
+    }).then(res => expect(res).to.eql(payment_session))
+  })
+
+  it('can confirm the payment session', async () => {
+    scope.post(`${base_path}/site/${site_name}/ecommerce/payment-sessions/${session_id}/confirm`, (body) => {
+      expect(body).to.eql({ state: 'PROCESSED', ...confirm_payment_body })
+      return body
+    }).reply(200, payment_url)
+
+    return await duda.appstore.ecomm.payments.confirm({ site_name, session_id, token, state: 'PROCESSED', ...confirm_payment_body })
   })
 })
