@@ -2,6 +2,7 @@ import AppsProducts from './Products';
 import AppsOptions from './Options';
 import AppsOrders from './Orders';
 import AppsPayments from './Payments';
+import AppsGateways from './Gateways';
 import { SubResource } from '../../base';
 // import * as Types from './types';
 // import { APIEndpoint } from '../../APIEndpoint';
@@ -17,6 +18,8 @@ class AppsEcomm extends SubResource {
   orders = new AppsOrders(this.base);
 
   payments = new AppsPayments(this.base);
+
+  gateways = new AppsGateways(this.base);
 }
 
 export default AppsEcomm;

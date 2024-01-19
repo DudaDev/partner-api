@@ -10,6 +10,7 @@ describe('App store ecomm tests', () => {
   const choice_id = 'string';
   const order_id = 'test_order';
   const session_id = 'test_session';
+  const gateway_id = "test_gateway";
 
   const offset = 0;
   const sort = 'sort';
@@ -445,6 +446,11 @@ describe('App store ecomm tests', () => {
     return_url: "string"
   }
 
+  const gateway = {
+    live_payment_methods_url: 'https://example.org/path/to/gateway',
+    test_payment_methods_url: 'https://test.example.org/path/to/gateway'
+  }
+
   let duda: Duda;
   let scope: nock.Scope;
 
@@ -609,5 +615,42 @@ describe('App store ecomm tests', () => {
     }).reply(200, payment_url)
 
     return await duda.appstore.ecomm.payments.confirm({ site_name, session_id, token, state: 'PROCESSED', ...confirm_payment_body })
+  })
+
+  it('can create a gateway', async () => {
+    scope.post(`${base_path}/site/${site_name}/ecommerce/payment-gateways`, (body) => {
+      expect(body).to.eql({ ...gateway })
+      return body
+    }).reply(201, { id: 'abc123', ...gateway })
+
+    return await duda.appstore.ecomm.gateways.create({ site_name, token, ...gateway })
+  })
+
+  it('can get a gateway', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/payment-gateways/${gateway_id}`)
+      .reply(200, { gateway_id, ...gateway })
+
+    return await duda.appstore.ecomm.gateways.get({ site_name, gateway_id, token })
+  })
+
+  it('can list all gateways', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/payment-gateways`)
+      .reply(200, [ {gateway_id, ...gateway} ])
+
+    return await duda.appstore.ecomm.gateways.list({ site_name, token })
+  })
+
+  it('can update a gateway', async () => {
+    scope.patch(`${base_path}/site/${site_name}/ecommerce/payment-gateways/${gateway_id}`, (body) => {
+      expect(body).to.eql(gateway)
+      return body
+    }).reply(200, gateway)
+
+    return await duda.appstore.ecomm.gateways.update({ site_name, gateway_id, token, ...gateway })
+  })
+
+  it('can delete a gateway', async () => {
+    scope.delete(`${base_path}/site/${site_name}/ecommerce/payment-gateways/${gateway_id}`).reply(204);
+    return await duda.appstore.ecomm.gateways.delete({ site_name, gateway_id, token });
   })
 })
