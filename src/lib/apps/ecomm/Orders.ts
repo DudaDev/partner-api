@@ -10,6 +10,11 @@ class AppsOrders extends SubResource {
     defaults: {
       host: 'api.duda.co',
     },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
+    },
     queryParams: {
       offset: {
         type: 'number',
