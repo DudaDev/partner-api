@@ -2007,3 +2007,65 @@ function validateSSO(req: YourRequestObject): boolean {
   ```typescript
   duda.appstore.ecomm.payments.confirm({ site_name: site_name, session_id: session_id });
   ```
+
+# Appstore eComm Payment Gateways
+
+## List Payment Gateways
+
+[List Payment Gateways Reference](https://developer.duda.co/reference/app-list-payment-gateways)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways`
+
+  ```typescript
+  duda.appstore.ecomm.gateways.list({ site_name: site_name });
+  ```
+
+## Get Payment Gateway
+
+[Get Payment Gateway Reference](https://developer.duda.co/reference/app-get-payment-gateway)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways/{id}`
+
+  ```typescript
+  duda.appstore.ecomm.gateways.get({ site_name: site_name, gateway_id: gateway_id });
+  ```
+
+## Create Payment Gateway
+
+[Create Payment Gateway Reference](https://developer.duda.co/reference/app-create-payment-gateway)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways`
+
+  ```typescript
+  duda.appstore.ecomm.gateways.create({ site_name: site_name, live_payment_methods_url: live_payment_methods_url });
+  ```
+
+## Update Payment Gateway
+
+[Update Payment Gateway Reference](https://developer.duda.co/reference/app-update-payment-gateway)
+
+### Request
+
+`PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways/{gateway_id}`
+
+  ```typescript
+  duda.appstore.ecomm.gateways.update({ site_name: site_name, gateway_id: gateway_id, live_payment_methods_url: live_payment_methods_url });
+  ```
+
+## Delete Payment Gateway
+
+[Delete Payment Gateway Reference](https://developer.duda.co/reference/app-delete-payment-gateway)
+
+### Request
+
+`DELETE https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways/{gateway_id}`
+
+  ```typescript
+  duda.appstore.ecomm.gateways.delete({ site_name: site_name, gateway_id: gateway_id });
+  ```
