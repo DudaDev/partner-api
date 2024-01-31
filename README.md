@@ -2069,3 +2069,29 @@ function validateSSO(req: YourRequestObject): boolean {
   ```typescript
   duda.appstore.ecomm.gateways.delete({ site_name: site_name, gateway_id: gateway_id });
   ```
+
+# Appstore eComm Carts
+
+## List Carts
+
+[List Carts Reference](https://developer.duda.co/reference/app-list-carts)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/carts`
+
+  ```typescript
+  duda.appstore.ecomm.carts.list({ site_name: site_name });
+  ```
+
+## Get Cart
+
+[Get Cart Reference](https://developer.duda.co/reference/app-get-cart)
+
+### Request
+
+`GET get https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/carts/{cart_id}`
+
+  ```typescript
+  duda.appstore.ecomm.carts.get({ site_name: site_name, cart_id: cart_id });
+  ```
