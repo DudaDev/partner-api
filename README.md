@@ -1248,6 +1248,42 @@ function validateSSO(req: YourRequestObject): boolean {
   duda.accounts.permissions.removeSiteAccess({ account_name: account_name, site_name: site_name });
   ```
 
+## List Duda Team Groups
+
+[List Duda Team Groups Reference](https://developer.duda.co/reference/team-permissions-list-duda-team-groups)
+
+### Request
+
+`GET https://api.duda.co/api/permission-groups/default`
+
+  ```typescript
+  duda.accounts.permissions.listDudaTeamGroups();
+  ```
+
+## List Custom Team Groups
+
+[List Custom Team Groups Reference](https://developer.duda.co/reference/team-permissions-list-custom-team-groups)
+
+### Request
+
+`GET https://api.duda.co/api/permission-groups/custom`
+
+  ```typescript
+  duda.accounts.permissions.listCustomTeamGroups();
+  ```
+
+## Assign Team Member to Group
+
+[Assign Team Member to Group Reference](https://developer.duda.co/reference/team-permissions-assign-team-member-to-group)
+
+### Request
+
+`POST https://api.duda.co/api/permission-groups/{group_name}/accounts/{account_name}/add`
+
+  ```typescript
+  duda.accounts.permissions.assignTeamMemberGroup({ group_name: group_name, account_name: account_name });
+  ```
+
 # Content
 
 ## Get Content Library
@@ -1746,4 +1782,316 @@ function validateSSO(req: YourRequestObject): boolean {
 
   ```typescript
   duda.other.ssl.delete({ site_name: site_name });
+  ```
+
+# Appstore eComm Products
+
+## List Products
+
+[List Products Reference](https://developer.duda.co/reference/app-list-products)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/products`
+
+  ```typescript
+  duda.appstore.ecomm.products.list({ site_name: site_name });
+  ```
+
+## Get Product
+
+[Get Product Reference](https://developer.duda.co/reference/app-get-product)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/products/{product_id}`
+
+  ```typescript
+  duda.appstore.ecomm.products.get({ site_name: site_name, product_id: product_id });
+  ```
+
+## Create Product
+
+[Create Product Reference](https://developer.duda.co/reference/app-create-product)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/products`
+
+  ```typescript
+  duda.appstore.ecomm.products.create({ site_name: site_name });
+  ```
+
+## Update Product
+
+[Update Product Reference](https://developer.duda.co/reference/app-update-product)
+
+### Request
+
+`PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/products/{product_id}`
+
+  ```typescript
+  duda.appstore.ecomm.products.update({ site_name: site_name, product_id: product_id });
+  ```
+
+## Delete Product
+
+[Delete Product Reference](https://developer.duda.co/reference/app-delete-product)
+
+### Request
+
+`DELETE https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/products/{product_id}`
+
+  ```typescript
+  duda.appstore.ecomm.products.delete({ site_name: site_name, product_id: product_id });
+  ```
+
+# Appstore eComm Product Options
+
+## List Product Options
+
+[List Product Options Reference](https://developer.duda.co/reference/app-ecommerce-list-product-options)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options`
+
+  ```typescript
+  duda.appstore.ecomm.options.list({ site_name: site_name });
+  ```
+
+## Get Product Option
+
+[Get Product Option Reference](https://developer.duda.co/reference/app-ecommerce-get-product-option)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}`
+
+  ```typescript
+  duda.appstore.ecomm.options.get({ site_name: site_name, option_id: option_id });
+  ```
+
+## Create Product Option
+
+[Create Product Option Reference](https://developer.duda.co/reference/app-ecommerce-create-product-option)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options`
+
+  ```typescript
+  duda.appstore.ecomm.options.create({ site_name: site_name, name: name, choices: choices });
+  ```
+
+## Update Product Option
+
+[Update Product Option Reference](https://developer.duda.co/reference/app-ecommerce-update-product-option)
+
+### Request
+
+`PUT https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}`
+
+  ```typescript
+  duda.appstore.ecomm.options.update({ site_name: site_name, option_id: option_id, name: name });
+  ```
+
+## Delete Product Option
+
+[Delete Product Option Reference](https://developer.duda.co/reference/app-ecommerce-delete-product-option)
+
+### Request
+
+`DELETE https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}`
+
+  ```typescript
+  duda.appstore.ecomm.options.delete({ site_name: site_name, option_id: option_id });
+  ```
+
+## Create Product Option Choice
+
+[Create Product Option Choice Reference](https://developer.duda.co/reference/app-ecommerce-create-product-option)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}/choices`
+
+  ```typescript
+  duda.appstore.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, value: value });
+  ```
+
+## Update Product Option Choice
+
+[Update Product Option Choice Reference](https://developer.duda.co/reference/app-ecommerce-update-product-option-choice)
+
+### Request
+
+`PUT https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}/choices/{choice_id}`
+
+  ```typescript
+  duda.appstore.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, choice_id: choice_id, value: value });
+  ```
+
+## Delete Product Option Choice
+
+[Delete Product Option Choice Reference](https://developer.duda.co/reference/app-ecommerce-delete-product-option-choice)
+
+### Request
+
+`DELETE https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}/choices/{choice_id}`
+
+  ```typescript
+  duda.appstore.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, choice_id: choice_id });
+  ```
+
+# Appstore eComm Orders
+
+## List Orders
+
+[List Orders Reference](https://developer.duda.co/reference/app-list-orders)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders`
+
+  ```typescript
+  duda.appstore.ecomm.orders.list({ site_name: site_name });
+  ```
+
+## Get Order
+
+[Get Order Reference](https://developer.duda.co/reference/app-get-order)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}`
+
+  ```typescript
+  duda.appstore.ecomm.orders.get({ site_name: site_name, order_id: order_id });
+  ```
+
+## Update Order
+
+[Update Order Reference](https://developer.duda.co/reference/app-update-order)
+
+### Request
+
+`PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}`
+
+  ```typescript
+  duda.appstore.ecomm.orders.update({ site_name: site_name, order_id: order_id });
+  ```
+
+# Appstore eComm Payments
+
+## Get Payment Session
+
+[Get Payment Session Reference](https://developer.duda.co/reference/app-get-payment-session)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-sessions/{session_id}`
+
+  ```typescript
+  duda.appstore.ecomm.payments.get({ site_name: site_name, session_id: session_id });
+  ```
+
+## Confirm Payment
+
+[Confirm Payment Reference](https://developer.duda.co/reference/app-confirm-payment)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-sessions/{session_id}/confirm`
+
+  ```typescript
+  duda.appstore.ecomm.payments.confirm({ site_name: site_name, session_id: session_id });
+  ```
+
+# Appstore eComm Payment Gateways
+
+## List Payment Gateways
+
+[List Payment Gateways Reference](https://developer.duda.co/reference/app-list-payment-gateways)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways`
+
+  ```typescript
+  duda.appstore.ecomm.gateways.list({ site_name: site_name });
+  ```
+
+## Get Payment Gateway
+
+[Get Payment Gateway Reference](https://developer.duda.co/reference/app-get-payment-gateway)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways/{id}`
+
+  ```typescript
+  duda.appstore.ecomm.gateways.get({ site_name: site_name, gateway_id: gateway_id });
+  ```
+
+## Create Payment Gateway
+
+[Create Payment Gateway Reference](https://developer.duda.co/reference/app-create-payment-gateway)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways`
+
+  ```typescript
+  duda.appstore.ecomm.gateways.create({ site_name: site_name, live_payment_methods_url: live_payment_methods_url });
+  ```
+
+## Update Payment Gateway
+
+[Update Payment Gateway Reference](https://developer.duda.co/reference/app-update-payment-gateway)
+
+### Request
+
+`PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways/{gateway_id}`
+
+  ```typescript
+  duda.appstore.ecomm.gateways.update({ site_name: site_name, gateway_id: gateway_id, live_payment_methods_url: live_payment_methods_url });
+  ```
+
+## Delete Payment Gateway
+
+[Delete Payment Gateway Reference](https://developer.duda.co/reference/app-delete-payment-gateway)
+
+### Request
+
+`DELETE https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways/{gateway_id}`
+
+  ```typescript
+  duda.appstore.ecomm.gateways.delete({ site_name: site_name, gateway_id: gateway_id });
+  ```
+
+# Appstore eComm Carts
+
+## List Carts
+
+[List Carts Reference](https://developer.duda.co/reference/app-list-carts)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/carts`
+
+  ```typescript
+  duda.appstore.ecomm.carts.list({ site_name: site_name });
+  ```
+
+## Get Cart
+
+[Get Cart Reference](https://developer.duda.co/reference/app-get-cart)
+
+### Request
+
+`GET get https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/carts/{cart_id}`
+
+  ```typescript
+  duda.appstore.ecomm.carts.get({ site_name: site_name, cart_id: cart_id });
   ```
