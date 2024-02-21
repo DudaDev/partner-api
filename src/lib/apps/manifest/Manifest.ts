@@ -12,7 +12,7 @@ class AppsManifest extends SubResource {
     },
   });
 
-  update = APIEndpoint<TokenRequest<Types.Manifest>, null>({
+  update = APIEndpoint<TokenRequest<Types.UpdateManifestPayload>, null>({
     method: 'post',
     path: '/{app_uuid}',
     defaults: {
