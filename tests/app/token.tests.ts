@@ -6,8 +6,7 @@ describe('App store token tests', () => {
   const base_path = '/api/integrationhub/application' 
   const user = 'testuser'
   const pass = 'testpass'
-  const token = '123456'
-
+  const encoded_auth = Buffer.from(`${user}:${pass}`).toString('base64');
   const app_uuid = 'uuid'
   const refresh_token = '123456'
 
@@ -28,19 +27,19 @@ describe('App store token tests', () => {
       env: Duda.Envs.direct,
     })
 
-    scope = nock('https://api.duda.co', {
+    scope = nock(`https://${Duda.Envs.direct}`, {
       reqheaders: {
-        'x-duda-access-token': `Bearer ${token}`
+        'authorization': `Basic ${encoded_auth}`,
       }
     })
   })
 
-  it('should create a new access token', async () => {
+  it('can create a new access token', async () => {
     scope.post(`${base_path}/${app_uuid}/token/refresh`, (body) => {
       expect(body).to.eql({ refresh_token: refresh_token });
       return body;
     }).reply(200, response)
 
-    return await duda.appstore.tokens.create({ app_uuid, token, refresh_token });
+    return await duda.appstore.tokens.create({ app_uuid, refresh_token });
   })
 })
