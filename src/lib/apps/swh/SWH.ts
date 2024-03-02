@@ -19,7 +19,7 @@ class AppsSWH extends SubResource {
 
   get = APIEndpoint<TokenRequest<Types.GetSWHPayload>, Types.GetSWHResponse>({
     method: 'get',
-    path: '/site/{site_name}/sitewidehtml/{swh_uuid}',
+    path: '/site/{site_name}/sitewidehtml/{uuid}',
     defaults: {
       host: 'api.duda.co',
     },
@@ -30,7 +30,7 @@ class AppsSWH extends SubResource {
     },
   });
 
-  add = APIEndpoint<TokenRequest<Types.CreateSWHPayload>, Types.CreateSWHResponse>({
+  create = APIEndpoint<TokenRequest<Types.CreateSWHPayload>, Types.CreateSWHResponse>({
     method: 'post',
     path: '/site/{site_name}/sitewidehtml',
     defaults: {
@@ -45,7 +45,7 @@ class AppsSWH extends SubResource {
 
   update = APIEndpoint<TokenRequest<Types.UpdateSWHPayload>, Types.UpdateSWHResponse>({
     method: 'put',
-    path: '/site/{site_name}/sitewidehtml/{swh_uuid}',
+    path: '/site/{site_name}/sitewidehtml/{uuid}',
     defaults: {
       host: 'api.duda.co',
     },
@@ -58,7 +58,7 @@ class AppsSWH extends SubResource {
 
   delete = APIEndpoint<TokenRequest<Types.DeleteSWHPayload>, Types.DeleteSWHResponse>({
     method: 'delete',
-    path: '/site/{site_name}/sitewidehtml/{swh_uuid}',
+    path: '/site/{site_name}/sitewidehtml/{uuid}',
     defaults: {
       host: 'api.duda.co',
     },

@@ -1,10 +1,11 @@
 export interface SWH {
-  location: 'BODY' | 'HEAD' | 'CONTENT_END';
+  location: 'BODY' | 'HEAD' | 'CONTENT_END' | 'BEFORE_SCRIPTS';
   markup: string;
   uuid: string;
 }
 
 export interface ListSWHPayload {
+  site_name: string;
 }
 
 export interface ListSWHResponse {
@@ -19,21 +20,28 @@ export interface GetSWHPayload {
 export interface GetSWHResponse extends SWH {
 }
 
-export interface CreateSWHPayload extends SWH {
+export interface CreateSWHPayload {
+  site_name: string;
+  location?: 'BODY' | 'HEAD' | 'CONTENT_END' | 'BEFORE_SCRIPTS';
+  markup?: string;
 }
 
 export interface CreateSWHResponse extends SWH {
 }
 
 export interface UpdateSWHPayload {
-  markup: string;
+  site_name: string;
+  uuid: string;
+  location?: 'BODY' | 'HEAD' | 'CONTENT_END' | 'BEFORE_SCRIPTS';
+  markup?: string;
 }
 
 export interface UpdateSWHResponse extends SWH {
 }
 
 export interface DeleteSWHPayload {
-  markup: string;
+  site_name: string;
+  uuid: string;
 }
 
 export type DeleteSWHResponse = void;
