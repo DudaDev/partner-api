@@ -71,6 +71,11 @@ function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
 
     const body = def.beforeRequest?.(optz as Opts) ?? (Object.keys(optz).length ? optz : null);
 
+    // strip off protocol from host override if needed
+    const override = (overrides && typeof overrides !== 'function' && overrides.host)
+      ? { ...overrides, host: overrides.host.replace(/^https?:\/\//, '') }
+      : overrides;
+
     const request = {
       headers: {},
       method: def.method,
@@ -80,8 +85,8 @@ function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
       }),
       ...def.defaults,
       ...(body && { body }),
-      ...(this.config.host && { host: this.config.host }),
-      ...(typeof overrides !== 'function' && overrides),
+      ...(this.config.host && { host: this.config.host.replace(/^https?:\/\//, '') }),
+      ...(typeof override !== 'function' && override),
     };
 
     const builtRequest = this.buildRequest?.(request, def, opts);

@@ -18,8 +18,8 @@
     "linter": "eslint --ext .ts src/",
     "tests": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' node ./node_modules/mocha/bin/mocha -r ./node_modules/ts-node/register/index.js 'tests/**/*.ts'",
     "test:file": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' node ./node_modules/mocha/bin/mocha -r ./node_modules/ts-node/register/index.js \"tests/**/$FILENAME.ts\"",
-    "test-publish": "npm publish --dry-run",
-    "prod-publish": "npm run tsc && npm publish",
+    "publish:test": "npm publish --dry-run",
+    "publish:prod": "npm run tsc && npm publish",
     "prepublishOnly": "npm run test",
     "preversion": "npm run test"
   },
