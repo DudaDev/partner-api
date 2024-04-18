@@ -11,6 +11,7 @@ describe('Ecomm tests', () => {
   const gateway_id = "test_gateway";
   const cart_id = 'test_cart';
   const order_id = 'test_order';
+  const refund_id = 'test_refund';
   const session_id = 'test_session';
   const category_id = 'test_category';
   const shipping_id = 'test_shipping';
@@ -411,6 +412,22 @@ describe('Ecomm tests', () => {
   const sort = 'sort';
   const direction = 'asc';
 
+  const address = {
+    first_name: "string",
+      last_name: "string",
+      full_name: "string",
+      address_1: "string",
+      address_2: "string",
+      street_number: "string",
+      street_name: "string",
+      city: "string",
+      sub_locality: "string",
+      region: "string",
+      country: "string",
+      postal_code: "string",
+      phone: "string"
+  }
+
   const order = {
     source: "CHECKOUT",
     mode: "LIVE",
@@ -525,6 +542,67 @@ describe('Ecomm tests', () => {
     limit: limit,
     total_response: 0,
     results: [order]
+  }
+
+  const update_order_item = {
+    id: "string",
+    metadata: "string"
+  }
+
+  const update_order_payload = {
+    email: "string",
+    items: [update_order_item],
+    billing_address: address,
+    shipping_address: address,
+    shipping_instructions: "string",
+    metadata: "string"
+  }
+
+  const refund = {
+    id: "string",
+    order_id: order_id,
+    transaction_id: "string",
+    reason: "string",
+    items: [
+      {
+        id: "string",
+        quantity: 0,
+        amount: 0,
+        taxes: [
+          {
+            id: "string",
+            name: "string",
+            rate: 0,
+            amount: 0,
+            provider: "BUILT_IN"
+          }
+        ]
+      }
+    ],
+    currency: "string",
+    tax_provider: {
+      provider: "BUILT_IN",
+      avalara_reference_id: "string"
+    },
+    subtotal: 0,
+    taxes: [
+      {
+        id: "string",
+        name: "string",
+        rate: 0,
+        amount: 0,
+        provider: "BUILT_IN"
+      }
+    ],
+    total: 0,
+    created: "2024-04-18T18:56:53.920Z"
+  }
+
+  const list_refunds = {
+    offset: offset,
+    limit: limit,
+    total_response: 0,
+    results: [refund]
   }
 
   const gateway = {
@@ -891,6 +969,34 @@ describe('Ecomm tests', () => {
 
     return await duda.ecomm.orders.get({ site_name, order_id })
       .then(res => expect(res).to.eql({ ...order }))
+  })
+
+  it('can update an order', async () => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}`, (body) => {
+      expect(body).to.eql({ status: 'IN_PROGRESS', ...update_order_payload })
+      return body
+    }).reply(200, order)
+
+    return await duda.ecomm.orders.update({ site_name, order_id, status: 'IN_PROGRESS', ...update_order_payload })
+  })
+
+  it('can list all refunds', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/refunds?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_refunds)
+    return await duda.ecomm.orders.listRefund({
+      site_name: site_name,
+      order_id: order_id,
+      offset: offset,
+      limit: limit,
+      sort: sort,
+      direction: direction
+    }).then(res => expect(res).to.eql(list_refunds))
+  })
+
+  it('can get a specific refund', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/refunds/${refund_id}`).reply(200, refund)
+
+    return await duda.ecomm.orders.getRefund({ site_name, order_id, refund_id })
+      .then(res => expect(res).to.eql({ ...refund }))
   })
 
   it('can get a payment session', async () => {
