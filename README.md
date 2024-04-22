@@ -1820,6 +1820,20 @@ function validateSSO(req: YourRequestObject): boolean {
   duda.other.ssl.delete({ site_name: site_name });
   ```
 
+# Simple Editor
+
+## Update Simple Editor Settings
+
+[Update Simple Editors Settings Reference](https://developer.duda.co/reference/update-simple-editor-settings)
+
+### Request
+
+`PATCH  https://api.duda.co/api/sites/multiscreen/{site_name}/simple-editor`
+
+  ```typescript
+  duda.diyEditor.update({ site_name: site_name, onboarding_required: onboarding_required });
+  ```
+
 # Appstore eComm Products
 
 ## List Products
