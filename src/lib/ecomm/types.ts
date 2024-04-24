@@ -302,8 +302,6 @@ export interface Payment {
   card_last_4: string
 }
 
-export interface Refund {}
-
 export interface OrderItem {
   id: string,
   product_id: string,
@@ -322,6 +320,40 @@ export interface OrderItem {
   total: number,
   combined_weight: number,
   metadata: string
+}
+
+export interface RefundTaxes {
+  id: string,
+  name: string,
+  rate: number,
+  amount: number,
+  provider: 'BUILT_IN' | 'AVALARA' | 'UNKNOWN'
+}
+
+export interface RefundOrderItem {
+  id: string,
+  quantity: number,
+  amount: number,
+  taxes: Array<RefundTaxes>
+}
+
+export interface RefundTaxProvider {
+  provider: 'BUILT_IN' | 'AVALARA' | 'UNKNOWN',
+  avalara_reference_id: string
+}
+
+export interface Refund {
+  id: string,
+  order_id: string,
+  transcation_id: string,
+  reason: string,
+  items: Array<RefundOrderItem>,
+  currency: string,
+  tax_provider: RefundTaxProvider,
+  subtotal: number,
+  taxes: Array<RefundTaxes>,
+  total: number,
+  createD: string
 }
 
 export interface Order {
@@ -391,6 +423,30 @@ export interface UpdateOrderPayload {
 }
 
 export interface UpdateOrderResponse extends Order {}
+
+export interface ListRefundsPayload {
+  site_name: string,
+  order_id: string,
+  offset?: number,
+  limit?: number,
+  sort?: string,
+  direction?: string
+}
+
+export interface ListRefundsResponse {
+  offset: number,
+  limit: number,
+  total_responses: number,
+  results: Array<Refund>
+}
+
+export interface GetRefundPayload {
+  site_name: string,
+  order_id: string,
+  refund_id: string
+}
+
+export type GetRefundResponse = Refund;
 
 export type GetCartResponse = Cart;
 

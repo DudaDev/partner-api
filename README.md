@@ -599,7 +599,43 @@ function validateSSO(req: YourRequestObject): boolean {
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}`
 
   ```typescript
-  duda.ecomm.carts.get({ site_name: site_name, order_id: order_id });
+  duda.ecomm.orders.get({ site_name: site_name, order_id: order_id });
+  ```
+
+## Update Order
+
+[Update Order Reference](https://developer.duda.co/reference/update-order)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}`
+
+  ```typescript
+  duda.ecomm.orders.update({ site_name: site_name, order_id: order_id });
+  ```
+
+## List Refunds
+
+[List Refunds Reference](https://developer.duda.co/reference/list-refunds)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/refunds`
+
+  ```typescript
+  duda.ecomm.orders.listRefunds({ site_name: site_name, order_id: order_id });
+  ```
+
+## Get Refund
+
+[Get Refund Reference](https://developer.duda.co/reference/get-refund)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/refunds/{refund_id}`
+
+  ```typescript
+  duda.ecomm.orders.getRefund({ site_name: site_name, order_id: order_id, refund_id: refund_id });
   ```
 
 # eComm Payment Gateways
@@ -1782,6 +1818,20 @@ function validateSSO(req: YourRequestObject): boolean {
 
   ```typescript
   duda.other.ssl.delete({ site_name: site_name });
+  ```
+
+# Simple Editor
+
+## Update Simple Editor Settings
+
+[Update Simple Editors Settings Reference](https://developer.duda.co/reference/update-simple-editor-settings)
+
+### Request
+
+`PATCH  https://api.duda.co/api/sites/multiscreen/{site_name}/simple-editor`
+
+  ```typescript
+  duda.diyEditor.update({ site_name: site_name, onboarding_required: onboarding_required });
   ```
 
 # Appstore eComm Products

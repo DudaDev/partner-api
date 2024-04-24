@@ -7,6 +7,7 @@ import Accounts from './lib/accounts/Accounts';
 import Apps from './lib/apps/Apps';
 import Collections from './lib/collections/Collections';
 import Content from './lib/content/Content';
+import Diyeditor from './lib/diyeditor/Diyeditor';
 import Ecomm from './lib/ecomm/Ecomm';
 import Other from './lib/other/Other';
 import Pages from './lib/pages/Pages';
@@ -40,6 +41,8 @@ class Duda {
 
   content: Content;
 
+  diyEditor: Diyeditor;
+
   ecomm: Ecomm;
 
   other: Other;
@@ -67,6 +70,7 @@ class Duda {
     this.accounts = new Accounts(config);
     this.collections = new Collections(config);
     this.content = new Content(config);
+    this.diyEditor = new Diyeditor(config);
     this.ecomm = new Ecomm(config);
     this.other = new Other(config);
     this.pages = new Pages(config);

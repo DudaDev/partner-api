@@ -10,6 +10,8 @@ class Config {
 
   pass?: string;
 
+  __bearer?: string;
+
   maxNetworkRetries?: number;
 
   timeout?: number;
@@ -24,6 +26,7 @@ class Config {
     this.host = opts.host;
     this.user = opts.user;
     this.pass = opts.pass;
+    this.__bearer = opts.__bearer;
     this.logger = opts.logger;
     this.logLevel = opts.logLevel;
     this.maxNetworkRetries = opts.maxNetworkRetries;
