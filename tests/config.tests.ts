@@ -6,6 +6,7 @@ describe('Config tests', () => {
     const path = '/api/sites/multiscreen/templates' 
     const user = 'testuser'
     const pass = 'testpass'
+    const __bearer = 'abcxyz'
 
     let duda: Duda;
     let scope: nock.Scope;
@@ -13,6 +14,31 @@ describe('Config tests', () => {
     describe('whout a user', () => {
       it('should throw an error', () => {
         expect(new Duda({ env: 'foo' })).to
+      })
+    })
+
+    describe('with a bearer token', () => {
+      before(() => {
+        duda = new Duda({
+          __bearer,
+        })
+      })
+
+      describe('authorization header', () => {
+        before(() => {
+
+          scope = nock('https://api.duda.co', {
+            reqheaders: {
+              authorization: `Bearer: ${__bearer}`,
+            }
+          })
+        })
+
+        it('should calculate the correct authorization header', async () => {
+          scope.get(path).reply(200, 'Headers matched')
+          const res = await duda.templates.list()
+          expect(res).to.eql({ data: 'Headers matched'})
+        })
       })
     })
 

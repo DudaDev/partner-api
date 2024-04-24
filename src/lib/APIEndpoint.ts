@@ -83,6 +83,9 @@ function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
       ...(this.config.user && this.config.pass && {
         auth: `${this.config.user}:${this.config.pass}`,
       }),
+      ...(this.config.__bearer && {
+        headers: { authorization: `Bearer: ${this.config.__bearer}` },
+      }),
       ...def.defaults,
       ...(body && { body }),
       ...(this.config.host && { host: this.config.host.replace(/^https?:\/\//, '') }),
