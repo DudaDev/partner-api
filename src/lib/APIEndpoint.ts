@@ -84,7 +84,7 @@ function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
         auth: `${this.config.user}:${this.config.pass}`,
       }),
       ...(this.config.__bearer && {
-        headers: { authorization: `Bearer: ${this.config.__bearer}` },
+        headers: { Authorization: `Bearer ${this.config.__bearer}` },
       }),
       ...def.defaults,
       ...(body && { body }),

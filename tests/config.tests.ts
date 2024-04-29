@@ -29,7 +29,7 @@ describe('Config tests', () => {
 
           scope = nock('https://api.duda.co', {
             reqheaders: {
-              authorization: `Bearer: ${__bearer}`,
+              Authorization: `Bearer ${__bearer}`,
             }
           })
         })
