@@ -500,6 +500,18 @@ function validateSSO(req: YourRequestObject): boolean {
   duda.pages.v2.update({ site_name: site_name, page_uuid: page_uuid });
   ```
 
+## Create Page
+
+[Create Page Reference](https://developer.duda.co/reference/pages-v2-create-page)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/pages`
+
+  ```typescript
+  duda.pages.v2.create({ site_name: site_name });
+  ```
+
 ## Duplicate Page
 
 [Duplicate Page Reference](https://developer.duda.co/reference/pages-v2-duplicate-page)

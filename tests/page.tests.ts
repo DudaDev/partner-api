@@ -17,6 +17,7 @@ describe('Page tests', () => {
     };
 
     const page = {
+        uuid: "My uuid",
         title: "My Title",
         path: "/test",
         seo,
@@ -57,6 +58,17 @@ describe('Page tests', () => {
             ...page,
             site_name,
             page_uuid,
+        })
+    })
+
+    it('can create a page', async () => {
+        scope.post(`${api_path}${site_name}${api_segment}`, (body) => {
+            expect(body).to.eql(page)
+            return body
+        }).reply(200, response)
+        return await duda.pages.v2.create({
+          ...page,
+          site_name,
         })
     })
 

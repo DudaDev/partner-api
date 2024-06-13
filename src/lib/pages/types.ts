@@ -57,14 +57,17 @@ export namespace V2 {
   }
 
   export interface Page {
+    uuid?: string,
     title?: string,
     path?: string,
     seo?: Seo
     header_html?: string,
+    draft_status?: 'STAGED_DRAFT' | 'DRAFT'
   }
 
-  export type UpdatePageResponse = void;
-  export type DuplicatePageResponse = void;
+  export type UpdatePageResponse = Page;
+  export type CreatePageResponse = Page;
+  export type DuplicatePageResponse = Page;
   export type DeletePageResponse = void;
   export type GetPageResponse = Page;
   export type ListPagesResponse = Array<Page>;
@@ -81,6 +84,10 @@ export namespace V2 {
   export interface UpdatePagePayload extends Page {
     site_name: string,
     page_uuid: string,
+  }
+
+  export interface CreatePagePayload extends Page {
+    site_name: string,
   }
 
   export interface DuplicatePagePayload extends Page {

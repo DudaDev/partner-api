@@ -27,6 +27,40 @@ class Pages extends Resource {
       host: 'api.duda.co',
     },
     bodyParams: {
+      uuid: {
+        type: 'string',
+        required: false,
+      },
+      title: {
+        type: 'string',
+        required: false,
+      },
+      path: {
+        type: 'string',
+        required: false,
+      },
+      seo: {
+        type: 'object',
+        required: false,
+      },
+      header_html: {
+        type: 'string',
+        required: false,
+      },
+    },
+  });
+
+  create = APIEndpoint<Types.V2.CreatePagePayload, Types.V2.CreatePageResponse>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}/pages',
+    defaults: {
+      host: 'api.duda.co',
+    },
+    bodyParams: {
+      uuid: {
+        type: 'string',
+        required: false,
+      },
       title: {
         type: 'string',
         required: false,
@@ -53,6 +87,10 @@ class Pages extends Resource {
       host: 'api.duda.co',
     },
     bodyParams: {
+      uuid: {
+        type: 'string',
+        required: false,
+      },
       title: {
         type: 'string',
         required: false,
