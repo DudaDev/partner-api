@@ -57,25 +57,9 @@ class Pages extends Resource {
       host: 'api.duda.co',
     },
     bodyParams: {
-      uuid: {
-        type: 'string',
-        required: false,
-      },
-      title: {
-        type: 'string',
-        required: false,
-      },
-      path: {
-        type: 'string',
-        required: false,
-      },
-      seo: {
+      page: {
         type: 'object',
-        required: false,
-      },
-      header_html: {
-        type: 'string',
-        required: false,
+        required: true,
       },
     },
   });

@@ -65,6 +65,15 @@ export namespace V2 {
     draft_status?: 'STAGED_DRAFT' | 'DRAFT'
   }
 
+  export interface UpdatePage {
+    uuid?: string,
+    title: string,
+    path: string,
+    seo?: Seo,
+    header_html?: string,
+    draft_status?: 'STAGED_DRAFT' | 'DRAFT'
+  }
+
   export type UpdatePageResponse = Page;
   export type CreatePageResponse = Page;
   export type DuplicatePageResponse = Page;
@@ -86,8 +95,9 @@ export namespace V2 {
     page_uuid: string,
   }
 
-  export interface CreatePagePayload extends Page {
+  export interface CreatePagePayload {
     site_name: string,
+    page: UpdatePage
   }
 
   export interface DuplicatePagePayload extends Page {

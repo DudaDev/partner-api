@@ -24,6 +24,10 @@ describe('Page tests', () => {
         header_html: "<b>Some HTML</b>"
     };
 
+    const page_object = {
+        page: page
+    }
+
     const page_uuid = '123abc';
 
     const response = { ...page, uuid: page_uuid };
@@ -63,12 +67,12 @@ describe('Page tests', () => {
 
     it('can create a page', async () => {
         scope.post(`${api_path}${site_name}${api_segment}`, (body) => {
-            expect(body).to.eql(page)
+            expect(body).to.eql(page_object)
             return body
         }).reply(200, response)
         return await duda.pages.v2.create({
-          ...page,
           site_name,
+          page: page
         })
     })
 
