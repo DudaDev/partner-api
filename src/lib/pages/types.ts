@@ -56,7 +56,7 @@ export namespace V2 {
     og_image?: string
   }
 
-  export interface Page_Payload_Object {
+  export interface Page {
     title?: string,
     path?: string,
     seo?: Seo
@@ -64,21 +64,16 @@ export namespace V2 {
     draft_status?: 'STAGED_DRAFT' | 'DRAFT'
   }
 
-  export interface Page_Response_Object {
+  export interface ExistingPage extends Page {
     uuid?: string,
-    title: string,
-    path: string,
-    seo?: Seo,
-    header_html?: string,
-    draft_status?: 'STAGED_DRAFT' | 'DRAFT'
   }
 
-  export type UpdatePageResponse = Page_Response_Object;
-  export type CreatePageResponse = Page_Response_Object;
-  export type DuplicatePageResponse = Page_Response_Object;
+  export type UpdatePageResponse = ExistingPage;
+  export type CreatePageResponse = ExistingPage;
+  export type DuplicatePageResponse = ExistingPage;
   export type DeletePageResponse = void;
-  export type GetPageResponse = Page_Response_Object;
-  export type ListPagesResponse = Array<Page_Response_Object>;
+  export type GetPageResponse = ExistingPage;
+  export type ListPagesResponse = Array<ExistingPage>;
 
   export interface GetPagePayload {
     site_name: string,
@@ -89,17 +84,17 @@ export namespace V2 {
     site_name: string,
   }
 
-  export interface UpdatePagePayload extends Page_Payload_Object {
+  export interface UpdatePagePayload extends Page {
     site_name: string,
     page_uuid: string,
   }
 
   export interface CreatePagePayload {
     site_name: string,
-    page: Page_Response_Object
+    page: ExistingPage
   }
 
-  export interface DuplicatePagePayload extends Page_Payload_Object {
+  export interface DuplicatePagePayload extends Page {
     site_name: string,
     page_uuid: string,
   }
