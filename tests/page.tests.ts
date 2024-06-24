@@ -23,6 +23,18 @@ describe('Page tests', () => {
         header_html: "<b>Some HTML</b>"
     };
 
+    const create_page_oblect = {
+        uuid: "My uuid",
+        title: "My Title",
+        path: "/test",
+        seo,
+        header_html: "<b>Some HTML</b>"
+    }
+
+    const page_object = {
+        page: create_page_oblect
+    }
+
     const page_uuid = '123abc';
 
     const response = { ...page, uuid: page_uuid };
@@ -57,6 +69,17 @@ describe('Page tests', () => {
             ...page,
             site_name,
             page_uuid,
+        })
+    })
+
+    it('can create a page', async () => {
+        scope.post(`${api_path}${site_name}${api_segment}`, (body) => {
+            expect(body).to.eql(page_object)
+            return body
+        }).reply(200, response)
+        return await duda.pages.v2.create({
+          site_name,
+          page: create_page_oblect
         })
     })
 
