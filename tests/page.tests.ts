@@ -17,15 +17,22 @@ describe('Page tests', () => {
     };
 
     const page = {
-        uuid: "My uuid",
         title: "My Title",
         path: "/test",
         seo,
         header_html: "<b>Some HTML</b>"
     };
 
+    const create_page_oblect = {
+        uuid: "My uuid",
+        title: "My Title",
+        path: "/test",
+        seo,
+        header_html: "<b>Some HTML</b>"
+    }
+
     const page_object = {
-        page: page
+        page: create_page_oblect
     }
 
     const page_uuid = '123abc';
@@ -72,7 +79,7 @@ describe('Page tests', () => {
         }).reply(200, response)
         return await duda.pages.v2.create({
           site_name,
-          page: page
+          page: create_page_oblect
         })
     })
 

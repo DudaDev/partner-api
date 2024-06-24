@@ -56,8 +56,7 @@ export namespace V2 {
     og_image?: string
   }
 
-  export interface Page {
-    uuid?: string,
+  export interface Page_Payload_Object {
     title?: string,
     path?: string,
     seo?: Seo
@@ -65,7 +64,7 @@ export namespace V2 {
     draft_status?: 'STAGED_DRAFT' | 'DRAFT'
   }
 
-  export interface UpdatePage {
+  export interface Page_Response_Object {
     uuid?: string,
     title: string,
     path: string,
@@ -74,12 +73,12 @@ export namespace V2 {
     draft_status?: 'STAGED_DRAFT' | 'DRAFT'
   }
 
-  export type UpdatePageResponse = Page;
-  export type CreatePageResponse = Page;
-  export type DuplicatePageResponse = Page;
+  export type UpdatePageResponse = Page_Response_Object;
+  export type CreatePageResponse = Page_Response_Object;
+  export type DuplicatePageResponse = Page_Response_Object;
   export type DeletePageResponse = void;
-  export type GetPageResponse = Page;
-  export type ListPagesResponse = Array<Page>;
+  export type GetPageResponse = Page_Response_Object;
+  export type ListPagesResponse = Array<Page_Response_Object>;
 
   export interface GetPagePayload {
     site_name: string,
@@ -90,17 +89,17 @@ export namespace V2 {
     site_name: string,
   }
 
-  export interface UpdatePagePayload extends Page {
+  export interface UpdatePagePayload extends Page_Payload_Object {
     site_name: string,
     page_uuid: string,
   }
 
   export interface CreatePagePayload {
     site_name: string,
-    page: UpdatePage
+    page: Page_Response_Object
   }
 
-  export interface DuplicatePagePayload extends Page {
+  export interface DuplicatePagePayload extends Page_Payload_Object {
     site_name: string,
     page_uuid: string,
   }
