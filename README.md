@@ -536,6 +536,56 @@ function validateSSO(req: YourRequestObject): boolean {
   duda.pages.v2.delete({ site_name: site_name, page_uuid: page_uuid });
   ```
 
+# Navigation
+
+## List Navigation
+
+[List Navigation Reference](https://developer.duda.co/reference/navigation-list-navigation)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/navigation`
+
+  ```typescript
+  duda.navigation.list({ site_name: site_name });
+  ```
+
+## Get Navigation By Language
+
+[Get Navigation By Language Reference](https://developer.duda.co/reference/navigation-get-navigation-by-language)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/navigation/{lang}`
+
+  ```typescript
+  duda.navigation.getByLang({ site_name: site_name, lang: lang });
+  ```
+
+## Create Navigation
+
+[Create Navigation Reference](https://developer.duda.co/reference/navigation-create-navigation)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/navigation/{lang}/items`
+
+  ```typescript
+  duda.navigation.create({ site_name: site_name, lang: lang });
+  ```
+
+## Update Navigation
+
+[Update Navigation Reference](https://developer.duda.co/reference/navigation-update-navigation)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/navigation/{lang}/items/{navigation_id}`
+
+  ```typescript
+  duda.navigation.update({ site_name: site_name, lang: lang, navigation_id: navigation_id });
+  ```
+
 # eComm
 
 ## Get Settings
