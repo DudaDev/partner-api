@@ -536,6 +536,56 @@ function validateSSO(req: YourRequestObject): boolean {
   duda.pages.v2.delete({ site_name: site_name, page_uuid: page_uuid });
   ```
 
+# Page Elements
+
+## List Page Elements
+
+[List Page Elements Reference](https://developer.duda.co/reference/page-elements-list-page-elements)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}/elements`
+
+  ```typescript
+  duda.pages.elements.list({ site_name: site_name, page_uuid: page_uuid });
+  ```
+
+## Create Page Element
+
+[Create Page Element Reference](https://developer.duda.co/reference/page-elements-create-page-element)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}/elements`
+
+  ```typescript
+  duda.pages.elements.create({ site_name: site_name, page_uuid: page_uuid });
+  ```
+
+## Update Page Element
+
+[Update Page Element Reference](https://developer.duda.co/reference/page-elements-update-page-element)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}/elements/{element_id}`
+
+  ```typescript
+  duda.pages.elements.update({ site_name: site_name, page_uuid: page_uuid, element_id: element_id });
+  ```
+
+## Delete Page Element
+
+[Delete Page Element Reference](https://developer.duda.co/reference/page-elements-delete-page-element)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}/elements/{element_id}`
+
+  ```typescript
+  duda.pages.elements.delete({ site_name: site_name, page_uuid: page_uuid, element_id: element_id });
+  ```
+
 # Navigation
 
 ## List Navigation

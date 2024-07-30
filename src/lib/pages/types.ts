@@ -104,3 +104,49 @@ export namespace V2 {
     page_uuid: string,
   }
 }
+
+export interface PageElement {
+  type: 'SECTION',
+  element_id: string,
+  next_sibling_id: string,
+  element_source_id: string
+}
+
+export interface ListPageElementPayload {
+  site_name: string,
+  page_uuid: string
+}
+
+export interface ListPageElementResponse {
+  results: Array<PageElement>
+}
+
+export interface CreatePageElementPayload {
+  site_name: string,
+  page_uuid: string,
+  element_source_id: string,
+  type: 'SECTION',
+  next_sibling_id?: string,
+  parent_element_id?: string
+}
+
+export interface CreatePageElementResponse extends PageElement {}
+
+export interface UpdatePageElementPayload {
+  site_name: string,
+  page_uuid: string,
+  element_id: string,
+  type: 'SECTION',
+  next_sibling_id?: string,
+  parent_element_id?: string
+}
+
+export interface UpdatePageElementResponse extends PageElement {}
+
+export interface DeletePageElementPayload {
+  site_name: string,
+  page_uuid: string,
+  element_id: string
+}
+
+export type DeletePageElementResponse = void;
