@@ -14,6 +14,7 @@ import Other from './lib/other/Other';
 import Pages from './lib/pages/Pages';
 import Plans from './lib/plans/Plans';
 import Reporting from './lib/reporting/Reporting';
+import Sections from './lib/sections/Sections';
 import Sites from './lib/sites/Sites';
 import Templates from './lib/templates/Templates';
 import Urlrules from './lib/urlrules/Urlrules';
@@ -56,6 +57,8 @@ class Duda {
 
   reporting: Reporting;
 
+  sections: Sections;
+
   sites: Sites;
 
   templates: Templates;
@@ -80,6 +83,7 @@ class Duda {
     this.pages = new Pages(config);
     this.plans = new Plans(config);
     this.reporting = new Reporting(config);
+    this.sections = new Sections(config);
     this.sites = new Sites(config);
     this.templates = new Templates(config);
     this.urlRules = new Urlrules(config);
