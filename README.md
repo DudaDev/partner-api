@@ -586,6 +586,32 @@ function validateSSO(req: YourRequestObject): boolean {
   duda.pages.elements.delete({ site_name: site_name, page_uuid: page_uuid, element_id: element_id });
   ```
 
+# Sections
+
+## List Sections
+
+[List Sections Reference](https://developer.duda.co/reference/sections-list-sections)
+
+### Request
+
+`GET https://api.duda.co/api/sections`
+
+  ```typescript
+  duda.sections.list();
+  ```
+
+## Get Section
+
+[Get Section Reference](https://developer.duda.co/reference/sections-get-section)
+
+### Request
+
+`GET https://api.duda.co/api/sections/{section_uuid}`
+
+  ```typescript
+  duda.sections.get({ section_uuid: section_uuid });
+  ```
+
 # Navigation
 
 ## List Navigation
