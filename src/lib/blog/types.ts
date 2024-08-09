@@ -21,9 +21,9 @@ export interface ImportBlogPost {
     title: string,
     description: string,
     content: string,
-    author: string,
-    thumbnail: Thumbnail,
-    main_image: MainImage
+    author?: string,
+    thumbnail?: Thumbnail,
+    main_image?: MainImage
 }
 
 export interface ImportBlogPostPayload extends ImportBlogPost {
