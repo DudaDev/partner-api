@@ -1,5 +1,3 @@
-import Blog from "./Blog"
-
 export interface ImportBlog {
     feed_url: string,
     import_type: 'APPEND' | 'OVERWRITE'
