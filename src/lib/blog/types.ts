@@ -1,3 +1,5 @@
+import Blog from "./Blog"
+
 export interface ImportBlog {
     feed_url: string,
     import_type: 'APPEND' | 'OVERWRITE'
@@ -9,11 +11,7 @@ export interface ImportBlogPayload extends ImportBlog {
 
 export interface ImportBlogResponse extends ImportBlog {}
 
-export interface Thumbnail {
-    url: string
-}
-
-export interface MainImage {
+export interface BlogImage {
     url: string
 }
 
@@ -22,8 +20,8 @@ export interface ImportBlogPost {
     description: string,
     content: string,
     author?: string,
-    thumbnail?: Thumbnail,
-    main_image?: MainImage
+    thumbnail?: BlogImage,
+    main_image?: BlogImage
 }
 
 export interface ImportBlogPostPayload extends ImportBlogPost {
