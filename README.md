@@ -500,6 +500,18 @@ function validateSSO(req: YourRequestObject): boolean {
   duda.pages.v2.update({ site_name: site_name, page_uuid: page_uuid });
   ```
 
+## Create Page
+
+[Create Page Reference](https://developer.duda.co/reference/pages-v2-create-page)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/pages`
+
+  ```typescript
+  duda.pages.v2.create({ site_name: site_name });
+  ```
+
 ## Duplicate Page
 
 [Duplicate Page Reference](https://developer.duda.co/reference/pages-v2-duplicate-page)
@@ -522,6 +534,170 @@ function validateSSO(req: YourRequestObject): boolean {
 
   ```typescript
   duda.pages.v2.delete({ site_name: site_name, page_uuid: page_uuid });
+  ```
+
+# Page Elements
+
+## List Page Elements
+
+[List Page Elements Reference](https://developer.duda.co/reference/page-elements-list-page-elements)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}/elements`
+
+  ```typescript
+  duda.pages.elements.list({ site_name: site_name, page_uuid: page_uuid });
+  ```
+
+## Create Page Element
+
+[Create Page Element Reference](https://developer.duda.co/reference/page-elements-create-page-element)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}/elements`
+
+  ```typescript
+  duda.pages.elements.create({ site_name: site_name, page_uuid: page_uuid });
+  ```
+
+## Update Page Element
+
+[Update Page Element Reference](https://developer.duda.co/reference/page-elements-update-page-element)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}/elements/{element_id}`
+
+  ```typescript
+  duda.pages.elements.update({ site_name: site_name, page_uuid: page_uuid, element_id: element_id });
+  ```
+
+## Delete Page Element
+
+[Delete Page Element Reference](https://developer.duda.co/reference/page-elements-delete-page-element)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}/elements/{element_id}`
+
+  ```typescript
+  duda.pages.elements.delete({ site_name: site_name, page_uuid: page_uuid, element_id: element_id });
+  ```
+
+# Sections
+
+## List Sections
+
+[List Sections Reference](https://developer.duda.co/reference/sections-list-sections)
+
+### Request
+
+`GET https://api.duda.co/api/sections`
+
+  ```typescript
+  duda.sections.list();
+  ```
+
+## Get Section
+
+[Get Section Reference](https://developer.duda.co/reference/sections-get-section)
+
+### Request
+
+`GET https://api.duda.co/api/sections/{section_uuid}`
+
+  ```typescript
+  duda.sections.get({ section_uuid: section_uuid });
+  ```
+
+# Navigation
+
+## List Navigation
+
+[List Navigation Reference](https://developer.duda.co/reference/navigation-list-navigation)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/navigation`
+
+  ```typescript
+  duda.navigation.list({ site_name: site_name });
+  ```
+
+## Get Navigation By Language
+
+[Get Navigation By Language Reference](https://developer.duda.co/reference/navigation-get-navigation-by-language)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/navigation/{lang}`
+
+  ```typescript
+  duda.navigation.getByLang({ site_name: site_name, lang: lang });
+  ```
+
+## Create Navigation
+
+[Create Navigation Reference](https://developer.duda.co/reference/navigation-create-navigation)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/navigation/{lang}/items`
+
+  ```typescript
+  duda.navigation.create({ site_name: site_name, lang: lang });
+  ```
+
+## Update Navigation
+
+[Update Navigation Reference](https://developer.duda.co/reference/navigation-update-navigation)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/navigation/{lang}/items/{navigation_id}`
+
+  ```typescript
+  duda.navigation.update({ site_name: site_name, lang: lang, navigation_id: navigation_id });
+  ```
+
+# Blog
+
+## Import Blog
+
+[Import Blog Reference](https://developer.duda.co/reference/import-blog)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog/import`
+
+  ```typescript
+  duda.blog.import({ site_name: site_name });
+  ```
+
+## Import Blog Post
+
+[Import Blog Post Reference](https://developer.duda.co/reference/import-blog-post)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts/import`
+
+  ```typescript
+  duda.blog.importPost({ site_name: site_name });
+  ```
+
+## Delete Blog Post
+
+[Delete Reference](https://developer.duda.co/reference/import-blog-post)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog`
+
+  ```typescript
+  duda.blog.delete({ site_name: site_name });
   ```
 
 # eComm
