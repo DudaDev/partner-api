@@ -662,6 +662,44 @@ function validateSSO(req: YourRequestObject): boolean {
   duda.navigation.update({ site_name: site_name, lang: lang, navigation_id: navigation_id });
   ```
 
+# Blog
+
+## Import Blog
+
+[Import Blog Reference](https://developer.duda.co/reference/import-blog)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog/import`
+
+  ```typescript
+  duda.blog.import({ site_name: site_name });
+  ```
+
+## Import Blog Post
+
+[Import Blog Post Reference](https://developer.duda.co/reference/import-blog-post)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts/import`
+
+  ```typescript
+  duda.blog.importPost({ site_name: site_name });
+  ```
+
+## Delete Blog Post
+
+[Delete Reference](https://developer.duda.co/reference/import-blog-post)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog`
+
+  ```typescript
+  duda.blog.delete({ site_name: site_name });
+  ```
+
 # eComm
 
 ## Get Settings

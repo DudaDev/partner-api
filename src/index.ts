@@ -5,6 +5,7 @@ import/prefer-default-export
 */
 import Accounts from './lib/accounts/Accounts';
 import Apps from './lib/apps/Apps';
+import Blog from './lib/blog/Blog';
 import Collections from './lib/collections/Collections';
 import Content from './lib/content/Content';
 import Diyeditor from './lib/diyeditor/Diyeditor';
@@ -38,6 +39,8 @@ class Duda {
   accounts: Accounts;
 
   appstore: Apps;
+
+  blog: Blog;
 
   collections: Collections;
 
@@ -74,6 +77,7 @@ class Duda {
     // new:resource::hook
     this.appstore = new Apps(config);
     this.accounts = new Accounts(config);
+    this.blog = new Blog(config);
     this.collections = new Collections(config);
     this.content = new Content(config);
     this.diyEditor = new Diyeditor(config);
