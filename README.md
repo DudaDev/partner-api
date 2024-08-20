@@ -2010,6 +2010,32 @@ function validateSSO(req: YourRequestObject): boolean {
   duda.diyEditor.update({ site_name: site_name, onboarding_required: onboarding_required });
   ```
 
+# Appstore eComm
+
+## Get Settings
+
+[Get Settings Reference](https://developer.duda.co/reference/app-get-ecomm-settings)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce`
+
+  ```typescript
+  duda.appstore.ecomm.get({ site_name: site_name });
+  ```
+
+## Update Settings
+
+[Update Settings Reference](https://developer.duda.co/reference/app-ecomm-update-settings)
+
+### Request
+
+`PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce`
+
+  ```typescript
+  duda.appstore.ecomm.update({ site_name: site_name });
+  ```
+
 # Appstore eComm Products
 
 ## List Products
