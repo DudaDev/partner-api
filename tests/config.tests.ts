@@ -13,7 +13,7 @@ describe('Config tests', () => {
 
     describe('whout a user', () => {
       it('should throw an error', () => {
-        expect(new Duda({ env: 'foo' })).to
+        expect(new Duda({ env: 'foo' })).to.throw
       })
     })
 
@@ -67,8 +67,8 @@ describe('Config tests', () => {
       describe('authorization header', () => {
         before(() => {
 
-          let buff = Buffer.from(`${user}:${pass}`);
-          let base64data = buff.toString('base64');
+          const buff = Buffer.from(`${user}:${pass}`);
+          const base64data = buff.toString('base64');
 
           scope = nock('https://api.duda.co', {
             reqheaders: {
