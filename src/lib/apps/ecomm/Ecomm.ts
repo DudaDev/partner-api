@@ -10,8 +10,6 @@ import AppsCarts from './Carts';
 import { TokenRequest } from '../types';
 
 class AppsEcomm extends SubResource {
-  basePath = '/application';
-
   products = new AppsProducts(this.base);
 
   options = new AppsOptions(this.base);
@@ -38,7 +36,7 @@ class AppsEcomm extends SubResource {
   });
 
   update = APIEndpoint<TokenRequest<Types.UpdateEcommPayload>, Types.UpdateEcommResponse>({
-    method: 'post',
+    method: 'patch',
     path: '/site/{site_name}/ecommerce',
     defaults: {
       host: 'api.duda.co',
