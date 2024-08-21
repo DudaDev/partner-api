@@ -1,5 +1,6 @@
 /* eslint-disable max-classes-per-file, no-underscore-dangle */
 
+import EventEmitter from 'events';
 import { RequestOptions } from './http';
 import { APIEndpointDefinition } from './APIEndpoint';
 
@@ -39,10 +40,14 @@ abstract class Resource {
   readonly config!: Config;
 
   /** @internal */
+  readonly events?: EventEmitter;
+
+  /** @internal */
   basePath!: string;
 
-  constructor(config: Config) {
+  constructor(config: Config, events?: EventEmitter) {
     this.config = config;
+    this.events = events;
 
     if (!this.basePath) this.basePath = '';
 
@@ -54,6 +59,9 @@ abstract class Resource {
     req: RequestOptions,
     def: APIEndpointDefinition<any, any>,
     opts: { [key: string]: any; }): RequestOptions;
+
+  /** @internal */
+  preRequest?(): void;
 }
 
 abstract class SubResource extends Resource {
@@ -65,6 +73,7 @@ abstract class SubResource extends Resource {
     this.base = base;
     this.basePath = base.basePath;
     this.buildRequest = base.buildRequest;
+    this.preRequest = base.preRequest;
   }
 }
 

@@ -3,8 +3,9 @@ import/no-unresolved,
 import/extensions,
 import/prefer-default-export
 */
+import EventEmitter from 'events';
 import Accounts from './lib/accounts/Accounts';
-import Apps from './lib/apps/Apps';
+import Apps, { DudaAppConfig } from './lib/apps/Apps';
 import Blog from './lib/blog/Blog';
 import Collections from './lib/collections/Collections';
 import Content from './lib/content/Content';
@@ -33,8 +34,10 @@ interface DudaConfig extends Config {
 
 class Duda {
   static Envs = envs;
-
+  
   // new:resource::type
+
+  events: EventEmitter;
 
   accounts: Accounts;
 
@@ -68,14 +71,16 @@ class Duda {
 
   urlRules: Urlrules;
 
-  constructor(opts: DudaConfig) {
+  constructor(opts: DudaConfig, appOpts?: DudaAppConfig) {
     const config = new Config({
       ...opts,
       host: opts.env ?? envs.direct,
     });
 
+    this.events = new EventEmitter();
+
     // new:resource::hook
-    this.appstore = new Apps(config);
+    this.appstore = new Apps(config, this.events, appOpts);
     this.accounts = new Accounts(config);
     this.blog = new Blog(config);
     this.collections = new Collections(config);
