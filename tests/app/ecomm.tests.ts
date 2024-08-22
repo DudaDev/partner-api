@@ -9,6 +9,7 @@ describe('App store ecomm tests', () => {
   const option_id = 'test_option';
   const choice_id = 'string';
   const order_id = 'test_order';
+  const refund_id = 'test_refund';
   const session_id = 'test_session';
   const gateway_id = "test_gateway";
   const cart_id = 'test_cart';
@@ -447,6 +448,53 @@ describe('App store ecomm tests', () => {
     return_url: "string"
   }
 
+  const refund = {
+    id: "string",
+    order_id: order_id,
+    transaction_id: "string",
+    reason: "string",
+    items: [
+      {
+        id: "string",
+        quantity: 0,
+        amount: 0,
+        taxes: [
+          {
+            id: "string",
+            name: "string",
+            rate: 0,
+            amount: 0,
+            provider: "BUILT_IN"
+          }
+        ]
+      }
+    ],
+    currency: "string",
+    tax_provider: {
+      provider: "BUILT_IN",
+      avalara_reference_id: "string"
+    },
+    subtotal: 0,
+    taxes: [
+      {
+        id: "string",
+        name: "string",
+        rate: 0,
+        amount: 0,
+        provider: "BUILT_IN"
+      }
+    ],
+    total: 0,
+    created: "2024-04-18T18:56:53.920Z"
+  }
+
+  const list_refunds = {
+    offset: offset,
+    limit: limit,
+    total_response: 0,
+    results: [refund]
+  }
+
   const gateway = {
     live_payment_methods_url: 'https://example.org/path/to/gateway',
     test_payment_methods_url: 'https://test.example.org/path/to/gateway'
@@ -758,6 +806,26 @@ describe('App store ecomm tests', () => {
     }).reply(200, order)
 
     return await duda.appstore.ecomm.orders.update({ site_name, order_id, token, status: 'IN_PROGRESS', ...update_order_payload })
+  })
+
+  it('can list all refunds', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/orders/${order_id}/refunds?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_refunds)
+    return await duda.appstore.ecomm.orders.listRefund({
+      site_name: site_name,
+      order_id: order_id,
+      offset: offset,
+      limit: limit,
+      sort: sort,
+      direction: direction,
+      token: token
+    }).then(res => expect(res).to.eql(list_refunds))
+  })
+
+  it('can get a specific refund', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/orders/${order_id}/refunds/${refund_id}`).reply(200, refund)
+
+    return await duda.appstore.ecomm.orders.getRefund({ site_name, order_id, refund_id, token })
+      .then(res => expect(res).to.eql({ ...refund }))
   })
 
   it('can get a payment session', async () => {

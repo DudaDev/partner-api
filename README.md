@@ -2096,7 +2096,6 @@ function validateSSO(req: YourRequestObject): boolean {
   duda.appstore.content.locations.delete({ site_name: site_name, location_id: location_id });
   ```
 
-
 # Appstore eComm
 
 ## Get Settings
@@ -2319,6 +2318,30 @@ function validateSSO(req: YourRequestObject): boolean {
 
   ```typescript
   duda.appstore.ecomm.orders.update({ site_name: site_name, order_id: order_id });
+  ```
+
+## List Refunds
+
+[List Refunds Reference](https://developer.duda.co/reference/app-list-refunds)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}/refunds`
+
+  ```typescript
+  duda.appstore.ecomm.orders.listRefunds({ site_name: site_name, order_id: order_id });
+  ```
+
+## Get Refund
+
+[Get Refund Reference](https://developer.duda.co/reference/app-get-refund)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}/refunds/{refund_id}`
+
+  ```typescript
+  duda.appstore.ecomm.orders.getRefund({ site_name: site_name, order_id: order_id, refund_id: refund_id });
   ```
 
 # Appstore eComm Payments
