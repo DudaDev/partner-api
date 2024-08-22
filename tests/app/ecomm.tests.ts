@@ -4,7 +4,7 @@ import { Duda } from "../../src/index"
 
 describe('App store ecomm tests', () => {
   const base_path = '/api/integrationhub/application' 
-  const site_name = "test_site";
+  const site_name = 'test_site';
   const product_id = "test_product";
   const option_id = 'test_option';
   const choice_id = 'string';
@@ -589,6 +589,29 @@ describe('App store ecomm tests', () => {
     results: [cart]
   }
 
+  const cartSettings = {
+    split_name_field: true,
+    split_address_1_field: true,
+    display_instruction_field: true,
+    display_phone_field: true
+  };
+
+  const settings = {
+    default_currency: 'USD',
+    business_name: 'My Great Company',
+    business_address: {
+      address_1: '123 Main St',
+      city: 'Louisville',
+      region: 'Colorado',
+      country: 'US',
+      postal_code: '80027'
+    },
+    time_zone: 'Mountain',
+    enabled_countries: ['US'],
+    send_email_notifications: true,
+    cart_settings: cartSettings
+  };
+
   let duda: Duda;
   let scope: nock.Scope;
 
@@ -790,6 +813,22 @@ describe('App store ecomm tests', () => {
   it('can delete a gateway', async () => {
     scope.delete(`${base_path}/site/${site_name}/ecommerce/payment-gateways/${gateway_id}`).reply(204);
     return await duda.appstore.ecomm.gateways.delete({ site_name, gateway_id, token });
+  })
+
+  it('can get the ecomm settings', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce`)
+      .reply(200, settings)
+
+    return await duda.appstore.ecomm.get({ site_name, token })
+  })
+
+  it('can update the ecomm settings', async () => {
+    scope.patch(`${base_path}/site/${site_name}/ecommerce`, (body) => {
+      expect(body).to.eql(settings)
+      return body
+    }).reply(200, settings)
+
+    return await duda.appstore.ecomm.update({ site_name, token, ...settings })
   })
 
   it('can list all carts', async () => {

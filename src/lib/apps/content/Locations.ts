@@ -1,13 +1,10 @@
+import * as Types from './types';
 import { SubResource } from '../../base';
 import { APIEndpoint } from '../../APIEndpoint';
+import { TokenRequest } from '../types';
 
 class AppsContentLocation extends SubResource {
-  create = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  create = APIEndpoint<TokenRequest<Types.CreateLocationPayload>, Types.CreateLocationResponse>({
     method: 'post',
     path: '/site/{site_name}/content/location',
     defaults: {
@@ -20,14 +17,9 @@ class AppsContentLocation extends SubResource {
     },
   });
 
-  get = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  get = APIEndpoint<TokenRequest<Types.GetLocationPayload>, Types.GetLocationResponse>({
     method: 'get',
-    path: '/site/{site_name}/content/location/{location_uuid}',
+    path: '/site/{site_name}/content/location/{location_id}',
     defaults: {
       host: 'api.duda.co',
     },
@@ -38,14 +30,9 @@ class AppsContentLocation extends SubResource {
     },
   });
 
-  update = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  update = APIEndpoint<TokenRequest<Types.UpdateLocationPayload>, Types.UpdateLocationResponse>({
     method: 'post',
-    path: '/site/{site_name}/content/location/{location_uuid}',
+    path: '/site/{site_name}/content/location/{location_id}',
     defaults: {
       host: 'api.duda.co',
     },
@@ -56,14 +43,9 @@ class AppsContentLocation extends SubResource {
     },
   });
 
-  delete = APIEndpoint<{
-    site_name: string;
-    token: string;
-  }, {
-    site_name: string;
-  }>({
+  delete = APIEndpoint<TokenRequest<Types.DeleteLocationPayload>, Types.DeleteLocationResponse>({
     method: 'delete',
-    path: '/site/{site_name}/content/location/{location_uuid}',
+    path: '/site/{site_name}/content/location/{location_id}',
     defaults: {
       host: 'api.duda.co',
     },

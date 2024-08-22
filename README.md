@@ -2010,6 +2010,119 @@ function validateSSO(req: YourRequestObject): boolean {
   duda.diyEditor.update({ site_name: site_name, onboarding_required: onboarding_required });
   ```
 
+# Appstore Content
+
+## Get Content Library
+
+[Get Content Library Reference](https://developer.duda.co/reference/get-content-library)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/content`
+
+  ```typescript
+  duda.appstore.content.get({ site_name: site_name });
+  ```
+
+## Update Content Library
+
+[Update Content Library Reference](https://developer.duda.co/reference/update-content-library)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content`
+
+  ```typescript
+  duda.appstore.content.update({ site_name: site_name });
+  ```
+
+## Publish Content Library
+
+[Publish Content Library Reference](https://developer.duda.co/reference/publish-content-library)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content/publish`
+
+  ```typescript
+  duda.appstore.content.publish({ site_name: site_name });
+  ```
+
+## Get Location
+
+[Get Location Reference](https://developer.duda.co/reference/get-location)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/content/location/{location_id}`
+
+  ```typescript
+  duda.appstore.content.locations.get({ site_name: site_name, location_id: location_id });
+  ```
+
+## Create Location
+
+[Create Location Reference](https://developer.duda.co/reference/create-location)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content/location`
+
+  ```typescript
+  duda.appstore.content.locations.create({ site_name: site_name });
+  ```
+
+## Update Location
+
+[Update Location Reference](https://developer.duda.co/reference/update-location-1)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content/location/{location_id}`
+
+  ```typescript
+  duda.appstore.content.locations.update({ site_name: site_name, location_id: location_id });
+  ```
+
+## Delete Location
+
+[Delete Location Reference](https://developer.duda.co/reference/delete-location-1)
+
+### Request
+
+`DELETE https://api.duda.co/api/integrationhub/application/site/{site_name}/content/location/{location_id}`
+
+  ```typescript
+  duda.appstore.content.locations.delete({ site_name: site_name, location_id: location_id });
+  ```
+
+
+# Appstore eComm
+
+## Get Settings
+
+[Get Settings Reference](https://developer.duda.co/reference/app-get-ecomm-settings)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce`
+
+  ```typescript
+  duda.appstore.ecomm.get({ site_name: site_name });
+  ```
+
+## Update Settings
+
+[Update Settings Reference](https://developer.duda.co/reference/app-ecomm-update-settings)
+
+### Request
+
+`PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce`
+
+  ```typescript
+  duda.appstore.ecomm.update({ site_name: site_name });
+  ```
+
 # Appstore eComm Products
 
 ## List Products

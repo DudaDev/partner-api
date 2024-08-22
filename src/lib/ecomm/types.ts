@@ -486,7 +486,9 @@ export interface UpdateEcommPayload extends Ecomm {
 export interface GetEcommResponse extends Ecomm {
   cart_settings: CartSettings
 }
-export interface UpdateEcommResponse extends Ecomm {}
+export interface UpdateEcommResponse extends Ecomm {
+  cart_settings: CartSettings
+}
 
 export interface PaymentItem {
   type: 'PHYSICAL' | 'DIGITAL' | 'TAX' | 'SHIPPING' | 'DISCOUNT',
