@@ -7,18 +7,18 @@ server-side Javascript.
 2. [Installation](#installation)
 3. [Usage](#usage)
 4. [Configuration](#configuration)
-    1. [Initialize with config object](#initialize-with-config-object)
-    2. [API Environments](#api-environments)
-    3. [Network Retries](#network-retries)
+   1. [Initialize with config object](#initialize-with-config-object)
+   2. [API Environments](#api-environments)
+   3. [Network Retries](#network-retries)
 5. [Request Overrides](#request-overrides)
 6. [Responses](#responses)
-    1. [Success](#success)
-    2. [Errors](#errors)
+   1. [Success](#success)
+   2. [Errors](#errors)
 7. [Debugging](#debugging)
 8. [App Store](#app-store-api)
-    1. [Authenticating requests](#authenticating-requests)
-    2. [Handling different `api_endpoint` values](#handling-different-api_endpoint-values)
-    3. [Utility functions](#utility-functions)
+   1. [Authenticating requests](#authenticating-requests)
+   2. [Handling different `api_endpoint` values](#handling-different-api_endpoint-values)
+   3. [Utility functions](#utility-functions)
 9. [More Information](#more-information)
 
 ## Requirements
@@ -40,7 +40,7 @@ yarn add @dudadev/partner-api
 The package needs to be configured with your API credentials:
 
 ```typescript
-const { Duda } = require('@dudadev/partner-api');
+const { Duda } = require("@dudadev/partner-api");
 
 const duda = new Duda({
   user: process.env.DUDA_API_USER,
@@ -48,9 +48,10 @@ const duda = new Duda({
   env: Duda.Envs.direct,
 });
 
-duda.sites.get({ site_name: "a-site-name" })
-  .then(site => console.log(site))
-  .catch(error => console.error(error));
+duda.sites
+  .get({ site_name: "a-site-name" })
+  .then((site) => console.log(site))
+  .catch((error) => console.error(error));
 ```
 
 Or using ES modules and `async/await`:
@@ -76,8 +77,8 @@ The package can be initialized with several options:
 
 ```typescript
 const duda = new Duda({
-  user: 'api-user',
-  pass: 'api-pass',
+  user: "api-user",
+  pass: "api-pass",
   env: Duda.Envs.sandbox, // also, .direct, .eu
 });
 ```
@@ -118,7 +119,7 @@ the [http.RequestOptions](https://definitelytyped.org/docs/node--node/interfaces
 of any method on a per-request basis by passing a second object with custom options:
 
 ```typescript
-const { Duda } = require('@dudadev/partner-api');
+const { Duda } = require("@dudadev/partner-api");
 
 const duda = new Duda({
   user: process.env.DUDA_API_USER,
@@ -126,15 +127,19 @@ const duda = new Duda({
   env: Duda.Envs.direct,
 });
 
-duda.sites.get({ site_name: 'a-site-name' }, {
-  host: 'api-special.duda.co',
-  auth: 'another-username:another-password',
-  headers: {
-    'X-CUSTOM-HEADER': 'a-value',
-  },
-})
+duda.sites
+  .get(
+    { site_name: "a-site-name" },
+    {
+      host: "api-special.duda.co",
+      auth: "another-username:another-password",
+      headers: {
+        "X-CUSTOM-HEADER": "a-value",
+      },
+    },
+  )
   .then((site) => console.log(site))
-  .catch((error) => console.error(error))
+  .catch((error) => console.error(error));
 ```
 
 ## Responses
@@ -195,9 +200,9 @@ API Endpoints protected by an `X-DUDA-ACCESS-TOKEN` expect method calls to inclu
 
 ```typescript
 duda.appstore.sites.get({
-  site_name: 'a-site-name',
-  token: 'authorization-code',
-})
+  site_name: "a-site-name",
+  token: "authorization-code",
+});
 ```
 
 ### Handling different `api_endpoint` values
@@ -207,23 +212,22 @@ You can use the [request override](#request-overrides) feature to set the host o
 
 ```typescript
 function getSite(site: string) {
-  const {
-    site_name,
-    auth,
-    api_endpoint
-  } = getInstallFromDB(site);
+  const { site_name, auth, api_endpoint } = getInstallFromDB(site);
 
-  return duda.appstore.sites.get({
-    site_name: site_name,
-    token: auth.authorization_code,
-  }, {
-    host: api_endpoint,
-  })
+  return duda.appstore.sites.get(
+    {
+      site_name: site_name,
+      token: auth.authorization_code,
+    },
+    {
+      host: api_endpoint,
+    },
+  );
 }
 
-getSite('a-site-name')
+getSite("a-site-name")
   .then((site) => console.log(site))
-  .catch((err) => console.log(err.status, err.error))
+  .catch((err) => console.log(err.status, err.error));
 ```
 
 ### Utility functions
@@ -233,7 +237,11 @@ Included under `Duda.appstore` is `utils` which contains useful methods for vali
 ```typescript
 function validateWebook(req: YourRequestObject): boolean {
   // conform request object
-  return duda.appstore.utils.validateWebook(process.env.SECRET_KEY, req.headers, req.body);
+  return duda.appstore.utils.validateWebook(
+    process.env.SECRET_KEY,
+    req.headers,
+    req.body,
+  );
 }
 
 function validateSSO(req: YourRequestObject): boolean {
@@ -241,6 +249,63 @@ function validateSSO(req: YourRequestObject): boolean {
   return duda.appstore.utils.validateSSOLink(process.env.SECRET_KEY, req.query);
 }
 ```
+
+### Configuring the Duda instance at initialization for App Store requests (beta)
+
+As of 2.8.0 you can configure an instance of the Duda class with an App Store configuration, negating the need to pass your token on each request. This configuration will also automatically handle refreshing your token if the expiration date has passed. _Note: You are still responsible for saving your new authorization and expiration date into your database._
+
+```typescript
+const duda = new Duda(
+  {
+    user: "testing",
+    pass: "testing",
+    env: Duda.Envs.direct,
+  },
+  {
+    auth: appStoreAuthObject,
+    uuid: appUuid,
+  },
+);
+```
+
+The optional second argument contains the UUID of your app (this is provided by Duda when starting your app build), and the entire auth object you receive when an app is [installed](https://developer.duda.co/docs/app-store-webhooks#install) onto a site.
+
+Once configured in this fashion, any requests to methods under the `appstore` namespace will no longer require a token.
+
+```typescript
+return duda.appstore.sites.get(
+  {
+    site_name: site_name,
+  },
+  {
+    host: api_endpoint,
+  },
+);
+```
+
+A second benefit of this configuration is that the object will check the `expiration_date` on the supplied auth object before executing your App Store request. If the date has passed, it will call the [token refresh endpoint](https://developer.duda.co/reference/app-create-access-token) and obtain a new auth object that contains an updated `authorization_code`.
+
+After aquiring a new code. The object will emit an event containing the entire auth object, which you should save to your db.
+
+```typescript
+const duda = new Duda(
+  {
+    user: "testing",
+    pass: "testing",
+    env: Duda.Envs.direct,
+  },
+  {
+    auth: appStoreAuthObject,
+    uuid: appUuid,
+  },
+);
+
+duda.events.on("refresh", (auth) => {
+  // save the updated auth object with the rest of the app install data.
+});
+```
+
+This feature is currently in beta, if you experience any issues while implementing the new configuration, please [open an issue](https://github.com/DudaDev/partner-api/issues).
 
 # Sites
 
@@ -252,9 +317,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}`
 
-  ```typescript
-  duda.sites.get({ site_name: site_name });
-  ```
+```typescript
+duda.sites.get({ site_name: site_name });
+```
 
 ## Get Site by External ID
 
@@ -264,9 +329,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/byexternalid/{external_uid}`
 
-  ```typescript
-  duda.sites.getByExternalID({ external_uid: external_uid })
-  ```
+```typescript
+duda.sites.getByExternalID({ external_uid: external_uid });
+```
 
 ## Create Site
 
@@ -276,9 +341,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/create`
 
-  ```typescript
-  duda.sites.create({ template_id: template_id })
-  ```
+```typescript
+duda.sites.create({ template_id: template_id });
+```
 
 ## Update Site
 
@@ -288,9 +353,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/update/{site_name}`
 
-  ```typescript
-  duda.sites.update({ site_name: site_name })
-  ```
+```typescript
+duda.sites.update({ site_name: site_name });
+```
 
 ## Duplicate Site
 
@@ -300,9 +365,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/duplicate/{site_name}`
 
-  ```typescript
-  duda.sites.duplicate({ site_name: site_name, new_default_domain_prefix: new_default_domain_prefix })
-  ```
+```typescript
+duda.sites.duplicate({
+  site_name: site_name,
+  new_default_domain_prefix: new_default_domain_prefix,
+});
+```
 
 ## Publish Site
 
@@ -312,9 +380,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/publish/{site_name}`
 
-  ```typescript
-  duda.sites.publish({ site_name: site_name })
-  ```
+```typescript
+duda.sites.publish({ site_name: site_name });
+```
 
 ## Unpublish Site
 
@@ -324,9 +392,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/unpublish/{site_name}`
 
-  ```typescript
-  duda.sites.unpublish({ site_name: site_name })
-  ```
+```typescript
+duda.sites.unpublish({ site_name: site_name });
+```
 
 ## Reset Site
 
@@ -336,9 +404,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/reset/{site_name}`
 
-  ```typescript
-  duda.sites.reset({ site_name: site_name, template_id: template_id })
-  ```
+```typescript
+duda.sites.reset({ site_name: site_name, template_id: template_id });
+```
 
 ## Switch Template
 
@@ -348,9 +416,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/switchTemplate/{site_name}`
 
-  ```typescript
-  duda.sites.switchTemplate({ site_name: site_name, template_id: template_id })
-  ```
+```typescript
+duda.sites.switchTemplate({ site_name: site_name, template_id: template_id });
+```
 
 ## Delete Site
 
@@ -360,9 +428,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}`
 
-  ```typescript
-  duda.sites.delete({ site_name: site_name })
-  ```
+```typescript
+duda.sites.delete({ site_name: site_name });
+```
 
 ## Get Site Theme
 
@@ -372,9 +440,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/theme`
 
-  ```typescript
-  duda.sites.theme.get({ site_name: site_name })
-  ```
+```typescript
+duda.sites.theme.get({ site_name: site_name });
+```
 
 ## Update Site Theme
 
@@ -384,9 +452,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PUT https://api.duda.co/api/sites/multiscreen/{site_name}/theme`
 
-  ```typescript
-  duda.sites.theme.update({ site_name: site_name })
-  ```
+```typescript
+duda.sites.theme.update({ site_name: site_name });
+```
 
 # Templates
 
@@ -398,9 +466,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/templates`
 
-  ```typescript
-  duda.templates.list();
-  ```
+```typescript
+duda.templates.list();
+```
 
 ## Get Template
 
@@ -410,9 +478,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/templates/{template_id}`
 
-  ```typescript
-  duda.templates.get({ template_id: template_id });
-  ```
+```typescript
+duda.templates.get({ template_id: template_id });
+```
 
 ## Update Template
 
@@ -422,9 +490,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/templates/{template_id}`
 
-  ```typescript
-  duda.templates.update({ template_id: template_id });
-  ```
+```typescript
+duda.templates.update({ template_id: template_id });
+```
 
 ## Create From Site
 
@@ -434,9 +502,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/templates/fromsite`
 
-  ```typescript
-  duda.templates.createFromSite({ site_name: site_name });
-  ```
+```typescript
+duda.templates.createFromSite({ site_name: site_name });
+```
 
 ## Create From Template
 
@@ -446,9 +514,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/templates/fromtemplate`
 
-  ```typescript
-  duda.templates.createFromTemplate({ template_id: template_id });
-  ```
+```typescript
+duda.templates.createFromTemplate({ template_id: template_id });
+```
 
 ## Delete Template
 
@@ -458,9 +526,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/templates/{template_id}`
 
-  ```typescript
-  duda.templates.delete({ template_id: template_id });
-  ```
+```typescript
+duda.templates.delete({ template_id: template_id });
+```
 
 # Pages v2
 
@@ -472,9 +540,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/pages`
 
-  ```typescript
-  duda.pages.v2.list({ site_name: site_name });
-  ```
+```typescript
+duda.pages.v2.list({ site_name: site_name });
+```
 
 ## Get Page
 
@@ -484,9 +552,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}`
 
-  ```typescript
-  duda.pages.v2.get({ site_name: site_name, page_uuid: page_uuid });
-  ```
+```typescript
+duda.pages.v2.get({ site_name: site_name, page_uuid: page_uuid });
+```
 
 ## Update Page
 
@@ -496,9 +564,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PUT https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}`
 
-  ```typescript
-  duda.pages.v2.update({ site_name: site_name, page_uuid: page_uuid });
-  ```
+```typescript
+duda.pages.v2.update({ site_name: site_name, page_uuid: page_uuid });
+```
 
 ## Create Page
 
@@ -508,9 +576,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/pages`
 
-  ```typescript
-  duda.pages.v2.create({ site_name: site_name });
-  ```
+```typescript
+duda.pages.v2.create({ site_name: site_name });
+```
 
 ## Duplicate Page
 
@@ -520,9 +588,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}/duplicate`
 
-  ```typescript
-  duda.pages.v2.duplicate({ site_name: site_name, page_uuid: page_uuid });
-  ```
+```typescript
+duda.pages.v2.duplicate({ site_name: site_name, page_uuid: page_uuid });
+```
 
 ## Delete Page
 
@@ -532,9 +600,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}`
 
-  ```typescript
-  duda.pages.v2.delete({ site_name: site_name, page_uuid: page_uuid });
-  ```
+```typescript
+duda.pages.v2.delete({ site_name: site_name, page_uuid: page_uuid });
+```
 
 # Page Elements
 
@@ -546,9 +614,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}/elements`
 
-  ```typescript
-  duda.pages.elements.list({ site_name: site_name, page_uuid: page_uuid });
-  ```
+```typescript
+duda.pages.elements.list({ site_name: site_name, page_uuid: page_uuid });
+```
 
 ## Create Page Element
 
@@ -558,9 +626,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}/elements`
 
-  ```typescript
-  duda.pages.elements.create({ site_name: site_name, page_uuid: page_uuid });
-  ```
+```typescript
+duda.pages.elements.create({ site_name: site_name, page_uuid: page_uuid });
+```
 
 ## Update Page Element
 
@@ -570,9 +638,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PUT https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}/elements/{element_id}`
 
-  ```typescript
-  duda.pages.elements.update({ site_name: site_name, page_uuid: page_uuid, element_id: element_id });
-  ```
+```typescript
+duda.pages.elements.update({
+  site_name: site_name,
+  page_uuid: page_uuid,
+  element_id: element_id,
+});
+```
 
 ## Delete Page Element
 
@@ -582,9 +654,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/pages/{page_uuid}/elements/{element_id}`
 
-  ```typescript
-  duda.pages.elements.delete({ site_name: site_name, page_uuid: page_uuid, element_id: element_id });
-  ```
+```typescript
+duda.pages.elements.delete({
+  site_name: site_name,
+  page_uuid: page_uuid,
+  element_id: element_id,
+});
+```
 
 # Sections
 
@@ -596,9 +672,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sections`
 
-  ```typescript
-  duda.sections.list();
-  ```
+```typescript
+duda.sections.list();
+```
 
 ## Get Section
 
@@ -608,9 +684,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sections/{section_uuid}`
 
-  ```typescript
-  duda.sections.get({ section_uuid: section_uuid });
-  ```
+```typescript
+duda.sections.get({ section_uuid: section_uuid });
+```
 
 # Navigation
 
@@ -622,9 +698,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/navigation`
 
-  ```typescript
-  duda.navigation.list({ site_name: site_name });
-  ```
+```typescript
+duda.navigation.list({ site_name: site_name });
+```
 
 ## Get Navigation By Language
 
@@ -634,9 +710,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/navigation/{lang}`
 
-  ```typescript
-  duda.navigation.getByLang({ site_name: site_name, lang: lang });
-  ```
+```typescript
+duda.navigation.getByLang({ site_name: site_name, lang: lang });
+```
 
 ## Create Navigation
 
@@ -646,9 +722,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/navigation/{lang}/items`
 
-  ```typescript
-  duda.navigation.create({ site_name: site_name, lang: lang });
-  ```
+```typescript
+duda.navigation.create({ site_name: site_name, lang: lang });
+```
 
 ## Update Navigation
 
@@ -658,9 +734,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/navigation/{lang}/items/{navigation_id}`
 
-  ```typescript
-  duda.navigation.update({ site_name: site_name, lang: lang, navigation_id: navigation_id });
-  ```
+```typescript
+duda.navigation.update({
+  site_name: site_name,
+  lang: lang,
+  navigation_id: navigation_id,
+});
+```
 
 # Blog
 
@@ -672,9 +752,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog/import`
 
-  ```typescript
-  duda.blog.import({ site_name: site_name });
-  ```
+```typescript
+duda.blog.import({ site_name: site_name });
+```
 
 ## Import Blog Post
 
@@ -684,9 +764,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts/import`
 
-  ```typescript
-  duda.blog.importPost({ site_name: site_name });
-  ```
+```typescript
+duda.blog.importPost({ site_name: site_name });
+```
 
 ## Delete Blog Post
 
@@ -696,9 +776,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog`
 
-  ```typescript
-  duda.blog.delete({ site_name: site_name });
-  ```
+```typescript
+duda.blog.delete({ site_name: site_name });
+```
 
 # eComm
 
@@ -710,9 +790,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce`
 
-  ```typescript
-  duda.ecomm.get({ site_name: site_name });
-  ```
+```typescript
+duda.ecomm.get({ site_name: site_name });
+```
 
 ## Update Settings
 
@@ -722,9 +802,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce`
 
-  ```typescript
-  duda.ecomm.update({ site_name: site_name });
-  ```
+```typescript
+duda.ecomm.update({ site_name: site_name });
+```
 
 # eComm Carts
 
@@ -736,9 +816,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/carts`
 
-  ```typescript
-  duda.ecomm.carts.list({ site_name: site_name });
-  ```
+```typescript
+duda.ecomm.carts.list({ site_name: site_name });
+```
 
 ## Get Cart
 
@@ -748,9 +828,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/carts/{cart_id}`
 
-  ```typescript
-  duda.ecomm.carts.get({ site_name: site_name, cart_id: cart_id });
-  ```
+```typescript
+duda.ecomm.carts.get({ site_name: site_name, cart_id: cart_id });
+```
 
 # eComm Orders
 
@@ -762,9 +842,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders`
 
-  ```typescript
-  duda.ecomm.orders.list({ site_name: site_name });
-  ```
+```typescript
+duda.ecomm.orders.list({ site_name: site_name });
+```
 
 ## Get Order
 
@@ -774,9 +854,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}`
 
-  ```typescript
-  duda.ecomm.orders.get({ site_name: site_name, order_id: order_id });
-  ```
+```typescript
+duda.ecomm.orders.get({ site_name: site_name, order_id: order_id });
+```
 
 ## Update Order
 
@@ -786,9 +866,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}`
 
-  ```typescript
-  duda.ecomm.orders.update({ site_name: site_name, order_id: order_id });
-  ```
+```typescript
+duda.ecomm.orders.update({ site_name: site_name, order_id: order_id });
+```
 
 ## List Refunds
 
@@ -798,9 +878,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/refunds`
 
-  ```typescript
-  duda.ecomm.orders.listRefunds({ site_name: site_name, order_id: order_id });
-  ```
+```typescript
+duda.ecomm.orders.listRefunds({ site_name: site_name, order_id: order_id });
+```
 
 ## Get Refund
 
@@ -810,9 +890,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/refunds/{refund_id}`
 
-  ```typescript
-  duda.ecomm.orders.getRefund({ site_name: site_name, order_id: order_id, refund_id: refund_id });
-  ```
+```typescript
+duda.ecomm.orders.getRefund({
+  site_name: site_name,
+  order_id: order_id,
+  refund_id: refund_id,
+});
+```
 
 # eComm Payment Gateways
 
@@ -824,9 +908,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/payment-gateways`
 
-  ```typescript
-  duda.ecomm.gateways.list({ site_name: site_name });
-  ```
+```typescript
+duda.ecomm.gateways.list({ site_name: site_name });
+```
 
 ## Get Payment Gateway
 
@@ -836,9 +920,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/payment-gateways/{gateway_id}`
 
-  ```typescript
-  duda.ecomm.gateways.get({ site_name: site_name, gateway_id: gateway_id });
-  ```
+```typescript
+duda.ecomm.gateways.get({ site_name: site_name, gateway_id: gateway_id });
+```
 
 ## Create Payment Gateway
 
@@ -848,9 +932,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/payment-gateways`
 
-  ```typescript
-  duda.ecomm.gateways.create({ site_name: site_name, live_payment_methods_url: live_payment_methods_url });
-  ```
+```typescript
+duda.ecomm.gateways.create({
+  site_name: site_name,
+  live_payment_methods_url: live_payment_methods_url,
+});
+```
 
 ## Update Payment Gateway
 
@@ -860,9 +947,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/payment-gateways/{gateway_id}`
 
-  ```typescript
-  duda.ecomm.gateways.update({ site_name: site_name, gateway_id: gateway_id, live_payment_methods_url: live_payment_methods_url });
-  ```
+```typescript
+duda.ecomm.gateways.update({
+  site_name: site_name,
+  gateway_id: gateway_id,
+  live_payment_methods_url: live_payment_methods_url,
+});
+```
 
 ## Delete Payment Gateway
 
@@ -872,9 +963,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/payment-gateways/{gateway_id}`
 
-  ```typescript
-  duda.ecomm.gateways.delete({ site_name: site_name, gateway_id: gateway_id });
-  ```
+```typescript
+duda.ecomm.gateways.delete({ site_name: site_name, gateway_id: gateway_id });
+```
 
 # eComm Payments
 
@@ -886,9 +977,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/payment-sessions/{session_id}`
 
-  ```typescript
-  duda.ecomm.payments.get({ site_name: site_name, session_id: session_id });
-  ```
+```typescript
+duda.ecomm.payments.get({ site_name: site_name, session_id: session_id });
+```
 
 ## Confirm Payment
 
@@ -898,9 +989,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/payment-sessions/{session_id}/confirm`
 
-  ```typescript
-  duda.ecomm.payments.confirm({ site_name: site_name, session_id: session_id, state: state });
-  ```
+```typescript
+duda.ecomm.payments.confirm({
+  site_name: site_name,
+  session_id: session_id,
+  state: state,
+});
+```
 
 # eComm Categories
 
@@ -912,9 +1007,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories`
 
-  ```typescript
-  duda.ecomm.categories.list({ site_name: site_name });
-  ```
+```typescript
+duda.ecomm.categories.list({ site_name: site_name });
+```
 
 ## Get Category
 
@@ -924,9 +1019,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories/{category_id}`
 
-  ```typescript
-  duda.ecomm.categories.get({ site_name: site_name, category_id: category_id });
-  ```
+```typescript
+duda.ecomm.categories.get({ site_name: site_name, category_id: category_id });
+```
 
 ## Create Category
 
@@ -936,9 +1031,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories`
 
-  ```typescript
-  duda.ecomm.categories.create({ site_name: site_name });
-  ```
+```typescript
+duda.ecomm.categories.create({ site_name: site_name });
+```
 
 ## Update Category
 
@@ -948,9 +1043,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories/{category_id}`
 
-  ```typescript
-  duda.ecomm.categories.update({ site_name: site_name, category_id: category_id });
-  ```
+```typescript
+duda.ecomm.categories.update({
+  site_name: site_name,
+  category_id: category_id,
+});
+```
 
 ## Delete Category
 
@@ -960,9 +1058,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories/{category_id}`
 
-  ```typescript
-  duda.ecomm.categories.delete({ site_name: site_name, category_id: category_id });
-  ```
+```typescript
+duda.ecomm.categories.delete({
+  site_name: site_name,
+  category_id: category_id,
+});
+```
 
 # eComm Shipping Providers
 
@@ -974,9 +1075,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/shipping-providers`
 
-  ```typescript
-  duda.ecomm.shipping.list({ site_name: site_name });
-  ```
+```typescript
+duda.ecomm.shipping.list({ site_name: site_name });
+```
 
 ## Get Shipping Provider
 
@@ -986,9 +1087,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{siteAlias}/ecommerce/shipping-providers/{id}`
 
-  ```typescript
-  duda.ecomm.shipping.get({ site_name: site_name, id: id });
-  ```
+```typescript
+duda.ecomm.shipping.get({ site_name: site_name, id: id });
+```
 
 ## Create Shipping Provider
 
@@ -998,9 +1099,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{siteAlias}/ecommerce/shipping-providers`
 
-  ```typescript
-  duda.ecomm.shipping.create({ site_name: site_name, live_shipping_rates_url: live_shipping_rates_url });
-  ```
+```typescript
+duda.ecomm.shipping.create({
+  site_name: site_name,
+  live_shipping_rates_url: live_shipping_rates_url,
+});
+```
 
 ## Update Shipping Provider
 
@@ -1010,9 +1114,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PATCH https://api.duda.co/api/sites/multiscreen/{siteAlias}/ecommerce/shipping-providers/{id}`
 
-  ```typescript
-  duda.ecomm.shipping.update({ site_name: site_name, id: id });
-  ```
+```typescript
+duda.ecomm.shipping.update({ site_name: site_name, id: id });
+```
 
 ## Delete Shipping Provider
 
@@ -1022,9 +1126,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{siteAlias}/ecommerce/shipping-providers/{id}`
 
-  ```typescript
-  duda.ecomm.shipping.delete({ site_name: site_name, id: id });
-  ```
+```typescript
+duda.ecomm.shipping.delete({ site_name: site_name, id: id });
+```
 
 # eComm Products
 
@@ -1036,9 +1140,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products`
 
-  ```typescript
-  duda.ecomm.products.list({ site_name: site_name });
-  ```
+```typescript
+duda.ecomm.products.list({ site_name: site_name });
+```
 
 ## Get Product
 
@@ -1048,9 +1152,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products/{product_id}`
 
-  ```typescript
-  duda.ecomm.products.get({ site_name: site_name, product_id: product_id });
-  ```
+```typescript
+duda.ecomm.products.get({ site_name: site_name, product_id: product_id });
+```
 
 ## Create Product
 
@@ -1060,9 +1164,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `CREATE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products`
 
-  ```typescript
-  duda.ecomm.products.create({ site_name: site_name });
-  ```
+```typescript
+duda.ecomm.products.create({ site_name: site_name });
+```
 
 ## Update Product
 
@@ -1072,9 +1176,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products/{product_id}`
 
-  ```typescript
-  duda.ecomm.products.update({ site_name: site_name, product_id: product_id });
-  ```
+```typescript
+duda.ecomm.products.update({ site_name: site_name, product_id: product_id });
+```
 
 ## Delete Product
 
@@ -1084,9 +1188,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products/{product_id}`
 
-  ```typescript
-  duda.ecomm.products.delete({ site_name: site_name, product_id: product_id });
-  ```
+```typescript
+duda.ecomm.products.delete({ site_name: site_name, product_id: product_id });
+```
 
 ## Get Product Variation
 
@@ -1096,9 +1200,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products/{product_id}/variations/{variation_id}`
 
-  ```typescript
-  duda.ecomm.variations.get({ site_name: site_name, product_id: product_id, variation_id: variation_id });
-  ```
+```typescript
+duda.ecomm.variations.get({
+  site_name: site_name,
+  product_id: product_id,
+  variation_id: variation_id,
+});
+```
 
 ## Update Product Variation
 
@@ -1108,9 +1216,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products/{product_id}/variations/{variation_id}`
 
-  ```typescript
-  duda.ecomm.variations.update({ site_name: site_name, product_id: product_id, variation_id: variation_id });
-  ```
+```typescript
+duda.ecomm.variations.update({
+  site_name: site_name,
+  product_id: product_id,
+  variation_id: variation_id,
+});
+```
 
 # eComm Product Options
 
@@ -1122,9 +1234,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options`
 
-  ```typescript
-  duda.ecomm.options.list({ site_name: site_name });
-  ```
+```typescript
+duda.ecomm.options.list({ site_name: site_name });
+```
 
 ## Get Product Option
 
@@ -1134,9 +1246,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options/{option_id}`
 
-  ```typescript
-  duda.ecomm.options.get({ site_name: site_name, option_id: option_id });
-  ```
+```typescript
+duda.ecomm.options.get({ site_name: site_name, option_id: option_id });
+```
 
 ## Create Product Option
 
@@ -1146,9 +1258,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `CREATE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options`
 
-  ```typescript
-  duda.ecomm.options.create({ site_name: site_name, choices: choices, name: name });
-  ```
+```typescript
+duda.ecomm.options.create({
+  site_name: site_name,
+  choices: choices,
+  name: name,
+});
+```
 
 ## Update Product Option
 
@@ -1158,9 +1274,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PUT https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options/{option_id}`
 
-  ```typescript
-  duda.ecomm.options.update({ site_name: site_name, option_id: option_id, name: name });
-  ```
+```typescript
+duda.ecomm.options.update({
+  site_name: site_name,
+  option_id: option_id,
+  name: name,
+});
+```
 
 ## Delete Product Option
 
@@ -1170,9 +1290,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options/{option_id}`
 
-  ```typescript
-  duda.ecomm.options.delete({ site_name: site_name, option_id: option_id });
-  ```
+```typescript
+duda.ecomm.options.delete({ site_name: site_name, option_id: option_id });
+```
 
 ## Create Product Option Choice
 
@@ -1182,9 +1302,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options/{option_id}/choices`
 
-  ```typescript
-  duda.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, value: value });
-  ```
+```typescript
+duda.ecomm.options.createChoice({
+  site_name: site_name,
+  option_id: option_id,
+  value: value,
+});
+```
 
 ## Update Product Option Choice
 
@@ -1194,9 +1318,14 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PUT https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options/{option_id}/choices/{choice_id}`
 
-  ```typescript
-  duda.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, choice_id: choice_id, value: value });
-  ```
+```typescript
+duda.ecomm.options.createChoice({
+  site_name: site_name,
+  option_id: option_id,
+  choice_id: choice_id,
+  value: value,
+});
+```
 
 ## Delete Product Option Choice
 
@@ -1206,9 +1335,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/options/{option_id}/choices/{choice_id}`
 
-  ```typescript
-  duda.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, choice_id: choice_id });
-  ```
+```typescript
+duda.ecomm.options.createChoice({
+  site_name: site_name,
+  option_id: option_id,
+  choice_id: choice_id,
+});
+```
 
 # URL Rules
 
@@ -1220,9 +1353,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/site/{site_name}/urlrules`
 
-  ```typescript
-  duda.urlRules.list({ site_name: site_name });
-  ```
+```typescript
+duda.urlRules.list({ site_name: site_name });
+```
 
 ## Get Rule
 
@@ -1232,9 +1365,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/site/{site_name}/urlrules/{id}`
 
-  ```typescript
-  duda.urlRules.get({ site_name: site_name, id: id });
-  ```
+```typescript
+duda.urlRules.get({ site_name: site_name, id: id });
+```
 
 ## Create Rule
 
@@ -1244,9 +1377,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/site/{site_name}/urlrules`
 
-  ```typescript
-  duda.urlRules.create({ site_name: site_name });
-  ```
+```typescript
+duda.urlRules.create({ site_name: site_name });
+```
 
 ## Update Rule
 
@@ -1256,9 +1389,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PUT https://api.duda.co/api/sites/multiscreen/site/{site_name}/urlrules/{id}`
 
-  ```typescript
-  duda.urlRules.update({ site_name: site_name, id: id });
-  ```
+```typescript
+duda.urlRules.update({ site_name: site_name, id: id });
+```
 
 ## Delete Rule
 
@@ -1268,9 +1401,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/site/{site_name}/urlrules/{id}`
 
-  ```typescript
-  duda.urlRules.update({ site_name: site_name, id: id });
-  ```
+```typescript
+duda.urlRules.update({ site_name: site_name, id: id });
+```
 
 # Site Plans
 
@@ -1282,9 +1415,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/plans`
 
-  ```typescript
-  duda.plans.list();
-  ```
+```typescript
+duda.plans.list();
+```
 
 ## Get Site Plan
 
@@ -1294,9 +1427,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/plan`
 
-  ```typescript
-  duda.plans.get({ site_name: site_name });
-  ```
+```typescript
+duda.plans.get({ site_name: site_name });
+```
 
 ## Update Site Plan
 
@@ -1306,9 +1439,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/plan/{plan_id}`
 
-  ```typescript
-  duda.plans.update({ site_name: site_name, plan_id: plan_id });
-  ```
+```typescript
+duda.plans.update({ site_name: site_name, plan_id: plan_id });
+```
 
 # Accounts
 
@@ -1320,9 +1453,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/accounts/{account_name}`
 
-  ```typescript
-  duda.accounts.get({ account_name: account_name });
-  ```
+```typescript
+duda.accounts.get({ account_name: account_name });
+```
 
 ## Create Account
 
@@ -1332,9 +1465,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/accounts/create`
 
-  ```typescript
-  duda.accounts.create({ account_name: account_name });
-  ```
+```typescript
+duda.accounts.create({ account_name: account_name });
+```
 
 ## Update Account
 
@@ -1344,9 +1477,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/accounts/update/{account_name}`
 
-  ```typescript
-  duda.accounts.update({ account_name: account_name });
-  ```
+```typescript
+duda.accounts.update({ account_name: account_name });
+```
 
 ## Delete Account
 
@@ -1356,9 +1489,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/accounts/{account_name}`
 
-  ```typescript
-  duda.accounts.delete({ account_name: account_name });
-  ```
+```typescript
+duda.accounts.delete({ account_name: account_name });
+```
 
 # Authentication
 
@@ -1370,9 +1503,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/accounts/sso/{account_name}/link`
 
-  ```typescript
-  duda.accounts.authentication.getSSOLink({ account_name: account_name });
-  ```
+```typescript
+duda.accounts.authentication.getSSOLink({ account_name: account_name });
+```
 
 ## Create Password Reset Link
 
@@ -1382,9 +1515,11 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/accounts/reset-password/{account_name}`
 
-  ```typescript
-  duda.accounts.authentication.getResetPasswordLink({ account_name: account_name });
-  ```
+```typescript
+duda.accounts.authentication.getResetPasswordLink({
+  account_name: account_name,
+});
+```
 
 ## Create Welcome Link
 
@@ -1394,9 +1529,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/accounts/reset-password/{account_name}`
 
-  ```typescript
-  duda.accounts.authentication.getWelcomeLink({ account_name: account_name });
-  ```
+```typescript
+duda.accounts.authentication.getWelcomeLink({ account_name: account_name });
+```
 
 # Permissions
 
@@ -1408,9 +1543,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/accounts/permissions/multiscreen`
 
-  ```typescript
-  duda.accounts.permissions.list();
-  ```
+```typescript
+duda.accounts.permissions.list();
+```
 
 ## Get Client Permissions
 
@@ -1420,9 +1555,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/accounts/{account_name}/sites/{site_name}/permissions`
 
-  ```typescript
-  duda.accounts.permissions.get({ account_name: account_name, site_name: site_name });
-  ```
+```typescript
+duda.accounts.permissions.get({
+  account_name: account_name,
+  site_name: site_name,
+});
+```
 
 ## List Client Sites
 
@@ -1432,9 +1570,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/accounts/grant-access/{account_name}/sites/multiscreen`
 
-  ```typescript
-  duda.accounts.permissions.listAccessibleSites({ account_name: account_name });
-  ```
+```typescript
+duda.accounts.permissions.listAccessibleSites({ account_name: account_name });
+```
 
 ## Grant Site Access
 
@@ -1444,9 +1582,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/accounts/{account_name}/sites/{site_name}/permissions`
 
-  ```typescript
-  duda.accounts.permissions.grantSiteAccess({ account_name: account_name, site_name: site_name });
-  ```
+```typescript
+duda.accounts.permissions.grantSiteAccess({
+  account_name: account_name,
+  site_name: site_name,
+});
+```
 
 ## Remove Site Access
 
@@ -1456,9 +1597,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/accounts/{account_name}/sites/{site_name}/permissions`
 
-  ```typescript
-  duda.accounts.permissions.removeSiteAccess({ account_name: account_name, site_name: site_name });
-  ```
+```typescript
+duda.accounts.permissions.removeSiteAccess({
+  account_name: account_name,
+  site_name: site_name,
+});
+```
 
 ## List Duda Team Groups
 
@@ -1468,9 +1612,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/permission-groups/default`
 
-  ```typescript
-  duda.accounts.permissions.listDudaTeamGroups();
-  ```
+```typescript
+duda.accounts.permissions.listDudaTeamGroups();
+```
 
 ## List Custom Team Groups
 
@@ -1480,9 +1624,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/permission-groups/custom`
 
-  ```typescript
-  duda.accounts.permissions.listCustomTeamGroups();
-  ```
+```typescript
+duda.accounts.permissions.listCustomTeamGroups();
+```
 
 ## Assign Team Member to Group
 
@@ -1492,9 +1636,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/permission-groups/{group_name}/accounts/{account_name}/add`
 
-  ```typescript
-  duda.accounts.permissions.assignTeamMemberGroup({ group_name: group_name, account_name: account_name });
-  ```
+```typescript
+duda.accounts.permissions.assignTeamMemberGroup({
+  group_name: group_name,
+  account_name: account_name,
+});
+```
 
 # Content
 
@@ -1506,9 +1653,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/content`
 
-  ```typescript
-  duda.content.get({ site_name: site_name });
-  ```
+```typescript
+duda.content.get({ site_name: site_name });
+```
 
 ## Update Content Library
 
@@ -1518,9 +1665,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/content`
 
-  ```typescript
-  duda.content.update({ site_name: site_name });
-  ```
+```typescript
+duda.content.update({ site_name: site_name });
+```
 
 ## Publish Content Library
 
@@ -1530,9 +1677,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/content/publish`
 
-  ```typescript
-  duda.content.publish({ site_name: site_name });
-  ```
+```typescript
+duda.content.publish({ site_name: site_name });
+```
 
 ## Get Location
 
@@ -1542,9 +1689,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/content/location/{location_id}`
 
-  ```typescript
-  duda.content.multilocation.get({ site_name: site_name, location_id: location_id });
-  ```
+```typescript
+duda.content.multilocation.get({
+  site_name: site_name,
+  location_id: location_id,
+});
+```
 
 ## Create Location
 
@@ -1554,9 +1704,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/content/location`
 
-  ```typescript
-  duda.content.multilocation.create({ site_name: site_name });
-  ```
+```typescript
+duda.content.multilocation.create({ site_name: site_name });
+```
 
 ## Update Location
 
@@ -1566,9 +1716,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/content/location/{location_id}`
 
-  ```typescript
-  duda.content.multilocation.update({ site_name: site_name, location_id: location_id });
-  ```
+```typescript
+duda.content.multilocation.update({
+  site_name: site_name,
+  location_id: location_id,
+});
+```
 
 ## Delete Location
 
@@ -1578,9 +1731,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/content/location/{location_id}`
 
-  ```typescript
-  duda.content.multilocation.delete({ site_name: site_name, location_id: location_id });
-  ```
+```typescript
+duda.content.multilocation.delete({
+  site_name: site_name,
+  location_id: location_id,
+});
+```
 
 ## Get Injected Content
 
@@ -1590,9 +1746,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/inject-content/{site_name}`
 
-  ```typescript
-  duda.content.injectedContent.get({ site_name: site_name });
-  ```
+```typescript
+duda.content.injectedContent.get({ site_name: site_name });
+```
 
 ## Create Injected Content
 
@@ -1602,9 +1758,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/inject-content/{site_name}`
 
-  ```typescript
-  duda.content.injectedContent.create({ site_name: site_name });
-  ```
+```typescript
+duda.content.injectedContent.create({ site_name: site_name });
+```
 
 ## Create Injected Content (Single Page)
 
@@ -1614,9 +1770,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/inject-content/{site_name}/pages/{page_name}`
 
-  ```typescript
-  duda.content.injectedContent.createSPA({ site_name: site_name, page_name: page_name });
-  ```
+```typescript
+duda.content.injectedContent.createSPA({
+  site_name: site_name,
+  page_name: page_name,
+});
+```
 
 ## Upload Resource
 
@@ -1626,9 +1785,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/resources/{site_name}/upload`
 
-  ```typescript
-  duda.content.uploadResource({ site_name: site_name });
-  ```
+```typescript
+duda.content.uploadResource({ site_name: site_name });
+```
 
 # Collections
 
@@ -1640,9 +1799,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/collection`
 
-  ```typescript
-  duda.collections.list({ site_name: site_name });
-  ```
+```typescript
+duda.collections.list({ site_name: site_name });
+```
 
 ## Get Collection
 
@@ -1652,9 +1811,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}`
 
-  ```typescript
-  duda.collections.get({ site_name: site_name, collection_name: collection_name });
-  ```
+```typescript
+duda.collections.get({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
 
 ## Create Collection
 
@@ -1664,9 +1826,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/collection`
 
-  ```typescript
-  duda.collections.create({ site_name: site_name, name: name });
-  ```
+```typescript
+duda.collections.create({ site_name: site_name, name: name });
+```
 
 ## Update Collection
 
@@ -1676,9 +1838,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PUT https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{current_collection_name}`
 
-  ```typescript
-  duda.collections.update({ site_name: site_name, current_collection_name: current_collection_name });
-  ```
+```typescript
+duda.collections.update({
+  site_name: site_name,
+  current_collection_name: current_collection_name,
+});
+```
 
 ## Delete Collection
 
@@ -1688,9 +1853,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}`
 
-  ```typescript
-  duda.collections.delete({ site_name: site_name, collection_name: collection_name });
-  ```
+```typescript
+duda.collections.delete({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
 
 ## Clear Cache
 
@@ -1700,9 +1868,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/revalidate`
 
-  ```typescript
-  duda.collections.clearCache({ site_name: site_name, collection_name: collection_name });
-  ```
+```typescript
+duda.collections.clearCache({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
 
 ## Clear Cache by External ID
 
@@ -1712,9 +1883,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/collections/revalidate/{external_id}`
 
-  ```typescript
-  duda.collections.clearCacheByExtID({ external_id: external_id });
-  ```
+```typescript
+duda.collections.clearCacheByExtID({ external_id: external_id });
+```
 
 ## Create Rows
 
@@ -1724,9 +1895,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/row`
 
-  ```typescript
-  duda.collections.rows.create({ site_name: site_name, collection_name: collection_name });
-  ```
+```typescript
+duda.collections.rows.create({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
 
 ## Update Rows
 
@@ -1736,9 +1910,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PUT https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/row`
 
-  ```typescript
-  duda.collections.rows.update({ site_name: site_name, collection_name: collection_name });
-  ```
+```typescript
+duda.collections.rows.update({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
 
 ## Delete Row
 
@@ -1748,9 +1925,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/row/{row_id}`
 
-  ```typescript
-  duda.collections.rows.deleteRow({ site_name: site_name, collection_name: collection_name, row_id: row_id });
-  ```
+```typescript
+duda.collections.rows.deleteRow({
+  site_name: site_name,
+  collection_name: collection_name,
+  row_id: row_id,
+});
+```
 
 ## Delete Rows
 
@@ -1760,9 +1941,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/row`
 
-  ```typescript
-  duda.collections.rows.delete({ site_name: site_name, collection_name: collection_name });
-  ```
+```typescript
+duda.collections.rows.delete({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
 
 ## Create Fields
 
@@ -1772,9 +1956,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/field`
 
-  ```typescript
-  duda.collections.fields.create({ site_name: site_name, collection_name: collection_name });
-  ```
+```typescript
+duda.collections.fields.create({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
 
 ## Update Field
 
@@ -1784,9 +1971,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PUT https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/field/{field_name}`
 
-  ```typescript
-  duda.collections.fields.update({ site_name: site_name, collection_name: collection_name, field_name: field_name });
-  ```
+```typescript
+duda.collections.fields.update({
+  site_name: site_name,
+  collection_name: collection_name,
+  field_name: field_name,
+});
+```
 
 ## Delete Field
 
@@ -1796,9 +1987,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/field/{field_name}`
 
-  ```typescript
-  duda.collections.fields.delete({ site_name: site_name, collection_name: collection_name, field_name: field_name });
-  ```
+```typescript
+duda.collections.fields.delete({
+  site_name: site_name,
+  collection_name: collection_name,
+  field_name: field_name,
+});
+```
 
 # Reporting
 
@@ -1810,9 +2005,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/created`
 
-  ```typescript
-  duda.reporting.sites.created();
-  ```
+```typescript
+duda.reporting.sites.created();
+```
 
 ## Sites Published
 
@@ -1822,9 +2017,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/published`
 
-  ```typescript
-  duda.reporting.sites.published();
-  ```
+```typescript
+duda.reporting.sites.published();
+```
 
 ## Sites Unpublished
 
@@ -1834,9 +2029,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/unpublished`
 
-  ```typescript
-  duda.reporting.sites.unpublished();
-  ```
+```typescript
+duda.reporting.sites.unpublished();
+```
 
 ## Form Submissions
 
@@ -1846,9 +2041,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/get-forms/{site_name}`
 
-  ```typescript
-  duda.reporting.forms.submissions({ site_name: site_name });
-  ```
+```typescript
+duda.reporting.forms.submissions({ site_name: site_name });
+```
 
 ## Activities
 
@@ -1858,9 +2053,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/activities`
 
-  ```typescript
-  duda.reporting.activities.get({ site_name: site_name });
-  ```
+```typescript
+duda.reporting.activities.get({ site_name: site_name });
+```
 
 ## Analytics
 
@@ -1870,9 +2065,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/analytics/site/{site_name}`
 
-  ```typescript
-  duda.reporting.analytics.get({ site_name: site_name });
-  ```
+```typescript
+duda.reporting.analytics.get({ site_name: site_name });
+```
 
 ## Get Client Settings
 
@@ -1882,9 +2077,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/accounts/{account_name}/sites/{site_name}/stats-email`
 
-  ```typescript
-  duda.reporting.emailSettings.get({ account_name: account_name, site_name: site_name });
-  ```
+```typescript
+duda.reporting.emailSettings.get({
+  account_name: account_name,
+  site_name: site_name,
+});
+```
 
 ## Create Subscription
 
@@ -1894,9 +2092,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/accounts/{account_name}/sites/{site_name}/stats-email`
 
-  ```typescript
-  duda.reporting.emailSettings.subscribe({ account_name: account_name, site_name: site_name, frequency: frequency });
-  ```
+```typescript
+duda.reporting.emailSettings.subscribe({
+  account_name: account_name,
+  site_name: site_name,
+  frequency: frequency,
+});
+```
 
 ## Unsubscribe
 
@@ -1906,9 +2108,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/accounts/{account_name}/sites/{site_name}/stats-email`
 
-  ```typescript
-  duda.reporting.emailSettings.unsubscribe({ account_name: account_name, site_name: site_name });
-  ```
+```typescript
+duda.reporting.emailSettings.unsubscribe({
+  account_name: account_name,
+  site_name: site_name,
+});
+```
 
 # Other
 
@@ -1920,9 +2125,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/sites/multiscreen/backups/{site_name}`
 
-  ```typescript
-  duda.other.backups.list({ site_name: site_name });
-  ```
+```typescript
+duda.other.backups.list({ site_name: site_name });
+```
 
 ## Create Backup
 
@@ -1932,9 +2137,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/backups/{site_name}/create`
 
-  ```typescript
-  duda.other.backups.create({ site_name: site_name });
-  ```
+```typescript
+duda.other.backups.create({ site_name: site_name });
+```
 
 ## Restore Backup
 
@@ -1944,9 +2149,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/backups/{site_name}/restore/{backup_name}`
 
-  ```typescript
-  duda.other.backups.restore({ site_name: site_name, backup_name: backup_name });
-  ```
+```typescript
+duda.other.backups.restore({ site_name: site_name, backup_name: backup_name });
+```
 
 ## Delete Backup
 
@@ -1956,9 +2161,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/backups/{site_name}/{backup_name}`
 
-  ```typescript
-  duda.other.backups.delete({ site_name: site_name, backup_name: backup_name });
-  ```
+```typescript
+duda.other.backups.delete({ site_name: site_name, backup_name: backup_name });
+```
 
 ## Create Certificate
 
@@ -1968,9 +2173,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/certificate`
 
-  ```typescript
-  duda.other.ssl.create({ site_name: site_name });
-  ```
+```typescript
+duda.other.ssl.create({ site_name: site_name });
+```
 
 ## Renew Certificate
 
@@ -1980,9 +2185,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/certificate/renew`
 
-  ```typescript
-  duda.other.ssl.renew({ site_name: site_name });
-  ```
+```typescript
+duda.other.ssl.renew({ site_name: site_name });
+```
 
 ## Delete Certificate
 
@@ -1992,9 +2197,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/certificate`
 
-  ```typescript
-  duda.other.ssl.delete({ site_name: site_name });
-  ```
+```typescript
+duda.other.ssl.delete({ site_name: site_name });
+```
 
 # Simple Editor
 
@@ -2006,9 +2211,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PATCH  https://api.duda.co/api/sites/multiscreen/{site_name}/simple-editor`
 
-  ```typescript
-  duda.diyEditor.update({ site_name: site_name, onboarding_required: onboarding_required });
-  ```
+```typescript
+duda.diyEditor.update({
+  site_name: site_name,
+  onboarding_required: onboarding_required,
+});
+```
 
 # Appstore Content
 
@@ -2020,9 +2228,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/integrationhub/application/site/{site_name}/content`
 
-  ```typescript
-  duda.appstore.content.get({ site_name: site_name });
-  ```
+```typescript
+duda.appstore.content.get({ site_name: site_name });
+```
 
 ## Update Content Library
 
@@ -2032,9 +2240,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content`
 
-  ```typescript
-  duda.appstore.content.update({ site_name: site_name });
-  ```
+```typescript
+duda.appstore.content.update({ site_name: site_name });
+```
 
 ## Publish Content Library
 
@@ -2044,9 +2252,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content/publish`
 
-  ```typescript
-  duda.appstore.content.publish({ site_name: site_name });
-  ```
+```typescript
+duda.appstore.content.publish({ site_name: site_name });
+```
 
 ## Get Location
 
@@ -2056,9 +2264,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api.duda.co/api/integrationhub/application/site/{site_name}/content/location/{location_id}`
 
-  ```typescript
-  duda.appstore.content.locations.get({ site_name: site_name, location_id: location_id });
-  ```
+```typescript
+duda.appstore.content.locations.get({
+  site_name: site_name,
+  location_id: location_id,
+});
+```
 
 ## Create Location
 
@@ -2068,9 +2279,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content/location`
 
-  ```typescript
-  duda.appstore.content.locations.create({ site_name: site_name });
-  ```
+```typescript
+duda.appstore.content.locations.create({ site_name: site_name });
+```
 
 ## Update Location
 
@@ -2080,9 +2291,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content/location/{location_id}`
 
-  ```typescript
-  duda.appstore.content.locations.update({ site_name: site_name, location_id: location_id });
-  ```
+```typescript
+duda.appstore.content.locations.update({
+  site_name: site_name,
+  location_id: location_id,
+});
+```
 
 ## Delete Location
 
@@ -2092,9 +2306,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api.duda.co/api/integrationhub/application/site/{site_name}/content/location/{location_id}`
 
-  ```typescript
-  duda.appstore.content.locations.delete({ site_name: site_name, location_id: location_id });
-  ```
+```typescript
+duda.appstore.content.locations.delete({
+  site_name: site_name,
+  location_id: location_id,
+});
+```
 
 # Appstore eComm
 
@@ -2106,9 +2323,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce`
 
-  ```typescript
-  duda.appstore.ecomm.get({ site_name: site_name });
-  ```
+```typescript
+duda.appstore.ecomm.get({ site_name: site_name });
+```
 
 ## Update Settings
 
@@ -2118,9 +2335,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce`
 
-  ```typescript
-  duda.appstore.ecomm.update({ site_name: site_name });
-  ```
+```typescript
+duda.appstore.ecomm.update({ site_name: site_name });
+```
 
 # Appstore eComm Products
 
@@ -2132,9 +2349,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/products`
 
-  ```typescript
-  duda.appstore.ecomm.products.list({ site_name: site_name });
-  ```
+```typescript
+duda.appstore.ecomm.products.list({ site_name: site_name });
+```
 
 ## Get Product
 
@@ -2144,9 +2361,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/products/{product_id}`
 
-  ```typescript
-  duda.appstore.ecomm.products.get({ site_name: site_name, product_id: product_id });
-  ```
+```typescript
+duda.appstore.ecomm.products.get({
+  site_name: site_name,
+  product_id: product_id,
+});
+```
 
 ## Create Product
 
@@ -2156,9 +2376,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/products`
 
-  ```typescript
-  duda.appstore.ecomm.products.create({ site_name: site_name });
-  ```
+```typescript
+duda.appstore.ecomm.products.create({ site_name: site_name });
+```
 
 ## Update Product
 
@@ -2168,9 +2388,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/products/{product_id}`
 
-  ```typescript
-  duda.appstore.ecomm.products.update({ site_name: site_name, product_id: product_id });
-  ```
+```typescript
+duda.appstore.ecomm.products.update({
+  site_name: site_name,
+  product_id: product_id,
+});
+```
 
 ## Delete Product
 
@@ -2180,9 +2403,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/products/{product_id}`
 
-  ```typescript
-  duda.appstore.ecomm.products.delete({ site_name: site_name, product_id: product_id });
-  ```
+```typescript
+duda.appstore.ecomm.products.delete({
+  site_name: site_name,
+  product_id: product_id,
+});
+```
 
 # Appstore eComm Product Options
 
@@ -2194,9 +2420,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options`
 
-  ```typescript
-  duda.appstore.ecomm.options.list({ site_name: site_name });
-  ```
+```typescript
+duda.appstore.ecomm.options.list({ site_name: site_name });
+```
 
 ## Get Product Option
 
@@ -2206,9 +2432,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}`
 
-  ```typescript
-  duda.appstore.ecomm.options.get({ site_name: site_name, option_id: option_id });
-  ```
+```typescript
+duda.appstore.ecomm.options.get({ site_name: site_name, option_id: option_id });
+```
 
 ## Create Product Option
 
@@ -2218,9 +2444,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options`
 
-  ```typescript
-  duda.appstore.ecomm.options.create({ site_name: site_name, name: name, choices: choices });
-  ```
+```typescript
+duda.appstore.ecomm.options.create({
+  site_name: site_name,
+  name: name,
+  choices: choices,
+});
+```
 
 ## Update Product Option
 
@@ -2230,9 +2460,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PUT https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}`
 
-  ```typescript
-  duda.appstore.ecomm.options.update({ site_name: site_name, option_id: option_id, name: name });
-  ```
+```typescript
+duda.appstore.ecomm.options.update({
+  site_name: site_name,
+  option_id: option_id,
+  name: name,
+});
+```
 
 ## Delete Product Option
 
@@ -2242,9 +2476,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}`
 
-  ```typescript
-  duda.appstore.ecomm.options.delete({ site_name: site_name, option_id: option_id });
-  ```
+```typescript
+duda.appstore.ecomm.options.delete({
+  site_name: site_name,
+  option_id: option_id,
+});
+```
 
 ## Create Product Option Choice
 
@@ -2254,9 +2491,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}/choices`
 
-  ```typescript
-  duda.appstore.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, value: value });
-  ```
+```typescript
+duda.appstore.ecomm.options.createChoice({
+  site_name: site_name,
+  option_id: option_id,
+  value: value,
+});
+```
 
 ## Update Product Option Choice
 
@@ -2266,9 +2507,14 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PUT https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}/choices/{choice_id}`
 
-  ```typescript
-  duda.appstore.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, choice_id: choice_id, value: value });
-  ```
+```typescript
+duda.appstore.ecomm.options.createChoice({
+  site_name: site_name,
+  option_id: option_id,
+  choice_id: choice_id,
+  value: value,
+});
+```
 
 ## Delete Product Option Choice
 
@@ -2278,9 +2524,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/options/{option_id}/choices/{choice_id}`
 
-  ```typescript
-  duda.appstore.ecomm.options.createChoice({ site_name: site_name, option_id: option_id, choice_id: choice_id });
-  ```
+```typescript
+duda.appstore.ecomm.options.createChoice({
+  site_name: site_name,
+  option_id: option_id,
+  choice_id: choice_id,
+});
+```
 
 # Appstore eComm Orders
 
@@ -2292,9 +2542,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders`
 
-  ```typescript
-  duda.appstore.ecomm.orders.list({ site_name: site_name });
-  ```
+```typescript
+duda.appstore.ecomm.orders.list({ site_name: site_name });
+```
 
 ## Get Order
 
@@ -2304,9 +2554,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}`
 
-  ```typescript
-  duda.appstore.ecomm.orders.get({ site_name: site_name, order_id: order_id });
-  ```
+```typescript
+duda.appstore.ecomm.orders.get({ site_name: site_name, order_id: order_id });
+```
 
 ## Update Order
 
@@ -2316,9 +2566,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}`
 
-  ```typescript
-  duda.appstore.ecomm.orders.update({ site_name: site_name, order_id: order_id });
-  ```
+```typescript
+duda.appstore.ecomm.orders.update({ site_name: site_name, order_id: order_id });
+```
 
 ## List Refunds
 
@@ -2328,9 +2578,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}/refunds`
 
-  ```typescript
-  duda.appstore.ecomm.orders.listRefunds({ site_name: site_name, order_id: order_id });
-  ```
+```typescript
+duda.appstore.ecomm.orders.listRefunds({
+  site_name: site_name,
+  order_id: order_id,
+});
+```
 
 ## Get Refund
 
@@ -2340,9 +2593,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}/refunds/{refund_id}`
 
-  ```typescript
-  duda.appstore.ecomm.orders.getRefund({ site_name: site_name, order_id: order_id, refund_id: refund_id });
-  ```
+```typescript
+duda.appstore.ecomm.orders.getRefund({
+  site_name: site_name,
+  order_id: order_id,
+  refund_id: refund_id,
+});
+```
 
 # Appstore eComm Payments
 
@@ -2354,9 +2611,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-sessions/{session_id}`
 
-  ```typescript
-  duda.appstore.ecomm.payments.get({ site_name: site_name, session_id: session_id });
-  ```
+```typescript
+duda.appstore.ecomm.payments.get({
+  site_name: site_name,
+  session_id: session_id,
+});
+```
 
 ## Confirm Payment
 
@@ -2366,9 +2626,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-sessions/{session_id}/confirm`
 
-  ```typescript
-  duda.appstore.ecomm.payments.confirm({ site_name: site_name, session_id: session_id });
-  ```
+```typescript
+duda.appstore.ecomm.payments.confirm({
+  site_name: site_name,
+  session_id: session_id,
+});
+```
 
 # Appstore eComm Payment Gateways
 
@@ -2380,9 +2643,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways`
 
-  ```typescript
-  duda.appstore.ecomm.gateways.list({ site_name: site_name });
-  ```
+```typescript
+duda.appstore.ecomm.gateways.list({ site_name: site_name });
+```
 
 ## Get Payment Gateway
 
@@ -2392,9 +2655,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways/{id}`
 
-  ```typescript
-  duda.appstore.ecomm.gateways.get({ site_name: site_name, gateway_id: gateway_id });
-  ```
+```typescript
+duda.appstore.ecomm.gateways.get({
+  site_name: site_name,
+  gateway_id: gateway_id,
+});
+```
 
 ## Create Payment Gateway
 
@@ -2404,9 +2670,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways`
 
-  ```typescript
-  duda.appstore.ecomm.gateways.create({ site_name: site_name, live_payment_methods_url: live_payment_methods_url });
-  ```
+```typescript
+duda.appstore.ecomm.gateways.create({
+  site_name: site_name,
+  live_payment_methods_url: live_payment_methods_url,
+});
+```
 
 ## Update Payment Gateway
 
@@ -2416,9 +2685,13 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways/{gateway_id}`
 
-  ```typescript
-  duda.appstore.ecomm.gateways.update({ site_name: site_name, gateway_id: gateway_id, live_payment_methods_url: live_payment_methods_url });
-  ```
+```typescript
+duda.appstore.ecomm.gateways.update({
+  site_name: site_name,
+  gateway_id: gateway_id,
+  live_payment_methods_url: live_payment_methods_url,
+});
+```
 
 ## Delete Payment Gateway
 
@@ -2428,9 +2701,12 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `DELETE https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/payment-gateways/{gateway_id}`
 
-  ```typescript
-  duda.appstore.ecomm.gateways.delete({ site_name: site_name, gateway_id: gateway_id });
-  ```
+```typescript
+duda.appstore.ecomm.gateways.delete({
+  site_name: site_name,
+  gateway_id: gateway_id,
+});
+```
 
 # Appstore eComm Carts
 
@@ -2442,9 +2718,9 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/carts`
 
-  ```typescript
-  duda.appstore.ecomm.carts.list({ site_name: site_name });
-  ```
+```typescript
+duda.appstore.ecomm.carts.list({ site_name: site_name });
+```
 
 ## Get Cart
 
@@ -2454,6 +2730,6 @@ function validateSSO(req: YourRequestObject): boolean {
 
 `GET get https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/carts/{cart_id}`
 
-  ```typescript
-  duda.appstore.ecomm.carts.get({ site_name: site_name, cart_id: cart_id });
-  ```
+```typescript
+duda.appstore.ecomm.carts.get({ site_name: site_name, cart_id: cart_id });
+```
