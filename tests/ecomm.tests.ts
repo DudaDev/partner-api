@@ -19,21 +19,6 @@ describe('Ecomm tests', () => {
   const choice_id = 'string';
   const variation_id = 'test_variation';
 
-  const updateSettings = {
-    default_currency: 'USD',
-    business_name: 'My Great Company',
-    business_address: {
-      address_1: '123 Main St',
-      city: 'Louisville',
-      region: 'Colorado',
-      country: 'US',
-      postal_code: '80027'
-    },
-    time_zone: 'Mountain',
-    enabled_countries: ['US'],
-    send_email_notifications: true
-  };
-
   const cartSettings = {
     split_name_field: true,
     split_address_1_field: true,
@@ -928,11 +913,11 @@ describe('Ecomm tests', () => {
 
   it('can update the ecomm settings', async () => {
     scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce`, (body) => {
-      expect(body).to.eql(updateSettings)
+      expect(body).to.eql(settings)
       return body
-    }).reply(200, updateSettings)
+    }).reply(200, settings)
 
-    return await duda.ecomm.update({ site_name, ...updateSettings });
+    return await duda.ecomm.update({ site_name, ...settings });
   })
 
   it('can list all carts', async () => {

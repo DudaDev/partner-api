@@ -4,11 +4,12 @@ import { Duda } from "../../src/index"
 
 describe('App store ecomm tests', () => {
   const base_path = '/api/integrationhub/application' 
-  const site_name = "test_site";
+  const site_name = 'test_site';
   const product_id = "test_product";
   const option_id = 'test_option';
   const choice_id = 'string';
   const order_id = 'test_order';
+  const refund_id = 'test_refund';
   const session_id = 'test_session';
   const gateway_id = "test_gateway";
   const cart_id = 'test_cart';
@@ -447,6 +448,53 @@ describe('App store ecomm tests', () => {
     return_url: "string"
   }
 
+  const refund = {
+    id: "string",
+    order_id: order_id,
+    transaction_id: "string",
+    reason: "string",
+    items: [
+      {
+        id: "string",
+        quantity: 0,
+        amount: 0,
+        taxes: [
+          {
+            id: "string",
+            name: "string",
+            rate: 0,
+            amount: 0,
+            provider: "BUILT_IN"
+          }
+        ]
+      }
+    ],
+    currency: "string",
+    tax_provider: {
+      provider: "BUILT_IN",
+      avalara_reference_id: "string"
+    },
+    subtotal: 0,
+    taxes: [
+      {
+        id: "string",
+        name: "string",
+        rate: 0,
+        amount: 0,
+        provider: "BUILT_IN"
+      }
+    ],
+    total: 0,
+    created: "2024-04-18T18:56:53.920Z"
+  }
+
+  const list_refunds = {
+    offset: offset,
+    limit: limit,
+    total_response: 0,
+    results: [refund]
+  }
+
   const gateway = {
     live_payment_methods_url: 'https://example.org/path/to/gateway',
     test_payment_methods_url: 'https://test.example.org/path/to/gateway'
@@ -588,6 +636,29 @@ describe('App store ecomm tests', () => {
     has_more_results: true,
     results: [cart]
   }
+
+  const cartSettings = {
+    split_name_field: true,
+    split_address_1_field: true,
+    display_instruction_field: true,
+    display_phone_field: true
+  };
+
+  const settings = {
+    default_currency: 'USD',
+    business_name: 'My Great Company',
+    business_address: {
+      address_1: '123 Main St',
+      city: 'Louisville',
+      region: 'Colorado',
+      country: 'US',
+      postal_code: '80027'
+    },
+    time_zone: 'Mountain',
+    enabled_countries: ['US'],
+    send_email_notifications: true,
+    cart_settings: cartSettings
+  };
 
   let duda: Duda;
   let scope: nock.Scope;
@@ -737,6 +808,26 @@ describe('App store ecomm tests', () => {
     return await duda.appstore.ecomm.orders.update({ site_name, order_id, token, status: 'IN_PROGRESS', ...update_order_payload })
   })
 
+  it('can list all refunds', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/orders/${order_id}/refunds?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_refunds)
+    return await duda.appstore.ecomm.orders.listRefund({
+      site_name: site_name,
+      order_id: order_id,
+      offset: offset,
+      limit: limit,
+      sort: sort,
+      direction: direction,
+      token: token
+    }).then(res => expect(res).to.eql(list_refunds))
+  })
+
+  it('can get a specific refund', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/orders/${order_id}/refunds/${refund_id}`).reply(200, refund)
+
+    return await duda.appstore.ecomm.orders.getRefund({ site_name, order_id, refund_id, token })
+      .then(res => expect(res).to.eql({ ...refund }))
+  })
+
   it('can get a payment session', async () => {
     scope.get(`${base_path}/site/${site_name}/ecommerce/payment-sessions/${session_id}`).reply(200, payment_session)
     return await duda.appstore.ecomm.payments.get({
@@ -790,6 +881,22 @@ describe('App store ecomm tests', () => {
   it('can delete a gateway', async () => {
     scope.delete(`${base_path}/site/${site_name}/ecommerce/payment-gateways/${gateway_id}`).reply(204);
     return await duda.appstore.ecomm.gateways.delete({ site_name, gateway_id, token });
+  })
+
+  it('can get the ecomm settings', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce`)
+      .reply(200, settings)
+
+    return await duda.appstore.ecomm.get({ site_name, token })
+  })
+
+  it('can update the ecomm settings', async () => {
+    scope.patch(`${base_path}/site/${site_name}/ecommerce`, (body) => {
+      expect(body).to.eql(settings)
+      return body
+    }).reply(200, settings)
+
+    return await duda.appstore.ecomm.update({ site_name, token, ...settings })
   })
 
   it('can list all carts', async () => {
