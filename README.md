@@ -19,6 +19,7 @@ server-side Javascript.
    1. [Authenticating requests](#authenticating-requests)
    2. [Handling different `api_endpoint` values](#handling-different-api_endpoint-values)
    3. [Utility functions](#utility-functions)
+   4. [Configuring at instantiation (beta)](#configuring-the-duda-instance-at-instantiation-for-app-store-requests-beta)
 9. [More Information](#more-information)
 
 ## Requirements
@@ -250,7 +251,7 @@ function validateSSO(req: YourRequestObject): boolean {
 }
 ```
 
-### Configuring the Duda instance at initialization for App Store requests (beta)
+### Configuring the Duda instance at instantiation for App Store requests (beta)
 
 As of 2.8.0 you can configure an instance of the Duda class with an App Store configuration, negating the need to pass your token on each request. This configuration will also automatically handle refreshing your token if the expiration date has passed. _Note: You are still responsible for saving your new authorization and expiration date into your database._
 
