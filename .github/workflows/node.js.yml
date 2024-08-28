@@ -5,36 +5,36 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 env:
   DUDA_API_USER: ${{ secrets.DUDA_API_USER }}
   DUDA_API_PASS: ${{ secrets.DUDA_API_PASS }}
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
-      fail-fast: false
+        node-version: [16.x, 18.x, 20.x]
+      fail-fast:
+        false
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Create an env file
-      run: |
-        touch .env
-        echo DUDA_API_USER=${{ secrets.DUDA_API_USER }} >> .env
-        echo DUDA_API_PASS=${{ secrets.DUDA_API_PASS }} >> .env
-    - run: npm install yarn -g
-    - run: rm -rf node_modules && yarn install --frozen-lockfile
-    - run: yarn tsc
-    - run: yarn test
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Create an env file
+        run: |
+          touch .env
+          echo DUDA_API_USER=${{ secrets.DUDA_API_USER }} >> .env
+          echo DUDA_API_PASS=${{ secrets.DUDA_API_PASS }} >> .env
+      - run: npm install yarn -g
+      - run: rm -rf node_modules && yarn install --frozen-lockfile
+      - run: yarn tsc
+      - run: yarn test
