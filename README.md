@@ -2404,6 +2404,18 @@ duda.appstore.content.locations.delete({
 duda.appstore.pages.get({ site_name: site_name });
 ```
 
+## Update Page
+
+[Update Page Reference](https://developer.duda.co/reference/app-update-page)
+
+### Request
+
+`PUT https://api.duda.co/api/integrationhub/application/site/{site_name}/v2/pages/{page_uuid}`
+
+```typescript
+duda.appstore.pages.update({ site_name: site_name, page_uuid: page_uuid });
+```
+
 # Appstore eComm
 
 ## Get Settings

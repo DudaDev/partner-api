@@ -51,4 +51,17 @@ describe('App store page tests', () => {
     return await duda.appstore.pages.get({ site_name, token })
       .then(res => expect(res).to.eql({ ...list }))
   })
+
+  it('can update a page by uuid', async () => {
+    scope.put(`${base_path}/site/${site_name}/v2/pages/${page_uuid}`, (body) => {
+        expect(body).to.eql(page)
+        return body
+    }).reply(200, response)
+    return await duda.appstore.pages.update({
+        ...page,
+        site_name,
+        page_uuid,
+        token
+    })
+})
 })
