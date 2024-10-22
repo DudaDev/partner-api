@@ -13,6 +13,7 @@ describe('App store ecomm tests', () => {
   const session_id = 'test_session';
   const gateway_id = "test_gateway";
   const cart_id = 'test_cart';
+  const variation_id = 'test_variation';
 
   const offset = 0;
   const sort = 'sort';
@@ -660,6 +661,42 @@ describe('App store ecomm tests', () => {
     cart_settings: cartSettings
   };
 
+  const variation_response = {
+    external_id: "KTP9XGbSg2",
+    id: "KTP9XGbSg2",
+    images: [
+      {
+        alt: "Image of fancy shirt",
+        url: "https://images.pexels.com/photos/1020585/pexels-photo-1020585.jpeg"
+      }
+    ],
+    options: [
+      {
+        choice_id: "db3je27rg7",
+        choice_value: "45",
+        option_id: "WMd1xylGrp",
+        option_name: "Shirt size"
+      }
+    ],
+    price_difference: "string",
+    quantity: 25,
+    sku: "UGG-BB-PUR-06",
+    status: "HIDDEN"
+  }
+
+  const update_variation_payload = {
+    external_id: "string",
+    images: [
+      {
+        alt: "Image of fancy shirt",
+        url: "https://images.pexels.com/photos/1020585/pexels-photo-1020585.jpeg"
+      }
+    ],
+    price_difference: "string",
+    quantity: 25,
+    sku: "UGG-BB-PUR-06",
+  }
+
   let duda: Duda;
   let scope: nock.Scope;
 
@@ -936,5 +973,21 @@ describe('App store ecomm tests', () => {
 
     return await duda.appstore.ecomm.carts.get({ site_name, cart_id, token })
       .then(res => expect(res).to.eql({ ...cart }))
+  })
+
+  it('can get a product variation', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/products/${product_id}/variations/${variation_id}`).reply(200, variation_response)
+
+    return await duda.appstore.ecomm.variations.get({ site_name, product_id, variation_id, token })
+      .then(res => expect(res).to.eql({ ...variation_response }))
+  })
+
+  it('can update a product variation', async () => {
+    scope.patch(`${base_path}/site/${site_name}/ecommerce/products/${product_id}/variations/${variation_id}`, (body) => {
+      expect(body).to.eql({ status: 'HIDDEN', ...update_variation_payload})
+      return body
+    }).reply(200, variation_response)
+
+    return await duda.appstore.ecomm.variations.update({ site_name, product_id, variation_id, status: 'HIDDEN', token, ...update_variation_payload })
   })
 })

@@ -1193,6 +1193,8 @@ duda.ecomm.products.update({ site_name: site_name, product_id: product_id });
 duda.ecomm.products.delete({ site_name: site_name, product_id: product_id });
 ```
 
+# eComm Variations
+
 ## Get Product Variation
 
 [Get Product Variation Reference](https://developer.duda.co/reference/ecommerce-get-product-variation)
@@ -2510,6 +2512,40 @@ duda.appstore.ecomm.products.update({
 duda.appstore.ecomm.products.delete({
   site_name: site_name,
   product_id: product_id,
+});
+```
+
+# Appstore eComm Variations
+
+## Get Product Variation
+
+[Get Product Variation Reference](https://developer.duda.co/reference/app-get-product-variation)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/products/{product_id}/variations/{variation_id}`
+
+```typescript
+duda.appstore.ecomm.variations.get({
+  site_name: site_name,
+  product_id: product_id,
+  variation_id: variation_id,
+});
+```
+
+## Update Product Variation
+
+[Update Product Variation Reference](https://developer.duda.co/reference/app-update-product-variation)
+
+### Request
+
+`PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/products/{product_id}/variations/{variation_id}`
+
+```typescript
+duda.appstore.ecomm.variations.update({
+  site_name: site_name,
+  product_id: product_id,
+  variation_id: variation_id,
 });
 ```
 
