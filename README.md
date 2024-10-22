@@ -2847,6 +2847,71 @@ duda.appstore.ecomm.gateways.delete({
 });
 ```
 
+# Appstore eComm Shipping Providers
+
+## List Shipping Providers
+
+[List Shipping Providers Reference](https://developer.duda.co/reference/app-list-shipping-providers)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/sites/{site_name}/ecommerce/shipping-providers`
+
+```typescript
+duda.appstore.ecomm.shipping.list({ site_name: site_name });
+```
+
+## Get Shipping Provider
+
+[Get Shipping Provider Reference](https://developer.duda.co/reference/app-get-shipping-provider)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/sites/{site_name}/ecommerce/shipping-providers/{id}`
+
+```typescript
+duda.appstore.ecomm.shipping.get({ site_name: site_name, id: id });
+```
+
+## Create Shipping Provider
+
+[Create Shipping Provider Reference](https://developer.duda.co/reference/app-create-shipping-provider)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/sites/{site_name}/ecommerce/shipping-providers`
+
+```typescript
+duda.appstore.ecomm.shipping.create({
+  site_name: site_name,
+  live_shipping_rates_url: live_shipping_rates_url,
+});
+```
+
+## Update Shipping Provider
+
+[Update Shipping Provider Reference](https://developer.duda.co/reference/app-update-shipping-provider)
+
+### Request
+
+`PATCH https://api-sandbox.duda.co/api/integrationhub/application/sites/{site_name}/ecommerce/shipping-providers/{id}`
+
+```typescript
+duda.appstore.ecomm.shipping.update({ site_name: site_name, id: id });
+```
+
+## Delete Shipping Provider
+
+[Delete Shipping Provider Reference](https://developer.duda.co/reference/app-delete-shipping-provider)
+
+### Request
+
+`DELETE https://api-sandbox.duda.co/api/integrationhub/application/sites/{site_name}/ecommerce/shipping-providers/{id}`
+
+```typescript
+duda.appstore.ecomm.shipping.delete({ site_name: site_name, id: id });
+```
+
 # Appstore eComm Carts
 
 ## List Carts

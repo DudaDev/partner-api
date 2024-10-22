@@ -8,6 +8,7 @@ import AppsPayments from './Payments';
 import AppsGateways from './Gateways';
 import AppsCarts from './Carts';
 import AppsVariations from './Variations';
+import AppsShipping from './Shipping';
 import { TokenRequest } from '../types';
 
 class AppsEcomm extends SubResource {
@@ -24,6 +25,8 @@ class AppsEcomm extends SubResource {
   carts = new AppsCarts(this.base);
 
   variations = new AppsVariations(this.base);
+
+  shipping = new AppsShipping(this.base);
 
   get = APIEndpoint<TokenRequest<Types.GetEcommPayload>, Types.GetEcommResponse>({
     method: 'get',

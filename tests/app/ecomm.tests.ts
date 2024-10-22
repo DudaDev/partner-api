@@ -14,6 +14,7 @@ describe('App store ecomm tests', () => {
   const gateway_id = "test_gateway";
   const cart_id = 'test_cart';
   const variation_id = 'test_variation';
+  const shipping_id = 'test_shipping';
 
   const offset = 0;
   const sort = 'sort';
@@ -697,6 +698,24 @@ describe('App store ecomm tests', () => {
     sku: "UGG-BB-PUR-06",
   }
 
+  const shipping_provider = {
+    id: shipping_id,
+    live_shipping_rates_url: 'string',
+    test_shipping_rates_url: 'string'
+  }
+
+  const shipping_providers_list = {
+    offset: 0,
+    limit: 0,
+    total_responses: 0,
+    results: [shipping_provider]
+  }
+
+  const shipping_payload = {
+    live_shipping_rates_url: 'string',
+    test_shipping_rates_url: 'string'
+  }
+
   let duda: Duda;
   let scope: nock.Scope;
 
@@ -901,6 +920,44 @@ describe('App store ecomm tests', () => {
     }).reply(200, payment_url)
 
     return await duda.appstore.ecomm.payments.confirm({ site_name, session_id, token, state: 'PROCESSED', ...confirm_payment_body })
+  })
+
+  it('can list all shipping providers', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/shipping-providers`).reply(200, shipping_providers_list)
+    return await duda.appstore.ecomm.shipping.list({
+      site_name: site_name,
+      token: token
+    }).then(res => expect(res).to.eql(shipping_providers_list))
+  })
+
+  it('can create a shipping provider', async () => {
+    scope.post(`${base_path}/site/${site_name}/ecommerce/shipping-providers`, (body) => {
+      expect(body).to.eql({ ...shipping_payload })
+      return body
+    }).reply(201, shipping_provider)
+
+    return await duda.appstore.ecomm.shipping.create({ site_name, token, ...shipping_payload })
+  })
+
+  it('can get a shipping provider', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/shipping-providers/${shipping_id}`).reply(200, shipping_provider)
+
+    return await duda.appstore.ecomm.shipping.get({ site_name, id: shipping_id, token })
+      .then(res => expect(res).to.eql({ ...shipping_provider }))
+  })
+
+  it('can update a shipping provider', async () => {
+    scope.patch(`${base_path}/site/${site_name}/ecommerce/shipping-providers/${shipping_id}`, (body) => {
+      expect(body).to.eql({ ...shipping_payload})
+      return body
+    }).reply(200, shipping_provider)
+
+    return await duda.appstore.ecomm.shipping.update({ site_name, id: shipping_id, token, ...shipping_payload })
+  })
+
+  it('can delete a shipping provider', async () => {
+    scope.delete(`${base_path}/site/${site_name}/ecommerce/shipping-providers/${shipping_id}`).reply(204)
+    return await duda.appstore.ecomm.shipping.delete({ site_name, id: shipping_id, token })
   })
 
   it('can create a gateway', async () => {
