@@ -13,6 +13,8 @@ describe('App store ecomm tests', () => {
   const session_id = 'test_session';
   const gateway_id = "test_gateway";
   const cart_id = 'test_cart';
+  const variation_id = 'test_variation';
+  const shipping_id = 'test_shipping';
 
   const offset = 0;
   const sort = 'sort';
@@ -660,6 +662,60 @@ describe('App store ecomm tests', () => {
     cart_settings: cartSettings
   };
 
+  const variation_response = {
+    external_id: "KTP9XGbSg2",
+    id: "KTP9XGbSg2",
+    images: [
+      {
+        alt: "Image of fancy shirt",
+        url: "https://images.pexels.com/photos/1020585/pexels-photo-1020585.jpeg"
+      }
+    ],
+    options: [
+      {
+        choice_id: "db3je27rg7",
+        choice_value: "45",
+        option_id: "WMd1xylGrp",
+        option_name: "Shirt size"
+      }
+    ],
+    price_difference: "string",
+    quantity: 25,
+    sku: "UGG-BB-PUR-06",
+    status: "HIDDEN"
+  }
+
+  const update_variation_payload = {
+    external_id: "string",
+    images: [
+      {
+        alt: "Image of fancy shirt",
+        url: "https://images.pexels.com/photos/1020585/pexels-photo-1020585.jpeg"
+      }
+    ],
+    price_difference: "string",
+    quantity: 25,
+    sku: "UGG-BB-PUR-06",
+  }
+
+  const shipping_provider = {
+    id: shipping_id,
+    live_shipping_rates_url: 'string',
+    test_shipping_rates_url: 'string'
+  }
+
+  const shipping_providers_list = {
+    offset: 0,
+    limit: 0,
+    total_responses: 0,
+    results: [shipping_provider]
+  }
+
+  const shipping_payload = {
+    live_shipping_rates_url: 'string',
+    test_shipping_rates_url: 'string'
+  }
+
   let duda: Duda;
   let scope: nock.Scope;
 
@@ -828,6 +884,26 @@ describe('App store ecomm tests', () => {
       .then(res => expect(res).to.eql({ ...refund }))
   })
 
+  it('can list all refunds (alternate)', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/orders/${order_id}/refunds?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_refunds)
+    return await duda.appstore.ecomm.orders.refunds.list({
+      site_name: site_name,
+      order_id: order_id,
+      offset: offset,
+      limit: limit,
+      sort: sort,
+      direction: direction,
+      token: token
+    }).then(res => expect(res).to.eql(list_refunds))
+  })
+
+  it('can get a specific refund (alternate)', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/orders/${order_id}/refunds/${refund_id}`).reply(200, refund)
+
+    return await duda.appstore.ecomm.orders.refunds.get({ site_name, order_id, refund_id, token })
+      .then(res => expect(res).to.eql({ ...refund }))
+  })
+
   it('can get a payment session', async () => {
     scope.get(`${base_path}/site/${site_name}/ecommerce/payment-sessions/${session_id}`).reply(200, payment_session)
     return await duda.appstore.ecomm.payments.get({
@@ -844,6 +920,44 @@ describe('App store ecomm tests', () => {
     }).reply(200, payment_url)
 
     return await duda.appstore.ecomm.payments.confirm({ site_name, session_id, token, state: 'PROCESSED', ...confirm_payment_body })
+  })
+
+  it('can list all shipping providers', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/shipping-providers`).reply(200, shipping_providers_list)
+    return await duda.appstore.ecomm.shipping.list({
+      site_name: site_name,
+      token: token
+    }).then(res => expect(res).to.eql(shipping_providers_list))
+  })
+
+  it('can create a shipping provider', async () => {
+    scope.post(`${base_path}/site/${site_name}/ecommerce/shipping-providers`, (body) => {
+      expect(body).to.eql({ ...shipping_payload })
+      return body
+    }).reply(201, shipping_provider)
+
+    return await duda.appstore.ecomm.shipping.create({ site_name, token, ...shipping_payload })
+  })
+
+  it('can get a shipping provider', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/shipping-providers/${shipping_id}`).reply(200, shipping_provider)
+
+    return await duda.appstore.ecomm.shipping.get({ site_name, id: shipping_id, token })
+      .then(res => expect(res).to.eql({ ...shipping_provider }))
+  })
+
+  it('can update a shipping provider', async () => {
+    scope.patch(`${base_path}/site/${site_name}/ecommerce/shipping-providers/${shipping_id}`, (body) => {
+      expect(body).to.eql({ ...shipping_payload})
+      return body
+    }).reply(200, shipping_provider)
+
+    return await duda.appstore.ecomm.shipping.update({ site_name, id: shipping_id, token, ...shipping_payload })
+  })
+
+  it('can delete a shipping provider', async () => {
+    scope.delete(`${base_path}/site/${site_name}/ecommerce/shipping-providers/${shipping_id}`).reply(204)
+    return await duda.appstore.ecomm.shipping.delete({ site_name, id: shipping_id, token })
   })
 
   it('can create a gateway', async () => {
@@ -916,5 +1030,21 @@ describe('App store ecomm tests', () => {
 
     return await duda.appstore.ecomm.carts.get({ site_name, cart_id, token })
       .then(res => expect(res).to.eql({ ...cart }))
+  })
+
+  it('can get a product variation', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/products/${product_id}/variations/${variation_id}`).reply(200, variation_response)
+
+    return await duda.appstore.ecomm.variations.get({ site_name, product_id, variation_id, token })
+      .then(res => expect(res).to.eql({ ...variation_response }))
+  })
+
+  it('can update a product variation', async () => {
+    scope.patch(`${base_path}/site/${site_name}/ecommerce/products/${product_id}/variations/${variation_id}`, (body) => {
+      expect(body).to.eql({ status: 'HIDDEN', ...update_variation_payload})
+      return body
+    }).reply(200, variation_response)
+
+    return await duda.appstore.ecomm.variations.update({ site_name, product_id, variation_id, status: 'HIDDEN', token, ...update_variation_payload })
   })
 })

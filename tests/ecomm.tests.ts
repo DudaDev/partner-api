@@ -984,6 +984,25 @@ describe('Ecomm tests', () => {
       .then(res => expect(res).to.eql({ ...refund }))
   })
 
+  it('can list all refunds (alternate)', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/refunds?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_refunds)
+    return await duda.ecomm.orders.refunds.list({
+      site_name: site_name,
+      order_id: order_id,
+      offset: offset,
+      limit: limit,
+      sort: sort,
+      direction: direction
+    }).then(res => expect(res).to.eql(list_refunds))
+  })
+
+  it('can get a specific refund (alternate)', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/refunds/${refund_id}`).reply(200, refund)
+
+    return await duda.ecomm.orders.refunds.get({ site_name, order_id, refund_id })
+      .then(res => expect(res).to.eql({ ...refund }))
+  })
+
   it('can get a payment session', async () => {
     scope.get(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/payment-sessions/${session_id}`).reply(200, payment_session)
     return await duda.ecomm.payments.get({

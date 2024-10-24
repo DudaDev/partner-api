@@ -1193,6 +1193,8 @@ duda.ecomm.products.update({ site_name: site_name, product_id: product_id });
 duda.ecomm.products.delete({ site_name: site_name, product_id: product_id });
 ```
 
+# eComm Variations
+
 ## Get Product Variation
 
 [Get Product Variation Reference](https://developer.duda.co/reference/ecommerce-get-product-variation)
@@ -2219,6 +2221,82 @@ duda.diyEditor.update({
 });
 ```
 
+# Appstore Accounts
+
+## Get Account Details
+
+[Get Account Details Reference](https://developer.duda.co/reference/get-account-details)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/account/details`
+
+```typescript
+duda.appstore.accounts.getOwner({ site_name: site_name });
+```
+
+# Appstore Sites
+
+## Get Site
+
+[Get Site Reference](https://developer.duda.co/reference/app-store-get-site)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}`
+
+```typescript
+duda.appstore.sites.get({ site_name: site_name });
+```
+
+## Update Site
+
+[Update Site Reference](https://developer.duda.co/reference/app-update-site)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}`
+
+```typescript
+duda.appstore.sites.update({ site_name: site_name });
+```
+
+## Get Branding Details
+
+[Get Branding Details Reference](https://developer.duda.co/reference/app-get-account-branding)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/branding`
+
+```typescript
+duda.appstore.sites.getBrandingDetails({ site_name: site_name });
+```
+
+## Republish Site
+
+[Republish Site Reference](https://developer.duda.co/reference/app-site-republish)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/republish`
+
+```typescript
+duda.appstore.sites.republish({ site_name: site_name });
+```
+
+## Upload Resources
+
+[Upload Resources Reference](https://developer.duda.co/reference/app-site-upload)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/resources/upload`
+
+```typescript
+duda.appstore.sites.uploadResources({ site_name: site_name });
+```
+
 # Appstore Content
 
 ## Get Content Library
@@ -2312,6 +2390,32 @@ duda.appstore.content.locations.delete({
   site_name: site_name,
   location_id: location_id,
 });
+```
+
+# Appstore Pages
+
+## Get Pages
+
+[Get Pages Reference](https://developer.duda.co/reference/app-get-pages)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/v2/pages`
+
+```typescript
+duda.appstore.pages.get({ site_name: site_name });
+```
+
+## Update Page
+
+[Update Page Reference](https://developer.duda.co/reference/app-update-page)
+
+### Request
+
+`PUT https://api.duda.co/api/integrationhub/application/site/{site_name}/v2/pages/{page_uuid}`
+
+```typescript
+duda.appstore.pages.update({ site_name: site_name, page_uuid: page_uuid });
 ```
 
 # Appstore eComm
@@ -2408,6 +2512,40 @@ duda.appstore.ecomm.products.update({
 duda.appstore.ecomm.products.delete({
   site_name: site_name,
   product_id: product_id,
+});
+```
+
+# Appstore eComm Variations
+
+## Get Product Variation
+
+[Get Product Variation Reference](https://developer.duda.co/reference/app-get-product-variation)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/products/{product_id}/variations/{variation_id}`
+
+```typescript
+duda.appstore.ecomm.variations.get({
+  site_name: site_name,
+  product_id: product_id,
+  variation_id: variation_id,
+});
+```
+
+## Update Product Variation
+
+[Update Product Variation Reference](https://developer.duda.co/reference/app-update-product-variation)
+
+### Request
+
+`PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/products/{product_id}/variations/{variation_id}`
+
+```typescript
+duda.appstore.ecomm.variations.update({
+  site_name: site_name,
+  product_id: product_id,
+  variation_id: variation_id,
 });
 ```
 
@@ -2709,6 +2847,71 @@ duda.appstore.ecomm.gateways.delete({
 });
 ```
 
+# Appstore eComm Shipping Providers
+
+## List Shipping Providers
+
+[List Shipping Providers Reference](https://developer.duda.co/reference/app-list-shipping-providers)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/sites/{site_name}/ecommerce/shipping-providers`
+
+```typescript
+duda.appstore.ecomm.shipping.list({ site_name: site_name });
+```
+
+## Get Shipping Provider
+
+[Get Shipping Provider Reference](https://developer.duda.co/reference/app-get-shipping-provider)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/sites/{site_name}/ecommerce/shipping-providers/{id}`
+
+```typescript
+duda.appstore.ecomm.shipping.get({ site_name: site_name, id: id });
+```
+
+## Create Shipping Provider
+
+[Create Shipping Provider Reference](https://developer.duda.co/reference/app-create-shipping-provider)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/sites/{site_name}/ecommerce/shipping-providers`
+
+```typescript
+duda.appstore.ecomm.shipping.create({
+  site_name: site_name,
+  live_shipping_rates_url: live_shipping_rates_url,
+});
+```
+
+## Update Shipping Provider
+
+[Update Shipping Provider Reference](https://developer.duda.co/reference/app-update-shipping-provider)
+
+### Request
+
+`PATCH https://api-sandbox.duda.co/api/integrationhub/application/sites/{site_name}/ecommerce/shipping-providers/{id}`
+
+```typescript
+duda.appstore.ecomm.shipping.update({ site_name: site_name, id: id });
+```
+
+## Delete Shipping Provider
+
+[Delete Shipping Provider Reference](https://developer.duda.co/reference/app-delete-shipping-provider)
+
+### Request
+
+`DELETE https://api-sandbox.duda.co/api/integrationhub/application/sites/{site_name}/ecommerce/shipping-providers/{id}`
+
+```typescript
+duda.appstore.ecomm.shipping.delete({ site_name: site_name, id: id });
+```
+
 # Appstore eComm Carts
 
 ## List Carts
@@ -2733,4 +2936,106 @@ duda.appstore.ecomm.carts.list({ site_name: site_name });
 
 ```typescript
 duda.appstore.ecomm.carts.get({ site_name: site_name, cart_id: cart_id });
+```
+
+# Appstore Site Wide HTML
+
+## List All Site Wide HTML
+
+[List All Site Wide HTML Reference](https://developer.duda.co/reference/app-list-all-swh)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/sitewidehtml/list`
+
+```typescript
+duda.appstore.sitewidehtml.list({ site_name: site_name });
+```
+
+## Get Site Wide HTML
+
+[Get Site Wide HTML Reference](https://developer.duda.co/reference/app-get-swh)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/sitewidehtml/{uuid}`
+
+```typescript
+duda.appstore.sitewidehtml.get({ site_name: site_name, uuid: uuid });
+```
+
+## Create Site Wide HTML
+
+[Create Site Wide HTML Reference](https://developer.duda.co/reference/app-create-site-wide-html)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/sitewidehtml`
+
+```typescript
+duda.appstore.sitewidehtml.create({ site_name: site_name });
+```
+
+## Update Site Wide HTML
+
+[Update Site Wide HTML Reference](https://developer.duda.co/reference/app-update-swh)
+
+### Request
+
+`PUT https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/sitewidehtml/{uuid}`
+
+```typescript
+duda.appstore.sitewidehtml.update({ site_name: site_name, uuid: uuid });
+```
+
+## Delete Site Wide HTML
+
+[Delete Site Wide HTML Reference](https://developer.duda.co/reference/app-delete-swh)
+
+### Request
+
+`DELETE https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/sitewidehtml/{uuid}`
+
+```typescript
+duda.appstore.sitewidehtml.delete({ site_name: site_name, uuid: uuid });
+```
+
+# Appstore Manifest
+
+## Get Manifest
+
+[Get Manifest Reference](https://developer.duda.co/reference/app-get-manifest)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/{app_uuid}`
+
+```typescript
+duda.appstore.manifest.get({ app_uuid: app_uuid });
+```
+
+## Update Manifest
+
+[Update Manifest Reference](https://developer.duda.co/reference/app-update-manifest)
+
+### Request
+
+`UPDATE https://api-sandbox.duda.co/api/integrationhub/application/{app_uuid}`
+
+```typescript
+duda.appstore.manifest.update({ app_uuid: app_uuid });
+```
+
+# Appstore Refresh
+
+## Create New Access Token
+
+[Create New Access Token Reference](https://developer.duda.co/reference/app-create-access-token)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/{app_uuid}/token/refresh`
+
+```typescript
+duda.appstore.tokens.create({ app_uuid: app_uuid });
 ```

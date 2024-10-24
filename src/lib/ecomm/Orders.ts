@@ -1,8 +1,11 @@
 import * as Types from './types';
 import Resource from '../base';
 import { APIEndpoint } from '../APIEndpoint';
+import Refunds from './Refunds';
 
 class Orders extends Resource {
+  refunds = new Refunds(this.config);
+
   list = APIEndpoint<Types.ListOrdersPayload, Types.ListOrdersResponse>({
     method: 'get',
     path: '/api/sites/multiscreen/{site_name}/ecommerce/orders',

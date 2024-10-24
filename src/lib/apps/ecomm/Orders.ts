@@ -2,8 +2,11 @@ import * as Types from './types';
 import { SubResource } from '../../base';
 import { APIEndpoint } from '../../APIEndpoint';
 import { TokenRequest } from '../types';
+import AppsRefunds from './Refunds';
 
 class AppsOrders extends SubResource {
+  refunds = new AppsRefunds(this.base);
+
   list = APIEndpoint<TokenRequest<Types.ListOrdersPayload>, Types.ListOrdersResponse>({
     method: 'get',
     path: '/site/{site_name}/ecommerce/orders',
