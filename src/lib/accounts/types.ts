@@ -74,7 +74,9 @@ export type Permissions =
   'CLIENT_MANAGE_FREE_APPS' |
   'AI_ASSISTANT';
 
-export type GetPermissionsResponse = Array<Permissions>;
+export interface GetPermissionsResponse {
+  permissions: Array<Permissions>;
+}
 
 export type ListAccessibleSitesResponse = Array<{
   site_name: string;
