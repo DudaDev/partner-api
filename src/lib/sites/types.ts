@@ -234,6 +234,8 @@ export type GetSiteByExtIDPayload = {
   external_uid: string,
 }
 
+export type GetSiteByExtIDResponse = Array<string>;
+
 export interface CreateSitePayload extends Site {
   template_id: string | number,
   url?: string,
