@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file, no-underscore-dangle */
 
-import EventEmitter from 'events';
+import {EventEmitter} from 'events';
 import { RequestOptions } from './http';
 import { APIEndpointDefinition } from './APIEndpoint';
 

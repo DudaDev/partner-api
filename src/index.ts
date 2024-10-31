@@ -3,7 +3,7 @@ import/no-unresolved,
 import/extensions,
 import/prefer-default-export
 */
-import EventEmitter from 'events';
+import {EventEmitter} from 'events';
 import Accounts from './lib/accounts/Accounts';
 import Apps, { DudaAppConfig } from './lib/apps/Apps';
 import Blog from './lib/blog/Blog';
