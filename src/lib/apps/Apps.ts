@@ -1,4 +1,4 @@
-import EventEmitter from 'events';
+import {EventEmitter} from 'events';
 // import * as apps from './types';
 import Resource, { Config } from '../base';
 import { APIEndpoint } from '../APIEndpoint';
