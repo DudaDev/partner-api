@@ -18,6 +18,7 @@ import Plans from './lib/plans/Plans';
 import Reporting from './lib/reporting/Reporting';
 import Sections from './lib/sections/Sections';
 import Sites from './lib/sites/Sites';
+import Snippets from './lib/snippets/Snippets';
 import Templates from './lib/templates/Templates';
 import Urlrules from './lib/urlrules/Urlrules';
 import { Config } from './lib/base';
@@ -67,6 +68,8 @@ class Duda {
 
   sites: Sites;
 
+  snippets: Snippets;
+
   templates: Templates;
 
   urlRules: Urlrules;
@@ -94,6 +97,7 @@ class Duda {
     this.reporting = new Reporting(config);
     this.sections = new Sections(config);
     this.sites = new Sites(config);
+    this.snippets = new Snippets(config);
     this.templates = new Templates(config);
     this.urlRules = new Urlrules(config);
   }
