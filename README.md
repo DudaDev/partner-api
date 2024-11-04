@@ -1792,6 +1792,80 @@ duda.content.injectedContent.createSPA({
 duda.content.uploadResource({ site_name: site_name });
 ```
 
+# Snippets
+
+## List Snippets
+
+[List Snippets Reference](https://developer.duda.co/reference/list-snippets)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/snippets`
+
+```typescript
+duda.snippets.list({ site_name: site_name });
+```
+
+## Get Snippet
+
+[Get Snippet Reference](https://developer.duda.co/reference/get-snippet)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/snippets/{id}`
+
+```typescript
+duda.snippets.get({ site_name: site_name, id: id });
+```
+
+## Create Snippet
+
+[Create Snippet Reference](https://developer.duda.co/reference/create-snippet)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/snippets`
+
+```typescript
+duda.snippets.create({ site_name: site_name });
+```
+
+## Update Snippet
+
+[Update Snippet Reference](https://developer.duda.co/reference/update-snippet)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/snippets/{id}`
+
+```typescript
+duda.snippets.update({ site_name: site_name, id: id });
+```
+
+## Publish Snippet
+
+[Publish Snippet Reference](https://developer.duda.co/reference/publish-snippet)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/snippets/{id}/publish`
+
+```typescript
+duda.snippets.publish({ site_name: site_name, id: id });
+```
+
+## Delete Snippet
+
+[Delete Snippet Reference](https://developer.duda.co/reference/delete-snippet)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/snippets/{id}`
+
+```typescript
+duda.snippets.delete({ site_name: site_name, id: id });
+```
+
 # Collections
 
 ## List Collections
