@@ -129,7 +129,11 @@ export interface Gateway {
 }
 
 export interface CreateGatewayPayload extends Gateway {
-  site_name: string
+  site_name: string,
+  name?: string,
+  description?: string,
+  image?: string,
+  icons?: Array<string>
 }
 
 export interface GatewayResponse extends Gateway {
@@ -156,7 +160,11 @@ export interface UpdateGatewayPayload {
   site_name: string,
   gateway_id: string,
   live_payment_methods_url: string,
-  test_payment_methods_url?: string
+  test_payment_methods_url?: string,
+  name?: string,
+  description?: string,
+  image?: string,
+  icons?: Array<string>
 }
 
 export interface DeleteGatewayPayload {
