@@ -5,7 +5,7 @@ import { APIEndpoint } from '../APIEndpoint';
 class Categories extends Resource {
   list = APIEndpoint<Types.ListCategoriesPaylaod, Types.ListCategoriesResponse>({
     method: 'get',
-    path: '/api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/categories',
     defaults: {
       host: 'api.duda.co',
     },
@@ -43,7 +43,7 @@ class Categories extends Resource {
 
   get = APIEndpoint<Types.GetCategoryPayload, Types.GetCategoryResponse>({
     method: 'get',
-    path: '/api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories/{category_id}',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/categories/{category_id}',
     defaults: {
       host: 'api.duda.co',
     },
@@ -51,7 +51,7 @@ class Categories extends Resource {
 
   create = APIEndpoint<Types.CreateCategoryPayload, Types.CreateCategoryResponse>({
     method: 'post',
-    path: '/api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/categories',
     defaults: {
       host: 'api.duda.co',
     },
@@ -89,7 +89,7 @@ class Categories extends Resource {
 
   update = APIEndpoint<Types.UpdateCategoryPayload, Types.UpdateCategoryResponse>({
     method: 'patch',
-    path: '/api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories/{category_id}',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/categories/{category_id}',
     defaults: {
       host: 'api.duda.co',
     },
@@ -127,7 +127,7 @@ class Categories extends Resource {
 
   delete = APIEndpoint<Types.DeleteCategoryPayload, Types.DeleteCategoryResponse>({
     method: 'delete',
-    path: '/api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories/{category_id}',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/categories/{category_id}',
     defaults: {
       host: 'api.duda.co',
     },

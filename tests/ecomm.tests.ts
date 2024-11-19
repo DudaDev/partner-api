@@ -92,7 +92,7 @@ describe('Ecomm tests', () => {
     limit: 0,
     offset: 0,
     results: [ product ],
-    site_name: site_name,
+    site_name,
     total_responses: 0
   }
 
@@ -262,8 +262,8 @@ describe('Ecomm tests', () => {
 
   const cart = {
     id: "string",
-    mode: mode,
-    status: status,
+    mode,
+    status,
     language: "string",
     email: "string",
     currency: "string",
@@ -388,7 +388,7 @@ describe('Ecomm tests', () => {
   }
 
   const list_carts = {
-    cursor: cursor,
+    cursor,
     has_more_results: true,
     results: [cart]
   }
@@ -523,8 +523,8 @@ describe('Ecomm tests', () => {
   }
 
   const list_orders = {
-    offset: offset,
-    limit: limit,
+    offset,
+    limit,
     total_response: 0,
     results: [order]
   }
@@ -545,7 +545,7 @@ describe('Ecomm tests', () => {
 
   const refund = {
     id: "string",
-    order_id: order_id,
+    order_id,
     transaction_id: "string",
     reason: "string",
     items: [
@@ -584,8 +584,8 @@ describe('Ecomm tests', () => {
   }
 
   const list_refunds = {
-    offset: offset,
-    limit: limit,
+    offset,
+    limit,
     total_response: 0,
     results: [refund]
   }
@@ -677,7 +677,7 @@ describe('Ecomm tests', () => {
     offset: 0,
     limit: 0,
     total_response: 0,
-    site_name: site_name,
+    site_name,
     results: [category]
   }
 
@@ -769,7 +769,7 @@ describe('Ecomm tests', () => {
     limit: 0,
     offset: 0,
     results: [product_option],
-    site_name: site_name,
+    site_name,
     total_responses: 0
   }
 
@@ -827,7 +827,7 @@ describe('Ecomm tests', () => {
   it('can list all products', async () => {
     scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/products?limit=0&offset=0&sort=sort&direction=asc`).reply(200, list_product)
     return await duda.ecomm.products.list({
-      site_name: site_name,
+      site_name,
       limit: 0,
       offset: 0,
       sort: 'sort',
@@ -923,11 +923,11 @@ describe('Ecomm tests', () => {
   it('can list all carts', async () => {
     scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/carts?status=${status}&mode=${mode}&cursor=${cursor}&limit=${limit}`).reply(200, list_carts)
     return await duda.ecomm.carts.list({
-      site_name: site_name,
-      status: status,
-      mode: mode,
-      cursor: cursor,
-      limit: limit
+      site_name,
+      status,
+      mode,
+      cursor,
+      limit
     }).then(res => expect(res).to.eql(list_carts))
   })
 
@@ -941,11 +941,11 @@ describe('Ecomm tests', () => {
   it('can list all orders', async () => {
     scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_orders)
     return await duda.ecomm.orders.list({
-      site_name: site_name,
-      offset: offset,
-      limit: limit,
-      sort: sort,
-      direction: direction
+      site_name,
+      offset,
+      limit,
+      sort,
+      direction
     }).then(res => expect(res).to.eql(list_orders))
   })
 
@@ -968,12 +968,12 @@ describe('Ecomm tests', () => {
   it('can list all refunds', async () => {
     scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/refunds?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_refunds)
     return await duda.ecomm.orders.listRefund({
-      site_name: site_name,
-      order_id: order_id,
-      offset: offset,
-      limit: limit,
-      sort: sort,
-      direction: direction
+      site_name,
+      order_id,
+      offset,
+      limit,
+      sort,
+      direction
     }).then(res => expect(res).to.eql(list_refunds))
   })
 
@@ -987,12 +987,12 @@ describe('Ecomm tests', () => {
   it('can list all refunds (alternate)', async () => {
     scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/refunds?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_refunds)
     return await duda.ecomm.orders.refunds.list({
-      site_name: site_name,
-      order_id: order_id,
-      offset: offset,
-      limit: limit,
-      sort: sort,
-      direction: direction
+      site_name,
+      order_id,
+      offset,
+      limit,
+      sort,
+      direction
     }).then(res => expect(res).to.eql(list_refunds))
   })
 
@@ -1004,15 +1004,15 @@ describe('Ecomm tests', () => {
   })
 
   it('can get a payment session', async () => {
-    scope.get(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/payment-sessions/${session_id}`).reply(200, payment_session)
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/payment-sessions/${session_id}`).reply(200, payment_session)
     return await duda.ecomm.payments.get({
-      site_name: site_name,
-      session_id: session_id
+      site_name,
+      session_id
     }).then(res => expect(res).to.eql(payment_session))
   })
 
   it('can confirm the payment session', async () => {
-    scope.post(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/payment-sessions/${session_id}/confirm`, (body) => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/payment-sessions/${session_id}/confirm`, (body) => {
       expect(body).to.eql({ state: 'PROCESSED', ...confirm_payment_body })
       return body
     }).reply(200, payment_url)
@@ -1021,9 +1021,9 @@ describe('Ecomm tests', () => {
   })
 
   it('can get all categories', async () => {
-    scope.get(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/categories?limit=0&offset=0&sort=title`).reply(200, list_category_response)
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/categories?limit=0&offset=0&sort=title`).reply(200, list_category_response)
     return await duda.ecomm.categories.list({
-      site_name: site_name,
+      site_name,
       limit: 0,
       offset: 0,
       sort: 'title'
@@ -1031,7 +1031,7 @@ describe('Ecomm tests', () => {
   })
 
   it('can create a category', async () => {
-    scope.post(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/categories`, (body) => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/categories`, (body) => {
       expect(body).to.eql({ ...category_payload })
       return body
     }).reply(200, category_response)
@@ -1040,14 +1040,14 @@ describe('Ecomm tests', () => {
   })
 
   it('can get a category', async () => {
-    scope.get(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/categories/${category_id}`).reply(200, category_response)
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/categories/${category_id}`).reply(200, category_response)
 
     return await duda.ecomm.categories.get({ site_name, category_id })
       .then(res => expect(res).to.eql({ ...category_response }))
   })
 
   it('can update a category', async () => {
-    scope.patch(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/categories/${category_id}`, (body) => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/categories/${category_id}`, (body) => {
       expect(body).to.eql({ ...category_payload})
       return body
     }).reply(200, category_response)
@@ -1056,14 +1056,14 @@ describe('Ecomm tests', () => {
   })
 
   it('can delete a category', async () => {
-    scope.delete(`/api.duda.co/api/sites/multiscreen/${site_name}/ecommerce/categories/${category_id}`).reply(200)
+    scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/categories/${category_id}`).reply(200)
     return await duda.ecomm.categories.delete({ site_name, category_id })
   })
 
   it('can list all shipping providers', async () => {
     scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-providers`).reply(200, shipping_providers_list)
     return await duda.ecomm.shipping.list({
-      site_name: site_name
+      site_name
     }).then(res => expect(res).to.eql(shipping_providers_list))
   })
 
@@ -1100,7 +1100,7 @@ describe('Ecomm tests', () => {
   it('can list all product options', async () => {
     scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/options?limit=0&offset=0&sort=string&direction=asc`).reply(200, list_product_option_response)
     return await duda.ecomm.options.list({
-      site_name: site_name,
+      site_name,
       limit: 0,
       offset: 0,
       sort: 'string',
