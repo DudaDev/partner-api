@@ -545,7 +545,7 @@ export interface GetPaymentsResponse {
 export interface ConfirmPaymentsPayload {
   site_name: string,
   session_id: string,
-  state: 'PROCESSING' | 'PROCESSED' | 'INVALIDATED' | 'FAILED',
+  state: 'PROCESSED' | 'FAILED' | 'PENDING',
   transaction_id?: string,
   icon?: string,
   name?: string,
