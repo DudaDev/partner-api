@@ -20,6 +20,27 @@ describe('Content tests', () => {
             label:"test_email"
           }
         ],
+        business_hours:[
+          {
+            days: [
+              "SAT",
+              "SUN"
+            ],
+            open: "00:00",
+            close: "00:00"
+          },
+          {
+            days: [
+              "MON",
+              "TUE",
+              "WED",
+              "THU",
+              "FRI"
+            ],
+            open: "09:00",
+            close: "18:00"
+          }
+        ],
         label:"test",
         social_accounts:{},
         address:{}

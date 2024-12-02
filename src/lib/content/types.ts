@@ -177,7 +177,11 @@ export interface UpdateContentPayload {
       longitude?: string
     },
     logo_url?: string,
-    business_hours?: BusinessHours,
+    busines_hours?: Array<{
+      days: Days[],
+      open: string,
+      close: string,
+    }>
   },
   site_texts?: {
     overview?: string,
