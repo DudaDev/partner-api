@@ -1,5 +1,6 @@
 import { expect } from "chai"
 import nock from "nock"
+import { Days } from "../src/lib/content/types"
 import { Duda } from "../src/index"
 
 describe('Content tests', () => {
@@ -20,12 +21,12 @@ describe('Content tests', () => {
             label:"test_email"
           }
         ],
-        business_hours:[
+        business_hours: [
           {
             days: [
               "SAT",
               "SUN"
-            ],
+            ] as Days[],
             open: "00:00",
             close: "00:00"
           },
@@ -36,7 +37,7 @@ describe('Content tests', () => {
               "WED",
               "THU",
               "FRI"
-            ],
+            ] as Days[],
             open: "09:00",
             close: "18:00"
           }
