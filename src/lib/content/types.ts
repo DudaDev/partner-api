@@ -1,4 +1,4 @@
-type Days = 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN'
+export type Days = 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN'
 
 export interface Schema {
   type: string,
@@ -177,7 +177,7 @@ export interface UpdateContentPayload {
       longitude?: string
     },
     logo_url?: string,
-    business_hours?: BusinessHours,
+    business_hours?: BusinessHours[]
   },
   site_texts?: {
     overview?: string,
