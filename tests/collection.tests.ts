@@ -17,6 +17,7 @@ describe('Collection tests', () => {
     }
     const collection_output = {
       name: 'test_collection',
+      item_count: 10,
       customer_lock: 'unlocked',
       fields: [
         {

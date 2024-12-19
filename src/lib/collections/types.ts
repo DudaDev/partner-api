@@ -17,7 +17,8 @@ export interface Field {
 
 export interface Collection {
   name?: string,
-  fields: Array<Field>
+  item_count: number,
+  fields: Array<Field>,
   values: Array<{
     id?: string,
     data?: {
@@ -32,6 +33,8 @@ export interface Collection {
 export interface CreateCollectionPayload {
   name: string,
   site_name: string,
+  customer_lock?: 'unlocked' | 'structure_locked' | 'locked',
+  static_page_bindable?: boolean,
   fields: Array<Field>,
   external_details?: {
     enabled?: boolean,
