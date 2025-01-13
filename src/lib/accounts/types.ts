@@ -72,7 +72,9 @@ export type Permissions =
   'MANAGE_CONNECTED_DATA' |
   'USE_APP' |
   'CLIENT_MANAGE_FREE_APPS' |
-  'AI_ASSISTANT';
+  'AI_ASSISTANT' |
+  'CONTENT_LIBRARY_EXTERNAL_DATA_SYNC' |
+  'SEO_OVERVIEW';
 
 export interface GetPermissionsResponse {
   permissions: Array<Permissions>;
