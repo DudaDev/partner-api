@@ -769,13 +769,85 @@ duda.blog.import({ site_name: site_name });
 duda.blog.importPost({ site_name: site_name });
 ```
 
-## Delete Blog Post
+## Publish Blog Post
 
-[Delete Reference](https://developer.duda.co/reference/import-blog-post)
+[Publish Blog Post Reference](https://developer.duda.co/reference/blog-publish-blog-post)
 
 ### Request
 
-`POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog`
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts/{post_id}/publish`
+
+```typescript
+duda.blog.publish({ site_name: site_name, post_id: post_id });
+```
+
+## Unpublish Blog Post
+
+[Unpublish Blog Post Reference](https://developer.duda.co/reference/blog-unpublish-blog-post)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts/{post_id}/unpublish`
+
+```typescript
+duda.blog.unpublish({ site_name: site_name, post_id: post_id });
+```
+
+## Update Blog Post
+
+[Update Blog Post Reference](https://developer.duda.co/reference/blog-update-blog-post)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts/{post_id}`
+
+```typescript
+duda.blog.update({ site_name: site_name, post_id: post_id });
+```
+
+## List Blog Posts
+
+[List Blog Posts Reference](https://developer.duda.co/reference/blog-list-blog-posts)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts`
+
+```typescript
+duda.blog.list({ site_name: site_name });
+```
+
+## Get Blog Post
+
+[Get Blog Post Reference](https://developer.duda.co/reference/blog-get-blog-post)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts/{post_id}`
+
+```typescript
+duda.blog.get({ site_name: site_name, post_id: post_id });
+```
+
+## Delete Blog Post
+
+[Delete Blog Post Reference](https://developer.duda.co/reference/blog-delete-blog-post)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts/{post_id}`
+
+```typescript
+duda.blog.deletePost({ site_name: site_name, post_id: post_id });
+```
+
+## Delete Blog
+
+[Delete Blog Reference](https://developer.duda.co/reference/blog-delete-blog)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/blog`
 
 ```typescript
 duda.blog.delete({ site_name: site_name });
