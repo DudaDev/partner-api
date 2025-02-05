@@ -467,11 +467,18 @@ interface BusinessAddress {
   postal_code?: string
 }
 
+interface MarketingOptInSettings {
+  enabled: boolean,
+  description_html: string
+}
+
 interface CartSettings {
   split_name_field: boolean,
   split_address_1_field: boolean,
   display_instruction_field: boolean,
-  display_phone_field: boolean
+  display_phone_field: boolean,
+  terms_and_conditions_html: string,
+  marketing_opt_in_settings: MarketingOptInSettings
 }
 
 interface Ecomm {
