@@ -99,7 +99,14 @@ export interface GrantSiteAccessPayload {
   permissions: Array<Permissions>;
 }
 
-export type SSOLinkTargets = 'STATS' | 'EDITOR' | 'RESET_SITE' | 'SWITCH_TEMPLATE' | 'RESET_BASIC';
+export type SSOLinkTargets =
+  'STATS' |
+  'EDITOR' |
+  'RESET_SITE' |
+  'SWITCH_TEMPLATE' |
+  'RESET_BASIC' |
+  'STORE_MANAGEMENT' |
+  'SITE_OVERVIEW';
 
 export type GrantSiteAccessResponse = void;
 export type RemoveSiteAccessResponse = void;
