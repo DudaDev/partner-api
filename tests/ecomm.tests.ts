@@ -23,7 +23,12 @@ describe('Ecomm tests', () => {
     split_name_field: true,
     split_address_1_field: true,
     display_instruction_field: true,
-    display_phone_field: true
+    display_phone_field: true,
+    terms_and_conditions_html: 'string',
+    marketing_opt_in_settings: {
+      enabled: true,
+      description_html: 'string'
+    }
   };
 
   const settings = {
