@@ -5,28 +5,23 @@ import { SubResource } from "../../base";
 import { APIEndpoint } from "../../APIEndpoint";
 
 class AppRows extends SubResource {
-  create = APIEndpoint<TokenRequest<Types.AddRowPayload>, Types.AddRowResponse>(
-    {
-      method: "post",
-      path: "/site/{site_name}/collection/{collection_name}/row",
-      defaults: {
-        host: "api.duda.co",
-      },
-      headerOptions: {
-        "X-DUDA-ACCESS-TOKEN": {
-          required: true,
-        },
-      },
-      beforeRequest(opts) {
-        return opts.raw_body;
+  create = APIEndpoint<TokenRequest<Types.AddRowPayload>, Types.AddRowResponse>({
+    method: "post",
+    path: "/site/{site_name}/collection/{collection_name}/row",
+    defaults: {
+      host: "api.duda.co",
+    },
+    headerOptions: {
+      "X-DUDA-ACCESS-TOKEN": {
+        required: true,
       },
     },
-  );
+    beforeRequest(opts) {
+      return opts.raw_body;
+    },
+  });
 
-  update = APIEndpoint<
-    TokenRequest<Types.UpdateRowPayload>,
-    Types.UpdateRowResponse
-  >({
+  update = APIEndpoint<TokenRequest<Types.UpdateRowPayload>, Types.UpdateRowResponse>({
     method: "put",
     path: "/site/{site_name}/collection/{collection_name}/row",
     defaults: {
@@ -42,10 +37,7 @@ class AppRows extends SubResource {
     },
   });
 
-  deleteRow = APIEndpoint<
-    TokenRequest<Types.DeleteSingleRowPayload>,
-    Types.DeleteSingleRowResponse
-  >({
+  deleteRow = APIEndpoint<TokenRequest<Types.DeleteSingleRowPayload>, Types.DeleteSingleRowResponse>({
     method: "delete",
     path: "/site/{site_name}/collection/{collection_name}/row/{row_id}",
     defaults: {
@@ -58,10 +50,7 @@ class AppRows extends SubResource {
     },
   });
 
-  delete = APIEndpoint<
-    TokenRequest<Types.DeleteRowPayload>,
-    Types.DeleteRowResponse
-  >({
+  delete = APIEndpoint<TokenRequest<Types.DeleteRowPayload>, Types.DeleteRowResponse>({
     method: "delete",
     path: "/site/{site_name}/collection/{collection_name}/row",
     defaults: {
