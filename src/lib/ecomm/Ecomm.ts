@@ -8,6 +8,7 @@ import Shipping from './Shipping';
 import Products from './Products';
 import Options from './Options';
 import Variations from './Variations';
+import Store from './Store';
 import * as Types from './types';
 import { APIEndpoint } from '../APIEndpoint';
 
@@ -29,6 +30,8 @@ class Ecomm extends Resource {
   options = new Options(this.config);
 
   variations = new Variations(this.config);
+
+  store = new Store(this.config);
 
   get = APIEndpoint<Types.GetEcommPayload, Types.GetEcommResponse>({
     method: 'get',

@@ -25,6 +25,18 @@ describe('App store ecomm tests', () => {
   const pass = 'testpass'
   const token = '123456'
 
+  const store = {
+    max_choice_per_option: 0,
+    max_variation_per_product: 0,
+    max_options: 0,
+    max_products: 0,
+  }
+
+  const storeReturn = {
+    site_name,
+    features: store
+  }
+
   const product = {
     custom_fields: [
       {
@@ -643,7 +655,12 @@ describe('App store ecomm tests', () => {
     split_name_field: true,
     split_address_1_field: true,
     display_instruction_field: true,
-    display_phone_field: true
+    display_phone_field: true,
+    terms_and_conditions_html: 'string',
+    marketing_opt_in_settings: {
+      enabled: true,
+      description_html: 'string'
+    }
   };
 
   const settings = {
@@ -1046,5 +1063,12 @@ describe('App store ecomm tests', () => {
     }).reply(200, variation_response)
 
     return await duda.appstore.ecomm.variations.update({ site_name, product_id, variation_id, status: 'HIDDEN', token, ...update_variation_payload })
+  })
+
+  it('can get a store', async () => {
+    scope.get(`${base_path}/site/multiscreen/${site_name}/ecommerce/store`).reply(200, storeReturn)
+
+    return await duda.appstore.ecomm.store.get({ site_name, token })
+      .then(res => expect(res).to.eql(storeReturn))
   })
 })

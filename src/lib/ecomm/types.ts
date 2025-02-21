@@ -467,11 +467,18 @@ interface BusinessAddress {
   postal_code?: string
 }
 
+interface MarketingOptInSettings {
+  enabled: boolean,
+  description_html: string
+}
+
 interface CartSettings {
   split_name_field: boolean,
   split_address_1_field: boolean,
   display_instruction_field: boolean,
-  display_phone_field: boolean
+  display_phone_field: boolean,
+  terms_and_conditions_html: string,
+  marketing_opt_in_settings: MarketingOptInSettings
 }
 
 interface Ecomm {
@@ -836,3 +843,33 @@ export interface UpdateVariationPayload {
 }
 
 export interface UpdateVariationResponse extends Variations {}
+
+export interface Store {
+  max_choice_per_option: number;
+  max_options: number;
+  max_products: number;
+  max_variations_per_product: number;
+}
+
+export interface GetStorePayload {
+  site_name: string;
+}
+
+export interface GetStoreResponse  {
+  site_name: string;
+  features: Store;
+}
+
+export interface CreateStorePayload {
+  site_name: string;
+}
+
+export interface CreateStoreResponse {
+  site_name: string;
+}
+
+export interface DeleteStorePayload {
+  site_name: string;
+}
+
+export type DeleteStoreResponse = void;
