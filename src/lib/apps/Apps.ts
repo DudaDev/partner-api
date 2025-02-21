@@ -12,6 +12,7 @@ import AppsContent from './content/Content';
 import AppsManifest from './manifest/Manifest';
 import AppsAccounts from './accounts/Accounts';
 import AppsEcomm from './ecomm/Ecomm';
+import AppsCollections from './collections/Collections';
 import { RequestOptions } from '../http';
 
 const DEFAULT_EXPIRY_TOLERANCE = 10000;
@@ -51,6 +52,8 @@ class Apps extends Resource {
   sitewidehtml = new AppsSWH(this);
 
   ecomm = new AppsEcomm(this);
+
+  collections = new AppsCollections(this);
 
   utils = Utils;
 
