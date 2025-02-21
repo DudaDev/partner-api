@@ -843,3 +843,33 @@ export interface UpdateVariationPayload {
 }
 
 export interface UpdateVariationResponse extends Variations {}
+
+export interface Store {
+  max_choice_per_option: number;
+  max_options: number;
+  max_products: number;
+  max_variations_per_product: number;
+}
+
+export interface GetStorePayload {
+  site_name: string;
+}
+
+export interface GetStoreResponse  {
+  site_name: string;
+  features: Store;
+}
+
+export interface CreateStorePayload {
+  site_name: string;
+}
+
+export interface CreateStoreResponse {
+  site_name: string;
+}
+
+export interface DeleteStorePayload {
+  site_name: string;
+}
+
+export type DeleteStoreResponse = void;

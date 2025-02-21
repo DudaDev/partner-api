@@ -19,6 +19,18 @@ describe('Ecomm tests', () => {
   const choice_id = 'string';
   const variation_id = 'test_variation';
 
+  const store = {
+    max_choice_per_option: 0,
+    max_variation_per_product: 0,
+    max_options: 0,
+    max_products: 0,
+  }
+
+  const storeReturn = {
+    site_name,
+    features: store
+  }
+
   const cartSettings = {
     split_name_field: true,
     split_address_1_field: true,
@@ -1180,5 +1192,20 @@ describe('Ecomm tests', () => {
     }).reply(200, variation_response)
 
     return await duda.ecomm.variations.update({ site_name, product_id, variation_id, status: 'HIDDEN', ...update_variation_payload })
+  })
+
+  it('can get store', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/store`).reply(200, storeReturn)
+    return await duda.ecomm.store.get({ site_name }).then(res => expect(res).to.eql(storeReturn))
+  })
+
+  it('can create a store', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/store`).reply(200, { site_name })
+    return await duda.ecomm.store.create({ site_name }).then(res => expect(res).to.eql({ site_name }))
+  })
+
+  it('can update a store', async () => {
+    scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/store`).reply(204)
+    return await duda.ecomm.store.delete({ site_name })
   })
 })
