@@ -13,7 +13,7 @@ class AppCollections extends SubResource {
 
   list = APIEndpoint<TokenRequest<Types.ListCollectionsPayload>, Types.ListCollectionsPayload>({
     method: 'get',
-    path: '/site/{site_name}/collections',
+    path: '/site/{site_name}/collection',
     defaults: {
       host: 'api.duda.co',
     },

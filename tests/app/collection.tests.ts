@@ -118,7 +118,7 @@ describe("App store collection tests", () => {
 
   it("can list all collections", async () => {
     scope
-      .get(`${base_path}/site/test_site/collections`)
+      .get(`${base_path}/site/test_site/collection`)
       .reply(200, collection_output);
     return await duda.appstore.collections.list({
       site_name: "test_site",
