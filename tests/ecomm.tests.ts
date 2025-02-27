@@ -49,7 +49,7 @@ describe('Ecomm tests', () => {
     product_ids: ['string']
   }
 
-  const list_tax_group_results = {
+  const tax_group_results = {
     id: 'string',
     name: 'string',
     product_ids: ['string']
@@ -60,7 +60,7 @@ describe('Ecomm tests', () => {
     offset: 0,
     limit: 0,
     total_responses: 1,
-    results: [ list_tax_group_results ]
+    results: [ tax_group_results ]
   }
 
   const settings = {
@@ -987,11 +987,11 @@ describe('Ecomm tests', () => {
 
   it('can create a tax group', async () => {
     scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/tax-groups`, (body) => {
-      expect(body).to.eql({ ...tax_group})
+      expect(body).to.eql({ ...tax_group_results})
       return body
     }).reply(201, tax_group)
 
-    return await duda.ecomm.groups.create({ site_name, ...tax_group })
+    return await duda.ecomm.groups.create({ site_name, ...tax_group_results })
   })
 
   it('can get a tax group', async () => {

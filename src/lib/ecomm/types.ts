@@ -879,7 +879,7 @@ export interface TaxGroup {
   product_ids: Array<string>
 }
 
-export interface ListTaxGroupResults extends TaxGroup {
+export interface TaxGroupResults extends TaxGroup {
   id: string
 }
 
@@ -894,7 +894,7 @@ export interface ListTaxGroupsResponse {
   offset: number,
   limit: number,
   total_responses: number,
-  results: Array<ListTaxGroupResults>
+  results: Array<TaxGroupResults>
 }
 
 export interface GetTaxGroupPayload {
@@ -908,7 +908,7 @@ export interface CreateTaxGroupPayload extends TaxGroup {
   site_name: string
 }
 
-export type CreateTaxGroupResponse = TaxGroup;
+export type CreateTaxGroupResponse = TaxGroupResults;
 
 export interface UpdateTaxGroupPayload extends TaxGroup {
   site_name: string,
