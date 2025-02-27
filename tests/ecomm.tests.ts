@@ -6,18 +6,19 @@ describe('Ecomm tests', () => {
   let duda: Duda;
   let scope: nock.Scope;
 
-  const site_name = "test_site";
-  const product_id = "test_product";
-  const gateway_id = "test_gateway";
-  const cart_id = 'test_cart';
-  const order_id = 'test_order';
-  const refund_id = 'test_refund';
-  const session_id = 'test_session';
-  const category_id = 'test_category';
-  const shipping_id = 'test_shipping';
-  const option_id = 'test_option';
+  const site_name = 'string';
+  const product_id = 'string';
+  const gateway_id = 'string';
+  const cart_id = 'string';
+  const group_id = 'string';
+  const order_id = 'string';
+  const refund_id = 'string';
+  const session_id = 'string';
+  const category_id = 'string';
+  const shipping_id = 'string';
+  const option_id = 'string';
   const choice_id = 'string';
-  const variation_id = 'test_variation';
+  const variation_id = 'string';
 
   const store = {
     max_choice_per_option: 0,
@@ -26,12 +27,12 @@ describe('Ecomm tests', () => {
     max_products: 0,
   }
 
-  const storeReturn = {
+  const store_return = {
     site_name,
     features: store
   }
 
-  const cartSettings = {
+  const cart_settings = {
     split_name_field: true,
     split_address_1_field: true,
     display_instruction_field: true,
@@ -42,6 +43,25 @@ describe('Ecomm tests', () => {
       description_html: 'string'
     }
   };
+
+  const tax_group = {
+    name: 'string',
+    product_ids: ['string']
+  }
+
+  const list_tax_group_results = {
+    id: 'string',
+    name: 'string',
+    product_ids: ['string']
+  }
+
+  const list_tax_groups_response = {
+    site_name,
+    offset: 0,
+    limit: 0,
+    total_responses: 1,
+    results: [ list_tax_group_results ]
+  }
 
   const settings = {
     default_currency: 'USD',
@@ -56,7 +76,7 @@ describe('Ecomm tests', () => {
     time_zone: 'Mountain',
     enabled_countries: ['US'],
     send_email_notifications: true,
-    cart_settings: cartSettings
+    cart_settings: cart_settings
   };
 
   const product = {
@@ -110,7 +130,7 @@ describe('Ecomm tests', () => {
     offset: 0,
     results: [ product ],
     site_name,
-    total_responses: 0
+    total_responses: 1
   }
 
   const product_response = {
@@ -787,7 +807,7 @@ describe('Ecomm tests', () => {
     offset: 0,
     results: [product_option],
     site_name,
-    total_responses: 0
+    total_responses: 1
   }
 
   const create_product_option_payload = {
@@ -953,6 +973,46 @@ describe('Ecomm tests', () => {
 
     return await duda.ecomm.carts.get({ site_name, cart_id })
       .then(res => expect(res).to.eql({ ...cart }))
+  })
+
+  it('can list all tax groups', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/tax-groups?limit=0&offset=0&direction=asc`).reply(200, list_tax_groups_response)
+    return await duda.ecomm.groups.list({
+      site_name,
+      limit: 0,
+      offset: 0,
+      direction: 'asc'
+    }).then(res => expect(res).to.eql(list_tax_groups_response))
+  })
+
+  it('can create a tax group', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/tax-groups`, (body) => {
+      expect(body).to.eql({ ...tax_group})
+      return body
+    }).reply(201, tax_group)
+
+    return await duda.ecomm.groups.create({ site_name, ...tax_group })
+  })
+
+  it('can get a tax group', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/tax-groups/${group_id}`).reply(200, tax_group)
+
+    return await duda.ecomm.groups.get({ site_name, group_id })
+      .then(res => expect(res).to.eql({ ...tax_group }))
+  })
+
+  it('can update a tax group', async () => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/tax-groups/${group_id}`, (body) => {
+      expect(body).to.eql({ ...tax_group})
+      return body
+    }).reply(200, tax_group)
+
+    return await duda.ecomm.groups.update({ site_name, group_id, ...tax_group })
+  })
+
+  it('can delete a tax group', async () => {
+    scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/tax-groups/${group_id}`).reply(204)
+    return await duda.ecomm.groups.delete({ site_name, group_id })
   })
 
   it('can list all orders', async () => {
@@ -1195,8 +1255,8 @@ describe('Ecomm tests', () => {
   })
 
   it('can get store', async () => {
-    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/store`).reply(200, storeReturn)
-    return await duda.ecomm.store.get({ site_name }).then(res => expect(res).to.eql(storeReturn))
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/store`).reply(200, store_return)
+    return await duda.ecomm.store.get({ site_name }).then(res => expect(res).to.eql(store_return))
   })
 
   it('can create a store', async () => {
