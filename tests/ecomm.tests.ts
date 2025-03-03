@@ -6,19 +6,19 @@ describe('Ecomm tests', () => {
   let duda: Duda;
   let scope: nock.Scope;
 
-  const site_name = 'string';
-  const product_id = 'string';
-  const gateway_id = 'string';
-  const cart_id = 'string';
-  const group_id = 'string';
-  const order_id = 'string';
-  const refund_id = 'string';
-  const session_id = 'string';
-  const category_id = 'string';
-  const shipping_id = 'string';
-  const option_id = 'string';
-  const choice_id = 'string';
-  const variation_id = 'string';
+  const site_name = 'test_site';
+  const product_id = 'test_product';
+  const gateway_id = 'test_gateway';
+  const cart_id = 'test_cart';
+  const group_id = 'test_group';
+  const order_id = 'test_order';
+  const refund_id = 'test_refund';
+  const session_id = 'test_session';
+  const category_id = 'test_category';
+  const shipping_id = 'test_shipping';
+  const option_id = 'test_option';
+  const choice_id = 'test_choice';
+  const variation_id = 'test_variation';
 
   const store = {
     max_choice_per_option: 0,
