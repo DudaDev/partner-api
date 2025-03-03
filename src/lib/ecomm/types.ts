@@ -873,3 +873,53 @@ export interface DeleteStorePayload {
 }
 
 export type DeleteStoreResponse = void;
+
+export interface TaxGroup {
+  name: string,
+  product_ids: Array<string>
+}
+
+export interface TaxGroupResults extends TaxGroup {
+  id: string
+}
+
+export interface ListTaxGroupsPayload {
+  site_name: string,
+  offset?: number,
+  limit?: number,
+  direction?: 'asc' | 'desc'
+}
+
+export interface ListTaxGroupsResponse {
+  offset: number,
+  limit: number,
+  total_responses: number,
+  results: Array<TaxGroupResults>
+}
+
+export interface GetTaxGroupPayload {
+  site_name: string,
+  group_id: string
+}
+
+export type GetTaxGroupResponse = TaxGroup;
+
+export interface CreateTaxGroupPayload extends TaxGroup {
+  site_name: string
+}
+
+export type CreateTaxGroupResponse = TaxGroupResults;
+
+export interface UpdateTaxGroupPayload extends TaxGroup {
+  site_name: string,
+  group_id: string
+}
+
+export type UpdateTaxGroupResponse = TaxGroup;
+
+export interface DeleteTaxGroupPayload {
+  site_name: string,
+  group_id: string
+}
+
+export type DeleteTaxGroupResponse = void;

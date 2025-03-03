@@ -1,5 +1,6 @@
 import Resource from '../base';
 import Carts from './Carts';
+import Groups from './Groups';
 import Orders from './Orders';
 import Gateways from './Gateways';
 import Payments from './Payments';
@@ -14,6 +15,8 @@ import { APIEndpoint } from '../APIEndpoint';
 
 class Ecomm extends Resource {
   carts = new Carts(this.config);
+
+  groups = new Groups(this.config);
 
   orders = new Orders(this.config);
 
