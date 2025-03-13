@@ -923,3 +923,130 @@ export interface DeleteTaxGroupPayload {
 }
 
 export type DeleteTaxGroupResponse = void;
+
+export interface TaxGroupOverrides {
+  [key: string]: number
+}
+
+export interface TaxRate {
+  name: string,
+  rate: string,
+  tax_number_for_invoice?: string,
+  tax_group_overrides?: TaxGroupOverrides
+}
+
+export interface TaxRateResults extends TaxRate {
+  id: string
+}
+
+export interface TaxZone {
+  country: string,
+  region?: string,
+  rates: Array<TaxRate>
+}
+
+export interface ListTaxZone {
+  country: string,
+  region?: string,
+  rates: Array<TaxRateResults>
+}
+
+export interface TaxZoneResults extends TaxZone {
+  id: string
+}
+
+export interface ListTaxZonesPayload {
+  site_name: string,
+  offset?: number,
+  limit?: number,
+  direction?: 'asc' | 'desc'
+}
+
+export interface ListTaxZonesResponse {
+  offset: number,
+  limit: number,
+  total_responses: number,
+  results: Array<ListTaxZone>
+}
+
+export interface GetTaxZonePayload {
+  site_name: string,
+  zone_id: string
+}
+
+export interface GetTaxZoneResponse extends ListTaxZone {}
+
+export interface CreateTaxZonePayload extends TaxZone {
+  site_name: string
+}
+
+export interface CreateTaxZoneResponse extends ListTaxZone {}
+
+export interface UpdateTaxZonePayload {
+  site_name: string,
+  zone_id: string,
+  rates?: Array<TaxRate>
+}
+
+export interface UpdateTaxZoneResponse extends ListTaxZone {}
+
+export interface DeleteTaxZonePayload {
+  site_name: string,
+  zone_id: string
+}
+
+export type DeleteTaxZoneResponse = void;
+
+export interface ListTaxZoneRatesPayload {
+  site_name: string,
+  zone_id: string,
+  offset?: number,
+  limit?: number,
+  direction?: 'asc' | 'desc'
+}
+
+export interface ListTaxZoneRatesResponse {
+  offset: number,
+  limit: number,
+  total_responses: number,
+  results: Array<TaxRate>
+}
+
+export interface GetTaxZoneRatePayload {
+  site_name: string,
+  zone_id: string,
+  rate_id: string
+}
+
+export interface GetTaxZoneRateResponse extends TaxRate {}
+
+export interface CreateTaxZoneRatePayload {
+  site_name: string,
+  zone_id: string,
+  name: string,
+  rate: string,
+  tax_number_for_invoice?: string,
+  tax_group_overrides?: TaxGroupOverrides
+}
+
+export interface CreateTaxZoneRateResponse extends TaxRateResults {}
+
+export interface UpdateTaxZoneRatePayload {
+  site_name: string,
+  zone_id: string,
+  rate_id: string,
+  name?: string,
+  rate?: string,
+  tax_number_for_invoice?: string,
+  tax_group_overrides?: TaxGroupOverrides
+}
+
+export interface UpdateTaxZoneRateResponse extends TaxRateResults {}
+
+export interface DeleteTaxZoneRatePayload {
+  site_name: string,
+  zone_id: string,
+  rate_id: string
+}
+
+export type DeleteTaxZoneRateResponse = void;
