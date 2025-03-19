@@ -1005,6 +1005,128 @@ duda.ecomm.groups.update({ site_name: site_name, group_id: group_id });
 duda.ecomm.groups.delete({ site_name: site_name, group_id: group_id });
 ```
 
+# eComm Tax Zones
+
+## List Tax Zones
+
+[List Tax Zones Reference](https://developer.duda.co/reference/list-tax-zones)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones`
+
+```typescript
+duda.ecomm.zones.list({ site_name: site_name });
+```
+
+## Get Tax Zone
+
+[Get Tax Zone Reference](https://developer.duda.co/reference/ecomm-get-tax-zone)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}`
+
+```typescript
+duda.ecomm.zones.get({ site_name: site_name, zone_id: zone_id });
+```
+
+## Create Tax Zone
+
+[Create Tax Zone Reference](https://developer.duda.co/reference/ecomm-create-tax-zone)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones`
+
+```typescript
+duda.ecomm.zones.create({ site_name: site_name });
+```
+
+## Update Tax Zone
+
+[Update Tax Zone Reference](https://developer.duda.co/reference/ecomm-update-tax-zone)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}`
+
+```typescript
+duda.ecomm.zones.update({ site_name: site_name, zone_id: zone_id });
+```
+
+## Delete Tax Zone
+
+[Delete Tax Zone Reference](https://developer.duda.co/reference/ecomm-delete-tax-zone)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}`
+
+```typescript
+duda.ecomm.zones.delete({ site_name: site_name, zone_id: zone_id });
+```
+
+## List Tax Zone Rates
+
+[List Tax Zone Rates  Reference](https://developer.duda.co/reference/ecomm-list-tax-zone-rates)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}/rates`
+
+```typescript
+duda.ecomm.zones.listRate({ site_name: site_name, zone_ide: zone_id });
+```
+
+## Get Tax Zone Rate
+
+[Get Tax Zone Rate Reference](https://developer.duda.co/reference/ecomm-get-tax-zone-rate)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}/rates/{rate_id}`
+
+```typescript
+duda.ecomm.zones.getRate({ site_name: site_name, zone_id: zone_id, rate_id: rate_id });
+```
+
+## Create Tax Zone Rate
+
+[Create Tax Zone Rate Reference](https://developer.duda.co/reference/ecomm-create-tax-zone-rate)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}/rates`
+
+```typescript
+duda.ecomm.zones.createRate({ site_name: site_name, zone_id: zone_id });
+```
+
+## Update Tax Zone Rate
+
+[Update Tax Zone Rate Reference](https://developer.duda.co/reference/ecomm-update-tax-zone-rate)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}/rates/{rate_id}`
+
+```typescript
+duda.ecomm.zones.updateRate({ site_name: site_name, zone_id: zone_id, rate_id: rate_id });
+```
+
+## Delete Tax Zone Rate
+
+[Delete Tax Zone Rate Reference](https://developer.duda.co/reference/delete-tax-zone-rate)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}/rates/{rate_id}`
+
+```typescript
+duda.ecomm.zones.deleteRate({ site_name: site_name, zone_id: zone_id, rate_id: rate_id });
+```
+
 # eComm Orders
 
 ## List Orders

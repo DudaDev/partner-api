@@ -11,6 +11,8 @@ describe('Ecomm tests', () => {
   const gateway_id = 'test_gateway';
   const cart_id = 'test_cart';
   const group_id = 'test_group';
+  const zone_id = 'test_zone';
+  const rate_id = 'test_rate';
   const order_id = 'test_order';
   const refund_id = 'test_refund';
   const session_id = 'test_session';
@@ -56,11 +58,56 @@ describe('Ecomm tests', () => {
   }
 
   const list_tax_groups_response = {
-    site_name,
     offset: 0,
     limit: 0,
     total_responses: 1,
     results: [ tax_group_results ]
+  }
+
+  const tax_rate = {
+    name: 'string',
+    rate: '0',
+    tax_number_for_invoice: 'string',
+    tax_group_overrides: {
+      "prop1": 0
+    }
+  }
+
+  const tax_rate_results = {
+    id: 'string',
+    name: 'string',
+    rate: '0',
+    tax_number_for_invoice: 'string',
+    tax_group_overrides: {
+      "prop1": 0
+    }
+  }
+
+  const tax_zone = {
+    country: 'string',
+    region: 'string',
+    rates: [tax_rate]
+  }
+
+  const tax_zone_results = {
+    id: 'string',
+    country: 'string',
+    region: 'string',
+    rates: [tax_rate_results]
+  }
+
+  const list_tax_zone_results = {
+    offset: 0,
+    limit: 0,
+    total_responses: 1,
+    results: [tax_zone]
+  }
+
+  const list_tax_zone_rate_results = {
+    offset: 0,
+    limit: 0,
+    total_responses: 1,
+    results: [tax_rate_results]
   }
 
   const settings = {
@@ -1013,6 +1060,87 @@ describe('Ecomm tests', () => {
   it('can delete a tax group', async () => {
     scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/tax-groups/${group_id}`).reply(204)
     return await duda.ecomm.groups.delete({ site_name, group_id })
+  })
+
+  it('can list all tax zones', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/tax-zones?limit=0&offset=0&direction=asc`).reply(200, list_tax_zone_results)
+    return await duda.ecomm.zones.list({
+      site_name,
+      limit: 0,
+      offset: 0,
+      direction: 'asc'
+    }).then(res => expect(res).to.eql(list_tax_zone_results))
+  })
+
+  it('can create a tax zone', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/tax-zones`, (body) => {
+      expect(body).to.eql({ ...tax_zone})
+      return body
+    }).reply(201, tax_zone_results)
+
+    return await duda.ecomm.zones.create({ site_name, ...tax_zone })
+  })
+
+  it('can get a tax zone', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/tax-zones/${zone_id}`).reply(200, tax_zone_results)
+
+    return await duda.ecomm.zones.get({ site_name, zone_id })
+      .then(res => expect(res).to.eql({ ...tax_zone_results }))
+  })
+
+  it('can update a tax zone', async () => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/tax-zones/${zone_id}`, (body) => {
+      expect(body).to.eql({ ...[tax_rate]})
+      return body
+    }).reply(200, tax_zone_results)
+
+    return await duda.ecomm.zones.update({ site_name, zone_id, ...[tax_rate] })
+  })
+
+  it('can delete a tax zone', async () => {
+    scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/tax-zones/${zone_id}`).reply(204)
+    return await duda.ecomm.zones.delete({ site_name, zone_id })
+  })
+
+  it('can list all tax zone rates', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/tax-zones/${zone_id}/rates?limit=0&offset=0&direction=asc`).reply(200, list_tax_zone_rate_results)
+    return await duda.ecomm.zones.listRate({
+      site_name,
+      zone_id,
+      limit: 0,
+      offset: 0,
+      direction: 'asc'
+    }).then(res => expect(res).to.eql(list_tax_zone_rate_results))
+  })
+
+  it('can create a tax zone rate', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/tax-zones/${zone_id}/rates`, (body) => {
+      expect(body).to.eql({ ...tax_rate})
+      return body
+    }).reply(201, tax_rate_results)
+
+    return await duda.ecomm.zones.createRate({ site_name, zone_id, ...tax_rate })
+  })
+
+  it('can get a tax zone rate', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/tax-zones/${zone_id}/rates/${rate_id}`).reply(200, tax_rate_results)
+
+    return await duda.ecomm.zones.getRate({ site_name, zone_id, rate_id })
+      .then(res => expect(res).to.eql({ ...tax_rate_results }))
+  })
+
+  it('can update a tax zone rate', async () => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/tax-zones/${zone_id}/rates/${rate_id}`, (body) => {
+      expect(body).to.eql({ ...tax_rate})
+      return body
+    }).reply(200, tax_rate_results)
+
+    return await duda.ecomm.zones.updateRate({ site_name, zone_id, rate_id, ...tax_rate })
+  })
+
+  it('can delete a tax zone rate', async () => {
+    scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/tax-zones/${zone_id}/rates/${rate_id}`).reply(204)
+    return await duda.ecomm.zones.deleteRate({ site_name, zone_id, rate_id })
   })
 
   it('can list all orders', async () => {
