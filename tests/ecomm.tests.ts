@@ -44,7 +44,12 @@ describe('Ecomm tests', () => {
       enabled: true,
       description_html: 'string'
     }
-  };
+  }
+
+  const tax_settings = {
+    calculation_mode: 'TAXES_EXCLUDED_FROM_PRICE',
+    default_tax_zone_id: 'string'
+  }
 
   const tax_group = {
     name: 'string',
@@ -123,7 +128,8 @@ describe('Ecomm tests', () => {
     time_zone: 'Mountain',
     enabled_countries: ['US'],
     send_email_notifications: true,
-    cart_settings: cart_settings
+    cart_settings: cart_settings,
+    tax_settings: tax_settings
   };
 
   const product = {
@@ -1001,7 +1007,7 @@ describe('Ecomm tests', () => {
       return body
     }).reply(200, settings)
 
-    return await duda.ecomm.update({ site_name, ...settings });
+    return await duda.ecomm.update({ site_name, ...settings })
   })
 
   it('can list all carts', async () => {

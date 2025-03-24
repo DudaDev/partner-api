@@ -468,17 +468,22 @@ interface BusinessAddress {
 }
 
 interface MarketingOptInSettings {
-  enabled: boolean,
-  description_html: string
+  enabled?: boolean,
+  description_html?: string
 }
 
 interface CartSettings {
-  split_name_field: boolean,
-  split_address_1_field: boolean,
-  display_instruction_field: boolean,
-  display_phone_field: boolean,
-  terms_and_conditions_html: string,
-  marketing_opt_in_settings: MarketingOptInSettings
+  split_name_field?: boolean,
+  split_address_1_field?: boolean,
+  display_instruction_field?: boolean,
+  display_phone_field?: boolean,
+  terms_and_conditions_html?: string,
+  marketing_opt_in_settings?: MarketingOptInSettings
+}
+
+interface TaxSettings {
+  calculation_mode?: 'TAXES_EXCLUDED_FROM_PRICE' | 'TAXES_INCLUDED_IN_PRICE' | string,
+  default_tax_zone_id?: string
 }
 
 interface Ecomm {
@@ -488,6 +493,8 @@ interface Ecomm {
   time_zone?: string,
   enabled_countries?: Array<string>,
   send_email_notifications?: boolean
+  cart_settings?: CartSettings
+  tax_settings?: TaxSettings
 }
 
 export interface GetEcommPayload {
@@ -498,12 +505,8 @@ export interface UpdateEcommPayload extends Ecomm {
   site_name: string
 }
 
-export interface GetEcommResponse extends Ecomm {
-  cart_settings: CartSettings
-}
-export interface UpdateEcommResponse extends Ecomm {
-  cart_settings: CartSettings
-}
+export interface GetEcommResponse extends Ecomm {}
+export interface UpdateEcommResponse extends Ecomm {}
 
 export interface PaymentItem {
   type: 'PHYSICAL' | 'DIGITAL' | 'TAX' | 'SHIPPING' | 'DISCOUNT',

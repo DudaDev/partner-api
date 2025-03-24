@@ -7,6 +7,32 @@ import { APIEndpoint } from '../APIEndpoint';
 class Sites extends Resource {
   theme = new Theme(this.config);
 
+  list = APIEndpoint<Types.ListSitePayload, Types.ListSiteResponse>({
+    method: 'get',
+    path: '/api/sites/multiscreen',
+    defaults: {
+      host: 'api.duda.co',
+    },
+    queryParams: {
+      offset: {
+        type: 'number',
+        required: false,
+      },
+      limit: {
+        type: 'number',
+        required: false,
+      },
+      sort: {
+        type: 'string',
+        required: false,
+      },
+      direction: {
+        type: 'string',
+        required: false,
+      },
+    },
+  });
+
   get = APIEndpoint<Types.GetSiteByNamePayload, Types.GetSiteResponse>({
     method: 'get',
     path: '/api/sites/multiscreen/{site_name}',
