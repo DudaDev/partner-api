@@ -57,6 +57,12 @@ describe('Site tests', () => {
         external_uid: external_uid,
         site_domain: site_domain
     }
+    const list_response = {
+        offset: 0,
+        limit: 0,
+        total_responses: 1,
+        results: [get_response]
+    }
     const get_array_response = [ site_name ]
 
     before(() => {
@@ -81,6 +87,10 @@ describe('Site tests', () => {
             return body
         }).reply(200, create_response)
         return await duda.sites.create({ ...site_obj })
+    })
+    it('can list all sites', async () => {
+        scope.get(`/api/sites/multiscreen`).reply(200, list_response)
+        return await duda.sites.list()
     })
     it('can get a site by name', async () => {
         scope.get(`${api_path}${site_name}`).reply(200, get_response)

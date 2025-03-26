@@ -104,9 +104,11 @@ export type SSOLinkTargets =
   'EDITOR' |
   'RESET_SITE' |
   'SWITCH_TEMPLATE' |
+  'SWITCH_TEMPLATE_WITH_AI' |
   'RESET_BASIC' |
   'STORE_MANAGEMENT' |
-  'SITE_OVERVIEW';
+  'SITE_OVERVIEW' |
+  'SITE_SEO_OVERVIEW';
 
 export type GrantSiteAccessResponse = void;
 export type RemoveSiteAccessResponse = void;

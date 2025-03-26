@@ -310,6 +310,18 @@ This feature is currently in beta, if you experience any issues while implementi
 
 # Sites
 
+## List Sites
+
+[List Sites Reference](https://developer.duda.co/reference/sites-list-sites)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen`
+
+```typescript
+duda.sites.list();
+```
+
 ## Get Site
 
 [Get Site Reference](https://developer.duda.co/reference/sites-get-site)

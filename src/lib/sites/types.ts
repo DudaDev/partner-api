@@ -82,6 +82,7 @@ export interface Agendize {
 }
 
 export interface Site {
+  account_name?: string,
   external_uid?: string,
   piwik_id?: string,
   google_tracking_id?: string,
@@ -104,6 +105,10 @@ export interface Site {
   site_alternate_domains?: {
     domains?: Array<string>,
     is_redirect?: boolean
+  },
+  content_collection_form?: {
+    url?: string,
+    url_expiration_date?: string
   },
   site_seo?: {
     og_image?: string,
@@ -163,6 +168,13 @@ export interface GetSiteResponse extends Site {
   cookie_notification?: string,
   lang?: string,
   labels?: Array<SiteLabel>
+}
+
+export interface ListSiteResponse {
+  offset: number,
+  limit: number,
+  total_responses: number,
+  results: Array<GetSiteResponse>
 }
 
 export type CreateSiteResponse = SiteNamedResponse;
@@ -225,6 +237,13 @@ type AtLeastOne<T, U = {[K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U]
 
 export type UpdateSitePayload = FirstPartialUpdateSitePayload
 & AtLeastOne<SecondPartialUpdateSitePayload>
+
+export interface ListSitePayload {
+  offset?: number,
+  limit?: number,
+  sort?: string,
+  direction?: 'asc' | 'desc'
+}
 
 export type GetSiteByNamePayload = {
   site_name: string,
