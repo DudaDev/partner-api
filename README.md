@@ -1165,6 +1165,18 @@ duda.ecomm.orders.list({ site_name: site_name });
 duda.ecomm.orders.get({ site_name: site_name, order_id: order_id });
 ```
 
+## Create Order
+
+[Create Order Reference](https://developer.duda.co/reference/create-external-order)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders`
+
+```typescript
+duda.ecomm.orders.post({ site_name: site_name });
+```
+
 ## Update Order
 
 [Update Order Reference](https://developer.duda.co/reference/update-order)

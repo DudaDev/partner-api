@@ -10,10 +10,21 @@ export type AddFieldResponse = void;
 export type UpdateFieldResponse = void;
 export type DeleteFieldResponse = void;
 
-export interface Field {
+interface FieldIsMultiSelect {
   name: string,
-  type: string,
+  type: 'multi_select', 
+  multi_select_options: Array<string>, // required when type === 'multi_select'
+  inner_collection_fields?: Array<string>
 }
+
+interface FieldIsNotMultiSelect {
+  name: string, 
+  type: Exclude<string, 'multi_select'>,  // not 'multi_select'
+  multi_select_options?: any,  // optional when type !== 'multi_select'
+  inner_collection_fields?: Array<string>
+}
+
+export type Field = FieldIsMultiSelect | FieldIsNotMultiSelect;
 
 export interface Collection {
   name?: string,
@@ -22,10 +33,7 @@ export interface Collection {
   values: Array<{
     id?: string,
     data?: {
-      date?: string,
-      'entry-price'?: string,
-      'event-image'?: string,
-      location?: string,
+      [key: string]: string | number; // additionalProp
     }
   }>
 }
