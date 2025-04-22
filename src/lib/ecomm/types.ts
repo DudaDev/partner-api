@@ -185,7 +185,7 @@ export interface Taxes {
   amount: number
 }
 
-export interface UnitDimenions {
+export interface UnitDimensions {
   height: number,
   width: number,
   length: number
@@ -227,7 +227,7 @@ export interface CartItem {
   },
   unit_price: number,
   unit_weight: number,
-  unit_dimensions: UnitDimenions,
+  unit_dimensions: UnitDimensions,
   discounts: Discount
   tax_code: string,
   taxes: Taxes
@@ -324,7 +324,7 @@ export interface OrderItem {
   shippable: boolean,
   unit_price: number,
   unit_weight: number,
-  unit_dimensions: UnitDimenions,
+  unit_dimensions: UnitDimensions,
   total: number,
   combined_weight: number,
   metadata: string
@@ -391,6 +391,21 @@ export interface Order {
   metadata: string
 }
 
+export interface CreateOrderItem {
+  product_id: string,
+  variation_id: string,
+  external_product_id?: string,
+  external_variation_id?: string,
+  name: string,
+  image?: string,
+  options?: Array<OrderOptions>,
+  quantity: number,
+  shippable?: boolean,
+  unit_price: number,
+  unit_weight?: number,
+  unit_dimensions: UnitDimensions,
+}
+
 export interface UpdateOrderItem {
   id: string,
   metadata: string
@@ -417,6 +432,29 @@ export interface GetOrderPayload {
 }
 
 export type GetOrderResponse = Order;
+
+export interface CreateOrderPayload {
+  site_name: string,
+  mode: 'LIVE' | 'TEST',
+  curreny: string,
+  external_id?: string,
+  status: 'IN_PROGRESS' | 'PROCESSED' | 'DISPUTED' | 'SHIPPED' | 'DELIVERED' | 'PENDING' | 'CANCELLED' | 'DISPATCHED',
+  invoice_number: string,
+  email: string,
+  items: Array<CreateOrderItem>,
+  billing_address: Address,
+  shipping_address?: Address,
+  shipping_instructions?: string,
+  inventory_sync_strategy?: string,
+  user_agent?: string,
+  ip_address?: string,
+  created?: string,
+  metadata?: {
+    [key: string]: string
+  }
+}
+
+export interface CreateOrderResponse extends Order {}
 
 export interface UpdateOrderPayload {
   site_name: string,
