@@ -40,6 +40,14 @@ class Orders extends Resource {
     },
   });
 
+  create = APIEndpoint<Types.CreateOrderPayload, Types.CreateOrderResponse>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/orders',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
   update = APIEndpoint<Types.UpdateOrderPayload, Types.UpdateOrderResponse>({
     method: 'patch',
     path: '/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}',

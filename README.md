@@ -310,6 +310,18 @@ This feature is currently in beta, if you experience any issues while implementi
 
 # Sites
 
+## List Sites
+
+[List Sites Reference](https://developer.duda.co/reference/sites-list-sites)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen`
+
+```typescript
+duda.sites.list();
+```
+
 ## Get Site
 
 [Get Site Reference](https://developer.duda.co/reference/sites-get-site)
@@ -879,6 +891,44 @@ duda.ecomm.get({ site_name: site_name });
 duda.ecomm.update({ site_name: site_name });
 ```
 
+# eComm Store
+
+## Get Store
+
+[Get Store Reference](https://developer.duda.co/reference/get-store)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/store`
+
+```typescript
+duda.ecomm.store.get({ site_name: site_name });
+```
+
+## Create Store
+
+[Create Store Reference](https://developer.duda.co/reference/create-store)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/store`
+
+```typescript
+duda.ecomm.store.create({ site_name: site_name });
+```
+
+## Delete Store
+
+[Delete Store Reference](https://developer.duda.co/reference/delete-store)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/store`
+
+```typescript
+duda.ecomm.store.delete({ site_name: site_name });
+```
+
 # eComm Carts
 
 ## List Carts
@@ -905,6 +955,190 @@ duda.ecomm.carts.list({ site_name: site_name });
 duda.ecomm.carts.get({ site_name: site_name, cart_id: cart_id });
 ```
 
+# eComm Tax Groups
+
+## List Tax Groups
+
+[List Tax Groups Reference](https://developer.duda.co/reference/ecomm-list-tax-groups)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-groups`
+
+```typescript
+duda.ecomm.groups.list({ site_name: site_name });
+```
+
+## Get Tax Group
+
+[Get Tax Group Reference](https://developer.duda.co/reference/ecomm-get-tax-group)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-groups/{group_id}`
+
+```typescript
+duda.ecomm.groups.get({ site_name: site_name, group_id: group_id });
+```
+
+## Create Tax Group
+
+[Create Tax Group Reference](https://developer.duda.co/reference/ecomm-create-tax-group)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-groups`
+
+```typescript
+duda.ecomm.groups.create({ site_name: site_name });
+```
+
+## Update Tax Group
+
+[Update Tax Group Reference](https://developer.duda.co/reference/ecomm-update-tax-group)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-groups/{group_id}`
+
+```typescript
+duda.ecomm.groups.update({ site_name: site_name, group_id: group_id });
+```
+
+## Delete Tax Group
+
+[Delete Tax Group Reference](https://developer.duda.co/reference/ecomm-delete-tax-group)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-groups/{group_id}`
+
+```typescript
+duda.ecomm.groups.delete({ site_name: site_name, group_id: group_id });
+```
+
+# eComm Tax Zones
+
+## List Tax Zones
+
+[List Tax Zones Reference](https://developer.duda.co/reference/list-tax-zones)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones`
+
+```typescript
+duda.ecomm.zones.list({ site_name: site_name });
+```
+
+## Get Tax Zone
+
+[Get Tax Zone Reference](https://developer.duda.co/reference/ecomm-get-tax-zone)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}`
+
+```typescript
+duda.ecomm.zones.get({ site_name: site_name, zone_id: zone_id });
+```
+
+## Create Tax Zone
+
+[Create Tax Zone Reference](https://developer.duda.co/reference/ecomm-create-tax-zone)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones`
+
+```typescript
+duda.ecomm.zones.create({ site_name: site_name });
+```
+
+## Update Tax Zone
+
+[Update Tax Zone Reference](https://developer.duda.co/reference/ecomm-update-tax-zone)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}`
+
+```typescript
+duda.ecomm.zones.update({ site_name: site_name, zone_id: zone_id });
+```
+
+## Delete Tax Zone
+
+[Delete Tax Zone Reference](https://developer.duda.co/reference/ecomm-delete-tax-zone)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}`
+
+```typescript
+duda.ecomm.zones.delete({ site_name: site_name, zone_id: zone_id });
+```
+
+## List Tax Zone Rates
+
+[List Tax Zone Rates  Reference](https://developer.duda.co/reference/ecomm-list-tax-zone-rates)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}/rates`
+
+```typescript
+duda.ecomm.zones.listRate({ site_name: site_name, zone_ide: zone_id });
+```
+
+## Get Tax Zone Rate
+
+[Get Tax Zone Rate Reference](https://developer.duda.co/reference/ecomm-get-tax-zone-rate)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}/rates/{rate_id}`
+
+```typescript
+duda.ecomm.zones.getRate({ site_name: site_name, zone_id: zone_id, rate_id: rate_id });
+```
+
+## Create Tax Zone Rate
+
+[Create Tax Zone Rate Reference](https://developer.duda.co/reference/ecomm-create-tax-zone-rate)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}/rates`
+
+```typescript
+duda.ecomm.zones.createRate({ site_name: site_name, zone_id: zone_id });
+```
+
+## Update Tax Zone Rate
+
+[Update Tax Zone Rate Reference](https://developer.duda.co/reference/ecomm-update-tax-zone-rate)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}/rates/{rate_id}`
+
+```typescript
+duda.ecomm.zones.updateRate({ site_name: site_name, zone_id: zone_id, rate_id: rate_id });
+```
+
+## Delete Tax Zone Rate
+
+[Delete Tax Zone Rate Reference](https://developer.duda.co/reference/delete-tax-zone-rate)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/tax-zones/{zone_id}/rates/{rate_id}`
+
+```typescript
+duda.ecomm.zones.deleteRate({ site_name: site_name, zone_id: zone_id, rate_id: rate_id });
+```
+
 # eComm Orders
 
 ## List Orders
@@ -929,6 +1163,18 @@ duda.ecomm.orders.list({ site_name: site_name });
 
 ```typescript
 duda.ecomm.orders.get({ site_name: site_name, order_id: order_id });
+```
+
+## Create Order
+
+[Create Order Reference](https://developer.duda.co/reference/create-external-order)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders`
+
+```typescript
+duda.ecomm.orders.post({ site_name: site_name });
 ```
 
 ## Update Order
@@ -2538,6 +2784,196 @@ duda.appstore.content.locations.delete({
 });
 ```
 
+# Appstore Collections
+
+## List Collections
+
+[List Collections Reference](https://developer.duda.co/reference/list-collections-app)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection`
+
+```typescript
+duda.appstore.collections.list({ site_name: site_name });
+```
+
+## Get Collection
+
+[Get Collection Reference](https://developer.duda.co/reference/get-collection-app)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection/{collection_name}`
+
+```typescript
+duda.appstore.collections.get({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
+
+## Create Collection
+
+[Create Collection Reference](https://developer.duda.co/reference/create-collection-app)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection`
+
+```typescript
+duda.appstore.collections.create({ site_name: site_name, name: name });
+```
+
+## Update Collection
+
+[Update Collection Reference](https://developer.duda.co/reference/update-collection-app)
+
+### Request
+
+`PUT https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection/{collection_name}`
+
+```typescript
+duda.appstore.collections.update({
+  site_name: site_name,
+  current_collection_name: current_collection_name,
+});
+```
+
+## Delete Collection
+
+[Delete Collection Reference](https://developer.duda.co/reference/delete-collection-app)
+
+### Request
+
+`DELETE https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection/{collection_name}`
+
+```typescript
+duda.appstore.collections.delete({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
+
+## Clear Cache
+
+[Clear Cache Reference](https://developer.duda.co/reference/clear-cache-app)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection/{collection_name}/revalidate`
+
+```typescript
+duda.appstore.collections.clearCache({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
+
+## Clear Cache by External ID
+
+[Clear Cache by External ID Reference](https://developer.duda.co/reference/clear-cache-by-external-id-app)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection/{collection_name}/revalidate/{external_id}`
+
+```typescript
+duda.appstore.collections.clearCacheByExtID({ external_id: external_id });
+```
+
+## Create Rows
+
+[Create Rows Reference](https://developer.duda.co/reference/create-rows-app)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection/{collection_name}/row`
+
+```typescript
+duda.appstore.collections.rows.create({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
+
+## Update Rows
+
+[Update Rows Reference](https://developer.duda.co/reference/update-rows-app)
+
+### Request
+
+`PUT https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection/{collection_name}/row`
+
+```typescript
+duda.appstore.collections.rows.update({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
+
+## Delete Rows
+
+[Delete Rows Reference](https://developer.duda.co/reference/collection-rows-delete-rows)
+
+### Request
+
+`DELETE https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection/{collection_name}/row`
+
+```typescript
+duda.appstore.collections.rows.delete({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
+
+## Create Fields
+
+[Create Fields Reference](https://developer.duda.co/reference/create-fields-app)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection/{collection_name}/field`
+
+```typescript
+duda.appstore.collections.fields.create({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
+
+## Update Field
+
+[Update Field Reference](https://developer.duda.co/reference/update-fields-app)
+
+### Request
+
+`PUT https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection/{collection_name}/field/{field_name}`
+
+```typescript
+duda.appstore.collections.fields.update({
+  site_name: site_name,
+  collection_name: collection_name,
+  field_name: field_name,
+});
+```
+
+## Delete Field
+
+[Delete Field Reference](https://developer.duda.co/reference/delete-fields)
+
+### Request
+
+`DELETE https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection/{collection_name}/row`
+
+```typescript
+duda.appstore.collections.fields.delete({
+  site_name: site_name,
+  collection_name: collection_name,
+  field_name: field_name,
+});
+```
+
 # Appstore Pages
 
 ## Get Pages
@@ -3056,6 +3492,20 @@ duda.appstore.ecomm.shipping.update({ site_name: site_name, id: id });
 
 ```typescript
 duda.appstore.ecomm.shipping.delete({ site_name: site_name, id: id });
+```
+
+# Appstore eComm Store
+
+## Get Store
+
+[Get Store Reference](https://developer.duda.co/reference/app-get-store)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/multiscreen/{site_name}/ecommerce/store`
+
+```typescript
+duda.appstore.ecomm.store.get({ site_name: site_name });
 ```
 
 # Appstore eComm Carts

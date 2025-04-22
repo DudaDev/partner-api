@@ -49,7 +49,13 @@ describe('Blog tests', () => {
     publish_date: "string",
     status: "string",
     tags: ["string"],
-    title: "string"
+    title: "string",
+    main_image: {
+      url: "string"
+    },
+    thumbnail: {
+      url: "string"
+    }
   }
 
   const list_blog_posts = {

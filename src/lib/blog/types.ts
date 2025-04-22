@@ -67,9 +67,27 @@ export interface BlogPost {
     title?: string
 }
 
+export interface MainImage {
+    url: string
+}
+
+export interface Thumbnail {
+    url: string
+}
+
 export interface UpdateBlogPostResponse extends BlogPost {}
 
 export type UnpublishBlogPostResponse = null;
+
+export interface GetBlogPostPayload {
+    site_name: string,
+    post_id: string
+}
+
+export interface GetBlogPostResponse extends BlogPost {
+    main_image: MainImage,
+    thumbnail: Thumbnail
+}
 
 export interface ListBlogPostsPayload {
     site_name: string,
@@ -80,16 +98,9 @@ export interface ListBlogPostsPayload {
 export interface ListBlogPostsResponse {
     limit: number,
     offset: number,
-    results: Array<BlogPost>,
+    results: Array<GetBlogPostPayload>,
     total_responses: number
 }
-
-export interface GetBlogPostPayload {
-    site_name: string,
-    post_id: string
-}
-
-export interface GetBlogPostResponse extends BlogPost {}
 
 export interface DeleteBlogPostPayload {
     site_name: string,

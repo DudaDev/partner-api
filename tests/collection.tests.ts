@@ -34,6 +34,10 @@ describe('Collection tests', () => {
         }
       ]
     }
+    const custom_headers = {
+      name: 'name',
+      values: ['value']
+    }
     const external_details = {
       enabled: true,
       external_id: '1',
@@ -41,6 +45,7 @@ describe('Collection tests', () => {
       page_item_url_field: '3',
       collection_data_json_path: '4',
       authorization_header_value: '5',
+      custom_headers: [custom_headers]
     }
     const collection_name = 'new_collection_name'
     const update_collection_payload = {
