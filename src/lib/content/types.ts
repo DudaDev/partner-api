@@ -179,6 +179,32 @@ export interface UpdateContentPayload {
     logo_url?: string,
     business_hours?: BusinessHours[]
   },
+  additional_locations?: Array<{
+    phones?: Array<{
+      phoneNumber?: string,
+      label?: string,
+    }>,
+    emails?: Array<{
+      emailAddress?: string,
+      label?: string,
+    }>,
+    schema?: {
+      type?: string,
+      custom_fields?: Array<{
+        name: string,
+        value?: string,
+      }>
+    },
+    label?: string,
+    social_accounts?: SocialAccounts,
+    address?: Address,
+    geo?: {
+      latitude?: string,
+      longitude?: string
+    },
+    logo_url?: string,
+    business_hours?: BusinessHours[]
+  }>,
   site_texts?: {
     overview?: string,
     about_us?: string,
