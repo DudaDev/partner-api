@@ -6,7 +6,7 @@ import { APIEndpoint } from "../../APIEndpoint";
 class AppsStore extends SubResource {
   get = APIEndpoint<TokenRequest<Types.GetStorePayload>, Types.GetStoreResponse>({
     method: "get",
-    path: "/site/multiscreen/{site_name}/ecommerce/store",
+    path: "/site/{site_name}/ecommerce/store",
     defaults: {
       host: "api.duda.co",
     },
