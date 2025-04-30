@@ -1066,7 +1066,7 @@ describe('App store ecomm tests', () => {
   })
 
   it('can get a store', async () => {
-    scope.get(`${base_path}/site/multiscreen/${site_name}/ecommerce/store`).reply(200, storeReturn)
+    scope.get(`${base_path}/site/${site_name}/ecommerce/store`).reply(200, storeReturn)
 
     return await duda.appstore.ecomm.store.get({ site_name, token })
       .then(res => expect(res).to.eql(storeReturn))
