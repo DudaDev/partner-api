@@ -106,6 +106,10 @@ export interface ContentLibraryResponse {
   business_data: {
     name: string | null,
     logo_url: string | null,
+    description: string | null,
+    category: string | null,
+    tone_of_voice: string | null,
+    service_area: string | null,
     data_controller: string | null,
   },
   site_images: Array<
@@ -217,6 +221,11 @@ export interface UpdateContentPayload {
   business_data?: {
     name?: string,
     logo_url?: string,
+    description?: string,
+    category?: string,
+    tone_of_voice?: string,
+    service_area?: string,
+    data_controller?: string,
   },
   site_images?: Array<{
     label: string,
