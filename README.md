@@ -1165,16 +1165,16 @@ duda.ecomm.orders.list({ site_name: site_name });
 duda.ecomm.orders.get({ site_name: site_name, order_id: order_id });
 ```
 
-## Create Order
+## Create External Order
 
-[Create Order Reference](https://developer.duda.co/reference/create-external-order)
+[Create External Order Reference](https://developer.duda.co/reference/create-external-order)
 
 ### Request
 
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders`
 
 ```typescript
-duda.ecomm.orders.post({ site_name: site_name });
+duda.ecomm.orders.create({ site_name: site_name });
 ```
 
 ## Update Order
@@ -3277,6 +3277,18 @@ duda.appstore.ecomm.orders.list({ site_name: site_name });
 
 ```typescript
 duda.appstore.ecomm.orders.get({ site_name: site_name, order_id: order_id });
+```
+
+## Create External Order
+
+[Create External Order Reference](https://developer.duda.co/reference/app-create-external-order)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders`
+
+```typescript
+duda.appstore.ecomm.orders.create({ site_name: site_name });
 ```
 
 ## Update Order
