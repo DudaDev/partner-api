@@ -1199,7 +1199,7 @@ describe('Ecomm tests', () => {
       .then(res => expect(res).to.eql({ ...order }))
   })
 
-  it('can create an order', async () => {
+  it('can create an external order', async () => {
     scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/orders`, (body) => {
       expect(body).to.eql({ mode: 'LIVE', status: 'IN_PROGRESS', ...create_order_payload })
       return body

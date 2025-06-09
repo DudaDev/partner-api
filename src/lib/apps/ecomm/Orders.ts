@@ -51,6 +51,19 @@ class AppsOrders extends SubResource {
     },
   });
 
+  create = APIEndpoint<TokenRequest<Types.CreateOrderPayload>, Types.CreateOrderResponse>({
+    method: 'post',
+    path: '/site/{site_name}/ecommerce/orders',
+    defaults: {
+      host: 'api.duda.co',
+    },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
+    },
+  });
+
   update = APIEndpoint<TokenRequest<Types.UpdateOrderPayload>, Types.UpdateOrderResponse>({
     method: 'patch',
     path: '/site/{site_name}/ecommerce/orders/{order_id}',

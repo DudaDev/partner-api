@@ -378,6 +378,38 @@ describe('App store ecomm tests', () => {
     results: [order]
   }
 
+  const create_order_options = {
+    name: "string",
+    value: "string"
+  }
+
+  const create_order_item = {
+    product_id: "string",
+    variation_id: "string",
+    external_product_id: "string",
+    external_variation_id: "string",
+    name: "string",
+    image: "string",
+    options: [create_order_options],
+    quantity: 1,
+    unit_price: 1,
+    unit_dimensions: {
+      height: 0,
+      width: 0,
+      length: 0
+    },
+  }
+
+  const create_order_payload = {
+    curreny: "string",
+    invoice_number: "string",
+    email: "string",
+    items: [create_order_item],
+    billing_address: address,
+    shipping_address: address,
+    shipping_instructions: "string",
+  }
+
   const update_order_item = {
     id: "string",
     metadata: "string"
@@ -870,6 +902,15 @@ describe('App store ecomm tests', () => {
 
     return await duda.appstore.ecomm.orders.get({ site_name, order_id, token })
       .then(res => expect(res).to.eql({ ...order }))
+  })
+
+  it('can create an external order', async () => {
+    scope.post(`${base_path}/site/${site_name}/ecommerce/orders`, (body) => {
+      expect(body).to.eql({ mode: 'LIVE', status: 'IN_PROGRESS', ...create_order_payload })
+      return body
+    }).reply(200, order)
+
+    return await duda.appstore.ecomm.orders.create({ site_name, mode: 'LIVE', status: 'IN_PROGRESS', token, ...create_order_payload })
   })
 
   it('can update an order', async () => {
