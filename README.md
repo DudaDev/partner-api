@@ -3596,6 +3596,18 @@ duda.appstore.sitewidehtml.create({ site_name: site_name });
 duda.appstore.sitewidehtml.update({ site_name: site_name, uuid: uuid });
 ```
 
+## Publish Site Wide HTML
+
+[Publish Site Wide HTML Reference](https://developer.duda.co/reference/app-publish-swh)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/sitewidehtml/{uuid}/publish`
+
+```typescript
+duda.appstore.sitewidehtml.publish({ site_name: site_name, uuid: uuid });
+```
+
 ## Delete Site Wide HTML
 
 [Delete Site Wide HTML Reference](https://developer.duda.co/reference/app-delete-swh)
