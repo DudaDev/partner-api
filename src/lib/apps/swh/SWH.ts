@@ -56,6 +56,19 @@ class AppsSWH extends SubResource {
     },
   });
 
+  publish = APIEndpoint<TokenRequest<Types.PublishSWHPayload>, Types.PublishSWHResponse>({
+    method: 'post',
+    path: '/site/{site_name}/sitewidehtml/{uuid}/publish',
+    defaults: {
+      host: 'api.duda.co',
+    },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
+    },
+  });
+
   delete = APIEndpoint<TokenRequest<Types.DeleteSWHPayload>, Types.DeleteSWHResponse>({
     method: 'delete',
     path: '/site/{site_name}/sitewidehtml/{uuid}',

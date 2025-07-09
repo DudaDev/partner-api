@@ -39,6 +39,14 @@ export interface UpdateSWHPayload {
 export interface UpdateSWHResponse extends SWH {
 }
 
+export interface PublishSWHPayload {
+  site_name: string;
+  uuid: string;
+}
+
+export interface PublishSWHResponse extends SWH {
+}
+
 export interface DeleteSWHPayload {
   site_name: string;
   uuid: string;
