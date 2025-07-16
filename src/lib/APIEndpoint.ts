@@ -58,7 +58,7 @@ function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
   ): void;
 
   async function call<
-    RequestOverrides extends https.RequestOptions & { body?: any }
+    RequestOverrides extends https.RequestOptions & { body?: any, skipPreRequest?: boolean } = https.RequestOptions
   >(
     this: SubResource,
     opts: Opts | { (err: any, res: Return): any } = {} as any,
@@ -85,6 +85,16 @@ function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
         ? { ...overrides, host: overrides.host.replace(/^https?:\/\//, "") }
         : overrides;
 
+    const skipPre = !!(
+      overrides &&
+      typeof overrides !== "function" &&
+      (overrides as any).skipPreRequest
+    );
+
+    if (override && typeof override !== "function" && override.skipPreRequest) {
+      delete override.skipPreRequest;
+    }
+
     const request = {
       headers: {},
       method: def.method,
@@ -104,7 +114,10 @@ function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
       ...(typeof override !== "function" && override),
     };
 
-    await this.preRequest?.();
+    if (!skipPre) {
+      await this.preRequest?.();
+    }
+    
     const builtRequest = this.buildRequest?.(request, def, opts);
 
     validateHeaders(
