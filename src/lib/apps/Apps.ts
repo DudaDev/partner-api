@@ -16,7 +16,6 @@ import AppsCollections from './collections/Collections';
 import { RequestOptions } from '../http';
 
 const DEFAULT_EXPIRY_TOLERANCE = 10000;
-let preRequests = false;
 
 export type DudaAuth = {
   type: 'bearer';
@@ -68,6 +67,8 @@ class Apps extends Resource {
 
   private _appConfig?: DudaAppConfig
 
+  private _refreshing = false;
+
   get auth() {
     return this._appConfig?.auth;
   }
@@ -102,19 +103,32 @@ class Apps extends Resource {
   async preRequest() {
     const self: Apps = this.base;
 
-    if (!self.auth || !self.uuid || preRequests) return;
+    if (!self.auth || !self.uuid || this._refreshing) return;
 
-    preRequests = true;
-    const { expiration_date: expirationDate, refresh_token: refreshToken } = self.auth;
+    this._refreshing = true;
+    try {
+      const { expiration_date: expirationDate, refresh_token: refreshToken } =
+        self.auth;
 
-    if (Date.now() + (self._appConfig?.expirationTolerance ?? DEFAULT_EXPIRY_TOLERANCE) > expirationDate) {
-      const newAuth = await this.base.tokens.refresh({ app_uuid: self.uuid, refresh_token: refreshToken })
-      self._appConfig = { ...self._appConfig!, auth: newAuth }
+      const tolerance =
+        self._appConfig?.expirationTolerance ?? DEFAULT_EXPIRY_TOLERANCE;
 
-      if (this.base.events) {
-        this.base.events.emit('refresh', newAuth)
+      if (Date.now() + tolerance > expirationDate) {
+        const newAuth = await this.base.tokens.refresh(
+          {
+            app_uuid: self.uuid,
+            refresh_token: refreshToken,
+          },
+          { skipPreRequest: true },
+        );
+        self._appConfig = { ...self._appConfig!, auth: newAuth };
+
+        if (this.base.events) {
+          this.base.events.emit("refresh", newAuth);
+        }
       }
-      preRequests = false;
+    } finally {
+      this._refreshing = false;
     }
   }
 }

@@ -86,5 +86,5 @@ const branding_details = {
   it('can republish a site', async () => {
     scope.post(`${base_path}/site/${site_name}/republish`).reply(204)
     return await duda.appstore.sites.republish({ site_name, token })
-})
+  })
 })

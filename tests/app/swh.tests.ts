@@ -71,6 +71,11 @@ describe('App store site wide html tests', () => {
     return await duda.appstore.sitewidehtml.update({ site_name, uuid, token, location, markup})
   })
 
+  it('can publish the site wide html', async () => {
+    scope.post(`${base_path}/site/${site_name}/sitewidehtml/${uuid}/publish`).reply(200, swh)
+    return await duda.appstore.sitewidehtml.publish({ site_name, uuid, token })
+  })
+
   it('can delete a specific site wide html', async () => {
     scope.delete(`${base_path}/site/${site_name}/sitewidehtml/${uuid}`).reply(204)
     return await duda.appstore.sitewidehtml.delete({ site_name, uuid, token })
