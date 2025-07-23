@@ -50,6 +50,14 @@ class Collections extends Resource {
     },
   });
 
+  publish = APIEndpoint<Types.PublishCollectionPayload, Types.PublishCollecitonResponse>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}/collection/{collection_name}/publish',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
   clearCache = APIEndpoint<Types.ClearCachePayload, Types.ClearCacheResponse>({
     method: 'post',
     path: '/api/sites/multiscreen/{site_name}/collection/{collection_name}/revalidate',

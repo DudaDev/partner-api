@@ -125,11 +125,14 @@ describe('Ecomm tests', () => {
       country: 'US',
       postal_code: '80027'
     },
-    time_zone: 'Mountain',
     enabled_countries: ['US'],
     send_email_notifications: true,
     cart_settings: cart_settings,
-    tax_settings: tax_settings
+    tax_settings: tax_settings,
+    contact_email: 'string',
+    contact_name: 'string',
+    show_lowest_price: true,
+    measurement_system: 'IMPERIAL'
   };
 
   const product = {
@@ -714,7 +717,8 @@ describe('Ecomm tests', () => {
 
   const gateway = {
     live_payment_methods_url: 'https://example.org/path/to/gateway',
-    test_payment_methods_url: 'https://test.example.org/path/to/gateway'
+    test_payment_methods_url: 'https://test.example.org/path/to/gateway',
+    management_url: 'https://management.example.org/path/to/gateway'
   }
 
   const payment_session = {
