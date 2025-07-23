@@ -2,6 +2,7 @@ export type CreateCollectionResponse = void;
 export type UpdateCollectionResponse = void;
 export type ClearCacheResponse = void;
 export type ClearCacheByExtIdResponse = void;
+export type PublishCollecitonResponse = void;
 export type DeleteCollectionResponse = void;
 export type UpdateRowResponse = void;
 export type DeleteSingleRowResponse = void;
@@ -93,6 +94,11 @@ export interface ClearCacheByExtIdPayload {
 }
 
 export interface DeleteCollectionPayload {
+  site_name: string,
+  collection_name: string
+}
+
+export interface PublishCollectionPayload {
   site_name: string,
   collection_name: string
 }

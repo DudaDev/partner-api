@@ -125,7 +125,8 @@ export type DeleteProductResponse = void;
 
 export interface Gateway {
   live_payment_methods_url: string,
-  test_payment_methods_url?: string
+  test_payment_methods_url?: string,
+  management_url?: string
 }
 
 export interface CreateGatewayPayload extends Gateway {
@@ -528,11 +529,14 @@ interface Ecomm {
   default_currency?: string,
   business_name?: string,
   business_address?: BusinessAddress,
-  time_zone?: string,
   enabled_countries?: Array<string>,
   send_email_notifications?: boolean
   cart_settings?: CartSettings
-  tax_settings?: TaxSettings
+  tax_settings?: TaxSettings,
+  contact_email?: string,
+  contact_name?: string,
+  show_lowest_price?: boolean,
+  measurement_system?: 'IMPERIAL' | 'METRIC' | string
 }
 
 export interface GetEcommPayload {

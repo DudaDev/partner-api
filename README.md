@@ -2240,6 +2240,21 @@ duda.collections.update({
 });
 ```
 
+## Publish Collection
+
+[Publish Collection Reference](https://developer.duda.co/reference/publish-collection#/)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/publish`
+
+```typescript
+duda.collections.publish({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
+
 ## Delete Collection
 
 [Delete Collection Reference](https://developer.duda.co/reference/collections-delete-collection)
@@ -2837,6 +2852,21 @@ duda.appstore.collections.create({ site_name: site_name, name: name });
 duda.appstore.collections.update({
   site_name: site_name,
   current_collection_name: current_collection_name,
+});
+```
+
+## Publish Collection
+
+[Publish Collection Reference](https://developer.duda.co/reference/app-publish-collection#/)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection/{collection_name}/publish`
+
+```typescript
+duda.appstore.collections.publish({
+  site_name: site_name,
+  collection_name: collection_name,
 });
 ```
 

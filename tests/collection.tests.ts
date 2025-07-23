@@ -147,6 +147,14 @@ describe('Collection tests', () => {
       return await duda.collections.clearCacheByExtID({ external_id:'test_id' })
     })
 
+    it('can publish a collection', async () => {
+      scope.post('/api/sites/multiscreen/test_site/collection/test_collection/publish').reply(204)
+      return await duda.collections.publish({
+        site_name: 'test_site',
+        collection_name: 'test_collection'
+      })
+    })
+
     it('can delete a collection', async () => {
       scope.delete('/api/sites/multiscreen/test_site/collection/test_collection').reply(204)
       return await duda.collections.delete({
