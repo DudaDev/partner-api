@@ -63,7 +63,7 @@ class AppCollections extends SubResource {
     },
   });
 
-  publish = APIEndpoint<TokenRequest<Types.PublishCollectionPayload>, Types.PublishCollecitonResponse>({
+  publish = APIEndpoint<TokenRequest<Types.PublishCollectionPayload>, Types.PublishCollectionResponse>({
     method: 'post',
     path: '/site/{site_name}/collection/{collection_name}/publish',
     defaults: {

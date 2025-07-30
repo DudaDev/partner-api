@@ -50,7 +50,7 @@ class Collections extends Resource {
     },
   });
 
-  publish = APIEndpoint<Types.PublishCollectionPayload, Types.PublishCollecitonResponse>({
+  publish = APIEndpoint<Types.PublishCollectionPayload, Types.PublishCollectionResponse>({
     method: 'post',
     path: '/api/sites/multiscreen/{site_name}/collection/{collection_name}/publish',
     defaults: {
