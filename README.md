@@ -1,7 +1,6 @@
 # @dudadev/partner-api
 
-The `@dudadev/partner-api` library provides convenient access to Duda's public APIs from applications written in
-server-side Javascript.
+The `@dudadev/partner-api` library provides convenient access to Duda's public APIs from applications written in server-side Javascript.
 
 1. [Requirements](#requirements)
 2. [Installation](#installation)

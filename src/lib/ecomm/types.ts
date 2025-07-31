@@ -507,10 +507,10 @@ export interface FulfillmentTracking {
 }
 
 export interface Fulfillment {
-  status: 'IN_PROGRESS' | 'FULFILLED' | string,
-  method: 'EMAIL_MESSAGE' | 'SHIPMENT' | 'PICKUP' | string,
-  items: Array<FulfillmentItems>,
-  tracking: FulfillmentTracking
+  status?: 'IN_PROGRESS' | 'FULFILLED' | string,
+  method?: 'EMAIL_MESSAGE' | 'SHIPMENT' | 'PICKUP' | string,
+  items?: Array<FulfillmentItems>,
+  tracking?: FulfillmentTracking
 }
 
 export interface FulfillmentResponse extends Fulfillment {
@@ -552,8 +552,8 @@ export interface UpdateOrderFulfillmentPayload {
   site_name: string,
   order_id: string,
   fulfillment_id: string,
-  status: 'IN_PROGRESS' | 'FULFILLED' | string,
-  tracking: FulfillmentTracking
+  status?: 'IN_PROGRESS' | 'FULFILLED' | string,
+  tracking?: FulfillmentTracking
 }
 
 export interface UpdateOrderFulfillmentResponse extends FulfillmentResponse {}
