@@ -120,6 +120,76 @@ class AppsOrders extends SubResource {
       },
     },
   });
+
+  listFulfillments = APIEndpoint<TokenRequest<Types.ListOrderFulfillmentsPayload>, Types.ListOrderFulfillmentsResponse>({
+    method: 'get',
+    path: '/site/{site_name}/ecommerce/orders/{order_id}/fulfillments',
+    defaults: {
+      host: 'api.duda.co',
+    },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
+    },
+    queryParams: {
+      offset: {
+        type: 'number',
+        required: false,
+      },
+      limit: {
+        type: 'number',
+        required: false,
+      },
+      sort: {
+        type: 'string',
+        required: false,
+      },
+      direction: {
+        type: 'string',
+        required: false,
+      },
+    },
+  });
+
+  getFulfillment = APIEndpoint<TokenRequest<Types.GetOrderFulfillmentPayload>, Types.GetOrderFulfillmentResponse>({
+    method: 'get',
+    path: '/site/{site_name}/ecommerce/orders/{order_id}/fulfillments/{fulfillment_id}',
+    defaults: {
+      host: 'api.duda.co',
+    },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
+    }
+  });
+
+  createFulfillment = APIEndpoint<TokenRequest<Types.CreateOrderFulfillmentPayload>, Types.CreateOrderFulfillmentResponse>({
+    method: 'post',
+    path: '/site/{site_name}/ecommerce/orders/{order_id}/fulfillments',
+    defaults: {
+      host: 'api.duda.co',
+    },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
+    }
+  });
+
+  updateFulfillment = APIEndpoint<TokenRequest<Types.UpdateOrderFulfillmentPayload>, Types.UpdateOrderFulfillmentResponse>({
+    method: 'patch',
+    path: '/site/{site_name}/ecommerce/orders/{order_id}/fulfillments/{fulfillment_id}',
+    defaults: {
+      host: 'api.duda.co',
+    },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
+    }
+  });
 }
 
 export default AppsOrders;

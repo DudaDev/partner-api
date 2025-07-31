@@ -15,12 +15,18 @@ describe('Ecomm tests', () => {
   const rate_id = 'test_rate';
   const order_id = 'test_order';
   const refund_id = 'test_refund';
+  const fulfillment_id = 'fulfil_test';
   const session_id = 'test_session';
   const category_id = 'test_category';
   const shipping_id = 'test_shipping';
   const option_id = 'test_option';
   const choice_id = 'test_choice';
   const variation_id = 'test_variation';
+
+  const offset = 0;
+  const limit = 1;
+  const sort = 'sort';
+  const direction = 'asc';
 
   const store = {
     max_choice_per_option: 0,
@@ -351,7 +357,6 @@ describe('Ecomm tests', () => {
   const status = 'IN_PROGRESS';
   const mode = 'LIVE';
   const cursor = 'string';
-  const limit = 1;
 
   const cart = {
     id: "string",
@@ -485,10 +490,6 @@ describe('Ecomm tests', () => {
     has_more_results: true,
     results: [cart]
   }
-
-  const offset = 0;
-  const sort = 'sort';
-  const direction = 'asc';
 
   const address = {
     first_name: "string",
@@ -713,6 +714,55 @@ describe('Ecomm tests', () => {
     limit,
     total_response: 0,
     results: [refund]
+  }
+
+  const fulfillment = {
+    id: "fulfil_test",
+    status: "FULFILLED",
+    method: "SHIPMENT",
+    items: [
+      {
+        id: "item_123",
+        quantity: 2
+      }
+    ],
+    tracking: {
+      carrier: "Canada Post",
+      number: "12345",
+      url: "https://example.com/12345"
+    }
+  }
+
+  const list_fulfillments = {
+    offset,
+    limit,
+    total_response: 1,
+    results: [fulfillment]
+  }
+
+  const create_order_fulfillment_payload = {
+    status: "FULFILLED",
+    method: "SHIPMENT",
+    items: [
+      {
+        id: "item_123",
+        quantity: 2
+      }
+    ],
+    tracking: {
+      carrier: "Canada Post",
+      number: "12345",
+      url: "https://example.com/12345"
+    }
+  }
+
+  const update_order_fulfillment_payload = {
+    status: "FULFILLED",
+    tracking: {
+      carrier: "Canada Post",
+      number: "12345",
+      url: "https://example.com/12345"
+    }
   }
 
   const gateway = {
@@ -1257,6 +1307,42 @@ describe('Ecomm tests', () => {
 
     return await duda.ecomm.orders.refunds.get({ site_name, order_id, refund_id })
       .then(res => expect(res).to.eql({ ...refund }))
+  })
+
+  it('can list all order fulfillments', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/fulfillments?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_fulfillments)
+    return await duda.ecomm.orders.listFulfillments({
+      site_name,
+      order_id,
+      offset,
+      limit,
+      sort,
+      direction
+    }).then(res => expect(res).to.eql(list_fulfillments))
+  })
+
+  it('can get a specific order fulfillment', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/fulfillments/${fulfillment_id}`).reply(200, fulfillment)
+    return await duda.ecomm.orders.getFulfillment({ site_name, order_id, fulfillment_id })
+      .then(res => expect(res).to.eql({ ...fulfillment }))
+  })
+
+  it('can create an order fulfillment', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/fulfillments`, (body) => {
+      expect(body).to.eql({ ...create_order_fulfillment_payload })
+      return body
+    }).reply(201, fulfillment)
+
+    return await duda.ecomm.orders.createFulfillment({ site_name, order_id, ...create_order_fulfillment_payload })
+  })
+
+  it('can update an order fulfillment', async () => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/fulfillments/${fulfillment_id}`, (body) => {
+      expect(body).to.eql({ ...update_order_fulfillment_payload })
+      return body
+    }).reply(200, fulfillment)
+
+    return await duda.ecomm.orders.updateFulfillment({ site_name, order_id, fulfillment_id, ...update_order_fulfillment_payload })
   })
 
   it('can get a payment session', async () => {
