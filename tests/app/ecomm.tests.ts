@@ -10,6 +10,7 @@ describe('App store ecomm tests', () => {
   const choice_id = 'string';
   const order_id = 'test_order';
   const refund_id = 'test_refund';
+  const fulfillment_id = 'fulfil_test';
   const session_id = 'test_session';
   const gateway_id = "test_gateway";
   const cart_id = 'test_cart';
@@ -541,6 +542,55 @@ describe('App store ecomm tests', () => {
     results: [refund]
   }
 
+  const fulfillment = {
+    id: "fulfil_test",
+    status: "FULFILLED",
+    method: "SHIPMENT",
+    items: [
+      {
+        id: "item_123",
+        quantity: 2
+      }
+    ],
+    tracking: {
+      carrier: "Canada Post",
+      number: "12345",
+      url: "https://example.com/12345"
+    }
+  }
+
+  const list_fulfillments = {
+    offset,
+    limit,
+    total_response: 1,
+    results: [fulfillment]
+  }
+
+  const create_order_fulfillment_payload = {
+    status: "FULFILLED",
+    method: "SHIPMENT",
+    items: [
+      {
+        id: "item_123",
+        quantity: 2
+      }
+    ],
+    tracking: {
+      carrier: "Canada Post",
+      number: "12345",
+      url: "https://example.com/12345"
+    }
+  }
+
+  const update_order_fulfillment_payload = {
+    status: "FULFILLED",
+    tracking: {
+      carrier: "Canada Post",
+      number: "12345",
+      url: "https://example.com/12345"
+    }
+  }
+
   const gateway = {
     live_payment_methods_url: 'https://example.org/path/to/gateway',
     test_payment_methods_url: 'https://test.example.org/path/to/gateway',
@@ -970,6 +1020,44 @@ describe('App store ecomm tests', () => {
 
     return await duda.appstore.ecomm.orders.refunds.get({ site_name, order_id, refund_id, token })
       .then(res => expect(res).to.eql({ ...refund }))
+  })
+
+  it('can list all order fulfillments', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/orders/${order_id}/fulfillments?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_fulfillments)
+    return await duda.appstore.ecomm.orders.fulfillments.list({
+      site_name,
+      order_id,
+      offset,
+      limit,
+      sort,
+      direction,
+      token
+    }).then(res => expect(res).to.eql(list_fulfillments))
+  })
+
+  it('can get a specific order fulfillment', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/orders/${order_id}/fulfillments/${fulfillment_id}`).reply(200, fulfillment)
+
+    return await duda.appstore.ecomm.orders.fulfillments.get({ site_name, order_id, fulfillment_id, token })
+      .then(res => expect(res).to.eql({ ...fulfillment }))
+  })
+
+  it('can create an order fulfillment', async () => {
+    scope.post(`${base_path}/site/${site_name}/ecommerce/orders/${order_id}/fulfillments`, (body) => {
+      expect(body).to.eql({ ...create_order_fulfillment_payload })
+      return body
+    }).reply(201, fulfillment)
+
+    return await duda.appstore.ecomm.orders.fulfillments.create({ site_name, order_id, token, ...create_order_fulfillment_payload })
+  })
+
+  it('can update an order fulfillment', async () => {
+    scope.patch(`${base_path}/site/${site_name}/ecommerce/orders/${order_id}/fulfillments/${fulfillment_id}`, (body) => {
+      expect(body).to.eql({ ...update_order_fulfillment_payload })
+      return body
+    }).reply(200, fulfillment)
+
+    return await duda.appstore.ecomm.orders.fulfillments.update({ site_name, order_id, fulfillment_id, token, ...update_order_fulfillment_payload })
   })
 
   it('can get a payment session', async () => {

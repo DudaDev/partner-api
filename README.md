@@ -1,7 +1,6 @@
 # @dudadev/partner-api
 
-The `@dudadev/partner-api` library provides convenient access to Duda's public APIs from applications written in
-server-side Javascript.
+The `@dudadev/partner-api` library provides convenient access to Duda's public APIs from applications written in server-side Javascript.
 
 1. [Requirements](#requirements)
 2. [Installation](#installation)
@@ -1214,6 +1213,62 @@ duda.ecomm.orders.getRefund({
   site_name: site_name,
   order_id: order_id,
   refund_id: refund_id,
+});
+```
+
+## List Order Fulfillments
+
+[List Order Fulfillments Reference](https://developer.duda.co/reference/ecommerce-list-order-fulfillments#/)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments`
+
+```typescript
+duda.ecomm.orders.fulfillments.list({ site_name: site_name, order_id: order_id });
+```
+
+## Get Order Fulfillment
+
+[Get Order Fulfillment Reference](https://developer.duda.co/reference/ecommerce-get-order-fulfillment#/)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments/{fulfillment_id}`
+
+```typescript
+duda.ecomm.orders.fulfillments.get({
+  site_name: site_name,
+  order_id: order_id,
+  fulfillment_id: fulfillment_id
+});
+```
+
+## Create Order Fulfillment
+
+[Create Order Fulfillment Reference](https://developer.duda.co/reference/ecommerce-create-order-fulfillment#/)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments`
+
+```typescript
+duda.ecomm.orders.fulfillments.create({ site_name: site_name, order_id: order_id });
+```
+
+## Update Order Fulfillment
+
+[Update Order Fulfillment Reference](https://developer.duda.co/reference/ecommerce-update-order-fulfillment#/)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments/{fulfillment_id}`
+
+```typescript
+duda.ecomm.orders.fulfillments.update({
+  site_name: site_name,
+  order_id: order_id,
+  fulfillment_id: fulfillment_id
 });
 ```
 
@@ -3361,6 +3416,62 @@ duda.appstore.ecomm.orders.getRefund({
   site_name: site_name,
   order_id: order_id,
   refund_id: refund_id,
+});
+```
+
+## List Order Fulfillments
+
+[List Order Fulfillments Reference](https://developer.duda.co/reference/app-ecommerce-list-order-fulfillments#/)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/${order_id}/fulfillments`
+
+```typescript
+duda.appstore.ecomm.orders.fulfillments.list({ site_name: site_name, order_id: order_id });
+```
+
+## Get Order Fulfillment
+
+[Get Order Fulfillment Reference](https://developer.duda.co/reference/app-ecommerce-get-order-fulfillment#/)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/${order_id}/fulfillments/{fulfillment_id}`
+
+```typescript
+duda.appstore.ecomm.orders.fulfillments.get({
+  site_name: site_name,
+  order_id: order_id,
+  fulfillment_id: fulfillment_id
+});
+```
+
+## Create Order Fulfillment
+
+[Create Order Fulfillment Reference](https://developer.duda.co/reference/app-ecommerce-create-order-fulfillment#/)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/${order_id}/fulfillments`
+
+```typescript
+duda.appstore.ecomm.orders.fulfillments.create({ site_name: site_name, order_id: order_id });
+```
+
+## Update Order Fulfillment
+
+[Update Order Fulfillment Reference](https://developer.duda.co/reference/app-ecommerce-update-order-fulfillment#/)
+
+### Request
+
+`PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/${order_id}/fulfillments/{fulfillment_id}`
+
+```typescript
+duda.appstore.ecomm.orders.fulfillments.update({
+  site_name: site_name,
+  order_id: order_id,
+  fulfillment_id: fulfillment_id
 });
 ```
 

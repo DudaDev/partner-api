@@ -495,6 +495,69 @@ export interface GetRefundPayload {
 
 export type GetRefundResponse = Refund;
 
+export interface FulfillmentItems {
+  id: string,
+  quantity: number
+}
+
+export interface FulfillmentTracking {
+  carrier: string,
+  number: string,
+  url: string
+}
+
+export interface Fulfillment {
+  status?: 'IN_PROGRESS' | 'FULFILLED' | string,
+  method?: 'EMAIL_MESSAGE' | 'SHIPMENT' | 'PICKUP' | string,
+  items?: Array<FulfillmentItems>,
+  tracking?: FulfillmentTracking
+}
+
+export interface FulfillmentResponse extends Fulfillment {
+  id: string
+}
+
+export interface ListOrderFulfillmentsPayload {
+  site_name: string,
+  order_id: string,
+  limit?: number,
+  offset?: number,
+  sort?: 'title' | string,
+  direction?: 'asc' | 'desc',
+}
+
+export interface ListOrderFulfillmentsResponse {
+  offset: number,
+  limit: number,
+  total_responses: number,
+  results: Array<FulfillmentResponse>
+}
+
+export interface GetOrderFulfillmentPayload {
+  site_name: string,
+  order_id: string,
+  fulfillment_id: string
+}
+
+export interface GetOrderFulfillmentResponse extends FulfillmentResponse {}
+
+export interface CreateOrderFulfillmentPayload extends Fulfillment {
+  site_name: string,
+  order_id: string
+}
+
+export interface CreateOrderFulfillmentResponse extends FulfillmentResponse {}
+
+export interface UpdateOrderFulfillmentPayload {
+  site_name: string,
+  order_id: string,
+  fulfillment_id: string,
+  status?: 'IN_PROGRESS' | 'FULFILLED' | string,
+  tracking?: FulfillmentTracking
+}
+
+export interface UpdateOrderFulfillmentResponse extends FulfillmentResponse {}
+
 export type GetCartResponse = Cart;
 
 interface BusinessAddress {
