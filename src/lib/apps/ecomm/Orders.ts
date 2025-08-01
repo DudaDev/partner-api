@@ -3,9 +3,12 @@ import { SubResource } from '../../base';
 import { APIEndpoint } from '../../APIEndpoint';
 import { TokenRequest } from '../types';
 import AppsRefunds from './Refunds';
+import AppsFulfillments from './Fulfillments';
 
 class AppsOrders extends SubResource {
   refunds = new AppsRefunds(this.base);
+
+  fulfillments = new AppsFulfillments(this.base);
 
   list = APIEndpoint<TokenRequest<Types.ListOrdersPayload>, Types.ListOrdersResponse>({
     method: 'get',
@@ -119,76 +122,6 @@ class AppsOrders extends SubResource {
         required: true,
       },
     },
-  });
-
-  listFulfillments = APIEndpoint<TokenRequest<Types.ListOrderFulfillmentsPayload>, Types.ListOrderFulfillmentsResponse>({
-    method: 'get',
-    path: '/site/{site_name}/ecommerce/orders/{order_id}/fulfillments',
-    defaults: {
-      host: 'api.duda.co',
-    },
-    headerOptions: {
-      'X-DUDA-ACCESS-TOKEN': {
-        required: true,
-      },
-    },
-    queryParams: {
-      offset: {
-        type: 'number',
-        required: false,
-      },
-      limit: {
-        type: 'number',
-        required: false,
-      },
-      sort: {
-        type: 'string',
-        required: false,
-      },
-      direction: {
-        type: 'string',
-        required: false,
-      },
-    },
-  });
-
-  getFulfillment = APIEndpoint<TokenRequest<Types.GetOrderFulfillmentPayload>, Types.GetOrderFulfillmentResponse>({
-    method: 'get',
-    path: '/site/{site_name}/ecommerce/orders/{order_id}/fulfillments/{fulfillment_id}',
-    defaults: {
-      host: 'api.duda.co',
-    },
-    headerOptions: {
-      'X-DUDA-ACCESS-TOKEN': {
-        required: true,
-      },
-    }
-  });
-
-  createFulfillment = APIEndpoint<TokenRequest<Types.CreateOrderFulfillmentPayload>, Types.CreateOrderFulfillmentResponse>({
-    method: 'post',
-    path: '/site/{site_name}/ecommerce/orders/{order_id}/fulfillments',
-    defaults: {
-      host: 'api.duda.co',
-    },
-    headerOptions: {
-      'X-DUDA-ACCESS-TOKEN': {
-        required: true,
-      },
-    }
-  });
-
-  updateFulfillment = APIEndpoint<TokenRequest<Types.UpdateOrderFulfillmentPayload>, Types.UpdateOrderFulfillmentResponse>({
-    method: 'patch',
-    path: '/site/{site_name}/ecommerce/orders/{order_id}/fulfillments/{fulfillment_id}',
-    defaults: {
-      host: 'api.duda.co',
-    },
-    headerOptions: {
-      'X-DUDA-ACCESS-TOKEN': {
-        required: true,
-      },
-    }
   });
 }
 

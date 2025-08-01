@@ -2,9 +2,12 @@ import * as Types from './types';
 import Resource from '../base';
 import { APIEndpoint } from '../APIEndpoint';
 import Refunds from './Refunds';
+import Fulfillments from './Fulfillments';
 
 class Orders extends Resource {
   refunds = new Refunds(this.config);
+
+  fulfillments = new Fulfillments(this.config);
 
   list = APIEndpoint<Types.ListOrdersPayload, Types.ListOrdersResponse>({
     method: 'get',
@@ -85,56 +88,6 @@ class Orders extends Resource {
   getRefund = APIEndpoint<Types.GetRefundPayload, Types.GetRefundResponse>({
     method: 'get',
     path: '/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/refunds/{refund_id}',
-    defaults: {
-      host: 'api.duda.co',
-    },
-  });
-
-  listFulfillments = APIEndpoint<Types.ListOrderFulfillmentsPayload, Types.ListOrderFulfillmentsResponse>({
-    method: 'get',
-    path: '/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments',
-    defaults: {
-      host: 'api.duda.co',
-    },
-    queryParams: {
-      offset: {
-        type: 'number',
-        required: false,
-      },
-      limit: {
-        type: 'number',
-        required: false,
-      },
-      sort: {
-        type: 'string',
-        required: false,
-      },
-      direction: {
-        type: 'string',
-        required: false,
-      },
-    },
-  });
-
-  getFulfillment = APIEndpoint<Types.GetOrderFulfillmentPayload, Types.GetOrderFulfillmentResponse>({
-    method: 'get',
-    path: '/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments/{fulfillment_id}',
-    defaults: {
-      host: 'api.duda.co',
-    },
-  });
-
-  createFulfillment = APIEndpoint<Types.CreateOrderFulfillmentPayload, Types.CreateOrderFulfillmentResponse>({
-    method: 'post',
-    path: '/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments',
-    defaults: {
-      host: 'api.duda.co',
-    },
-  });
-
-  updateFulfillment = APIEndpoint<Types.UpdateOrderFulfillmentPayload, Types.UpdateOrderFulfillmentResponse>({
-    method: 'patch',
-    path: '/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments/{fulfillment_id}',
     defaults: {
       host: 'api.duda.co',
     },

@@ -1225,7 +1225,7 @@ duda.ecomm.orders.getRefund({
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments`
 
 ```typescript
-duda.ecomm.orders.listFulfillments({ site_name: site_name, order_id: order_id });
+duda.ecomm.orders.fulfillments.list({ site_name: site_name, order_id: order_id });
 ```
 
 ## Get Order Fulfillment
@@ -1237,7 +1237,7 @@ duda.ecomm.orders.listFulfillments({ site_name: site_name, order_id: order_id })
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments/{fulfillment_id}`
 
 ```typescript
-duda.ecomm.orders.getFulfillment({
+duda.ecomm.orders.fulfillments.get({
   site_name: site_name,
   order_id: order_id,
   fulfillment_id: fulfillment_id
@@ -1253,7 +1253,7 @@ duda.ecomm.orders.getFulfillment({
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments`
 
 ```typescript
-duda.ecomm.orders.createFulfillment({ site_name: site_name, order_id: order_id });
+duda.ecomm.orders.fulfillments.create({ site_name: site_name, order_id: order_id });
 ```
 
 ## Update Order Fulfillment
@@ -1265,7 +1265,7 @@ duda.ecomm.orders.createFulfillment({ site_name: site_name, order_id: order_id }
 `PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments/{fulfillment_id}`
 
 ```typescript
-duda.ecomm.orders.updateFulfillment({
+duda.ecomm.orders.fulfillments.update({
   site_name: site_name,
   order_id: order_id,
   fulfillment_id: fulfillment_id
@@ -3428,7 +3428,7 @@ duda.appstore.ecomm.orders.getRefund({
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/${order_id}/fulfillments`
 
 ```typescript
-duda.appstore.ecomm.orders.listFulfillments({ site_name: site_name, order_id: order_id });
+duda.appstore.ecomm.orders.fulfillments.list({ site_name: site_name, order_id: order_id });
 ```
 
 ## Get Order Fulfillment
@@ -3440,7 +3440,7 @@ duda.appstore.ecomm.orders.listFulfillments({ site_name: site_name, order_id: or
 `GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/${order_id}/fulfillments/{fulfillment_id}`
 
 ```typescript
-duda.appstore.ecomm.orders.getFulfillment({
+duda.appstore.ecomm.orders.fulfillments.get({
   site_name: site_name,
   order_id: order_id,
   fulfillment_id: fulfillment_id
@@ -3456,7 +3456,7 @@ duda.appstore.ecomm.orders.getFulfillment({
 `POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/${order_id}/fulfillments`
 
 ```typescript
-duda.appstore.ecomm.orders.createFulfillment({ site_name: site_name, order_id: order_id });
+duda.appstore.ecomm.orders.fulfillments.create({ site_name: site_name, order_id: order_id });
 ```
 
 ## Update Order Fulfillment
@@ -3468,7 +3468,7 @@ duda.appstore.ecomm.orders.createFulfillment({ site_name: site_name, order_id: o
 `PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/${order_id}/fulfillments/{fulfillment_id}`
 
 ```typescript
-duda.appstore.ecomm.orders.updateFulfillment({
+duda.appstore.ecomm.orders.fulfillments.update({
   site_name: site_name,
   order_id: order_id,
   fulfillment_id: fulfillment_id

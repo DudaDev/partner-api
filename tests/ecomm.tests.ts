@@ -1311,7 +1311,7 @@ describe('Ecomm tests', () => {
 
   it('can list all order fulfillments', async () => {
     scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/fulfillments?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_fulfillments)
-    return await duda.ecomm.orders.listFulfillments({
+    return await duda.ecomm.orders.fulfillments.list({
       site_name,
       order_id,
       offset,
@@ -1323,7 +1323,7 @@ describe('Ecomm tests', () => {
 
   it('can get a specific order fulfillment', async () => {
     scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/fulfillments/${fulfillment_id}`).reply(200, fulfillment)
-    return await duda.ecomm.orders.getFulfillment({ site_name, order_id, fulfillment_id })
+    return await duda.ecomm.orders.fulfillments.get({ site_name, order_id, fulfillment_id })
       .then(res => expect(res).to.eql({ ...fulfillment }))
   })
 
@@ -1333,7 +1333,7 @@ describe('Ecomm tests', () => {
       return body
     }).reply(201, fulfillment)
 
-    return await duda.ecomm.orders.createFulfillment({ site_name, order_id, ...create_order_fulfillment_payload })
+    return await duda.ecomm.orders.fulfillments.create({ site_name, order_id, ...create_order_fulfillment_payload })
   })
 
   it('can update an order fulfillment', async () => {
@@ -1342,7 +1342,7 @@ describe('Ecomm tests', () => {
       return body
     }).reply(200, fulfillment)
 
-    return await duda.ecomm.orders.updateFulfillment({ site_name, order_id, fulfillment_id, ...update_order_fulfillment_payload })
+    return await duda.ecomm.orders.fulfillments.update({ site_name, order_id, fulfillment_id, ...update_order_fulfillment_payload })
   })
 
   it('can get a payment session', async () => {
