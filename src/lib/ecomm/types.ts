@@ -495,6 +495,21 @@ export interface GetRefundPayload {
 
 export type GetRefundResponse = Refund;
 
+export interface CreateRefundOrderItem {
+  id: string,
+  quantity: number
+}
+
+export interface CreateRefundPayload {
+  site_name: string,
+  order_id: string,
+  reason?: string,
+  notify_customer?: boolean,
+  items: Array<CreateRefundOrderItem>,
+}
+
+export type CreateRefundResponse = Refund;
+
 export interface FulfillmentItems {
   id: string,
   quantity: number

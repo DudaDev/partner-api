@@ -36,6 +36,14 @@ class Refunds extends Resource {
       host: 'api.duda.co',
     },
   });
+
+  create = APIEndpoint<Types.CreateRefundPayload, Types.CreateRefundResponse>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/refunds',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
 }
 
 export default Refunds;

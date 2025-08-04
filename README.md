@@ -1188,7 +1188,7 @@ duda.ecomm.orders.create({ site_name: site_name });
 duda.ecomm.orders.update({ site_name: site_name, order_id: order_id });
 ```
 
-## List Refunds
+## List Refunds (DEPRECATED -- See updated endpoint [here](#list-refunds))
 
 [List Refunds Reference](https://developer.duda.co/reference/list-refunds)
 
@@ -1200,7 +1200,7 @@ duda.ecomm.orders.update({ site_name: site_name, order_id: order_id });
 duda.ecomm.orders.listRefunds({ site_name: site_name, order_id: order_id });
 ```
 
-## Get Refund
+## Get Refund (DEPRECATED -- See updated endpoint [here](#get-refund))
 
 [Get Refund Reference](https://developer.duda.co/reference/get-refund)
 
@@ -1214,6 +1214,46 @@ duda.ecomm.orders.getRefund({
   order_id: order_id,
   refund_id: refund_id,
 });
+```
+
+## List Refunds
+
+[List Refunds Reference](https://developer.duda.co/reference/list-refunds)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/refunds`
+
+```typescript
+duda.ecomm.orders.refunds.list({ site_name: site_name, order_id: order_id });
+```
+
+## Get Refund
+
+[Get Refund Reference](https://developer.duda.co/reference/get-refund)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/refunds/{refund_id}`
+
+```typescript
+duda.ecomm.orders.refunds.get({
+  site_name: site_name,
+  order_id: order_id,
+  refund_id: refund_id,
+});
+```
+
+## Create Refund
+
+[Create Refund Reference](https://developer.duda.co/reference/ecommerce-create-refund#/)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/refunds`
+
+```typescript
+duda.ecomm.orders.refunds.create({ site_name: site_name, order_id: order_id });
 ```
 
 ## List Order Fulfillments
@@ -3388,7 +3428,7 @@ duda.appstore.ecomm.orders.create({ site_name: site_name });
 duda.appstore.ecomm.orders.update({ site_name: site_name, order_id: order_id });
 ```
 
-## List Refunds
+## List Refunds (DEPRECATED -- See updated endpoint [here](#list-refunds-1))
 
 [List Refunds Reference](https://developer.duda.co/reference/app-list-refunds)
 
@@ -3403,7 +3443,7 @@ duda.appstore.ecomm.orders.listRefunds({
 });
 ```
 
-## Get Refund
+## Get Refund (DEPRECATED -- See updated endpoint [here](#get-refund-1))
 
 [Get Refund Reference](https://developer.duda.co/reference/app-get-refund)
 
@@ -3416,6 +3456,52 @@ duda.appstore.ecomm.orders.getRefund({
   site_name: site_name,
   order_id: order_id,
   refund_id: refund_id,
+});
+```
+
+## List Refunds
+
+[List Refunds Reference](https://developer.duda.co/reference/app-list-refunds)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}/refunds`
+
+```typescript
+duda.appstore.ecomm.orders.refunds.list({
+  site_name: site_name,
+  order_id: order_id,
+});
+```
+
+## Get Refund
+
+[Get Refund Reference](https://developer.duda.co/reference/app-get-refund)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}/refunds/{refund_id}`
+
+```typescript
+duda.appstore.ecomm.orders.refunds.get({
+  site_name: site_name,
+  order_id: order_id,
+  refund_id: refund_id,
+});
+```
+
+## Create Refund
+
+[Create Refund Reference](https://developer.duda.co/reference/app-ecomm-create-refund#/)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}/refunds`
+
+```typescript
+duda.appstore.ecomm.orders.refunds.create({
+  site_name: site_name,
+  order_id: order_id,
 });
 ```
 
