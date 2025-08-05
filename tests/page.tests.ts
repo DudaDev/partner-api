@@ -66,6 +66,26 @@ describe('Page tests', () => {
         parent_element_id: "element_id"
     }
 
+    const footer_element = {
+        element_id: element_id,
+        next_sibling_id: "next_sibling_id",
+        element_source_id: "element_source_id"
+    }
+
+    const list_footer_elements_response = {
+        results: [footer_element]
+    }
+
+    const create_footer_element_payload = {
+        element_source_id: "element_source_id",
+        next_sibling_id: "next_sibling_id"
+    }
+
+    const update_footer_page_element_payload = {
+        next_sibling_id: "next_sibling_id",
+        parent_element_id: "element_id"
+    }
+
     before(() => {
         duda = new Duda({
           user: 'testuser',
@@ -129,10 +149,7 @@ describe('Page tests', () => {
     describe('Page Elements', () => {
         it('can list all page elements on a site for a page', async () => {
             scope.get(`${api_path}${site_name}${api_segment}/${page_uuid}/elements`).reply(200, list_page_elements_response)
-            return await duda.pages.elements.list({
-                site_name: site_name,
-                page_uuid: page_uuid
-            })
+            return await duda.pages.elements.list({ site_name, page_uuid })
         })
 
         it('can create a page element', async () => {
@@ -140,14 +157,7 @@ describe('Page tests', () => {
                 expect(body).to.eql(create_page_element_payload)
                 return body
             }).reply(200, page_element)
-            return await duda.pages.elements.create({
-              site_name: site_name,
-              page_uuid: page_uuid,
-              element_source_id: "element_source_id",
-              type: "SECTION",
-              next_sibling_id: "next_sibling_id",
-              parent_element_id: "element_id"
-            })
+            return await duda.pages.elements.create({ site_name, page_uuid, ...create_page_element_payload })
         })
     
         it('can update a page element by id', async () => {
@@ -156,22 +166,44 @@ describe('Page tests', () => {
                 return body
             }).reply(200, response)
             return await duda.pages.elements.update({
-                site_name: site_name,
-                page_uuid: page_uuid,
-                element_id: element_id,
-                type: "SECTION",
-                next_sibling_id: "next_sibling_id",
-                parent_element_id: "element_id"
+                site_name,
+                page_uuid,
+                element_id,
+                ...update_page_element_payload
             })
         })
     
         it('can delete a page by id', async () => {
             scope.delete(`${api_path}${site_name}${api_segment}/${page_uuid}/elements/${element_id}`).reply(204)
-            return await duda.pages.elements.delete({
-                site_name: site_name,
-                page_uuid: page_uuid,
-                element_id: element_id
-            })
+            return await duda.pages.elements.delete({ site_name, page_uuid, element_id })
+        })
+      })
+
+    describe('Footer Page Elements', () => {
+        it('can list all footer page elements on a site for a page', async () => {
+            scope.get(`${api_path}${site_name}/footer/elements`).reply(200, list_footer_elements_response)
+            return await duda.pages.footer.list({ site_name })
+        })
+
+        it('can create a footer page element', async () => {
+            scope.post(`${api_path}${site_name}/footer/elements`, (body) => {
+                expect(body).to.eql(create_footer_element_payload)
+                return body
+            }).reply(201, footer_element)
+            return await duda.pages.footer.create({ site_name, ...create_footer_element_payload })
+        })
+    
+        it('can update a footer page element by id', async () => {
+            scope.put(`${api_path}${site_name}/footer/elements/${element_id}`, (body) => {
+                expect(body).to.eql(update_footer_page_element_payload)
+                return body
+            }).reply(200, response)
+            return await duda.pages.footer.update({ site_name, element_id, ...update_footer_page_element_payload })
+        })
+    
+        it('can delete a page by id', async () => {
+            scope.delete(`${api_path}${site_name}/footer/elements/${element_id}`).reply(204)
+            return await duda.pages.footer.delete({ site_name ,element_id })
         })
       })
 })

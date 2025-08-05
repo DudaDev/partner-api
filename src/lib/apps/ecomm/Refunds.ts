@@ -47,6 +47,19 @@ class AppsRefunds extends SubResource {
       },
     },
   });
+
+  create = APIEndpoint<TokenRequest<Types.CreateRefundPayload>, Types.CreateRefundResponse>({
+    method: 'post',
+    path: '/site/{site_name}/ecommerce/orders/{order_id}/refunds',
+    defaults: {
+      host: 'api.duda.co',
+    },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
+    },
+  });
 }
 
 export default AppsRefunds;

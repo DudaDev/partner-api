@@ -716,6 +716,17 @@ describe('Ecomm tests', () => {
     results: [refund]
   }
 
+  const create_refund_payload = {
+    reason: "string",
+    notify_customer: true,
+    items: [
+      {
+        id: "string",
+        quantity: 0
+      }
+    ]
+  }
+
   const fulfillment = {
     id: "fulfil_test",
     status: "FULFILLED",
@@ -1271,9 +1282,28 @@ describe('Ecomm tests', () => {
     return await duda.ecomm.orders.update({ site_name, order_id, status: 'IN_PROGRESS', ...update_order_payload })
   })
 
-  it('can list all refunds', async () => {
+  it('can list all refunds (DEPRECATED)', async () => {
     scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/refunds?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_refunds)
     return await duda.ecomm.orders.listRefund({
+      site_name,
+      order_id,
+      offset,
+      limit,
+      sort,
+      direction
+    }).then(res => expect(res).to.eql(list_refunds))
+  })
+
+  it('can get a specific refund (DEPRECATED)', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/refunds/${refund_id}`).reply(200, refund)
+
+    return await duda.ecomm.orders.getRefund({ site_name, order_id, refund_id })
+      .then(res => expect(res).to.eql({ ...refund }))
+  })
+
+  it('can list all refunds', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/refunds?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_refunds)
+    return await duda.ecomm.orders.refunds.list({
       site_name,
       order_id,
       offset,
@@ -1286,27 +1316,17 @@ describe('Ecomm tests', () => {
   it('can get a specific refund', async () => {
     scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/refunds/${refund_id}`).reply(200, refund)
 
-    return await duda.ecomm.orders.getRefund({ site_name, order_id, refund_id })
-      .then(res => expect(res).to.eql({ ...refund }))
-  })
-
-  it('can list all refunds (alternate)', async () => {
-    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/refunds?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_refunds)
-    return await duda.ecomm.orders.refunds.list({
-      site_name,
-      order_id,
-      offset,
-      limit,
-      sort,
-      direction
-    }).then(res => expect(res).to.eql(list_refunds))
-  })
-
-  it('can get a specific refund (alternate)', async () => {
-    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/refunds/${refund_id}`).reply(200, refund)
-
     return await duda.ecomm.orders.refunds.get({ site_name, order_id, refund_id })
       .then(res => expect(res).to.eql({ ...refund }))
+  })
+
+  it('can create a refund', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/refunds`, (body) => {
+      expect(body).to.eql({ ...create_refund_payload })
+      return body
+    }).reply(201, refund)
+
+    return await duda.ecomm.orders.refunds.create({ site_name, order_id, ...create_refund_payload })
   })
 
   it('can list all order fulfillments', async () => {
