@@ -674,6 +674,56 @@ duda.pages.elements.delete({
 });
 ```
 
+# Footer Page Elements
+
+## List Footer Page Elements
+
+[List Footer Page Elements Reference](https://developer.duda.co/update/reference/page-elements-list-footer-page-elements#/)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/footer/elements`
+
+```typescript
+duda.pages.footer.list({ site_name: site_name });
+```
+
+## Create Footer Page Element
+
+[Create Footer Page Element Reference](https://developer.duda.co/update/reference/page-elements-create-footer-page-element#/)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/footer/elements`
+
+```typescript
+duda.pages.footer.create({ site_name: site_name });
+```
+
+## Update Footer Page Element
+
+[Update Footer Page Element Reference](https://developer.duda.co/update/reference/page-elements-update-footer-page-element#/)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/footer/elements/{element_id}`
+
+```typescript
+duda.pages.footer.update({ site_name: site_name, element_id: element_id });
+```
+
+## Delete Footer Page Element
+
+[Delete Footer Page Element Reference](https://developer.duda.co/update/reference/page-elements-delete-footer-page-element#/)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/footer/elements/{element_id}`
+
+```typescript
+duda.pages.footer.delete({ site_name: site_name, element_id: element_id });
+```
+
 # Sections
 
 ## List Sections

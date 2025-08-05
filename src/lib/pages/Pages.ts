@@ -2,6 +2,7 @@ import * as Types from './types';
 import Resource from '../base';
 import PagesV2 from './v2';
 import Elements from './elements';
+import Footer from './Footer';
 
 import { APIEndpoint } from '../APIEndpoint';
 
@@ -9,6 +10,8 @@ class Pages extends Resource {
   v2 = new PagesV2(this.config);
 
   elements = new Elements(this.config);
+
+  footer = new Footer(this.config);
 
   list = APIEndpoint<Types.V1.ListPagesPayload, Types.V1.ListPagesResponse>({
     method: 'get',
