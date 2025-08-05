@@ -1238,7 +1238,7 @@ duda.ecomm.orders.create({ site_name: site_name });
 duda.ecomm.orders.update({ site_name: site_name, order_id: order_id });
 ```
 
-## List Refunds (DEPRECATED -- See updated endpoint [here](#list-refunds))
+## List Refunds (DEPRECATED -- See updated method [here](#list-refunds))
 
 [List Refunds Reference](https://developer.duda.co/reference/list-refunds)
 
@@ -1250,7 +1250,7 @@ duda.ecomm.orders.update({ site_name: site_name, order_id: order_id });
 duda.ecomm.orders.listRefunds({ site_name: site_name, order_id: order_id });
 ```
 
-## Get Refund (DEPRECATED -- See updated endpoint [here](#get-refund))
+## Get Refund (DEPRECATED -- See updated method [here](#get-refund))
 
 [Get Refund Reference](https://developer.duda.co/reference/get-refund)
 
@@ -3478,7 +3478,7 @@ duda.appstore.ecomm.orders.create({ site_name: site_name });
 duda.appstore.ecomm.orders.update({ site_name: site_name, order_id: order_id });
 ```
 
-## List Refunds (DEPRECATED -- See updated endpoint [here](#list-refunds-1))
+## List Refunds (DEPRECATED -- See updated method [here](#list-refunds-1))
 
 [List Refunds Reference](https://developer.duda.co/reference/app-list-refunds)
 
@@ -3493,7 +3493,7 @@ duda.appstore.ecomm.orders.listRefunds({
 });
 ```
 
-## Get Refund (DEPRECATED -- See updated endpoint [here](#get-refund-1))
+## Get Refund (DEPRECATED -- See updated method [here](#get-refund-1))
 
 [Get Refund Reference](https://developer.duda.co/reference/app-get-refund)
 
