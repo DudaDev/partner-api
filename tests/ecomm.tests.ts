@@ -1500,7 +1500,7 @@ describe('Ecomm tests', () => {
     return await duda.ecomm.options.delete({ site_name, option_id })
   })
 
-  it('can create a product option choice', async () => {
+  it('can create a product option choice (DEPRECATED)', async () => {
     scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/options/${option_id}/choices`, (body) => {
       expect(body).to.eql({ value: 'string' })
       return body
@@ -1509,7 +1509,7 @@ describe('Ecomm tests', () => {
     return await duda.ecomm.options.createChoice({ site_name, option_id, value: 'string' })
   })
 
-  it('can update a product option choice', async () => {
+  it('can update a product option choice (DEPRECATED)', async () => {
     scope.put(`/api/sites/multiscreen/${site_name}/ecommerce/options/${option_id}/choices/${choice_id}`, (body) => {
       expect(body).to.eql({ value: 'string' })
       return body
@@ -1518,9 +1518,32 @@ describe('Ecomm tests', () => {
     return await duda.ecomm.options.updateChoice({ site_name, option_id, choice_id, value: 'string' })
   })
 
-  it('can delete a product option choice', async () => {
+  it('can delete a product option choice (DEPRECATED)', async () => {
     scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/options/${option_id}/choices/${choice_id}`).reply(204)
     return await duda.ecomm.options.deleteChoice({ site_name, option_id, choice_id })
+  })
+
+  it('can create a product option choice', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/options/${option_id}/choices`, (body) => {
+      expect(body).to.eql({ value: 'string' })
+      return body
+    }).reply(200, product_option)
+
+    return await duda.ecomm.options.choices.create({ site_name, option_id, value: 'string' })
+  })
+
+  it('can update a product option choice', async () => {
+    scope.put(`/api/sites/multiscreen/${site_name}/ecommerce/options/${option_id}/choices/${choice_id}`, (body) => {
+      expect(body).to.eql({ value: 'string' })
+      return body
+    }).reply(200, product_option)
+
+    return await duda.ecomm.options.choices.update({ site_name, option_id, choice_id, value: 'string' })
+  })
+
+  it('can delete a product option choice', async () => {
+    scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/options/${option_id}/choices/${choice_id}`).reply(204)
+    return await duda.ecomm.options.choices.delete({ site_name, option_id, choice_id })
   })
 
   it('can get a product variation', async () => {
