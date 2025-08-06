@@ -1,7 +1,7 @@
 import * as Types from './types';
 import Resource from '../base';
 import PagesV2 from './v2';
-import Elements from './elements';
+import Elements from './Elements';
 import Footer from './Footer';
 
 import { APIEndpoint } from '../APIEndpoint';

@@ -1,5 +1,3 @@
-import Footer from "./Footer";
-
 export namespace V1 {
   export interface Page {
     page_title?: string,
