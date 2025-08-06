@@ -35,7 +35,8 @@ describe('Blog tests', () => {
     path: "string",
     publish_date: "string",
     tags: ["string"],
-    title: "string"
+    title: "string",
+    schedule_publish_date: "string"
   }
 
   const blog_post = {
@@ -47,6 +48,7 @@ describe('Blog tests', () => {
     no_index: true,
     path: "string",
     publish_date: "string",
+    schedule_publish_date: "string",
     status: "string",
     tags: ["string"],
     title: "string",
