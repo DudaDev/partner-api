@@ -125,7 +125,7 @@ export interface CreatePageElementPayload {
   site_name: string,
   page_uuid: string,
   element_source_id: string,
-  type: 'SECTION',
+  type: 'SECTION' | string,
   next_sibling_id?: string,
   parent_element_id?: string
 }
@@ -136,7 +136,7 @@ export interface UpdatePageElementPayload {
   site_name: string,
   page_uuid: string,
   element_id: string,
-  type: 'SECTION',
+  type: 'SECTION' | string,
   next_sibling_id?: string,
   parent_element_id?: string
 }
@@ -150,3 +150,41 @@ export interface DeletePageElementPayload {
 }
 
 export type DeletePageElementResponse = void;
+
+export interface FooterPageElement {
+  element_id: string,
+  element_source_id: string,
+  next_sibling_id: string
+}
+
+export interface ListFooterPageElementPayload {
+  site_name: string
+}
+
+export interface ListFooterPageElementResponse {
+  results: Array<FooterPageElement>
+}
+
+export interface CreateFooterPageElementPayload {
+  site_name: string,
+  element_source_id: string,
+  next_sibling_id: string
+}
+
+export interface CreateFooterPageElementResponse extends FooterPageElement {}
+
+export interface UpdateFooterPageElementPayload {
+  site_name: string,
+  element_id: string,
+  next_sibling_id: string,
+  parent_element_id: string
+}
+
+export interface UpdateFooterPageElementResponse extends FooterPageElement {}
+
+export interface DeleteFooterPageElementPayload {
+  site_name: string,
+  element_id: string
+}
+
+export type DeleteFooterPageElementResponse = void;

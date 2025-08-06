@@ -63,6 +63,19 @@ class AppCollections extends SubResource {
     },
   });
 
+  publish = APIEndpoint<TokenRequest<Types.PublishCollectionPayload>, Types.PublishCollectionResponse>({
+    method: 'post',
+    path: '/site/{site_name}/collection/{collection_name}/publish',
+    defaults: {
+      host: 'api.duda.co',
+    },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
+    },
+  });
+
   delete = APIEndpoint<TokenRequest<Types.DeleteCollectionPayload>, Types.DeleteCollectionResponse>({
     method: 'delete',
     path: '/site/{site_name}/collection/{collection_name}',

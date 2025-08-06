@@ -2,9 +2,12 @@ import * as Types from './types';
 import Resource from '../base';
 import { APIEndpoint } from '../APIEndpoint';
 import Refunds from './Refunds';
+import Fulfillments from './Fulfillments';
 
 class Orders extends Resource {
   refunds = new Refunds(this.config);
+
+  fulfillments = new Fulfillments(this.config);
 
   list = APIEndpoint<Types.ListOrdersPayload, Types.ListOrdersResponse>({
     method: 'get',

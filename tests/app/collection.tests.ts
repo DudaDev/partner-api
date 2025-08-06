@@ -173,6 +173,17 @@ describe("App store collection tests", () => {
     });
   });
 
+  it("can publish a collection", async () => {
+    scope
+      .post(`${base_path}/site/test_site/collection/test_collection/publish`)
+      .reply(204);
+    return await duda.appstore.collections.publish({
+      site_name: "test_site",
+      collection_name: "test_collection",
+      token,
+    });
+  });
+
   it("can delete a collection", async () => {
     scope
       .delete(`${base_path}/site/test_site/collection/test_collection`)

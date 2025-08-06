@@ -1,7 +1,6 @@
 # @dudadev/partner-api
 
-The `@dudadev/partner-api` library provides convenient access to Duda's public APIs from applications written in
-server-side Javascript.
+The `@dudadev/partner-api` library provides convenient access to Duda's public APIs from applications written in server-side Javascript.
 
 1. [Requirements](#requirements)
 2. [Installation](#installation)
@@ -675,6 +674,56 @@ duda.pages.elements.delete({
 });
 ```
 
+# Footer Page Elements
+
+## List Footer Page Elements
+
+[List Footer Page Elements Reference](https://developer.duda.co/update/reference/page-elements-list-footer-page-elements#/)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/footer/elements`
+
+```typescript
+duda.pages.footer.list({ site_name: site_name });
+```
+
+## Create Footer Page Element
+
+[Create Footer Page Element Reference](https://developer.duda.co/update/reference/page-elements-create-footer-page-element#/)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/footer/elements`
+
+```typescript
+duda.pages.footer.create({ site_name: site_name });
+```
+
+## Update Footer Page Element
+
+[Update Footer Page Element Reference](https://developer.duda.co/update/reference/page-elements-update-footer-page-element#/)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/footer/elements/{element_id}`
+
+```typescript
+duda.pages.footer.update({ site_name: site_name, element_id: element_id });
+```
+
+## Delete Footer Page Element
+
+[Delete Footer Page Element Reference](https://developer.duda.co/update/reference/page-elements-delete-footer-page-element#/)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/footer/elements/{element_id}`
+
+```typescript
+duda.pages.footer.delete({ site_name: site_name, element_id: element_id });
+```
+
 # Sections
 
 ## List Sections
@@ -1189,7 +1238,7 @@ duda.ecomm.orders.create({ site_name: site_name });
 duda.ecomm.orders.update({ site_name: site_name, order_id: order_id });
 ```
 
-## List Refunds
+## List Refunds (DEPRECATED -- See updated method [here](#list-refunds))
 
 [List Refunds Reference](https://developer.duda.co/reference/list-refunds)
 
@@ -1201,7 +1250,7 @@ duda.ecomm.orders.update({ site_name: site_name, order_id: order_id });
 duda.ecomm.orders.listRefunds({ site_name: site_name, order_id: order_id });
 ```
 
-## Get Refund
+## Get Refund (DEPRECATED -- See updated method [here](#get-refund))
 
 [Get Refund Reference](https://developer.duda.co/reference/get-refund)
 
@@ -1214,6 +1263,102 @@ duda.ecomm.orders.getRefund({
   site_name: site_name,
   order_id: order_id,
   refund_id: refund_id,
+});
+```
+
+## List Refunds
+
+[List Refunds Reference](https://developer.duda.co/reference/list-refunds)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/refunds`
+
+```typescript
+duda.ecomm.orders.refunds.list({ site_name: site_name, order_id: order_id });
+```
+
+## Get Refund
+
+[Get Refund Reference](https://developer.duda.co/reference/get-refund)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/refunds/{refund_id}`
+
+```typescript
+duda.ecomm.orders.refunds.get({
+  site_name: site_name,
+  order_id: order_id,
+  refund_id: refund_id,
+});
+```
+
+## Create Refund
+
+[Create Refund Reference](https://developer.duda.co/reference/ecommerce-create-refund#/)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/refunds`
+
+```typescript
+duda.ecomm.orders.refunds.create({ site_name: site_name, order_id: order_id });
+```
+
+## List Order Fulfillments
+
+[List Order Fulfillments Reference](https://developer.duda.co/reference/ecommerce-list-order-fulfillments#/)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments`
+
+```typescript
+duda.ecomm.orders.fulfillments.list({ site_name: site_name, order_id: order_id });
+```
+
+## Get Order Fulfillment
+
+[Get Order Fulfillment Reference](https://developer.duda.co/reference/ecommerce-get-order-fulfillment#/)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments/{fulfillment_id}`
+
+```typescript
+duda.ecomm.orders.fulfillments.get({
+  site_name: site_name,
+  order_id: order_id,
+  fulfillment_id: fulfillment_id
+});
+```
+
+## Create Order Fulfillment
+
+[Create Order Fulfillment Reference](https://developer.duda.co/reference/ecommerce-create-order-fulfillment#/)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments`
+
+```typescript
+duda.ecomm.orders.fulfillments.create({ site_name: site_name, order_id: order_id });
+```
+
+## Update Order Fulfillment
+
+[Update Order Fulfillment Reference](https://developer.duda.co/reference/ecommerce-update-order-fulfillment#/)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/fulfillments/{fulfillment_id}`
+
+```typescript
+duda.ecomm.orders.fulfillments.update({
+  site_name: site_name,
+  order_id: order_id,
+  fulfillment_id: fulfillment_id
 });
 ```
 
@@ -2240,6 +2385,21 @@ duda.collections.update({
 });
 ```
 
+## Publish Collection
+
+[Publish Collection Reference](https://developer.duda.co/reference/publish-collection#/)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/collection/{collection_name}/publish`
+
+```typescript
+duda.collections.publish({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
+
 ## Delete Collection
 
 [Delete Collection Reference](https://developer.duda.co/reference/collections-delete-collection)
@@ -2840,6 +3000,21 @@ duda.appstore.collections.update({
 });
 ```
 
+## Publish Collection
+
+[Publish Collection Reference](https://developer.duda.co/reference/app-publish-collection#/)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/content/collection/{collection_name}/publish`
+
+```typescript
+duda.appstore.collections.publish({
+  site_name: site_name,
+  collection_name: collection_name,
+});
+```
+
 ## Delete Collection
 
 [Delete Collection Reference](https://developer.duda.co/reference/delete-collection-app)
@@ -3303,7 +3478,7 @@ duda.appstore.ecomm.orders.create({ site_name: site_name });
 duda.appstore.ecomm.orders.update({ site_name: site_name, order_id: order_id });
 ```
 
-## List Refunds
+## List Refunds (DEPRECATED -- See updated method [here](#list-refunds-1))
 
 [List Refunds Reference](https://developer.duda.co/reference/app-list-refunds)
 
@@ -3318,7 +3493,7 @@ duda.appstore.ecomm.orders.listRefunds({
 });
 ```
 
-## Get Refund
+## Get Refund (DEPRECATED -- See updated method [here](#get-refund-1))
 
 [Get Refund Reference](https://developer.duda.co/reference/app-get-refund)
 
@@ -3331,6 +3506,108 @@ duda.appstore.ecomm.orders.getRefund({
   site_name: site_name,
   order_id: order_id,
   refund_id: refund_id,
+});
+```
+
+## List Refunds
+
+[List Refunds Reference](https://developer.duda.co/reference/app-list-refunds)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}/refunds`
+
+```typescript
+duda.appstore.ecomm.orders.refunds.list({
+  site_name: site_name,
+  order_id: order_id,
+});
+```
+
+## Get Refund
+
+[Get Refund Reference](https://developer.duda.co/reference/app-get-refund)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}/refunds/{refund_id}`
+
+```typescript
+duda.appstore.ecomm.orders.refunds.get({
+  site_name: site_name,
+  order_id: order_id,
+  refund_id: refund_id,
+});
+```
+
+## Create Refund
+
+[Create Refund Reference](https://developer.duda.co/reference/app-ecomm-create-refund#/)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}/refunds`
+
+```typescript
+duda.appstore.ecomm.orders.refunds.create({
+  site_name: site_name,
+  order_id: order_id,
+});
+```
+
+## List Order Fulfillments
+
+[List Order Fulfillments Reference](https://developer.duda.co/reference/app-ecommerce-list-order-fulfillments#/)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/${order_id}/fulfillments`
+
+```typescript
+duda.appstore.ecomm.orders.fulfillments.list({ site_name: site_name, order_id: order_id });
+```
+
+## Get Order Fulfillment
+
+[Get Order Fulfillment Reference](https://developer.duda.co/reference/app-ecommerce-get-order-fulfillment#/)
+
+### Request
+
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/${order_id}/fulfillments/{fulfillment_id}`
+
+```typescript
+duda.appstore.ecomm.orders.fulfillments.get({
+  site_name: site_name,
+  order_id: order_id,
+  fulfillment_id: fulfillment_id
+});
+```
+
+## Create Order Fulfillment
+
+[Create Order Fulfillment Reference](https://developer.duda.co/reference/app-ecommerce-create-order-fulfillment#/)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/${order_id}/fulfillments`
+
+```typescript
+duda.appstore.ecomm.orders.fulfillments.create({ site_name: site_name, order_id: order_id });
+```
+
+## Update Order Fulfillment
+
+[Update Order Fulfillment Reference](https://developer.duda.co/reference/app-ecommerce-update-order-fulfillment#/)
+
+### Request
+
+`PATCH https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/${order_id}/fulfillments/{fulfillment_id}`
+
+```typescript
+duda.appstore.ecomm.orders.fulfillments.update({
+  site_name: site_name,
+  order_id: order_id,
+  fulfillment_id: fulfillment_id
 });
 ```
 
