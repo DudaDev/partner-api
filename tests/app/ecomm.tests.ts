@@ -425,6 +425,12 @@ describe('App store ecomm tests', () => {
     metadata: "string"
   }
 
+  const cancel_order_payload = {
+    reason: "string",
+    restock_items: true,
+    refund: true
+  }
+
   const payment_session = {
     id: "string",
     mode: "LIVE",
@@ -1014,6 +1020,15 @@ describe('App store ecomm tests', () => {
     }).reply(200, order)
 
     return await duda.appstore.ecomm.orders.update({ site_name, order_id, token, status: 'IN_PROGRESS', ...update_order_payload })
+  })
+
+  it('can cancel an order', async () => {
+    scope.patch(`${base_path}/site/${site_name}/ecommerce/orders/${order_id}/cancel`, (body) => {
+      expect(body).to.eql({ ...cancel_order_payload })
+      return body
+    }).reply(200, order)
+
+    return await duda.appstore.ecomm.orders.cancel({ site_name, order_id, token, ...cancel_order_payload })
   })
 
   it('can list all refunds (DEPRECATED)', async () => {

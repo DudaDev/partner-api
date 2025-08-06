@@ -1238,6 +1238,18 @@ duda.ecomm.orders.create({ site_name: site_name });
 duda.ecomm.orders.update({ site_name: site_name, order_id: order_id });
 ```
 
+## Cancel Order
+
+[Cancel Order Reference](https://developer.duda.co/reference/ecommerce-cancel-order#/)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/cancel`
+
+```typescript
+duda.ecomm.orders.cancel({ site_name: site_name, order_id: order_id });
+```
+
 ## List Refunds (DEPRECATED -- See updated method [here](#list-refunds))
 
 [List Refunds Reference](https://developer.duda.co/reference/list-refunds)
@@ -3574,6 +3586,18 @@ duda.appstore.ecomm.orders.create({ site_name: site_name });
 
 ```typescript
 duda.appstore.ecomm.orders.update({ site_name: site_name, order_id: order_id });
+```
+
+## Cancel Order
+
+[Cancel Order Reference](https://developer.duda.co/reference/app-ecomm-cancel-order#/)
+
+### Request
+
+`POST https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/orders/{order_id}/cancel`
+
+```typescript
+duda.appstore.ecomm.orders.cancel({ site_name: site_name, order_id: order_id });
 ```
 
 ## List Refunds (DEPRECATED -- See updated method [here](#list-refunds-1))

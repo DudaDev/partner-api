@@ -59,6 +59,14 @@ class Orders extends Resource {
     },
   });
 
+  cancel = APIEndpoint<Types.CancelOrderPayload, Types.CancelOrderResponse>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/cancel',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
   listRefund = APIEndpoint<Types.ListRefundsPayload, Types.ListRefundsResponse>({
     method: 'get',
     path: '/api/sites/multiscreen/{site_name}/ecommerce/orders/{order_id}/refunds',

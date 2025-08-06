@@ -669,6 +669,12 @@ describe('Ecomm tests', () => {
     metadata: "string"
   }
 
+  const cancel_order_payload = {
+    reason: "string",
+    restock_items: true,
+    refund: true
+  }
+
   const refund = {
     id: "string",
     order_id,
@@ -1280,6 +1286,15 @@ describe('Ecomm tests', () => {
     }).reply(200, order)
 
     return await duda.ecomm.orders.update({ site_name, order_id, status: 'IN_PROGRESS', ...update_order_payload })
+  })
+
+  it('can cancel an order', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/cancel`, (body) => {
+      expect(body).to.eql({ ...cancel_order_payload })
+      return body
+    }).reply(200, order)
+
+    return await duda.ecomm.orders.cancel({ site_name, order_id, ...cancel_order_payload })
   })
 
   it('can list all refunds (DEPRECATED)', async () => {
