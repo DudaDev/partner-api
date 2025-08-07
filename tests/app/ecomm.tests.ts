@@ -425,6 +425,12 @@ describe('App store ecomm tests', () => {
     metadata: "string"
   }
 
+  const cancel_order_payload = {
+    reason: "string",
+    restock_items: true,
+    refund: true
+  }
+
   const payment_session = {
     id: "string",
     mode: "LIVE",
@@ -933,7 +939,7 @@ describe('App store ecomm tests', () => {
     return await duda.appstore.ecomm.options.delete({ site_name, option_id, token })
   })
 
-  it('can create a product option choice', async () => {
+  it('can create a product option choice (DEPRECATED)', async () => {
     scope.post(`${base_path}/site/${site_name}/ecommerce/options/${option_id}/choices`, (body) => {
       expect(body).to.eql({ value: 'string' })
       return body
@@ -942,7 +948,7 @@ describe('App store ecomm tests', () => {
     return await duda.appstore.ecomm.options.createChoice({ site_name, option_id, token, value: 'string' })
   })
 
-  it('can update a product option choice', async () => {
+  it('can update a product option choice (DEPRECATED)', async () => {
     scope.put(`${base_path}/site/${site_name}/ecommerce/options/${option_id}/choices/${choice_id}`, (body) => {
       expect(body).to.eql({ value: 'string' })
       return body
@@ -951,9 +957,32 @@ describe('App store ecomm tests', () => {
     return await duda.appstore.ecomm.options.updateChoice({ site_name, option_id, choice_id, token, value: 'string' })
   })
 
-  it('can delete a product option choice', async () => {
+  it('can delete a product option choice (DEPRECATED)', async () => {
     scope.delete(`${base_path}/site/${site_name}/ecommerce/options/${option_id}/choices/${choice_id}`).reply(204)
     return await duda.appstore.ecomm.options.deleteChoice({ site_name, option_id, choice_id, token })
+  })
+
+  it('can create a product option choice', async () => {
+    scope.post(`${base_path}/site/${site_name}/ecommerce/options/${option_id}/choices`, (body) => {
+      expect(body).to.eql({ value: 'string' })
+      return body
+    }).reply(200, product_option)
+
+    return await duda.appstore.ecomm.options.choices.create({ site_name, option_id, token, value: 'string' })
+  })
+
+  it('can update a product option choice', async () => {
+    scope.put(`${base_path}/site/${site_name}/ecommerce/options/${option_id}/choices/${choice_id}`, (body) => {
+      expect(body).to.eql({ value: 'string' })
+      return body
+    }).reply(200, product_option)
+
+    return await duda.appstore.ecomm.options.choices.update({ site_name, option_id, choice_id, token, value: 'string' })
+  })
+
+  it('can delete a product option choice', async () => {
+    scope.delete(`${base_path}/site/${site_name}/ecommerce/options/${option_id}/choices/${choice_id}`).reply(204)
+    return await duda.appstore.ecomm.options.choices.delete({ site_name, option_id, choice_id, token })
   })
 
   it('can list all orders', async () => {
@@ -991,6 +1020,15 @@ describe('App store ecomm tests', () => {
     }).reply(200, order)
 
     return await duda.appstore.ecomm.orders.update({ site_name, order_id, token, status: 'IN_PROGRESS', ...update_order_payload })
+  })
+
+  it('can cancel an order', async () => {
+    scope.patch(`${base_path}/site/${site_name}/ecommerce/orders/${order_id}/cancel`, (body) => {
+      expect(body).to.eql({ ...cancel_order_payload })
+      return body
+    }).reply(200, order)
+
+    return await duda.appstore.ecomm.orders.cancel({ site_name, order_id, token, ...cancel_order_payload })
   })
 
   it('can list all refunds (DEPRECATED)', async () => {

@@ -80,6 +80,19 @@ class AppsOrders extends SubResource {
     },
   });
 
+  cancel = APIEndpoint<TokenRequest<Types.CancelOrderPayload>, Types.CancelOrderResponse>({
+    method: 'patch',
+    path: '/site/{site_name}/ecommerce/orders/{order_id}/cancel',
+    defaults: {
+      host: 'api.duda.co',
+    },
+    headerOptions: {
+      'X-DUDA-ACCESS-TOKEN': {
+        required: true,
+      },
+    },
+  });
+
   listRefund = APIEndpoint<TokenRequest<Types.ListRefundsPayload>, Types.ListRefundsResponse>({
     method: 'get',
     path: '/site/{site_name}/ecommerce/orders/{order_id}/refunds',
