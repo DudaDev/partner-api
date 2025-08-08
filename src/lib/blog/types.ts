@@ -50,7 +50,8 @@ export interface UpdateBlogPostPayload {
     path?: string,
     publish_date?: string,
     tags?: Array<string>,
-    title?: string
+    title?: string,
+    schedule_publish_date?: string
 }
 
 export interface BlogPost {
@@ -64,7 +65,8 @@ export interface BlogPost {
     publish_date?: string,
     status?: string,
     tags?: Array<string>,
-    title?: string
+    title?: string,
+    schedule_publish_date?: string
 }
 
 export interface MainImage {

@@ -471,6 +471,16 @@ export interface UpdateOrderPayload {
 
 export interface UpdateOrderResponse extends Order {}
 
+export interface CancelOrderPayload {
+  site_name: string,
+  order_id: string,
+  reason?: string,
+  restock_items?: boolean,
+  refund?: boolean
+}
+
+export interface CancelOrderResponse extends Order {}
+
 export interface ListRefundsPayload {
   site_name: string,
   order_id: string,
