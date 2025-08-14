@@ -1,8 +1,11 @@
 import * as Types from './types';
 import Resource from '../base';
+import Choices from './Choices';
 import { APIEndpoint } from '../APIEndpoint';
 
 class Options extends Resource {
+  choices = new Choices(this.config);
+
   list = APIEndpoint<Types.ListOptionsPayload, Types.ListOptionsResponse>({
     method: 'get',
     path: '/api/sites/multiscreen/{site_name}/ecommerce/options',

@@ -2,8 +2,11 @@ import * as Types from './types';
 import { SubResource } from '../../base';
 import { APIEndpoint } from '../../APIEndpoint';
 import { TokenRequest } from '../types';
+import AppsChoices from './Choices';
 
 class AppsOptions extends SubResource {
+  choices = new AppsChoices(this.base);
+
   list = APIEndpoint<TokenRequest<Types.ListOptionsPayload>, Types.ListOptionsResponse>({
     method: 'get',
     path: '/site/{site_name}/ecommerce/options',
