@@ -818,6 +818,54 @@ duda.navigation.update({
 duda.blog.import({ site_name: site_name });
 ```
 
+## Delete Blog
+
+[Delete Blog Reference](https://developer.duda.co/reference/blog-delete-blog)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/blog`
+
+```typescript
+duda.blog.delete({ site_name: site_name });
+```
+
+## Create Blog
+
+[Create Blog Reference](https://developer.duda.co/reference/blog-create-blog#/)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog`
+
+```typescript
+duda.blog.create({ site_name: site_name });
+```
+
+## Update Blog
+
+[Update Blog Reference](https://developer.duda.co/reference/blog-update-blog#/)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/blog`
+
+```typescript
+duda.blog.update({ site_name: site_name });
+```
+
+## Get Blog
+
+[Get Blog Reference](https://developer.duda.co/reference/get-blog#/)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/blog`
+
+```typescript
+duda.blog.get({ site_name: site_name });
+```
+
 ## Import Blog Post
 
 [Import Blog Post Reference](https://developer.duda.co/reference/import-blog-post)
@@ -827,7 +875,7 @@ duda.blog.import({ site_name: site_name });
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts/import`
 
 ```typescript
-duda.blog.importPost({ site_name: site_name });
+duda.blog.posts.import({ site_name: site_name });
 ```
 
 ## Publish Blog Post
@@ -839,7 +887,7 @@ duda.blog.importPost({ site_name: site_name });
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts/{post_id}/publish`
 
 ```typescript
-duda.blog.publish({ site_name: site_name, post_id: post_id });
+duda.blog.posts.publish({ site_name: site_name, post_id: post_id });
 ```
 
 ## Unpublish Blog Post
@@ -851,7 +899,7 @@ duda.blog.publish({ site_name: site_name, post_id: post_id });
 `POST https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts/{post_id}/unpublish`
 
 ```typescript
-duda.blog.unpublish({ site_name: site_name, post_id: post_id });
+duda.blog.posts.unpublish({ site_name: site_name, post_id: post_id });
 ```
 
 ## Update Blog Post
@@ -863,7 +911,7 @@ duda.blog.unpublish({ site_name: site_name, post_id: post_id });
 `PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts/{post_id}`
 
 ```typescript
-duda.blog.update({ site_name: site_name, post_id: post_id });
+duda.blog.posts.update({ site_name: site_name, post_id: post_id });
 ```
 
 ## List Blog Posts
@@ -875,7 +923,7 @@ duda.blog.update({ site_name: site_name, post_id: post_id });
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts`
 
 ```typescript
-duda.blog.list({ site_name: site_name });
+duda.blog.posts.list({ site_name: site_name });
 ```
 
 ## Get Blog Post
@@ -887,7 +935,7 @@ duda.blog.list({ site_name: site_name });
 `GET https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts/{post_id}`
 
 ```typescript
-duda.blog.get({ site_name: site_name, post_id: post_id });
+duda.blog.posts.get({ site_name: site_name, post_id: post_id });
 ```
 
 ## Delete Blog Post
@@ -899,19 +947,7 @@ duda.blog.get({ site_name: site_name, post_id: post_id });
 `DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/blog/posts/{post_id}`
 
 ```typescript
-duda.blog.deletePost({ site_name: site_name, post_id: post_id });
-```
-
-## Delete Blog
-
-[Delete Blog Reference](https://developer.duda.co/reference/blog-delete-blog)
-
-### Request
-
-`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/blog`
-
-```typescript
-duda.blog.delete({ site_name: site_name });
+duda.blog.posts.delete({ site_name: site_name, post_id: post_id });
 ```
 
 # eComm
