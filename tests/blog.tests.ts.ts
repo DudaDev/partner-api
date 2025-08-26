@@ -14,6 +14,20 @@ describe('Blog tests', () => {
     import_type: 'APPEND'
   }
 
+  const blog = {
+    name: "string",
+    title: "string",
+    description: "string",
+    image: "string",
+    image_alt_text: "string"
+  }
+
+  const blog_payload = {
+    name: "string",
+    title: "string",
+    description: "string"
+  }
+
   const import_blog_post_object = {
     title: 'title',
     description: 'description',
@@ -89,12 +103,43 @@ describe('Blog tests', () => {
    })
   })
 
+  it('can delete a blog', async () => {
+    scope.delete(`${api_path}/${site_name}/blog`).reply(204)
+    return await duda.blog.delete({
+      site_name: site_name,
+      delete_backups: true
+    })
+  })
+
+  it('can create a blog', async () => {
+      scope.post(`${api_path}/${site_name}/blog`, (body) => {
+          expect(body).to.eql({ ...blog_payload })
+          return body
+      }).reply(200, blog)
+      return await duda.blog.create({ site_name, ...blog_payload })
+  })
+
+  it('can update a blog', async () => {
+    scope.patch(`${api_path}/${site_name}/blog`).reply(200, blog)
+    return await duda.blog.update({
+      site_name: site_name,
+      ...blog_payload
+    }).then(res => expect(res).to.eql(blog))
+  })
+
+  it('can get a blog', async () => {
+    scope.get(`${api_path}/${site_name}/blog`).reply(200, blog)
+    return await duda.blog.get({
+      site_name: site_name
+    }).then(res => expect(res).to.eql(blog))
+  })
+
   it('can import a blog post', async () => {
     scope.post(`${api_path}/${site_name}/blog/posts/import`, (body) => {
         expect(body).to.eql({ ...import_blog_post_object })
         return body
     }).reply(200, import_blog_post_object)
-   return await duda.blog.importPost({
+   return await duda.blog.posts.import({
     site_name: site_name,
     title: 'title',
     description: 'description',
@@ -111,7 +156,7 @@ describe('Blog tests', () => {
 
   it('can publish a blog post', async () => {
     scope.post(`${api_path}/${site_name}/blog/posts/${post_id}/publish`).reply(204)
-    return await duda.blog.publish({
+    return await duda.blog.posts.publish({
       site_name: site_name,
       post_id: post_id
     })
@@ -119,7 +164,7 @@ describe('Blog tests', () => {
 
   it('can unpublish a blog post', async () => {
     scope.post(`${api_path}/${site_name}/blog/posts/${post_id}/unpublish`).reply(204)
-    return await duda.blog.unpublish({
+    return await duda.blog.posts.unpublish({
       site_name: site_name,
       post_id: post_id
     })
@@ -127,7 +172,7 @@ describe('Blog tests', () => {
 
   it('can update a blog post', async () => {
     scope.patch(`${api_path}/${site_name}/blog/posts/${post_id}`).reply(200, blog_post)
-    return await duda.blog.update({
+    return await duda.blog.posts.update({
       site_name: site_name,
       post_id: post_id,
       ...update_blog_post_payload
@@ -136,7 +181,7 @@ describe('Blog tests', () => {
 
   it('can list all blog posts', async () => {
     scope.get(`${api_path}/${site_name}/blog/posts?limit=1&offset=0`).reply(200, list_blog_posts)
-    return await duda.blog.list({
+    return await duda.blog.posts.list({
       site_name: site_name,
       limit: 1,
       offset: 0
@@ -145,7 +190,7 @@ describe('Blog tests', () => {
 
   it('can get a blog post', async () => {
     scope.get(`${api_path}/${site_name}/blog/posts/${post_id}`).reply(200, blog_post)
-    return await duda.blog.get({
+    return await duda.blog.posts.get({
       site_name: site_name,
       post_id: post_id
     }).then(res => expect(res).to.eql(blog_post))
@@ -153,17 +198,9 @@ describe('Blog tests', () => {
 
   it('can delete a blog post', async () => {
     scope.delete(`${api_path}/${site_name}/blog/posts/${post_id}`).reply(204)
-    return await duda.blog.deletePost({
+    return await duda.blog.posts.delete({
       site_name: site_name,
       post_id: post_id
-    })
-  })
-
-  it('can delete a blog', async () => {
-    scope.delete(`${api_path}/${site_name}/blog`).reply(204)
-    return await duda.blog.delete({
-      site_name: site_name,
-      delete_backups: true
     })
   })
 })

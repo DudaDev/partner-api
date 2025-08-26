@@ -2,8 +2,11 @@ import * as Types from './types';
 import Resource from '../base';
 
 import { APIEndpoint } from '../APIEndpoint';
+import Posts from './Posts';
 
 class Blog extends Resource {
+  posts = new Posts(this.config);
+
   import = APIEndpoint<Types.ImportBlogPayload, Types.ImportBlogResponse>({
     method: 'post',
     path: '/api/sites/multiscreen/{site_name}/blog/import',
@@ -12,74 +15,32 @@ class Blog extends Resource {
     },
   });
 
-  importPost = APIEndpoint<Types.ImportBlogPostPayload, Types.ImportBlogPostResponse>({
-    method: 'post',
-    path: '/api/sites/multiscreen/{site_name}/blog/posts/import',
-    defaults: {
-      host: 'api.duda.co',
-    },
-  });
-
-  publish = APIEndpoint<Types.PublishBlogPostPayload, Types.PublishBlogPostResponse>({
-    method: 'post',
-    path: '/api/sites/multiscreen/{site_name}/blog/posts/{post_id}/publish',
-    defaults: {
-      host: 'api.duda.co',
-    },
-  });
-
-  unpublish = APIEndpoint<Types.UnpublishBlogPostPayload, Types.UnpublishBlogPostResponse>({
-    method: 'post',
-    path: '/api/sites/multiscreen/{site_name}/blog/posts/{post_id}/unpublish',
-    defaults: {
-      host: 'api.duda.co',
-    },
-  });
-
-  update = APIEndpoint<Types.UpdateBlogPostPayload, Types.UpdateBlogPostResponse>({
-    method: 'patch',
-    path: '/api/sites/multiscreen/{site_name}/blog/posts/{post_id}',
-    defaults: {
-      host: 'api.duda.co',
-    },
-  });
-
-  list = APIEndpoint<Types.ListBlogPostsPayload, Types.ListBlogPostsResponse>({
-    method: 'get',
-    path: '/api/sites/multiscreen/{site_name}/blog/posts',
-    defaults: {
-      host: 'api.duda.co',
-    },
-    queryParams: {
-      limit: {
-        type: 'number',
-        required: false,
-      },
-      offset: {
-        type: 'number',
-        required: false,
-      },
-    },
-  });
-
-  get = APIEndpoint<Types.GetBlogPostPayload, Types.GetBlogPostResponse>({
-    method: 'get',
-    path: '/api/sites/multiscreen/{site_name}/blog/posts/{post_id}',
-    defaults: {
-      host: 'api.duda.co',
-    },
-  });
-
-  deletePost = APIEndpoint<Types.DeleteBlogPostPayload, Types.DeleteBlogPostResponse>({
-    method: 'delete',
-    path: '/api/sites/multiscreen/{site_name}/blog/posts/{post_id}',
-    defaults: {
-      host: 'api.duda.co',
-    },
-  });
-
   delete = APIEndpoint<Types.DeleteBlogPayload, Types.DeleteBlogResponse>({
     method: 'delete',
+    path: '/api/sites/multiscreen/{site_name}/blog',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  create = APIEndpoint<Types.CreateBlogPayload, Types.CreateBlogResponse>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}/blog',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  update = APIEndpoint<Types.UpdateBlogPayload, Types.UpdateBlogResponse>({
+    method: 'patch',
+    path: '/api/sites/multiscreen/{site_name}/blog',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  get = APIEndpoint<Types.GetBlogPayload, Types.GetBlogResponse>({
+    method: 'get',
     path: '/api/sites/multiscreen/{site_name}/blog',
     defaults: {
       host: 'api.duda.co',
