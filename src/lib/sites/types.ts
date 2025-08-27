@@ -132,6 +132,38 @@ export type SiteThemeColor = {
   label: string,
 }
 
+export interface BreakpointOverrides {
+  font_size?: string
+}
+
+export interface ThemeBreakpoints {
+  mobile?: BreakpointOverrides,
+  tablet?: BreakpointOverrides
+}
+
+export interface ThemeTextStyle {
+  font_family?: string;
+  font_size?: string;
+  font_weight?: string;
+  color?: string;
+  line_height?: string;
+  letter_spacing?: string;
+  text_decoration?: string;
+  font_style?: string;
+  breakpoints?: ThemeBreakpoints;
+}
+
+export interface ThemeTextStyles {
+  default?: ThemeTextStyle,
+  paragraph?: ThemeTextStyle,
+  h1?: ThemeTextStyle,
+  h2?: ThemeTextStyle,
+  h3?: ThemeTextStyle,
+  h4?: ThemeTextStyle,
+  h5?: ThemeTextStyle,
+  h6?: ThemeTextStyle
+}
+
 export interface SiteNamedPayload {
   site_name: string;
 }
@@ -143,6 +175,7 @@ export interface SiteNamedResponse {
 export interface UpdateSiteThemePayload {
   site_name: string,
   colors: Array<SiteThemeColor>,
+  text: ThemeTextStyles
 }
 
 export interface GetSiteResponse extends Site {
@@ -189,6 +222,7 @@ export type SwitchTemplateResponse = void;
 
 export type SiteThemeResponse = {
   colors: Array<SiteThemeColor>,
+  text: ThemeTextStyles
 }
 
 export interface PublishSitePayload extends SiteNamedPayload {
@@ -238,11 +272,18 @@ type AtLeastOne<T, U = {[K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U]
 export type UpdateSitePayload = FirstPartialUpdateSitePayload
 & AtLeastOne<SecondPartialUpdateSitePayload>
 
+export type PublishStatus =
+  'NOT_PUBLISHED_YET' |
+  'PUBLISHED' |
+  'UNPUBLISHED';
+
 export interface ListSitePayload {
   offset?: number,
   limit?: number,
-  sort?: string,
-  direction?: 'asc' | 'desc'
+  sort?: 'CREATION_DATE' | 'LAST_PUBLISHED_DATE',
+  direction?: 'asc' | 'desc',
+  label_names?: Array<string>,
+  publish_status?: Array<PublishStatus>
 }
 
 export type GetSiteByNamePayload = {

@@ -19,12 +19,6 @@ class Theme extends Resource {
     defaults: {
       host: 'api.duda.co',
     },
-    bodyParams: {
-      colors: {
-        type: 'array',
-        required: true,
-      },
-    },
   });
 }
 

@@ -51,6 +51,34 @@ describe('Site tests', () => {
     }
     const colors = [colors_obj]
 
+    const theme_text = {
+        h1: {
+          font_family: "string",
+          font_size: "string",
+          font_weight: "string",
+          color: "string",
+          line_height: "string",
+          letter_spacing: "string",
+          text_decoration: "string",
+          font_style: "string",
+          breakpoints: {
+            mobile: {
+                font_size: "string"
+            }
+          }
+        }
+    }
+
+    const site_theme_response = {
+        colors: colors,
+        text: theme_text
+    }
+
+    const update_site_theme_payload = {
+        colors: colors,
+        text: theme_text
+    }
+
     const create_response = { site_name: site_name };
     const get_response = {
         account_name: account_name,
@@ -89,12 +117,22 @@ describe('Site tests', () => {
         return await duda.sites.create({ ...site_obj })
     })
     it('can list all sites', async () => {
-        scope.get(`/api/sites/multiscreen`).reply(200, list_response)
-        return await duda.sites.list()
+        scope.get(`/api/sites/multiscreen?limit=0&offset=0&sort=CREATION_DATE&direction=asc`).reply(200, list_response)
+        return await duda.sites.list({
+            limit: 0,
+            offset: 0,
+            sort: 'CREATION_DATE',
+            direction: 'asc',
+            publish_status: [
+                'PUBLISHED'
+            ]
+        }).then(res => expect(res).to.eql(list_response))
     })
-    it('can get a site by name', async () => {
+    it('an get a site by name', async () => {
         scope.get(`${api_path}${site_name}`).reply(200, get_response)
-        return await duda.sites.get({ site_name:site_name })
+
+        return await duda.sites.get({ site_name })
+        .then(res => expect(res).to.eql({ ...get_response }))
     })
     it('can update a site', async () => {
         scope.post(`${api_path}update/${site_name}`, (body) => {
@@ -146,14 +184,16 @@ describe('Site tests', () => {
         return await duda.sites.delete({ site_name:site_name })
     })
     it('can get the site theme of a site', async () => {
-        scope.get(`${api_path}${site_name}/theme`).reply(200, get_response)
-        return await duda.sites.theme.get({ site_name:site_name })
+        scope.get(`${api_path}${site_name}/theme`).reply(200, site_theme_response)
+
+        return await duda.sites.theme.get({ site_name })
+        .then(res => expect(res).to.eql({ ...site_theme_response }))
     })
     it('can update the site theme of a site', async () => {
         scope.put(`${api_path}${site_name}/theme`, (body) => {
-            expect(body).to.eql({ colors: colors })
+            expect(body).to.eql({ ...update_site_theme_payload })
             return body
-        }).reply(200, colors)
-        return await duda.sites.theme.update({ site_name:site_name, colors: colors })
+        }).reply(200, site_theme_response)
+        return await duda.sites.theme.update({ site_name, ...update_site_theme_payload })
     })
 })
