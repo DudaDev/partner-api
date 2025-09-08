@@ -38,6 +38,18 @@ class Templates extends Resource {
         type: 'number',
         required: false,
       },
+      "page_count.gte": {
+        type: 'number',
+        required: false,
+      },
+      "page_count.lte": {
+        type: 'number',
+        required: false,
+      },
+      "name.contains": {
+        type: 'number',
+        required: false,
+      },
       sort: {
         type: 'string',
         required: false,

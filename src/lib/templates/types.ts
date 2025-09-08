@@ -30,6 +30,9 @@ export type ListTemplatesPayload = {
   editor?: 'ADVANCED' | 'ADVANCED-2.0',
   type?: 'DUDA' | 'CUSTOM',
   page_count?: number,
+  "page_count.gte"?: number,
+  "page_count.lte"?: number,
+  "name.contains"?: string,
   sort?: string,
   direction?: 'asc' | 'desc',
   categories?: string

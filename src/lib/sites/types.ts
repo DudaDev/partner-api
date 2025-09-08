@@ -174,8 +174,8 @@ export interface SiteNamedResponse {
 
 export interface UpdateSiteThemePayload {
   site_name: string,
-  colors: Array<SiteThemeColor>,
-  text: ThemeTextStyles
+  colors?: Array<SiteThemeColor>,
+  text?: ThemeTextStyles
 }
 
 export interface GetSiteResponse extends Site {

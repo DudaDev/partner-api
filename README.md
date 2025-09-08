@@ -505,7 +505,7 @@ duda.async.get({ task_id: task_id });
 `GET https://api.duda.co/api/sites/multiscreen/templates`
 
 ```typescript
-duda.templates.list();
+duda.templates.list({ 'page_count.gte': 1 });
 ```
 
 ## Get Template
