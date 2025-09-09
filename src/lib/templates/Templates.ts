@@ -14,6 +14,54 @@ class Templates extends Resource {
         type: 'string',
         required: false,
       },
+      has_store: {
+        type: 'boolean',
+        required: false,
+      },
+      has_blog: {
+        type: 'boolean',
+        required: false,
+      },
+      store_type: {
+        type: 'string',
+        required: false,
+      },
+      editor: {
+        type: 'string',
+        required: false,
+      },
+      type: {
+        type: 'string',
+        required: false,
+      },
+      page_count: {
+        type: 'number',
+        required: false,
+      },
+      "page_count.gte": {
+        type: 'number',
+        required: false,
+      },
+      "page_count.lte": {
+        type: 'number',
+        required: false,
+      },
+      "name.contains": {
+        type: 'number',
+        required: false,
+      },
+      sort: {
+        type: 'string',
+        required: false,
+      },
+      direction: {
+        type: 'string',
+        required: false,
+      },
+      categories: {
+        type: 'string',
+        required: false,
+      },
     },
   });
 

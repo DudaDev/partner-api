@@ -39,8 +39,10 @@ describe('Template tests', () => {
   })
 
   it('can list all templates', async () => {
-    scope.get(`${api_path}`).reply(200, response)
-    return await duda.templates.list()
+    scope.get(`${api_path}?page_count.gte=5`).reply(200, response)
+    return await duda.templates.list({
+      'page_count.gte': 5
+    })
   })
 
   it('can list all templates of a specific language', async () => {

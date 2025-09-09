@@ -6,6 +6,7 @@ import/prefer-default-export
 import {EventEmitter} from 'events';
 import Accounts from './lib/accounts/Accounts';
 import Apps, { DudaAppConfig } from './lib/apps/Apps';
+import Async from './lib/async tasks/Async';
 import Blog from './lib/blog/Blog';
 import Collections from './lib/collections/Collections';
 import Content from './lib/content/Content';
@@ -43,6 +44,8 @@ class Duda {
   accounts: Accounts;
 
   appstore: Apps;
+
+  async: Async;
 
   blog: Blog;
 
@@ -85,6 +88,7 @@ class Duda {
     // new:resource::hook
     this.appstore = new Apps(config, this.events, appOpts);
     this.accounts = new Accounts(config);
+    this.async = new Async(config);
     this.blog = new Blog(config);
     this.collections = new Collections(config);
     this.content = new Content(config);

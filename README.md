@@ -468,6 +468,32 @@ duda.sites.theme.get({ site_name: site_name });
 duda.sites.theme.update({ site_name: site_name });
 ```
 
+# Async Site Tasks
+
+## Generate Site with AI
+
+[Generate Site with AI Reference](https://developer.duda.co/reference/generate-site-with-ai#/)
+
+### Request
+
+`POST https://api.duda.co/api/async-tasks/generate-site-with-ai`
+
+```typescript
+duda.async.generate();
+```
+
+## Get Task
+
+[Get Task Reference](https://developer.duda.co/reference/get-task#/)
+
+### Request
+
+`GET https://api.duda.co/api/async-tasks/{task_id}`
+
+```typescript
+duda.async.get({ task_id: task_id });
+```
+
 # Templates
 
 ## List Templates
@@ -479,7 +505,7 @@ duda.sites.theme.update({ site_name: site_name });
 `GET https://api.duda.co/api/sites/multiscreen/templates`
 
 ```typescript
-duda.templates.list();
+duda.templates.list({ 'page_count.gte': 1 });
 ```
 
 ## Get Template
