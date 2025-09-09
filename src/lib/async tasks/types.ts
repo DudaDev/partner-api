@@ -9,7 +9,7 @@ interface BusinessData {
     logo_url?: string,
     name: string,
     service_area?: string,
-    tone_of_voice: string
+    tone_of_voice?: string
 }
 
 interface Labels {
