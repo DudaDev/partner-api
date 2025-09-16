@@ -32,6 +32,9 @@ export interface SocialAccounts {
   reddit?: string;
   tripadvisor?: string;
   snapchat?: string;
+  tiktok?: string;
+  whatsapp?: string;
+  google_my_business?: string;
 }
 
 export interface Address {
