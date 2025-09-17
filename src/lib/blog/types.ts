@@ -117,3 +117,35 @@ export interface DeleteBlogPayload {
 }
 
 export type DeleteBlogResponse = void;
+
+export interface Blog {
+    name: string,
+    title: string,
+    description: string,
+    image: string,
+    image_alt_text: string
+}
+
+export interface CreateBlogPayload {
+    site_name: string,
+    name?: string,
+    title?: string,
+    description?: string
+}
+
+export interface CreateBlogResponse extends Blog {}
+
+export interface UpdateBlogPayload {
+    site_name: string,
+    name?: string,
+    title?: string,
+    description?: string
+}
+
+export interface UpdateBlogResponse extends Blog {}
+
+export interface GetBlogPayload {
+    site_name: string
+}
+
+export interface GetBlogResponse extends Blog {}

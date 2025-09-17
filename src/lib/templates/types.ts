@@ -12,8 +12,10 @@ export interface Template {
   template_properties?: {
     can_build_from_url?: boolean,
     has_store?: boolean,
+    store_type?: 'NATIVE' | 'THIRDPARTY',
     has_blog?: boolean,
     page_count?: number
+    type?: 'DUDA' | 'CUSTOM'
   }
 }
 
@@ -21,7 +23,19 @@ export type ListTemplatesResponse = Array<Template>;
 export type GetTemplateResponse = Template;
 
 export type ListTemplatesPayload = {
-  lang?: string;
+  lang?: string,
+  has_store?: string,
+  has_blog?: string,
+  store_type?: 'NATIVE' | 'THIRDPARTY',
+  editor?: 'ADVANCED' | 'ADVANCED-2.0',
+  type?: 'DUDA' | 'CUSTOM',
+  page_count?: number,
+  "page_count.gte"?: number,
+  "page_count.lte"?: number,
+  "name.contains"?: string,
+  sort?: string,
+  direction?: 'asc' | 'desc',
+  categories?: string
 }
 
 export interface CreateFromResponse {
