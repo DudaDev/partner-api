@@ -192,9 +192,15 @@ export interface UnitDimensions {
   length: number
 }
 
-export interface ShippingMethod {
+export interface ShippingMethodCart {
   name: string,
   cost: number
+}
+
+export interface ShippingMethodOrder {
+  name: string,
+  cost: number,
+  id: string
 }
 
 export interface CartItem {
@@ -263,7 +269,7 @@ export interface Cart {
   items: Array<CartItem>,
   billing_address: Address,
   shipping_address: Address,
-  shipping_method: ShippingMethod,
+  shipping_method: ShippingMethodCart,
   shipping_instructions: string,
   discounts: Discount,
   tax_provider: 'BUILT_IN' | 'AVALARA' | 'UNKNOWN',
@@ -376,7 +382,7 @@ export interface Order {
   items: Array<OrderItem>,
   billing_address: Address,
   shipping_address: Address,
-  shipping_method: ShippingMethod,
+  shipping_method: ShippingMethodOrder,
   shipping_instructions: string,
   discounts: Array<Discount>,
   taxes: Array<Taxes>,

@@ -74,7 +74,8 @@ export type Permissions =
   'CLIENT_MANAGE_FREE_APPS' |
   'AI_ASSISTANT' |
   'CONTENT_LIBRARY_EXTERNAL_DATA_SYNC' |
-  'SEO_OVERVIEW';
+  'SEO_OVERVIEW' |
+  'BOOKING_ADMIN';
 
 export interface GetPermissionsResponse {
   permissions: Array<Permissions>;
