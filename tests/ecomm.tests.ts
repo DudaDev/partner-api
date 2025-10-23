@@ -577,7 +577,8 @@ describe('Ecomm tests', () => {
     },
     shipping_method: {
       name: "string",
-      cost: 0
+      cost: 0,
+      id: "string"
     },
     shipping_instructions: "string",
     discounts: [
