@@ -8,6 +8,7 @@ import Accounts from './lib/accounts/Accounts';
 import Apps, { DudaAppConfig } from './lib/apps/Apps';
 import Async from './lib/async tasks/Async';
 import Blog from './lib/blog/Blog';
+import Booking from './lib/booking/Booking';
 import Collections from './lib/collections/Collections';
 import Content from './lib/content/Content';
 import Diyeditor from './lib/diyeditor/Diyeditor';
@@ -48,6 +49,8 @@ class Duda {
   async: Async;
 
   blog: Blog;
+
+  booking: Booking;
 
   collections: Collections;
 
@@ -90,6 +93,7 @@ class Duda {
     this.accounts = new Accounts(config);
     this.async = new Async(config);
     this.blog = new Blog(config);
+    this.booking = new Booking(config);
     this.collections = new Collections(config);
     this.content = new Content(config);
     this.diyEditor = new Diyeditor(config);
