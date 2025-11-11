@@ -1932,6 +1932,20 @@ duda.ecomm.options.choices.delete({
 });
 ```
 
+# Booking Appointments
+
+## List Booking Appointments
+
+[List Booking Appointments Reference](https://developer.duda.co/reference/list-booking-appointments)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointments`
+
+```typescript
+duda.booking.appointments.list({ site_name: site_name });
+```
+
 # URL Rules
 
 ## List Rules
