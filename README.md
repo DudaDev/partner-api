@@ -1946,6 +1946,68 @@ duda.ecomm.options.choices.delete({
 duda.booking.appointments.list({ site_name: site_name });
 ```
 
+# Booking Appointment Types
+
+## List Booking Appointment Types
+
+[List Booking Appointment Types Reference](https://developer.duda.co/reference/list-booking-appointment-types)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointment-types`
+
+```typescript
+duda.booking.appointment_types.list({ site_name: site_name });
+```
+
+## Get Booking Appointment Type
+
+[Get Booking Appointment Type Reference](https://developer.duda.co/reference/get-booking-appointment-type)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointment-types/{id}`
+
+```typescript
+duda.booking.appointment_types.get({ site_name: site_name, id: id });
+```
+
+## Create Booking Appointment Type
+
+[Create Booking Appointment Type Reference](https://developer.duda.co/reference/create-booking-appointment-type)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointment-types`
+
+```typescript
+duda.booking.appointment_types.create({ site_name: site_name });
+```
+
+## Update Booking Appointment Type
+
+[Update Booking Appointment Type Reference](https://developer.duda.co/reference/update-booking-appointment-type)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointment-types/{id}`
+
+```typescript
+duda.booking.appointment_types.update({ site_name: site_name, id: id });
+```
+
+## Delete Booking Appointment Type
+
+[Delete Booking Appointment Type Reference](https://developer.duda.co/reference/delete-booking-appointment-type)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointment-types/{id}`
+
+```typescript
+duda.booking.appointment_types.delete({ site_name: site_name, id: id });
+```
+
 # URL Rules
 
 ## List Rules

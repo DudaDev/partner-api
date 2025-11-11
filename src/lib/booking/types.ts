@@ -130,3 +130,57 @@ export interface ListBookingAppointmentsResponse {
     site_name: string,
     total_responses: number
 }
+
+interface BookingAppointmentTypes {
+    created_at: string,
+    description: string,
+    duration: number,
+    id: string,
+    name: string,
+    updated_at: string
+}
+
+export interface ListBookingAppointmentTypesPayload {
+    site_name: string
+}
+
+export interface ListBookingAppointmentTypesResponse {
+    limit: number,
+    offset: number,
+    results: Array<BookingAppointmentTypes>,
+    site_name: string,
+    total_responses: number
+}
+
+export interface GetBookingAppointmentTypesPayload {
+    site_name: string,
+    id: string
+}
+
+export interface GetBookingAppointmentTypesResponse extends BookingAppointmentTypes {}
+
+export interface CreateBookingAppointmentTypesPayload {
+    site_name: string,
+    description?: string,
+    duration: number,
+    name: string
+}
+
+export interface CreateBookingAppointmentTypesResponse extends BookingAppointmentTypes {}
+
+export interface UpdateBookingAppointmentTypesPayload {
+    site_name: string,
+    id: string,
+    description?: string,
+    duration: number,
+    name: string
+}
+
+export interface UpdateBookingAppointmentTypesResponse extends BookingAppointmentTypes {}
+
+export interface DeleteBookingAppointmentTypesPayload {
+    site_name: string,
+    id: string
+}
+
+export type DeleteBookingAppointmentTypesResponse = null;
