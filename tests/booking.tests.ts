@@ -83,11 +83,6 @@ describe('Booking tests', () => {
   })
 
   describe('booking appointments', () => {
-    // it('can list all booking appointments', async () => {
-    //   scope.get(`/api/sites/multiscreen/test_site/booking/appointments`).reply(200, list_booking_appointments_response)
-    //   return await duda.booking.appointments.list()
-    // })
-
     it('can list all booking appointments', async () => {
     scope.get(`${api_path}${site_name}/booking/appointments?offset=${offset}&limit=${limit}`).reply(200, list_booking_appointments_response)
     return await duda.booking.appointments.list({
