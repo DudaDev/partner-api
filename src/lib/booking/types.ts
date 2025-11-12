@@ -263,7 +263,7 @@ interface StaffMemberOverrides {
 interface BookingStaffMemberAvailability {
     availability?: Array<StaffMemberAvailability>,
     overrides?: Array<StaffMemberOverrides>,
-    timezone?: string
+    time_zone?: string
 }
 
 export interface GetBookingStaffMembersAvailabilityPayload {
