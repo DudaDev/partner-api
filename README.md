@@ -2008,6 +2008,92 @@ duda.booking.appointment_types.update({ site_name: site_name, id: id });
 duda.booking.appointment_types.delete({ site_name: site_name, id: id });
 ```
 
+# Booking Staff Members
+
+## List Booking Staff Members
+
+[List Booking Staff Members Reference](https://developer.duda.co/reference/list-booking-staff-members)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/staff-members`
+
+```typescript
+duda.booking.staff_members.list({ site_name: site_name });
+```
+
+## Get Booking Staff Member
+
+[Get Booking Staff Member Reference](https://developer.duda.co/reference/get-booking-staff-member)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/staff-members/{id}`
+
+```typescript
+duda.booking.staff_members.get({ site_name: site_name, id: id });
+```
+
+## Create Booking Staff Member
+
+[Create Booking Staff Member Reference](https://developer.duda.co/reference/create-booking-staff-member)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/staff-members`
+
+```typescript
+duda.booking.staff_members.create({ site_name: site_name });
+```
+
+## Update Booking Staff Member
+
+[Update Booking Staff Member Reference](https://developer.duda.co/reference/update-booking-staff-member)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/booking/staff-members/{id}`
+
+```typescript
+duda.booking.staff_members.update({ site_name: site_name, id: id });
+```
+
+## Delete Booking Staff Member
+
+[Delete Booking Staff Member Reference](https://developer.duda.co/reference/delete-booking-staff-member)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/booking/staff-members/{id}`
+
+```typescript
+duda.booking.staff_members.delete({ site_name: site_name, id: id });
+```
+
+## Get Booking Staff Member Availability
+
+[Get Booking Staff Member Availability Reference](https://developer.duda.co/reference/get-booking-staff-member-availability)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/staff-members/{id}/availability`
+
+```typescript
+duda.booking.staff_members.availability.get({ site_name: site_name, id: id });
+```
+
+## Update Booking Staff Member Availability
+
+[Update Booking Staff Member Availability Reference](https://developer.duda.co/reference/update-booking-staff-member-availability)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/booking/staff-members/{id}/availability`
+
+```typescript
+duda.booking.staff_members.availability.update({ site_name: site_name, id: id });
+```
+
 # URL Rules
 
 ## List Rules

@@ -184,3 +184,98 @@ export interface DeleteBookingAppointmentTypesPayload {
 }
 
 export type DeleteBookingAppointmentTypesResponse = null;
+
+interface BookingStaffMember {
+    account_name?: string,
+    email: string,
+    id: string,
+    name: string
+}
+
+export interface ListBookingStaffMembersPayload {
+    site_name: string
+}
+
+export interface ListBookingStaffMembersResponse {
+    limit: number,
+    offset: number,
+    results: Array<BookingStaffMember>,
+    site_name: string,
+    total_responses: number
+}
+
+export interface GetBookingStaffMembersPayload {
+    site_name: string,
+    id: string
+}
+
+export interface GetBookingStaffMembersResponse extends BookingStaffMember {}
+
+export interface CreateBookingStaffMembersPayload {
+    site_name: string,
+    account_name?: string,
+    email?: string,
+    name?: string,
+    timezone?: string
+}
+
+export interface CreateBookingStaffMembersResponse extends BookingStaffMember {}
+
+export interface UpdateBookingStaffMembersPayload {
+    site_name: string,
+    id: string,
+    account_name?: string,
+    email?: string,
+    name?: string
+}
+
+export interface UpdateBookingStaffMembersResponse extends BookingStaffMember {}
+
+export interface DeleteBookingStaffMembersPayload {
+    site_name: string,
+    id: string
+}
+
+export type DeleteBookingStaffMembersResponse = null;
+
+type StaffMemberAvailabilityDays =
+    'MONDAY' |
+    'TUESDAY' |
+    'WEDNESDAY' |
+    'THURSDAY' |
+    'FRIDAY' |
+    'SATURDAY' |
+    'SUNDAY' |
+    string;
+
+interface StaffMemberAvailability {
+    days?: Array<StaffMemberAvailabilityDays>,
+    start_time?: string,
+    end_time?: string
+}
+
+interface StaffMemberOverrides {
+    date?: string,
+    start_time?: string,
+    end_time?: string
+}
+
+interface BookingStaffMemberAvailability {
+    availability?: Array<StaffMemberAvailability>,
+    overrides?: Array<StaffMemberOverrides>,
+    timezone?: string
+}
+
+export interface GetBookingStaffMembersAvailabilityPayload {
+    site_name: string,
+    id: string
+}
+
+export interface GetBookingStaffMembersAvailabilityResponse extends BookingStaffMemberAvailability {}
+
+export interface UpdateBookingStaffMembersAvailabilityPayload extends BookingStaffMemberAvailability {
+    site_name: string,
+    id: string
+}
+
+export interface UpdateBookingStaffMembersAvailabilityResponse extends BookingStaffMemberAvailability {}
