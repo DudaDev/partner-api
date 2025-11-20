@@ -22,6 +22,7 @@ describe('Ecomm tests', () => {
   const option_id = 'test_option';
   const choice_id = 'test_choice';
   const variation_id = 'test_variation';
+  const custom_field_id = 'test_custom_field'
 
   const offset = 0;
   const limit = 1;
@@ -421,8 +422,7 @@ describe('Ecomm tests', () => {
           }
         ],
         total: 0,
-        combined_weight: 0,
-        metadata: "string"
+        combined_weight: 0
       }
     ],
     billing_address: {
@@ -481,8 +481,7 @@ describe('Ecomm tests', () => {
     created: "2023-09-06T18:09:28.653Z",
     updated: "2023-09-06T18:09:28.653Z",
     user_agent: "string",
-    ip_address: "string",
-    metadata: "string"
+    ip_address: "string"
   }
 
   const list_carts = {
@@ -541,8 +540,7 @@ describe('Ecomm tests', () => {
           length: 0
         },
         total: 0,
-        combined_weight: 0,
-        metadata: "string"
+        combined_weight: 0
       }
     ],
     billing_address: {
@@ -614,7 +612,6 @@ describe('Ecomm tests', () => {
     created: "2023-09-08T17:48:47.497Z",
     user_agent: "string",
     ip_address: "string",
-    metadata: "string"
   }
 
   const list_orders = {
@@ -657,8 +654,7 @@ describe('Ecomm tests', () => {
   }
 
   const update_order_item = {
-    id: "string",
-    metadata: "string"
+    id: "string"
   }
 
   const update_order_payload = {
@@ -666,8 +662,7 @@ describe('Ecomm tests', () => {
     items: [update_order_item],
     billing_address: address,
     shipping_address: address,
-    shipping_instructions: "string",
-    metadata: "string"
+    shipping_instructions: "string"
   }
 
   const cancel_order_payload = {
@@ -1006,6 +1001,24 @@ describe('Ecomm tests', () => {
     price_difference: "string",
     quantity: 25,
     sku: "UGG-BB-PUR-06",
+  }
+
+  const ecomm_custom_field = {
+    id: "test_custom_field",
+    name: "string",
+    type: "TEXT"
+  }
+
+  const list_ecomm_custom_fields = {
+    offset: 0,
+    limit: 50,
+    total_responses: 1,
+    results: [ecomm_custom_field]
+  }
+
+  const create_ecomm_custom_field_payload = {
+    name: "string",
+    type: "TEXT"
   }
 
   before(() => {
@@ -1591,5 +1604,31 @@ describe('Ecomm tests', () => {
   it('can update a store', async () => {
     scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/store`).reply(204)
     return await duda.ecomm.store.delete({ site_name })
+  })
+
+  it('can list all custom fields', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/custom-fields`).reply(200, list_ecomm_custom_fields)
+    return await duda.ecomm.custom_fields.list({ site_name }).then(res => expect(res).to.eql(list_ecomm_custom_fields))
+  })
+
+  it('can create a custom field', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/custom-fields`, (body) => {
+      expect(body).to.eql({ ...create_ecomm_custom_field_payload })
+      return body
+    }).reply(200, ecomm_custom_field)
+
+    return await duda.ecomm.custom_fields.create({ site_name, ...create_ecomm_custom_field_payload })
+  })
+
+  it('can get a custom field', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/custom-fields/${custom_field_id}`).reply(200, ecomm_custom_field)
+
+    return await duda.ecomm.custom_fields.get({ site_name, custom_field_id })
+      .then(res => expect(res).to.eql({ ...ecomm_custom_field }))
+  })
+
+  it('can delete a custom field', async () => {
+    scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/custom-fields/${custom_field_id}`).reply(204)
+    return await duda.ecomm.custom_fields.delete({ site_name, custom_field_id })
   })
 })

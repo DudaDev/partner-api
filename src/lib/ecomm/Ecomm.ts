@@ -10,6 +10,7 @@ import Shipping from './Shipping';
 import Products from './Products';
 import Options from './Options';
 import Variations from './Variations';
+import CustomFields from './Custom_Fields';
 import Store from './Store';
 import * as Types from './types';
 import { APIEndpoint } from '../APIEndpoint';
@@ -38,6 +39,8 @@ class Ecomm extends Resource {
   variations = new Variations(this.config);
 
   store = new Store(this.config);
+
+  custom_fields = new CustomFields(this.config);
 
   get = APIEndpoint<Types.GetEcommPayload, Types.GetEcommResponse>({
     method: 'get',

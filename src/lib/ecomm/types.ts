@@ -240,7 +240,9 @@ export interface CartItem {
   taxes: Taxes
   total: number,
   combined_weight: number,
-  metadata: string
+  metadata?: {
+    [key: string]: string
+  }
 }
 
 export interface Address {
@@ -280,7 +282,9 @@ export interface Cart {
   updated: string,
   user_agent: string,
   ip_address: string,
-  metadata: string
+  metadata?: {
+    [key: string]: string
+  }
 }
 
 export interface ListCartsPayload {
@@ -334,7 +338,9 @@ export interface OrderItem {
   unit_dimensions: UnitDimensions,
   total: number,
   combined_weight: number,
-  metadata: string
+  metadata?: {
+    [key: string]: string
+  }
 }
 
 export interface RefundTaxes {
@@ -395,7 +401,9 @@ export interface Order {
   created: string,
   user_agent: string,
   ip_address: string,
-  metadata: string
+  metadata?: {
+    [key: string]: string
+  }
 }
 
 export interface CreateOrderItem {
@@ -415,7 +423,7 @@ export interface CreateOrderItem {
 
 export interface UpdateOrderItem {
   id: string,
-  metadata: string
+  metadata?: Record<any, string> | string
 }
 
 export interface ListOrdersPayload {
@@ -472,7 +480,7 @@ export interface UpdateOrderPayload {
   billing_address?: Address,
   shipping_address?: Address,
   shipping_instructions?: string,
-  metadata?: string
+  metadata?: Record<any, string> | string
 }
 
 export interface UpdateOrderResponse extends Order {}
@@ -1189,3 +1197,49 @@ export interface DeleteTaxZoneRatePayload {
 }
 
 export type DeleteTaxZoneRateResponse = void;
+
+type CustomFieldType =
+  'TEXT' |
+  'PLAIN_TEXT' |
+  'IMAGE' |
+  'VIDEO';
+
+interface EcommCustomField {
+  id: string,
+  name: string,
+  type: CustomFieldType
+}
+
+export interface ListCustomFieldsPayload {
+  site_name: string
+}
+
+export interface ListCustomFieldsResponse {
+  offset: number,
+  limit: number,
+  total_responses: number,
+  site_name: string,
+  results: Array<EcommCustomField>
+}
+
+export interface GetCustomFieldPayload {
+  site_name: string,
+  custom_field_id: string
+}
+
+export interface GetCustomFieldResponse extends EcommCustomField {}
+
+export interface CreateCustomFieldPayload {
+  site_name: string,
+  name: string,
+  type: string
+}
+
+export interface CreateCustomFieldResponse extends EcommCustomField {}
+
+export interface DeleteCustomFieldPayload {
+  site_name: string,
+  custom_field_id: string
+}
+
+export type DeleteCustomFieldResponse = null;
