@@ -1932,6 +1932,56 @@ duda.ecomm.options.choices.delete({
 });
 ```
 
+# eComm Custom Fields
+
+## List Custom Fields
+
+[List Custom Fields Reference](https://developer.duda.co/reference/ecommerce-list-custom-fields)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/custom-fields`
+
+```typescript
+duda.ecomm.custom_fields.list({ site_name: site_name });
+```
+
+## Get Custom Field
+
+[Get Custom Field Reference](https://developer.duda.co/reference/ecommerce-get-custom-field)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/custom-fields/{custom_field_id}`
+
+```typescript
+duda.ecomm.custom_fields.get({ site_name: site_name, custom_field_id: custom_field_id });
+```
+
+## Create Custom Field
+
+[Create Custom Field Reference](https://developer.duda.co/reference/ecommerce-create-custom-field)
+
+### Request
+
+`CREATE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/custom-fields`
+
+```typescript
+duda.ecomm.options.create({ site_name: site_name });
+```
+
+## Delete Custom Field
+
+[Delete Custom Field Reference](https://developer.duda.co/reference/ecommerce-delete-custom-field)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/custom-fields/{custom_field_id}`
+
+```typescript
+duda.ecomm.custom_fields.delete({ site_name: site_name, custom_field_id: custom_field_id });
+```
+
 # Booking Appointments
 
 ## List Booking Appointments
