@@ -1932,6 +1932,218 @@ duda.ecomm.options.choices.delete({
 });
 ```
 
+# eComm Custom Fields
+
+## List Custom Fields
+
+[List Custom Fields Reference](https://developer.duda.co/reference/ecommerce-list-custom-fields)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/custom-fields`
+
+```typescript
+duda.ecomm.custom_fields.list({ site_name: site_name });
+```
+
+## Get Custom Field
+
+[Get Custom Field Reference](https://developer.duda.co/reference/ecommerce-get-custom-field)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/custom-fields/{custom_field_id}`
+
+```typescript
+duda.ecomm.custom_fields.get({ site_name: site_name, custom_field_id: custom_field_id });
+```
+
+## Create Custom Field
+
+[Create Custom Field Reference](https://developer.duda.co/reference/ecommerce-create-custom-field)
+
+### Request
+
+`CREATE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/custom-fields`
+
+```typescript
+duda.ecomm.options.create({ site_name: site_name });
+```
+
+## Delete Custom Field
+
+[Delete Custom Field Reference](https://developer.duda.co/reference/ecommerce-delete-custom-field)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/custom-fields/{custom_field_id}`
+
+```typescript
+duda.ecomm.custom_fields.delete({ site_name: site_name, custom_field_id: custom_field_id });
+```
+
+# Booking Appointments
+
+## List Booking Appointments
+
+[List Booking Appointments Reference](https://developer.duda.co/reference/list-booking-appointments)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointments`
+
+```typescript
+duda.booking.appointments.list({ site_name: site_name });
+```
+
+# Booking Appointment Types
+
+## List Booking Appointment Types
+
+[List Booking Appointment Types Reference](https://developer.duda.co/reference/list-booking-appointment-types)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointment-types`
+
+```typescript
+duda.booking.appointment_types.list({ site_name: site_name });
+```
+
+## Get Booking Appointment Type
+
+[Get Booking Appointment Type Reference](https://developer.duda.co/reference/get-booking-appointment-type)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointment-types/{id}`
+
+```typescript
+duda.booking.appointment_types.get({ site_name: site_name, id: id });
+```
+
+## Create Booking Appointment Type
+
+[Create Booking Appointment Type Reference](https://developer.duda.co/reference/create-booking-appointment-type)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointment-types`
+
+```typescript
+duda.booking.appointment_types.create({ site_name: site_name });
+```
+
+## Update Booking Appointment Type
+
+[Update Booking Appointment Type Reference](https://developer.duda.co/reference/update-booking-appointment-type)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointment-types/{id}`
+
+```typescript
+duda.booking.appointment_types.update({ site_name: site_name, id: id });
+```
+
+## Delete Booking Appointment Type
+
+[Delete Booking Appointment Type Reference](https://developer.duda.co/reference/delete-booking-appointment-type)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointment-types/{id}`
+
+```typescript
+duda.booking.appointment_types.delete({ site_name: site_name, id: id });
+```
+
+# Booking Staff Members
+
+## List Booking Staff Members
+
+[List Booking Staff Members Reference](https://developer.duda.co/reference/list-booking-staff-members)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/staff-members`
+
+```typescript
+duda.booking.staff_members.list({ site_name: site_name });
+```
+
+## Get Booking Staff Member
+
+[Get Booking Staff Member Reference](https://developer.duda.co/reference/get-booking-staff-member)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/staff-members/{id}`
+
+```typescript
+duda.booking.staff_members.get({ site_name: site_name, id: id });
+```
+
+## Create Booking Staff Member
+
+[Create Booking Staff Member Reference](https://developer.duda.co/reference/create-booking-staff-member)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/staff-members`
+
+```typescript
+duda.booking.staff_members.create({ site_name: site_name });
+```
+
+## Update Booking Staff Member
+
+[Update Booking Staff Member Reference](https://developer.duda.co/reference/update-booking-staff-member)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/booking/staff-members/{id}`
+
+```typescript
+duda.booking.staff_members.update({ site_name: site_name, id: id });
+```
+
+## Delete Booking Staff Member
+
+[Delete Booking Staff Member Reference](https://developer.duda.co/reference/delete-booking-staff-member)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/booking/staff-members/{id}`
+
+```typescript
+duda.booking.staff_members.delete({ site_name: site_name, id: id });
+```
+
+## Get Booking Staff Member Availability
+
+[Get Booking Staff Member Availability Reference](https://developer.duda.co/reference/get-booking-staff-member-availability)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/staff-members/{id}/availability`
+
+```typescript
+duda.booking.staff_members.availability.get({ site_name: site_name, id: id });
+```
+
+## Update Booking Staff Member Availability
+
+[Update Booking Staff Member Availability Reference](https://developer.duda.co/reference/update-booking-staff-member-availability)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/booking/staff-members/{id}/availability`
+
+```typescript
+duda.booking.staff_members.availability.update({ site_name: site_name, id: id });
+```
+
 # URL Rules
 
 ## List Rules

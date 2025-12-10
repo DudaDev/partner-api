@@ -333,7 +333,8 @@ describe('App store ecomm tests', () => {
     shipping_address: address,
     shipping_method: {
       name: "string",
-      cost: 0
+      cost: 0,
+      id: "string"
     },
     shipping_instructions: "string",
     discounts: [
