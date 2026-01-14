@@ -58,14 +58,24 @@ function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
   ): void;
 
   async function call<
-    RequestOverrides extends https.RequestOptions & { body?: any, skipPreRequest?: boolean } = https.RequestOptions
+    RequestOverrides extends https.RequestOptions & {
+      body?: any;
+      skipPreRequest?: boolean;
+    } = https.RequestOptions,
   >(
     this: SubResource,
-    opts: Opts | { (err: any, res: Return): any } = {} as any,
+    inOpts: Opts | { (err: any, res: Return): any } = {} as any,
     overrides?: RequestOverrides | { (err: any, res: Return): any },
-    cb?: { (err: any, res: Return): any }
+    cb?: { (err: any, res: Return): any },
   ): Promise<Return | any | null> {
     const params = { ...def.bodyParams, ...def.queryParams };
+
+    let opts = inOpts;
+    // clone input so we don't modify the users input
+    // https://github.com/DudaDev/partner-api/issues/276
+    if (typeof inOpts === "object") {
+      opts = { ...opts } as Opts;
+    }
 
     validateParams(params, opts);
 
@@ -75,9 +85,7 @@ function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
 
     const optz = def.bodyParams ? buildBodyParams(def.bodyParams, opts) : opts;
 
-    const body =
-      def.beforeRequest?.(optz as Opts) ??
-      (Object.keys(optz).length ? optz : null);
+    const body = def.beforeRequest?.(optz as Opts) ?? (Object.keys(optz).length ? optz : null);
 
     // strip off protocol from host override if needed
     const override =
@@ -101,8 +109,8 @@ function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
       path: query ? `${path}?${query}` : path,
       ...(this.config.user &&
         this.config.pass && {
-          auth: `${this.config.user}:${this.config.pass}`,
-        }),
+        auth: `${this.config.user}:${this.config.pass}`,
+      }),
       ...(this.config.__bearer && {
         headers: { Authorization: `Bearer ${this.config.__bearer}` },
       }),
@@ -117,7 +125,7 @@ function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
     if (!skipPre) {
       await this.preRequest?.();
     }
-    
+
     const builtRequest = this.buildRequest?.(request, def, opts);
 
     validateHeaders(
