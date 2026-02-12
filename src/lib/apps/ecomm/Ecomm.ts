@@ -10,6 +10,7 @@ import AppsCarts from './Carts';
 import AppsVariations from './Variations';
 import AppsShipping from './Shipping';
 import AppsStore from './Store';
+import AppsRefundIntent from './RefundIntent';
 import { TokenRequest } from '../types';
 
 class AppsEcomm extends SubResource {
@@ -30,6 +31,8 @@ class AppsEcomm extends SubResource {
   shipping = new AppsShipping(this.base);
 
   store = new AppsStore(this.base);
+
+  refund_intent = new AppsRefundIntent(this.base);
 
   get = APIEndpoint<TokenRequest<Types.GetEcommPayload>, Types.GetEcommResponse>({
     method: 'get',
