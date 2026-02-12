@@ -47,6 +47,10 @@ class Pages extends Resource {
         type: 'string',
         required: false,
       },
+      draft_status: {
+        type: 'string',
+        required: false,
+      },
     },
   });
 
@@ -88,6 +92,10 @@ class Pages extends Resource {
         required: false,
       },
       header_html: {
+        type: 'string',
+        required: false,
+      },
+      draft_status: {
         type: 'string',
         required: false,
       },

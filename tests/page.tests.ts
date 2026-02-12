@@ -20,7 +20,8 @@ describe('Page tests', () => {
         title: "My Title",
         path: "/test",
         seo,
-        header_html: "<b>Some HTML</b>"
+        header_html: "<b>Some HTML</b>",
+        draft_status: "DRAFT"
     };
 
     const create_page_oblect = {
@@ -115,6 +116,7 @@ describe('Page tests', () => {
             ...page,
             site_name,
             page_uuid,
+            draft_status: "DRAFT"
         })
     })
 
@@ -138,6 +140,7 @@ describe('Page tests', () => {
           ...page,
           site_name,
           page_uuid,
+          draft_status: "DRAFT"
         })
     })
 
