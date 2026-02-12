@@ -10,6 +10,7 @@ describe('App store ecomm tests', () => {
   const choice_id = 'string';
   const order_id = 'test_order';
   const refund_id = 'test_refund';
+  const refund_intent_id = 'test_refund_intent';
   const fulfillment_id = 'fulfil_test';
   const session_id = 'test_session';
   const gateway_id = "test_gateway";
@@ -560,6 +561,26 @@ describe('App store ecomm tests', () => {
     ]
   }
 
+  const refund_itent = {
+    id: refund_intent_id,
+    order_id,
+    mode: "TEST",
+    purchase_id: "purchase_id",
+    purchase_type: "string",
+    original_transaction_id: "string",
+    reason: "it was refunded.",
+    items: [
+      {
+        product_id: "item_123",
+        type: "PHYSICAL",
+        quantity: 2,
+        amount: "1.00"
+      }
+    ],
+    currency: "USD",
+    total: "2.00",
+  }
+
   const fulfillment = {
     id: "fulfil_test",
     status: "FULFILLED",
@@ -1092,6 +1113,12 @@ describe('App store ecomm tests', () => {
       direction,
       token
     }).then(res => expect(res).to.eql(list_fulfillments))
+  })
+
+  it('can get a speficic refund intent', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/refund-intents/${refund_intent_id}`).reply(200, refund_itent)
+    return await duda.appstore.ecomm.refund_intent.get({ site_name, refund_intent_id, token })
+      .then(res => expect(res).to.eql(refund_itent))
   })
 
   it('can get a specific order fulfillment', async () => {

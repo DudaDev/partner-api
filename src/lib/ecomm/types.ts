@@ -495,6 +495,29 @@ export interface CancelOrderPayload {
 
 export interface CancelOrderResponse extends Order {}
 
+export interface GetRefundIntentPayload {
+  site_name: string,
+  refund_intent_id: string,
+}
+export interface RefundIntentItem {
+  product_id: string,
+  type: "PHYSICAL" | "DIGITAL" | "TAX" | "SHIPPING" | "DISCOUNT",
+  quantity: number,
+  amount: string,
+}
+export interface GetRefundIntentResponse {
+  id: string,
+  mode: 'LIVE' | 'TEST',
+  purchase_id: string,
+  purchase_type: string,
+  original_transaction_id: string,
+  reason: string,
+  items: Array<RefundIntentItem>,
+  currency: string,
+  total: string,
+}
+
+
 export interface ListRefundsPayload {
   site_name: string,
   order_id: string,
