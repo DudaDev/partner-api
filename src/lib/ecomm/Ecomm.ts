@@ -12,6 +12,7 @@ import Options from './Options';
 import Variations from './Variations';
 import CustomFields from './Custom_Fields';
 import Store from './Store';
+import RefundIntent from './RefundIntent';
 import * as Types from './types';
 import { APIEndpoint } from '../APIEndpoint';
 
@@ -41,6 +42,8 @@ class Ecomm extends Resource {
   store = new Store(this.config);
 
   custom_fields = new CustomFields(this.config);
+
+  refund_intent = new RefundIntent(this.config);
 
   get = APIEndpoint<Types.GetEcommPayload, Types.GetEcommResponse>({
     method: 'get',
