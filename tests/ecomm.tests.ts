@@ -1381,8 +1381,8 @@ describe('Ecomm tests', () => {
   })
 
    it('can get a speficic refund intent', async () => {
-    scope.get(`${base_path}/site/${site_name}/ecommerce/refund-intents/${refund_intent_id}`).reply(200, refund_itent)
-    return await duda.ecomm.refund_intent.get({ site_name, refund_intent_id, token })
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/refund-intents/${refund_intent_id}`).reply(200, refund_itent)
+    return await duda.ecomm.refund_intent.get({ site_name, refund_intent_id })
       .then(res => expect(res).to.eql(refund_itent))
   })
 
