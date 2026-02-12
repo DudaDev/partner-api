@@ -15,6 +15,7 @@ describe('Ecomm tests', () => {
   const rate_id = 'test_rate';
   const order_id = 'test_order';
   const refund_id = 'test_refund';
+  const refund_intent_id = 'test_refund_intent';
   const fulfillment_id = 'fulfil_test';
   const session_id = 'test_session';
   const category_id = 'test_category';
@@ -729,6 +730,27 @@ describe('Ecomm tests', () => {
     ]
   }
 
+
+  const refund_itent = {
+    id: refund_intent_id,
+    order_id,
+    mode: "TEST",
+    purchase_id: "purchase_id",
+    purchase_type: "string",
+    original_transaction_id: "string",
+    reason: "it was refunded.",
+    items: [
+      {
+        product_id: "item_123",
+        type: "PHYSICAL",
+        quantity: 2,
+        amount: "1.00"
+      }
+    ],
+    currency: "USD",
+    total: "2.00",
+  }
+
   const fulfillment = {
     id: "fulfil_test",
     status: "FULFILLED",
@@ -1357,6 +1379,13 @@ describe('Ecomm tests', () => {
 
     return await duda.ecomm.orders.refunds.create({ site_name, order_id, ...create_refund_payload })
   })
+
+   it('can get a speficic refund intent', async () => {
+    scope.get(`${base_path}/site/${site_name}/ecommerce/refund-intents/${refund_intent_id}`).reply(200, refund_itent)
+    return await duda.ecomm.refund_intent.get({ site_name, refund_intent_id, token })
+      .then(res => expect(res).to.eql(refund_itent))
+  })
+
 
   it('can list all order fulfillments', async () => {
     scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/orders/${order_id}/fulfillments?offset=${offset}&limit=${limit}&sort=${sort}&direction=${direction}`).reply(200, list_fulfillments)
