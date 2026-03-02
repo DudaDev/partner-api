@@ -366,7 +366,7 @@ export interface RefundTaxProvider {
 export interface Refund {
   id: string,
   order_id: string,
-  transcation_id: string,
+  transaction_id: string,
   reason: string,
   items: Array<RefundOrderItem>,
   currency: string,
