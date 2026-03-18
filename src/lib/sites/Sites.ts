@@ -71,16 +71,6 @@ class Sites extends Resource {
     defaults: {
       host: 'api.duda.co',
     },
-    bodyParams: {
-      template_id: {
-        type: 'string',
-        required: true,
-      },
-      site_data: {
-        type: 'object',
-        required: false,
-      },
-    },
   });
 
   switchTemplate = APIEndpoint<Types.SwitchTemplatePayload, Types.SwitchTemplateResponse>({
@@ -112,32 +102,6 @@ class Sites extends Resource {
     path: '/api/sites/multiscreen/create',
     defaults: {
       host: 'api.duda.co',
-    },
-    bodyParams: {
-      template_id: {
-        type: 'string',
-        required: true,
-      },
-      url: {
-        type: 'string',
-        required: false,
-      },
-      default_domain_prefix: {
-        type: 'string',
-        required: false,
-      },
-      labels: {
-        type: 'array',
-        required: false,
-      },
-      lang: {
-        type: 'string',
-        required: false,
-      },
-      site_data: {
-        type: 'object',
-        required: false,
-      },
     },
   });
 

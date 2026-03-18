@@ -40,7 +40,8 @@ export interface Choices {
 export interface ProductOption {
   choices: Array<Choices>,
   id: string,
-  name: string
+  name: string,
+  type: 'COLOR' | 'TEXT' | string
 }
 
 export interface ProductSEO {
@@ -261,6 +262,16 @@ export interface Address {
   phone: string
 }
 
+interface CartCustomFields {
+  id: string,
+  label: string,
+  type: 'TEXT' | 'TEXTAREA' | 'SELECT' | 'RADIO_LIST' | 'CHECKBOX' | 'DATE' | string,
+  zone: 'CONTACT_INFO' | 'SHIPPING_ADDRESS' | 'SHIPPING_METHODS' | 'BILLING_ADDRESS' | 'PAYMENT_METHODS' | string,
+  value: string,
+  includes_time: boolean,
+  date_range_policy: 'ANY' | 'PAST_ONLY' | 'FUTURE_ONLY' | string
+}
+
 export interface Cart {
   id: string,
   mode: 'LIVE' | 'TEST',
@@ -282,6 +293,7 @@ export interface Cart {
   updated: string,
   user_agent: string,
   ip_address: string,
+  custom_fields: Array<CartCustomFields>
   metadata?: {
     [key: string]: string
   }
@@ -377,6 +389,16 @@ export interface Refund {
   createD: string
 }
 
+interface OrderCustomFields {
+  id: string,
+  label: string,
+  type: 'TEXT' | 'TEXTAREA' | 'SELECT' | 'RADIO_LIST' | 'CHECKBOX' | 'DATE' | string,
+  zone: 'CONTACT_INFO' | 'SHIPPING_ADDRESS' | 'SHIPPING_METHODS' | 'BILLING_ADDRESS' | 'PAYMENT_METHODS' | string,
+  value: string,
+  includes_time: boolean,
+  date_range_policy: 'ANY' | 'PAST_ONLY' | 'FUTURE_ONLY' | string
+}
+
 export interface Order {
   source: 'CHECKOUT' | 'EXTERNAL' | 'SUBSCRIPTION_BILLING_ENGINE',
   mode: 'LIVE' | 'TEST',
@@ -401,6 +423,9 @@ export interface Order {
   created: string,
   user_agent: string,
   ip_address: string,
+  cancellation_reason: string,
+  cancelled: string,
+  custom_fields: Array<OrderCustomFields>
   metadata?: {
     [key: string]: string
   }
@@ -636,6 +661,25 @@ interface MarketingOptInSettings {
   description_html?: string
 }
 
+interface CustomField {
+  id: string,
+  required: boolean,
+  label: string,
+  type: 'TEXT' | 'TEXTAREA' | 'SELECT' | 'RADIO_LIST' | 'CHECKBOX' | 'DATE' | string,
+  placeholder: string,
+  options: Array<string>,
+  includes_time: boolean,
+  date_range_policy: 'ANY' | 'PAST_ONLY' | 'FUTURE_ONLY' | string
+}
+
+interface EcommCustomFields {
+  CONTACT_INFO?: CustomField,
+  SHIPPING_ADDRESS?: CustomField,
+  SHIPPING_METHODS?: CustomField,
+  BILLING_ADDRESS?: CustomField,
+  PAYMENT_METHODS?: CustomField
+}
+
 interface CartSettings {
   split_name_field?: boolean,
   split_address_1_field?: boolean,
@@ -643,6 +687,7 @@ interface CartSettings {
   display_phone_field?: boolean,
   terms_and_conditions_html?: string,
   marketing_opt_in_settings?: MarketingOptInSettings
+  custom_fields?: EcommCustomFields
 }
 
 interface TaxSettings {

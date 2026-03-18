@@ -16,12 +16,50 @@ describe('Page tests', () => {
         og_image: "https://example.org/path/to/image.png"
     };
 
+    const styles = {
+        background: {
+        color: "#ffffff",
+        image: {
+            url: "https://example.com/background.jpg",
+            display_mode: "COVER",
+            position: "center center",
+            attachment: "fixed"
+        }
+        },
+        breakpoints: {
+            tablet: {
+                background: {
+                    color: "#f5f5f5",
+                    image: {
+                        url: "https://example.com/tablet-background.jpg",
+                        display_mode: "COVER",
+                        position: "top center"
+                    }
+                }
+            },
+            mobile: {
+                background: {
+                    color: "#f0f0f0",
+                    image: {
+                        url: "https://example.com/mobile-background.jpg",
+                        display_mode: "COVER",
+                        position: "top center",
+                        attachment: "initial"
+                    }
+                }
+            }
+        }
+    }
+
     const page = {
         title: "My Title",
         path: "/test",
-        seo,
+        seo: seo,
         header_html: "<b>Some HTML</b>",
-        draft_status: "DRAFT"
+        draft_status: "DRAFT",
+        collection_name: "string",
+        type: "REGULAR",
+        styles: styles
     };
 
     const create_page_oblect = {
