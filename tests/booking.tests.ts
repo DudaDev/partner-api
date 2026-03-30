@@ -78,6 +78,12 @@ describe('Booking tests', () => {
     duration: 30,
     id: appointment_type_id,
     name: 'string',
+    price_info: {
+      base_price: 'string',
+      currency: 'string',
+      formatted_base_price: 'string'
+    },
+    pricing_type: 'string', 
     updated_at: 'string'
   }
 
@@ -164,7 +170,11 @@ describe('Booking tests', () => {
         expect(body).to.eql({
           description: 'string',
           duration: 30,
-          name: 'string'
+          name: 'string',
+          price_info: {
+            base_price: 'string'
+          },
+          pricing_type: 'string'
         })
         return body
       }).reply(200, booking_appointment_types)
@@ -173,7 +183,11 @@ describe('Booking tests', () => {
         site_name,
         description: 'string',
         duration: 30,
-        name: 'string'
+        name: 'string',
+        price_info: {
+          base_price: 'string'
+        },
+        pricing_type: 'string'
       })
     })
 
@@ -182,7 +196,11 @@ describe('Booking tests', () => {
         expect(body).to.eql({
           description: 'string',
           duration: 30,
-          name: 'string'
+          name: 'string',
+          price_info: {
+            base_price: 'string'
+          },
+          pricing_type: 'string'
         })
         return body
       }).reply(200, booking_appointment_types)
@@ -192,7 +210,11 @@ describe('Booking tests', () => {
         id: appointment_type_id,
         description: 'string',
         duration: 30,
-        name: 'string'
+        name: 'string',
+        price_info: {
+          base_price: 'string'
+        },
+        pricing_type: 'string'
       })
     })
 

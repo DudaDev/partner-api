@@ -26,32 +26,6 @@ class Pages extends Resource {
     defaults: {
       host: 'api.duda.co',
     },
-    bodyParams: {
-      uuid: {
-        type: 'string',
-        required: false,
-      },
-      title: {
-        type: 'string',
-        required: false,
-      },
-      path: {
-        type: 'string',
-        required: false,
-      },
-      seo: {
-        type: 'object',
-        required: false,
-      },
-      header_html: {
-        type: 'string',
-        required: false,
-      },
-      draft_status: {
-        type: 'string',
-        required: false,
-      },
-    },
   });
 
   create = APIEndpoint<Types.V2.CreatePagePayload, Types.V2.CreatePageResponse>({
@@ -73,32 +47,6 @@ class Pages extends Resource {
     path: '/api/sites/multiscreen/{site_name}/pages/{page_uuid}/duplicate',
     defaults: {
       host: 'api.duda.co',
-    },
-    bodyParams: {
-      uuid: {
-        type: 'string',
-        required: false,
-      },
-      title: {
-        type: 'string',
-        required: false,
-      },
-      path: {
-        type: 'string',
-        required: false,
-      },
-      seo: {
-        type: 'object',
-        required: false,
-      },
-      header_html: {
-        type: 'string',
-        required: false,
-      },
-      draft_status: {
-        type: 'string',
-        required: false,
-      },
     },
   });
 

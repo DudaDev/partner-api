@@ -46,7 +46,8 @@ type AppointmentAttendeesLanguage =
     'et' |
     'lv' |
     'el' |
-    'ca';
+    'ca' |
+    string;
 
 interface AppointmentAttendees {
     absent?: boolean,
@@ -79,7 +80,8 @@ type BookingAppointmentStatus =
     'accepted' |
     'cancelled' |
     'pending' |
-    'rejected';
+    'rejected' |
+    string;
 
 export interface BookingAppointment {
     absent_host?: boolean,
@@ -131,12 +133,28 @@ export interface ListBookingAppointmentsResponse {
     total_responses: number
 }
 
+interface PriceInfo {
+    base_price: string
+}
+
+interface ListPriceInfo extends PriceInfo {
+    currency: string,
+    formatted_base_price: string
+}
+
+type PricingType =
+    'FREE' |
+    'PAID' |
+    string;
+
 interface BookingAppointmentTypes {
     created_at: string,
     description: string,
     duration: number,
     id: string,
     name: string,
+    price_info: ListPriceInfo,
+    pricing_type: PricingType
     updated_at: string
 }
 
@@ -163,7 +181,9 @@ export interface CreateBookingAppointmentTypesPayload {
     site_name: string,
     description?: string,
     duration: number,
-    name: string
+    name: string,
+    price_info: PriceInfo,
+    pricing_type: PricingType
 }
 
 export interface CreateBookingAppointmentTypesResponse extends BookingAppointmentTypes {}
@@ -173,7 +193,9 @@ export interface UpdateBookingAppointmentTypesPayload {
     id: string,
     description?: string,
     duration: number,
-    name: string
+    name: string,
+    price_info: PriceInfo,
+    pricing_type: PricingType
 }
 
 export interface UpdateBookingAppointmentTypesResponse extends BookingAppointmentTypes {}

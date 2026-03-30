@@ -67,7 +67,7 @@ class Templates extends Resource {
 
   get = APIEndpoint<Types.GetTemplatePayload, Types.GetTemplateResponse>({
     method: 'get',
-    path: '/api/sites/multiscreen/templates/{template_id}',
+    path: '/api/sites/multiscreen/templates/{template_id_or_alias}',
     defaults: {
       host: 'api.duda.co',
     },
@@ -76,12 +76,16 @@ class Templates extends Resource {
         type: 'string',
         required: false,
       },
+      ai_enabled: {
+        type: 'boolean',
+        required: false,
+      },
     },
   });
 
   delete = APIEndpoint<Types.DeleteTemplatePayload, Types.DeleteTemplateResponse>({
     method: 'delete',
-    path: '/api/sites/multiscreen/templates/{template_id}',
+    path: '/api/sites/multiscreen/templates/{template_id_or_alias}',
     defaults: {
       host: 'api.duda.co',
     },
@@ -89,7 +93,7 @@ class Templates extends Resource {
 
   update = APIEndpoint<Types.UpdateTemplatePayload, Types.UpdateTemplateResponse>({
     method: 'post',
-    path: '/api/sites/multiscreen/templates/{template_id}',
+    path: '/api/sites/multiscreen/templates/{template_id_or_alias}',
     defaults: {
       host: 'api.duda.co',
     },

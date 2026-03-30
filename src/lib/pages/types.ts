@@ -56,12 +56,42 @@ export namespace V2 {
     og_image?: string
   }
 
+  interface BackgroundPageImageStyle {
+    attachment?: 'fixed' | 'initial' | string,
+    display_mode?: 'COVER' | 'CONTAIN' | 'TILE' | 'NO_REPEAT' | string,
+    position?: 'top left' | 'top center' | 'top right' | 'center left' | 'center center' | 'center right' | 'bottom left' | 'bottom center' | 'bottom right' | string,
+    url?: string
+  }
+
+  interface BackgroundPageStyles {
+    color?: string,
+    gradient?: string,
+    image?: BackgroundPageImageStyle
+  }
+
+  interface BackgroundPageBreakpointOverride {
+    background: BackgroundPageStyles
+  }
+
+  interface BackgroundPageBreakpoint {
+    mobile?: BackgroundPageBreakpointOverride,
+    tablet?: BackgroundPageBreakpointOverride
+  }
+
+  interface PageStyles {
+    background?: BackgroundPageStyles,
+    breakpoints?: BackgroundPageBreakpoint
+  }
+
   export interface Page {
     title?: string,
     path?: string,
     seo?: Seo
     header_html?: string,
-    draft_status?: 'STAGED_DRAFT' | 'DRAFT'
+    draft_status?: 'STAGED_DRAFT' | 'DRAFT' | string,
+    collection_name?: string,
+    type?: 'REGULAR' | 'DYNAMIC' | string,
+    styles?: PageStyles
   }
 
   export interface ExistingPage extends Page {

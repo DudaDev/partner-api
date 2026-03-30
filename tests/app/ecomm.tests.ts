@@ -65,7 +65,8 @@ describe('App store ecomm tests', () => {
           }
         ],
         id: "WMd1xylGrp",
-        name: "Shirt size"
+        name: "Shirt size",
+        type: "TEXT"
       }
     ],
     prices: [
@@ -208,7 +209,8 @@ describe('App store ecomm tests', () => {
           }
         ],
         id: "WMd1xylGrp",
-        name: "Shirt size"
+        name: "Shirt size",
+        type: "TEXT"
       }
     ],
     prices: [
@@ -371,7 +373,19 @@ describe('App store ecomm tests', () => {
     created: "2023-09-08T17:48:47.497Z",
     user_agent: "string",
     ip_address: "string",
-    metadata: "string"
+    cancellation_reason: "string",
+    cancelled: "string",
+    custom_fields: [
+      {
+        id: "string",
+        label: "string",
+        type: "TEXT",
+        zone: "CONTACT_INFO",
+        value: "string",
+        includes_time: true,
+        date_range_policy: "ANY"
+      }
+    ]
   }
 
   const list_orders = {
@@ -764,7 +778,18 @@ describe('App store ecomm tests', () => {
     updated: "2023-09-06T18:09:28.653Z",
     user_agent: "string",
     ip_address: "string",
-    metadata: "string"
+    cancelled: "string",
+    custom_fields: [
+      {
+        id: "string",
+        label: "string",
+        type: "TEXT",
+        zone: "CONTACT_INFO",
+        value: "string",
+        includes_time: true,
+        date_range_policy: "ANY"
+      }
+    ]
   }
 
   const list_carts = {
@@ -782,6 +807,20 @@ describe('App store ecomm tests', () => {
     marketing_opt_in_settings: {
       enabled: true,
       description_html: 'string'
+    },
+    custom_fields: {
+      CONTACT_INFO: {
+          id: "string",
+          required: true,
+          label: "string",
+          type: "TEXT",
+          placeholder: "string",
+          options: [
+            "string"
+          ],
+          includes_time: true,
+          date_range_policy: "ANY"
+      }
     }
   };
 

@@ -10,11 +10,13 @@ describe('Site tests', () => {
     const site_name = 'test_site';
     const external_uid = 'test_id';
     const template_id = 1;
+    const template_alias = 'test_alias'
     const site_domain = 'test.com';
     const new_default_domain_prefix = 'test_prefix';
 
     const site_obj: CreateSitePayload = {
       template_id,
+      template_alias,
       default_domain_prefix: new_default_domain_prefix,
       lang: 'en',
       site_data: {
@@ -69,14 +71,202 @@ describe('Site tests', () => {
         }
     }
 
+    const background = {
+        breakpoints:{
+            mobile:{
+                color:"string",
+                gradient:"string",
+                image:{
+                    attachment:"fixed",
+                    display_mode:"COVER",
+                    position:"top left",
+                    url:"string"
+                }
+            },
+            tablet:{
+                color:"string",
+                gradient:"string",
+                image:{
+                    attachment:"fixed",
+                    display_mode:"COVER",
+                    position:"top left",
+                    url:"string"
+                }
+            }
+        },
+        color:"string",
+        gradient:"string",
+        image:{
+            attachment:"fixed",
+            display_mode:"COVER",
+            position:"top left",
+            url:"string"
+        }
+    }
+
+    const buttons = {
+        primary:{
+            background:{
+                color:"string",
+                gradient:"string",
+                image:{
+                    display_mode:"COVER",
+                    position:"top left",
+                    url:"string"
+                }
+            },
+            border:{
+                color:"string",
+                radius:"string",
+                width:"string"
+            },
+            box_shadow:"string",
+            breakpoints:{
+                mobile:{
+                    text:{
+                    font_size:"string"
+                    }
+                },
+                tablet:{
+                    text:{
+                    font_size:"string"
+                    }
+                }
+            },
+            hover:{
+                background:{
+                    color:"string"
+                },
+                border:{
+                    color:"string"
+                },
+                text:{
+                    color:"string",
+                    font_style:"string",
+                    font_weight:"string",
+                    text_decoration:"string"
+                }
+            },
+            icon:{
+                color:"string"
+            },
+            text:{
+                color:"string",
+                direction:"ltr",
+                font_family:"string",
+                font_size:"string",
+                font_style:"string",
+                font_weight:"string",
+                text_align:"left",
+                text_decoration:"string"
+            }
+        }
+    }
+
+    const columns = {
+        breakpoints:{
+            mobile:{
+                spacing:{
+                    padding_bottom:"string",
+                    padding_left:"string",
+                    padding_right:"string",
+                    padding_top:"string"
+                }
+            },
+            tablet:{
+                spacing:{
+                    padding_bottom:"string",
+                    padding_left:"string",
+                    padding_right:"string",
+                    padding_top:"string"
+                }
+            }
+        },
+        spacings:{
+            padding_bottom:"string",
+            padding_left:"string",
+            padding_right:"string",
+            padding_top:"string"
+        }
+    }
+
+    const inner_columns = {
+        breakpoints:{
+            mobile:{
+                spacing:{
+                    padding_bottom:"string",
+                    padding_left:"string",
+                    padding_right:"string",
+                    padding_top:"string"
+                }
+            },
+            tablet:{
+                spacing:{
+                    padding_bottom:"string",
+                    padding_left:"string",
+                    padding_right:"string",
+                    padding_top:"string"
+                }
+            }
+        },
+        spacings:{
+            padding_bottom:"string",
+            padding_left:"string",
+            padding_right:"string",
+            padding_top:"string"
+        }
+        }
+
+    const sections = {
+        breakpoints:{
+            mobile:{
+                spacing:{
+                    padding_bottom:"string",
+                    padding_left:"string",
+                    padding_right:"string",
+                    padding_top:"string"
+                }
+            },
+            tablet:{
+                spacing:{
+                    padding_bottom:"string",
+                    padding_left:"string",
+                    padding_right:"string",
+                    padding_top:"string"
+                }
+            }
+        },
+        content_width:{
+            default_content_mode:"full_width",
+            default_max_width_constraint:"string"
+        },
+        spacings:{
+            padding_bottom:"string",
+            padding_left:"string",
+            padding_right:"string",
+            padding_top:"string"
+        }
+    }
+
+
     const site_theme_response = {
         colors: colors,
-        text: theme_text
+        text: theme_text,
+        buttons: buttons,
+        sections: sections,
+        columns: columns,
+        inner_columns: inner_columns,
+        background: background
     }
 
     const update_site_theme_payload = {
         colors: colors,
-        text: theme_text
+        text: theme_text,
+        buttons: buttons,
+        sections: sections,
+        columns: columns,
+        inner_columns: inner_columns,
+        background: background
     }
 
     const create_response = { site_name: site_name };
@@ -104,10 +294,10 @@ describe('Site tests', () => {
     })
     it('can create a site', async () => {
         scope.post(`${api_path}create`, (body) => {
-            expect(body).to.eql({ template_id:template_id })
+            expect(body).to.eql({ template_alias })
             return body
         }).reply(200, create_response)
-        return await duda.sites.create({ template_id: 1})
+        return await duda.sites.create({ template_alias })
     })
     it('can create a site with a full site object', async () => {
         scope.post(`${api_path}create`, (body) => {
@@ -164,24 +354,24 @@ describe('Site tests', () => {
     it('can reset a site', async () => {
       const site_data = { removeBizInfos: true };
         scope.post(`${api_path}reset/${site_name}`, (body) => {
-            expect(body).to.eql({ template_id, site_data })
+            expect(body).to.eql({ template_alias, site_data })
             return body
         }).reply(204)
-        return await duda.sites.reset({ site_name, template_id, site_data})
+        return await duda.sites.reset({ site_name, template_alias, site_data})
     })
 
     // Dev Docs List template_id as string, can be either number or string
     // template_id not required Dev Docs, required to execute command (500)
     it('can switch the template of a site', async () => {
         scope.post(`${api_path}switchTemplate/${site_name}`, (body) => {
-            expect(body).to.eql({ template_id:template_id })
+            expect(body).to.eql({ template_alias })
             return body
         }).reply(204)
-        return await duda.sites.switchTemplate({ site_name:site_name, template_id:template_id })
+        return await duda.sites.switchTemplate({ site_name, template_alias })
     })
     it('can delete a site', async () => {
         scope.delete(`${api_path}${site_name}`).reply(204)
-        return await duda.sites.delete({ site_name:site_name })
+        return await duda.sites.delete({ site_name })
     })
     it('can get the site theme of a site', async () => {
         scope.get(`${api_path}${site_name}/theme`).reply(200, site_theme_response)

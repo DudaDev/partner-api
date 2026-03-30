@@ -4,7 +4,7 @@ import Resource from '../base';
 import { APIEndpoint } from '../APIEndpoint';
 
 class Permissions extends Resource {
-  list = APIEndpoint<null, Types.Permissions>({
+  list = APIEndpoint<null, Types.ClientPermissions>({
     method: 'get',
     path: '/api/accounts/permissions/multiscreen',
     defaults: {

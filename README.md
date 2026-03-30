@@ -514,10 +514,10 @@ duda.templates.list({ 'page_count.gte': 1 });
 
 ### Request
 
-`GET https://api.duda.co/api/sites/multiscreen/templates/{template_id}`
+`GET https://api.duda.co/api/sites/multiscreen/templates/{template_id_or_alias}`
 
 ```typescript
-duda.templates.get({ template_id: template_id });
+duda.templates.get({ template_id_or_alias: template_id_or_alias });
 ```
 
 ## Update Template
@@ -526,10 +526,10 @@ duda.templates.get({ template_id: template_id });
 
 ### Request
 
-`POST https://api.duda.co/api/sites/multiscreen/templates/{template_id}`
+`POST https://api.duda.co/api/sites/multiscreen/templates/{template_id_or_alias}`
 
 ```typescript
-duda.templates.update({ template_id: template_id });
+duda.templates.update({ template_id_or_alias: template_id_or_alias });
 ```
 
 ## Create From Site
@@ -562,10 +562,10 @@ duda.templates.createFromTemplate({ template_id: template_id });
 
 ### Request
 
-`DELETE https://api.duda.co/api/sites/multiscreen/templates/{template_id}`
+`DELETE https://api.duda.co/api/sites/multiscreen/templates/{template_id_or_alias}`
 
 ```typescript
-duda.templates.delete({ template_id: template_id });
+duda.templates.delete({ template_id_or_alias: template_id_or_alias });
 ```
 
 # Pages v2
