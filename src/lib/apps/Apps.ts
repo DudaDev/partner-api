@@ -100,6 +100,20 @@ class Apps extends Resource {
   }
 
   /** @internal */
+  async postRequest(error: any): Promise<boolean> {
+    const self: Apps = this.base;
+
+    if (error?.status !== 401 || !self.auth || !self.uuid || this._refreshing) {
+      return false;
+    }
+
+    // Force token refresh by expiring the current token
+    self._appConfig!.auth.expiration_date = 0;
+    await this.preRequest?.();
+    return true;
+  }
+
+  /** @internal */
   async preRequest() {
     const self: Apps = this.base;
 
