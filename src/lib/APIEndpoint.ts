@@ -125,13 +125,31 @@ function APIEndpoint<Opts, Return>(def: APIEndpointDefinition<Opts, Return>) {
       def.headerOptions
     );
 
-    const [error, response] = await makeRequest<Return>(
-      builtRequest ?? request,
-      {
-        maxNetworkRetries: (this.config as any).maxNetworkRetries!,
-        timeout: (this.config as any).timeout!,
+    let error: any = null;
+    let response: Return | undefined;
+
+    try {
+      [error, response] = await makeRequest<Return>(
+        builtRequest ?? request,
+        {
+          maxNetworkRetries: (this.config as any).maxNetworkRetries!,
+          timeout: (this.config as any).timeout!,
+        }
+      );
+    } catch (err: any) {
+      const rejection = Array.isArray(err) ? err[0] : err;
+
+      if (!skipPre && this.postRequest && await this.postRequest(rejection)) {
+        // postRequest handled the error (e.g. token refresh) — retry once
+        this.buildRequest?.(request, def, opts);
+        [error, response] = await makeRequest<Return>(request, {
+          maxNetworkRetries: 0,
+          timeout: (this.config as any).timeout!,
+        });
+      } else {
+        throw err;
       }
-    );
+    }
 
     const finalResponse =
       def.afterRequest?.(error, response ?? ({} as Return)) ?? response;
