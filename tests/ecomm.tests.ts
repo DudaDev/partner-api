@@ -157,7 +157,7 @@ describe('Ecomm tests', () => {
     measurement_system: 'IMPERIAL'
   };
 
-  const product = {
+  const general_product = {
     custom_fields: [
       {
         id: "WMd1xylGrp",
@@ -204,10 +204,16 @@ describe('Ecomm tests', () => {
     sku: "UGG-BB-PUR-06",
   }
 
+  const summary = {
+    failed: 0,
+    successful: 1,
+    total: 1
+  }
+
   const list_product = {
     limit: 0,
     offset: 0,
-    results: [ product ],
+    results: [ general_product ],
     site_name,
     total_responses: 1
   }
@@ -375,6 +381,34 @@ describe('Ecomm tests', () => {
   const status = 'IN_PROGRESS';
   const mode = 'LIVE';
   const cursor = 'string';
+
+  const bulk_product = {
+    name: "string"
+  }
+
+  const bulk_update_product = {
+    id: "string",
+    name: "string"
+  }
+
+  const bulk_create_product_payload = {
+    products: [bulk_product]
+  }
+
+  const bulk_product_response_results = {
+    product: bulk_product,
+    key: "string",
+    status: "SUCCESS",
+    summary: summary
+  }
+
+  const bulk_product_response = {
+    results: [bulk_product_response_results]
+  }
+
+  const bulk_update_product_payload = {
+    products: [bulk_update_product]
+  }
 
   const cart = {
     id: "string",
@@ -988,6 +1022,80 @@ describe('Ecomm tests', () => {
     title: 'string'
   }
 
+  const bulk_create_category_payload = {
+    categories: [
+      {
+        description: "string",
+        image: {
+          alt: "string",
+          url: "string"
+        },
+        parent_id: "string",
+        seo: {
+          description: "string",
+          title: "string",
+          url: "string"
+        },
+        title: "string"
+      }
+    ]
+  }
+
+  const bulk_update_category_payload = {
+    categories: [
+      {
+        description: "string",
+        id: "string",
+        image: {
+          alt: "string",
+          url: "string"
+        },
+        parent_id: "string",
+        seo: {
+          description: "string",
+          title: "string",
+          url: "string"
+        },
+        title: "string"
+      }
+    ]
+  }
+
+  const bulk_category_response = {
+    results: [
+      {
+        category: {
+          description: "string",
+          id: "string",
+          image: {
+            alt: "string",
+            url: "string"
+          },
+          parent_id: "string",
+          seo: {
+            description: "string",
+            title: "string",
+            url: "string"
+          },
+          title: "string"
+        },
+        key: "string",
+        status: "string",
+        validation_errors: [
+          {
+            field: "string",
+            message: "string"
+          }
+        ]
+      }
+    ],
+    summary: {
+      failed: 0,
+      successful: 1,
+      total: 1
+    }
+  }
+
   const shipping_provider = {
     id: shipping_id,
     live_shipping_rates_url: 'string',
@@ -1107,11 +1215,11 @@ describe('Ecomm tests', () => {
 
   it('can create a product', async () => {
     scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/products`, (body) => {
-      expect(body).to.eql({ status: 'HIDDEN', stock_status: 'IN_STOCK', type: 'PHYSICAL', ...product })
+      expect(body).to.eql({ status: 'HIDDEN', stock_status: 'IN_STOCK', type: 'PHYSICAL', ...general_product })
       return body
     }).reply(200, product_response)
 
-    return await duda.ecomm.products.create({ site_name, status: 'HIDDEN', stock_status: 'IN_STOCK', type: 'PHYSICAL', ...product })
+    return await duda.ecomm.products.create({ site_name, status: 'HIDDEN', stock_status: 'IN_STOCK', type: 'PHYSICAL', ...general_product })
   })
 
   it('can get a product', async () => {
@@ -1133,6 +1241,24 @@ describe('Ecomm tests', () => {
   it('can delete a product', async () => {
     scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/products/${product_id}`).reply(204)
     return await duda.ecomm.products.delete({ site_name, product_id })
+  })
+
+  it('can bulk create products', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/products/bulk`, (body) => {
+      expect(body).to.eql({ ...bulk_create_product_payload })
+      return body
+    }).reply(200, bulk_product_response)
+
+    return await duda.ecomm.products.bulkCreate({ site_name, ...bulk_create_product_payload })
+  })
+
+  it('can bulk update products', async () => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/products/bulk`, (body) => {
+      expect(body).to.eql({ ...bulk_update_product_payload})
+      return body
+    }).reply(200, bulk_product_response)
+
+    return await duda.ecomm.products.bulkUpdate({ site_name, ...bulk_update_product_payload })
   })
 
   it('can create a gateway', async () => {
@@ -1519,6 +1645,24 @@ describe('Ecomm tests', () => {
   it('can delete a category', async () => {
     scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/categories/${category_id}`).reply(200)
     return await duda.ecomm.categories.delete({ site_name, category_id })
+  })
+
+  it('can bulk create categories', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/categories/bulk`, (body) => {
+      expect(body).to.eql({ ...bulk_create_category_payload })
+      return body
+    }).reply(200, bulk_category_response)
+
+    return await duda.ecomm.categories.bulkCreate({ site_name, ...bulk_create_category_payload })
+  })
+
+  it('can bulk update categories', async () => {
+    scope.put(`/api/sites/multiscreen/${site_name}/ecommerce/categories/bulk`, (body) => {
+      expect(body).to.eql({ ...bulk_update_category_payload})
+      return body
+    }).reply(200, bulk_category_response)
+
+    return await duda.ecomm.categories.bulkUpdate({ site_name, ...bulk_update_category_payload })
   })
 
   it('can list all shipping providers', async () => {
