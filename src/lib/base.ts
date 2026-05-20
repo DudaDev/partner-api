@@ -62,6 +62,9 @@ abstract class Resource {
 
   /** @internal */
   preRequest?(): void;
+
+  /** @internal */
+  postRequest?(error: any): Promise<boolean> | boolean;
 }
 
 abstract class SubResource extends Resource {
@@ -74,6 +77,7 @@ abstract class SubResource extends Resource {
     this.basePath = base.basePath;
     this.buildRequest = base.buildRequest;
     this.preRequest = base.preRequest;
+    this.postRequest = base.postRequest;
   }
 }
 

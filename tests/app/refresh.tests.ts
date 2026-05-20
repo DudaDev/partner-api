@@ -145,6 +145,117 @@ describe("App store refresh tests", () => {
     });
   });
 
+  describe("with a 401 response (postRequest retry)", () => {
+    beforeEach(() => {
+      duda = new Duda(
+        {
+          user: "testing",
+          pass: "testing",
+          env: Duda.Envs.direct,
+        },
+        {
+          auth: { ...auth, expiration_date: futureTimestamp },
+          uuid: appUuid,
+        },
+      );
+    });
+
+    it("will refresh the token and retry the request on 401", async () => {
+      // First call returns 401, then refresh, then retry succeeds
+      scope
+        .post(`${basePath}/site/${siteName}/republish`)
+        .reply(401, { error: "Unauthorized" });
+
+      scope
+        .post(`${basePath}/${appUuid}/token/refresh`)
+        .reply(200, { ...auth, expiration_date: futureTimestamp });
+
+      scope
+        .post(`${basePath}/site/${siteName}/republish`)
+        .reply(204);
+
+      await duda.appstore.sites.republish({ site_name: siteName });
+      expect(nock.isDone()).to.be.true;
+    });
+
+    it("will emit the refresh event on 401 retry", async () => {
+      const newAuth = { ...auth, expiration_date: futureTimestamp };
+
+      scope
+        .post(`${basePath}/site/${siteName}/republish`)
+        .reply(401, { error: "Unauthorized" });
+
+      scope
+        .post(`${basePath}/${appUuid}/token/refresh`)
+        .reply(200, newAuth);
+
+      scope
+        .post(`${basePath}/site/${siteName}/republish`)
+        .reply(204);
+
+      const spy = sinon.spy();
+      duda.events.on("refresh", spy);
+
+      await duda.appstore.sites.republish({ site_name: siteName });
+
+      expect(spy.calledWith(newAuth)).to.be.true;
+      duda.events.off("refresh", spy);
+    });
+
+    it("will throw if the retry also fails", async () => {
+      scope
+        .post(`${basePath}/site/${siteName}/republish`)
+        .reply(401, { error: "Unauthorized" });
+
+      scope
+        .post(`${basePath}/${appUuid}/token/refresh`)
+        .reply(200, { ...auth, expiration_date: futureTimestamp });
+
+      scope
+        .post(`${basePath}/site/${siteName}/republish`)
+        .reply(401, { error: "Unauthorized" });
+
+      try {
+        await duda.appstore.sites.republish({ site_name: siteName });
+        expect.fail("should have thrown");
+      } catch (err: any) {
+        const error = Array.isArray(err) ? err[0] : err;
+        expect(error.status).to.eql(401);
+      }
+    });
+
+    it("will not retry on non-401 errors", async () => {
+      scope
+        .post(`${basePath}/site/${siteName}/republish`)
+        .reply(500, { error: "Internal Server Error" });
+
+      try {
+        await duda.appstore.sites.republish({ site_name: siteName });
+        expect.fail("should have thrown");
+      } catch (err: any) {
+        const error = Array.isArray(err) ? err[0] : err;
+        expect(error.status).to.eql(500);
+      }
+    });
+
+    it("will not retry when skipPreRequest is set", async () => {
+      scope
+        .post(`${basePath}/${appUuid}/token/refresh`)
+        .reply(401, { error: "Unauthorized" });
+
+      try {
+        await (duda.appstore.tokens.refresh as any)(
+          { app_uuid: appUuid, refresh_token: refreshToken },
+          { skipPreRequest: true },
+        );
+        expect.fail("should have thrown");
+      } catch (err: any) {
+        const error = Array.isArray(err) ? err[0] : err;
+        expect(error.status).to.eql(401);
+      }
+    });
+  });
+
   describe("with an unexpired authentication token", () => {
     beforeEach(() => {
       scope.post(`${basePath}/site/${siteName}/republish`).reply(204);

@@ -60,6 +60,22 @@ class Products extends Resource {
       host: 'api.duda.co',
     },
   });
+
+  bulkCreate = APIEndpoint<Types.BulkCreateProductPayload, Types.BulkCreateProductResponse>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/products/bulk',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  bulkUpdate = APIEndpoint<Types.BulkUpdateProductPayload, Types.BulkUpdateProductResponse>({
+    method: 'patch',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/products/bulk',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
 }
 
 export default Products;

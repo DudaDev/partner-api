@@ -514,10 +514,10 @@ duda.templates.list({ 'page_count.gte': 1 });
 
 ### Request
 
-`GET https://api.duda.co/api/sites/multiscreen/templates/{template_id}`
+`GET https://api.duda.co/api/sites/multiscreen/templates/{template_id_or_alias}`
 
 ```typescript
-duda.templates.get({ template_id: template_id });
+duda.templates.get({ template_id_or_alias: template_id_or_alias });
 ```
 
 ## Update Template
@@ -526,10 +526,10 @@ duda.templates.get({ template_id: template_id });
 
 ### Request
 
-`POST https://api.duda.co/api/sites/multiscreen/templates/{template_id}`
+`POST https://api.duda.co/api/sites/multiscreen/templates/{template_id_or_alias}`
 
 ```typescript
-duda.templates.update({ template_id: template_id });
+duda.templates.update({ template_id_or_alias: template_id_or_alias });
 ```
 
 ## Create From Site
@@ -562,10 +562,10 @@ duda.templates.createFromTemplate({ template_id: template_id });
 
 ### Request
 
-`DELETE https://api.duda.co/api/sites/multiscreen/templates/{template_id}`
+`DELETE https://api.duda.co/api/sites/multiscreen/templates/{template_id_or_alias}`
 
 ```typescript
-duda.templates.delete({ template_id: template_id });
+duda.templates.delete({ template_id_or_alias: template_id_or_alias });
 ```
 
 # Pages v2
@@ -1603,6 +1603,30 @@ duda.ecomm.categories.delete({
 });
 ```
 
+## Bulk Create Categories
+
+[Bulk Create Categories Reference](https://developer.duda.co/reference/ecommerce-bulk-create-categories)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories/bulk`
+
+```typescript
+duda.ecomm.categories.bulkCreate({ site_name: site_name });
+```
+
+## Bulk Update Categories
+
+[Bulk Update Categories Reference](https://developer.duda.co/reference/ecommerce-bulk-update-categories)
+
+### Request
+
+`PUT https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/categories/bulk`
+
+```typescript
+duda.ecomm.categories.bulkUpdate({ site_name: site_name });
+```
+
 # eComm Shipping Providers
 
 ## List Shipping Providers
@@ -1728,6 +1752,30 @@ duda.ecomm.products.update({ site_name: site_name, product_id: product_id });
 
 ```typescript
 duda.ecomm.products.delete({ site_name: site_name, product_id: product_id });
+```
+
+## Bulk Create Products
+
+[Bulk Create Products Reference](https://developer.duda.co/reference/ecommerce-bulk-create-products)
+
+### Request
+
+`CREATE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products/bulk`
+
+```typescript
+duda.ecomm.products.bulkCreate({ site_name: site_name });
+```
+
+## Bulk Update Products
+
+[Bulk Update Products Reference](https://developer.duda.co/reference/ecommerce-bulk-update-products)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/products/bulk`
+
+```typescript
+duda.ecomm.products.bulkUpdate({ site_name: site_name });
 ```
 
 # eComm Variations

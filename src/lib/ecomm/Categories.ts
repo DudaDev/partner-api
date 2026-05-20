@@ -132,6 +132,22 @@ class Categories extends Resource {
       host: 'api.duda.co',
     },
   });
+
+  bulkCreate = APIEndpoint<Types.BulkCreateCategoryPayload, Types.BulkCreateCategoryResponse>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/categories/bulk',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  bulkUpdate = APIEndpoint<Types.BulkUpdateCategoryPayload, Types.BulkUpdateCategoryResponse>({
+    method: 'put',
+    path: '/api/sites/multiscreen/{site_name}/ecommerce/categories/bulk',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
 }
 
 export default Categories;

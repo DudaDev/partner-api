@@ -13,14 +13,15 @@ describe('Account tests', () => {
     lang: 'en',
     email: 'foo@example.org'
   }
-  const permissions = ['EDIT']
+  const client_permissions = ['EDIT']
+  const team_permissions = ['EDIT_SITES']
   const sites = [{ site_name:'test_site' }]
   const groups = [
     {
       group_name: 'test',
       color: 'test',
       title: 'test',
-      permissions: permissions
+      permissions: team_permissions
     }
   ]
   const url = 'test_url.com'
@@ -93,11 +94,11 @@ describe('Account tests', () => {
       })
     })
     it('can get all permissions', async () => {
-      scope.get('/api/accounts/permissions/multiscreen').reply(200, permissions)
+      scope.get('/api/accounts/permissions/multiscreen').reply(200, client_permissions)
       return await duda.accounts.permissions.list()
     })
     it('can get site permissions for an account by name', async () => {
-      scope.get('/api/accounts/test_account/sites/test_site/permissions').reply(200, permissions)
+      scope.get('/api/accounts/test_account/sites/test_site/permissions').reply(200, client_permissions)
       return await duda.accounts.permissions.get({
         account_name: 'test_account',
         site_name: 'test_site'

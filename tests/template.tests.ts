@@ -8,6 +8,8 @@ describe('Template tests', () => {
   const api_path = '/api/sites/multiscreen/templates';
   const new_name = 'New Name';
   const site_name = 'testsite';
+  const template_id = '1005442';
+  const template_id_or_alias = 'string';
   const lang = 'en';
   
   const response = [{
@@ -18,16 +20,17 @@ describe('Template tests', () => {
     tablet_thumbnail_url: "https://irp-cdn.multiscreensite.com/0f8a84df3a244e0f9249423e0588397f/siteTemplateIcons/LUihe1rSq5kiizBraMgG_auto-repair_ipad.png",
     mobile_thumbnail_url: "https://irp-cdn.multiscreensite.com/0f8a84df3a244e0f9249423e0588397f/siteTemplateIcons/rcceNsKOTKSqSx5bnPME_auto-repair-mobile.png",
     template_id: '1005442',
+    template_alias: "string",
     template_properties: {
       can_build_from_url: false,
       has_store: false,
       has_blog: false,
+      ai_enabled: false,
       page_count: 5,
       type: "duda"
     }
   }];
 
-  const { template_id } = response[0];
   before(() => {
     duda = new Duda({
       user: 'testuser',
@@ -51,16 +54,16 @@ describe('Template tests', () => {
   })
 
   it('can get a template by id', async () => {
-    scope.get(`${api_path}/${template_id}`).reply(200, response[0])
-    return await duda.templates.get({ template_id })
+    scope.get(`${api_path}/${template_id_or_alias}`).reply(200, response[0])
+    return await duda.templates.get({ template_id_or_alias })
   })
 
   it('can update a template', async () => {
-    scope.post(`${api_path}/${template_id}`, (body) => {
+    scope.post(`${api_path}/${template_id_or_alias}`, (body) => {
       expect(body).to.eql({ new_name })
       return body
     }).reply(204)
-    return await duda.templates.update({ new_name, template_id })
+    return await duda.templates.update({ new_name, template_id_or_alias })
   })
 
   it('can create a template from a site', async () => {
@@ -80,7 +83,7 @@ describe('Template tests', () => {
   })
 
   it('can delete a template', async () => {
-    scope.delete(`${api_path}/${template_id}`).reply(204)
-    return await duda.templates.delete({ template_id })
+    scope.delete(`${api_path}/${template_id_or_alias}`).reply(204)
+    return await duda.templates.delete({ template_id_or_alias })
   })
 })

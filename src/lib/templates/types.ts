@@ -9,11 +9,13 @@ export interface Template {
   tablet_thumbnail_url?: string,
   mobile_thumbnail_url?: string,
   template_id?: number,
+  template_alias?: string,
   template_properties?: {
     can_build_from_url?: boolean,
     has_store?: boolean,
     store_type?: 'NATIVE' | 'THIRDPARTY',
     has_blog?: boolean,
+    ai_enabled?: boolean,
     page_count?: number
     type?: 'DUDA' | 'CUSTOM'
   }
@@ -42,6 +44,7 @@ export interface CreateFromResponse {
   template_name: string,
   preview_url: string,
   thumbnail_url: string,
+  template_alias: string,
   template_id: number,
   template_properties: {
     can_build_from_url: boolean
@@ -49,7 +52,7 @@ export interface CreateFromResponse {
 }
 
 export interface DeleteTemplatePayload {
-  template_id: string,
+  template_id_or_alias: string,
 }
 
 export interface CreateFromSitePayload {
@@ -63,10 +66,10 @@ export interface CreateFromTemplatePayload {
 }
 
 export interface UpdateTemplatePayload {
-  template_id: string,
+  template_id_or_alias: string,
   new_name: string,
 }
 
 export interface GetTemplatePayload {
-  template_id?: string,
+  template_id_or_alias: string,
 }

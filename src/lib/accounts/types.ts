@@ -50,7 +50,7 @@ export type CreateAccountResponse = void;
 export type UpdateAccountResponse = void;
 export type DeleteAccountResponse = void;
 
-export type Permissions =
+export type ClientPermissions =
   'STATS_TAB' |
   'EDIT' |
   'ADD_FLEX' |
@@ -73,12 +73,15 @@ export type Permissions =
   'USE_APP' |
   'CLIENT_MANAGE_FREE_APPS' |
   'AI_ASSISTANT' |
+  'MANAGE_DOMAIN' |
   'CONTENT_LIBRARY_EXTERNAL_DATA_SYNC' |
   'SEO_OVERVIEW' |
-  'BOOKING_ADMIN';
+  'BOOKING_ADMIN' |
+  'BOOKING_USER' |
+  string;
 
 export interface GetPermissionsResponse {
-  permissions: Array<Permissions>;
+  permissions: Array<ClientPermissions>;
 }
 
 export type ListAccessibleSitesResponse = Array<{
@@ -97,7 +100,7 @@ export interface GetPermissionsPayload {
 export interface GrantSiteAccessPayload {
   site_name: string;
   account_name: string;
-  permissions: Array<Permissions>;
+  permissions: Array<ClientPermissions>;
 }
 
 export type SSOLinkTargets =
@@ -137,23 +140,50 @@ export interface GetPwdLinkResponse {
   reset_url: string;
 }
 
+type TeamPermissions =
+  'ANNOTATIONS' |
+  'MANAGE_CATEGORY' |
+  'CREATE_SITES' |
+  'DELETE_SITES' |
+  'EDIT_SITES' |
+  'WIDGETS_BUILDER' |
+  'MANAGE_DOMAIN' |
+  'MANAGE_STAFF' |
+  'STATS' |
+  'CONTENT_LIBRARY_EXTERNAL_DATA_SYNC' |
+  'REPUBLISH' |
+  'LIMIT_EDITING' |
+  'CONTENT_LIBRARY' |
+  'E_COMMERCE' |
+	'CO_PILOT' |
+  'ACTIVITY_LOG' |
+  'INSTALL_APP' |
+  'PRO_SETTINGS' |
+  'VIEW_APP' |
+  'DEV_MODE' |
+  'MARKETING' |
+  'AI_ASSISTANT' |
+  'API' |
+  'MANAGE_CUSTOMERS' |
+  'PUBLISH' |
+  'CUSTOM_DOMAIN' |
+  'BLOG' |
+  string;
+
+export interface TeamGroups {
+  group_name?: string,
+  color?: string,
+  title: string,
+  permissions?: TeamPermissions
+}
+
 export type ListCustomTeamGroupsPayload = null;
 
-export interface ListCustomTeamGroupsResponse {
-  group_name: string;
-  color: string;
-  title: string;
-  permissions: string;
-}
+export type ListCustomTeamGroupsResponse = Array<TeamGroups>
 
 export type ListDudaTeamGroupsPayload = null;
 
-export interface ListDudaTeamGroupsResponse {
-  group_name: string;
-  color: string;
-  title: string;
-  permissions: string;
-}
+export type ListDudaTeamGroupsResponse = Array<TeamGroups>
 
 export interface AssignTeamToGroupPayload {
   group_name: string;

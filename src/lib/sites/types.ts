@@ -88,6 +88,10 @@ export interface Site {
   google_tracking_id?: string,
   googletagmanager_container_id?: Array<string>,
   site_domain?: string,
+  booking?: {
+    is_available?: boolean,
+    status?: 'ACTIVE' | 'SOFT_DELETED' | 'NOT_INSTALLED' | string
+  }
   site_business_info?: {
     business_name?: string,
     address?: {
@@ -119,7 +123,7 @@ export interface Site {
   schemas?: {
     local_business?: {
       enabled?: boolean,
-      status?: 'MISSING_REQUIRED_FIELDS' | 'MISSING_RECOMMENDED_FIELDS' | 'VALID',
+      status?: 'MISSING_REQUIRED_FIELDS' | 'MISSING_RECOMMENDED_FIELDS' | 'VALID' | string,
       missing_required_fields?: Array<string>,
       missing_recommended_fields?: Array<string>
     }
@@ -164,6 +168,167 @@ export interface ThemeTextStyles {
   h6?: ThemeTextStyle
 }
 
+export type ImageDisplayMode =
+  'COVER' |
+  'CONTAIN' |
+  'TITLE' |
+  'NO_REPEAT';
+
+export type ImagePosition =
+  'top left' |
+  'top center' |
+  'top right' |
+  'center left' |
+  'center center' |
+  'center right' |
+  'bottom left' |
+  'bottom center' |
+  'bottom right';
+
+export interface ButtonBackgroundImageThemeStyles {
+  display_mode?: ImageDisplayMode | string,
+  position?: ImagePosition | string,
+  url?: string
+}
+
+export interface ButtonBackgroundThemeStyles {
+  color?: string,
+  gradient?: string,
+  image?: ButtonBackgroundImageThemeStyles
+}
+
+export interface ButtonBorderThemeStyles {
+  color?: string,
+  radius?: string,
+  width?: string
+}
+
+export interface ButtonBreakpointsOverrideTextThemeStyles {
+  font_size?: string
+}
+
+export interface ButtonBreakpointsOverrideThemeStyles {
+  text?: ButtonBreakpointsOverrideTextThemeStyles
+}
+
+export interface ButtonBreakpointsThemeStyles {
+  mobile?: ButtonBreakpointsOverrideThemeStyles,
+  tablet?: ButtonBreakpointsOverrideThemeStyles
+}
+
+export interface ButtonBreakpointsHoverBackgroundThemeStyles {
+  color?: string
+}
+
+export interface ButtonsBreakpointsHoverTextThemeStyles {
+  color?: string,
+  font_style?: string,
+  font_weight?: string,
+  text_decoration?: string
+}
+
+export interface ButtonBreakpointsHoverThemeStyles {
+  background?: ButtonBreakpointsHoverBackgroundThemeStyles,
+  border?: ButtonBreakpointsHoverBackgroundThemeStyles,
+  text?: ButtonsBreakpointsHoverTextThemeStyles
+}
+
+export interface ButtonBreakpointsIconThemeStyles {
+  color?: string
+}
+
+export interface ButtonBreakpointsTextThemeStyles{
+  color?: string,
+  direction?: 'ltr' | 'rtl' | string,
+  font_family?: string,
+  font_size?: string,
+  font_style?: string,
+  font_weight?: string,
+  text_align?: 'left' | 'center' | 'right' | string,
+  text_decoration?: string
+}
+
+export interface GlobalButtonThemeStyles {
+  background?: ButtonBackgroundThemeStyles,
+  border?: ButtonBorderThemeStyles,
+  box_shadow?: string,
+  breakpoints?: ButtonBreakpointsThemeStyles,
+  hover?: ButtonBreakpointsHoverThemeStyles,
+  icon?: ButtonBreakpointsIconThemeStyles,
+  text?: ButtonBreakpointsTextThemeStyles
+}
+
+export interface ButtonThemeStyles {
+  primary?: GlobalButtonThemeStyles,
+  secondary?: GlobalButtonThemeStyles
+}
+
+export interface SpacingStyles {
+ padding_bottom?: string,
+ padding_left?: string,
+ padding_right?: string,
+ padding_top?: string 
+}
+
+export interface SectionThemeBreakpointStyles {
+  spacing?: SpacingStyles
+}
+
+export interface SectionThemeOverrideBreakpointStyles {
+  mobile?: SectionThemeBreakpointStyles,
+  tablet?: SectionThemeBreakpointStyles
+}
+
+export interface SectionThemeContentWidthStyles {
+  default_content_mode?: 'full_width' | 'constrained_width' | string,
+  default_max_width_constraint?: string
+}
+
+export interface SectionThemeStyles {
+  breakpoints?: SectionThemeOverrideBreakpointStyles,
+  content_widht?: SectionThemeContentWidthStyles,
+  spacings?: SpacingStyles
+}
+
+export interface ColumnThemeBreakpointStyles {
+  spacing?: SpacingStyles
+}
+
+export interface ColumnThemeOverrideBreakpointStyles {
+  mobile?: ColumnThemeBreakpointStyles,
+  tablet?: ColumnThemeBreakpointStyles
+}
+
+export interface ColumnThemeStyles {
+  breakpoints?: ColumnThemeOverrideBreakpointStyles,
+  spacings?: SpacingStyles
+}
+
+export interface BackgroundThemeImageStyles {
+  attachment?: 'fixed' | 'initial' | string,
+  display_mode?: ImageDisplayMode | string,
+  position?: ImagePosition | string,
+  url?: string
+}
+
+export interface BackgroundThemeBreakpointStyles {
+  color?: string,
+  gradient?: string,
+  image?: BackgroundThemeImageStyles
+}
+
+export interface BackgroundThemeOverrideBreakpointStyles {
+  mobile?: BackgroundThemeBreakpointStyles,
+  tablet?: BackgroundThemeBreakpointStyles
+}
+
+export interface BackgroundThemeStyles {
+  breakpoints?: BackgroundThemeOverrideBreakpointStyles,
+  color?: string,
+  gradient?: string,
+  image?: BackgroundThemeImageStyles
+}
+
 export interface SiteNamedPayload {
   site_name: string;
 }
@@ -175,7 +340,12 @@ export interface SiteNamedResponse {
 export interface UpdateSiteThemePayload {
   site_name: string,
   colors?: Array<SiteThemeColor>,
-  text?: ThemeTextStyles
+  text?: ThemeTextStyles,
+  buttons?: ButtonThemeStyles,
+  sections?: SectionThemeStyles,
+  columns?: ColumnThemeStyles,
+  inner_columns?: ColumnThemeStyles,
+  background?: BackgroundThemeStyles
 }
 
 export interface GetSiteResponse extends Site {
@@ -190,14 +360,14 @@ export interface GetSiteResponse extends Site {
   additionalLanguages?: Array<Languages>,
   fav_icon?: string,
   last_reset_by?: string,
-  certificate_status?: 'COMPLETE' | 'IN_PROGRESS' | 'FAILED',
+  certificate_status?: 'COMPLETE' | 'IN_PROGRESS' | 'FAILED' | string,
   modification_date?: string,
   creation_date?: string,
-  publish_status?: 'PUBLISHED' | 'UNPUBLISHED' | 'NOT_PUBLISHED_YET',
+  publish_status?: 'PUBLISHED' | 'UNPUBLISHED' | 'NOT_PUBLISHED_YET' | string,
   thumbnail_url?: string,
   canonical_url?: string,
-  store_status?: 'NONE' | 'ACTIVE' | 'SUSPENDED',
-  store_type?: 'NATIVE' | 'THIRDPARTY',
+  store_status?: 'NONE' | 'ACTIVE' | 'SUSPENDED' | string,
+  store_type?: 'NATIVE' | 'THIRDPARTY' | string,
   cookie_notification?: string,
   lang?: string,
   labels?: Array<SiteLabel>
@@ -222,7 +392,12 @@ export type SwitchTemplateResponse = void;
 
 export type SiteThemeResponse = {
   colors: Array<SiteThemeColor>,
-  text: ThemeTextStyles
+  text: ThemeTextStyles,
+  buttons: ButtonThemeStyles,
+  sections: SectionThemeStyles,
+  columns: ColumnThemeStyles,
+  inner_columns: ColumnThemeStyles,
+  background: BackgroundThemeStyles
 }
 
 export interface PublishSitePayload extends SiteNamedPayload {
@@ -246,14 +421,16 @@ export interface DuplicateSitePayload extends SiteNamedPayload {
 }
 
 export interface ResetSitePayload extends SiteNamedPayload {
-  template_id: string | number,
+  template_id?: string | number,
+  template_alias: string,
   site_data?: {
     removeBizInfos?: boolean,
   }
 }
 
 export interface SwitchTemplatePayload extends SiteNamedPayload {
-  template_id: string | number,
+  template_id?: string | number,
+  template_alias: string
 }
 
 type FirstPartialUpdateSitePayload = {
@@ -280,8 +457,8 @@ export type PublishStatus =
 export interface ListSitePayload {
   offset?: number,
   limit?: number,
-  sort?: 'CREATION_DATE' | 'LAST_PUBLISHED_DATE',
-  direction?: 'asc' | 'desc',
+  sort?: 'CREATION_DATE' | 'LAST_PUBLISHED_DATE' | string,
+  direction?: 'asc' | 'desc' | string,
   label_names?: Array<string>,
   publish_status?: Array<PublishStatus>
 }
@@ -297,7 +474,8 @@ export type GetSiteByExtIDPayload = {
 export type GetSiteByExtIDResponse = Array<string>;
 
 export interface CreateSitePayload extends Site {
-  template_id: string | number,
+  template_id?: string | number,
+  template_alias: string,
   url?: string,
   default_domain_prefix?: string,
   labels?: Array<SiteLabel>,

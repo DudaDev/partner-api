@@ -40,7 +40,8 @@ export interface Choices {
 export interface ProductOption {
   choices: Array<Choices>,
   id: string,
-  name: string
+  name: string,
+  type: 'COLOR' | 'TEXT' | string
 }
 
 export interface ProductSEO {
@@ -70,6 +71,17 @@ export interface Product {
   sku?: string,
   status?: 'ACTIVE' | 'HIDDEN',
   stock_status?: 'IN_STOCK' | 'OUT_OF_STOCK',
+}
+
+type Summary = {
+  failed: number,
+  successful: number,
+  total: number
+}
+
+type ValidationErrors = {
+  field?: string,
+  message: string
 }
 
 export interface ProductResponse extends Product {
@@ -122,6 +134,56 @@ export interface DeleteProductPayload {
 }
 
 export type DeleteProductResponse = void;
+
+type BulkVariations = {
+  external_id: string,
+  images: Array<Images>,
+  options: Array<VariationProductOptions>,
+  price_difference: string,
+  quantity: number,
+  sku: string,
+  status: 'HIDDEN' | 'ACTIVE' | string
+}
+
+interface CreateBulkProduct extends Product {
+  type?: 'PHYSICAL' | 'DIGITAL' | 'SERVICE' | 'DONATION' | string,
+  variations?: Array<BulkVariations>
+}
+
+interface UpdateBulkProduct extends Product {
+  id: string,
+  variations?: Array<BulkVariations>
+}
+
+interface BulkProductReponse extends Product {
+  id: string,
+  type?: 'PHYSICAL' | 'DIGITAL' | 'SERVICE' | 'DONATION' | string,
+  variations?: Array<BulkVariations>
+}
+
+type FullBulkProductResponse = {
+  key: string,
+  product?: BulkProductReponse,
+  status: 'SUCCESS' | 'FAILED' | string,
+  validation_errors?: ValidationErrors
+}
+
+export interface BulkCreateProductPayload {
+  site_name: string,
+  products: Array<CreateBulkProduct>
+}
+
+export interface BulkCreateProductResponse {
+  results: Array<FullBulkProductResponse>,
+  summary: Summary
+}
+
+export interface BulkUpdateProductPayload {
+  site_name: string,
+  products: Array<UpdateBulkProduct>
+}
+
+export interface BulkUpdateProductResponse extends BulkCreateProductResponse {}
 
 export interface Gateway {
   live_payment_methods_url: string,
@@ -261,6 +323,16 @@ export interface Address {
   phone: string
 }
 
+interface CartCustomFields {
+  id: string,
+  label: string,
+  type: 'TEXT' | 'TEXTAREA' | 'SELECT' | 'RADIO_LIST' | 'CHECKBOX' | 'DATE' | string,
+  zone: 'CONTACT_INFO' | 'SHIPPING_ADDRESS' | 'SHIPPING_METHODS' | 'BILLING_ADDRESS' | 'PAYMENT_METHODS' | string,
+  value: string,
+  includes_time: boolean,
+  date_range_policy: 'ANY' | 'PAST_ONLY' | 'FUTURE_ONLY' | string
+}
+
 export interface Cart {
   id: string,
   mode: 'LIVE' | 'TEST',
@@ -282,6 +354,7 @@ export interface Cart {
   updated: string,
   user_agent: string,
   ip_address: string,
+  custom_fields: Array<CartCustomFields>
   metadata?: {
     [key: string]: string
   }
@@ -377,6 +450,16 @@ export interface Refund {
   createD: string
 }
 
+interface OrderCustomFields {
+  id: string,
+  label: string,
+  type: 'TEXT' | 'TEXTAREA' | 'SELECT' | 'RADIO_LIST' | 'CHECKBOX' | 'DATE' | string,
+  zone: 'CONTACT_INFO' | 'SHIPPING_ADDRESS' | 'SHIPPING_METHODS' | 'BILLING_ADDRESS' | 'PAYMENT_METHODS' | string,
+  value: string,
+  includes_time: boolean,
+  date_range_policy: 'ANY' | 'PAST_ONLY' | 'FUTURE_ONLY' | string
+}
+
 export interface Order {
   source: 'CHECKOUT' | 'EXTERNAL' | 'SUBSCRIPTION_BILLING_ENGINE',
   mode: 'LIVE' | 'TEST',
@@ -401,6 +484,9 @@ export interface Order {
   created: string,
   user_agent: string,
   ip_address: string,
+  cancellation_reason: string,
+  cancelled: string,
+  custom_fields: Array<OrderCustomFields>
   metadata?: {
     [key: string]: string
   }
@@ -636,6 +722,25 @@ interface MarketingOptInSettings {
   description_html?: string
 }
 
+interface CustomField {
+  id: string,
+  required: boolean,
+  label: string,
+  type: 'TEXT' | 'TEXTAREA' | 'SELECT' | 'RADIO_LIST' | 'CHECKBOX' | 'DATE' | string,
+  placeholder: string,
+  options: Array<string>,
+  includes_time: boolean,
+  date_range_policy: 'ANY' | 'PAST_ONLY' | 'FUTURE_ONLY' | string
+}
+
+interface EcommCustomFields {
+  CONTACT_INFO?: CustomField,
+  SHIPPING_ADDRESS?: CustomField,
+  SHIPPING_METHODS?: CustomField,
+  BILLING_ADDRESS?: CustomField,
+  PAYMENT_METHODS?: CustomField
+}
+
 interface CartSettings {
   split_name_field?: boolean,
   split_address_1_field?: boolean,
@@ -643,6 +748,7 @@ interface CartSettings {
   display_phone_field?: boolean,
   terms_and_conditions_html?: string,
   marketing_opt_in_settings?: MarketingOptInSettings
+  custom_fields?: EcommCustomFields
 }
 
 interface TaxSettings {
@@ -846,6 +952,42 @@ export interface DeleteCategoryPayload {
 
 export type DeleteCategoryResponse = null;
 
+type BulkCategoryPayload = {
+  description?: string,
+  image?: Images,
+  parent_id?: string,
+  seo?: CategorySEO,
+  title?: string
+}
+
+interface BulkCategory extends BulkCategoryPayload {
+  id: string
+}
+
+type BulkCategoryResponse = {
+  category?: BulkCategory,
+  key: string,
+  status: 'SUCCESS' | 'FAILED' | string,
+  validation_errors?: Array<ValidationErrors>
+}
+
+export interface BulkCreateCategoryPayload {
+  site_name: string,
+  categories: Array<BulkCategoryPayload>
+}
+
+export interface BulkCreateCategoryResponse {
+  results: Array<BulkCategoryResponse>,
+  summary: Summary
+}
+
+export interface BulkUpdateCategoryPayload {
+  site_name: string,
+  categories: Array<BulkCategory>
+}
+
+export interface BulkUpdateCategoryResponse extends BulkCreateCategoryResponse {}
+
 export interface ShippingProvider {
   id: string,
   live_shipping_rates_url: string,
@@ -1009,7 +1151,7 @@ export interface UpdateVariationPayload {
   price_difference?: string,
   quantity?: number,
   sku?: string,
-  status?: 'HIDDEN' | 'ACTIVE'
+  status?: 'HIDDEN' | 'ACTIVE' | string
 }
 
 export interface UpdateVariationResponse extends Variations {}
