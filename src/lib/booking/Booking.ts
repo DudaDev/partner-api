@@ -40,7 +40,15 @@ class Booking extends Resource {
         required: false,
       },
     },
-  })
+  });
+
+  createWidgetEmbed = APIEndpoint<Types.CreateBookingWidgetEmbedPayload, Types.CreateBookingWidgetEmbedResponse>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}/booking/widget-embed',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
 }
 
 export default Booking;

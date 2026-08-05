@@ -2130,6 +2130,20 @@ duda.booking.appointments.reschedule({ site_name: site_name, appointment_uid: ap
 duda.booking.getAvailability({ site_name: site_name });
 ```
 
+# Booking Widget Embed
+
+## Create Booking Widget Embed
+
+[Create Booking Widget Embed Reference](https://developer.duda.co/reference/booking-widget-embed-get-booking-widget-embed)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/widget-embed`
+
+```typescript
+duda.booking.createWidgetEmbed({ site_name: site_name, appointment_type_ids: appointment_type_ids });
+```
+
 # Booking Appointment Types
 
 ## List Booking Appointment Types

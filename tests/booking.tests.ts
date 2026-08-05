@@ -82,6 +82,10 @@ describe('Booking tests', () => {
     sent_to: 'user@example.com'
   }
 
+  const booking_widget_embed_response = {
+    iframe_html: '<iframe src="https://example.com/booking-widget"></iframe>'
+  }
+
   const booking_availability_response = {
     slots: {
       '2025-06-16': [
@@ -290,6 +294,46 @@ describe('Booking tests', () => {
         time_zone: 'UTC',
         duration: 30
       }).then(res => expect(res).to.eql(booking_availability_response))
+    })
+  })
+
+  describe('booking widget embed', () => {
+    it('can create a booking widget embed', async () => {
+      scope.post(`${api_path}${site_name}/booking/widget-embed`, (body) => {
+        expect(body).to.eql({
+          appointment_type_ids: [appointment_type_id],
+          show_free_price: true,
+          design_style: 'site-theme',
+          lang: 'en',
+          choose_appointment_stage_config: {
+            is_title_visible: true,
+            title: 'string'
+          },
+          choose_staff_member_stage_config: {
+            is_stage_shown: true,
+            is_title_visible: true,
+            title: 'string'
+          }
+        })
+        return body
+      }).reply(200, booking_widget_embed_response)
+
+      return await duda.booking.createWidgetEmbed({
+        site_name,
+        appointment_type_ids: [appointment_type_id],
+        show_free_price: true,
+        design_style: 'site-theme',
+        lang: 'en',
+        choose_appointment_stage_config: {
+          is_title_visible: true,
+          title: 'string'
+        },
+        choose_staff_member_stage_config: {
+          is_stage_shown: true,
+          is_title_visible: true,
+          title: 'string'
+        }
+      }).then(res => expect(res).to.eql(booking_widget_embed_response))
     })
   })
 
