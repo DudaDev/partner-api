@@ -383,3 +383,30 @@ export interface GetBookingAvailabilityResponse {
     },
     time_zone?: string
 }
+
+type DesignStyle = "site-theme" | "basic" 
+
+export interface WidgetEmbedStageConfig {
+    is_title_visible?: boolean,
+    title?: string,
+}
+
+export interface AppointmentStageConfig extends WidgetEmbedStageConfig {}
+
+export interface StaffMemberStageConfig extends WidgetEmbedStageConfig {
+    is_stage_shown?: boolean,
+}
+
+export interface CreateBookingWidgetEmbedPayload {
+    site_name: string,
+    appointment_type_ids: Array<string>,
+    show_free_price?: boolean,
+    design_style?: DesignStyle,
+    lang?: AppointmentAttendeesLanguage,
+    choose_appointment_stage_config?: AppointmentStageConfig,
+    choose_staff_member_stage_config?: StaffMemberStageConfig,
+}
+
+export interface CreateBookingWidgetEmbedResponse {
+    iframe_html?: string,
+}
