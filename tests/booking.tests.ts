@@ -10,6 +10,7 @@ describe('Booking tests', () => {
   const site_name = 'test_site';
   const appointment_type_id = 'test_id'
   const staff_member_id = 'test_id'
+  const appointment_uid = 'test_uid'
 
   const offset = 0;
   const limit = 1;
@@ -26,7 +27,7 @@ describe('Booking tests', () => {
             email: "user@example.com",
             language: "en",
             name: "Default",
-            timeZone: "Asia/Jerusalem"
+            time_zone: "Asia/Jerusalem"
         }
     ],
     booking_fields_responses: {
@@ -45,7 +46,7 @@ describe('Booking tests', () => {
             email: "staffmember1@example.com",
             id: 1582498,
             name: "Staff Member 1",
-            timeZone: "Asia/Jerusalem",
+            time_zone: "Asia/Jerusalem",
             username: "staffmember1-example-com"
         }
     ],
@@ -70,6 +71,15 @@ describe('Booking tests', () => {
       results: [booking_appointment],
       site_name: 'test_site',
       total_responses: 0
+  }
+
+  const manage_appointment_links_response = {
+    cancel_link: 'https://example.com/cancel',
+    reschedule_link: 'https://example.com/reschedule'
+  }
+
+  const send_management_email_response = {
+    sent_to: 'user@example.com'
   }
 
   const booking_appointment_types = {
@@ -146,6 +156,114 @@ describe('Booking tests', () => {
           offset,
           limit
       }).then(res => expect(res).to.eql(list_booking_appointments_response))
+    })
+
+    it('can book an appointment', async () => {
+      scope.post(`${api_path}${site_name}/booking/appointments`, (body) => {
+        expect(body).to.eql({
+          appointment_type_id,
+          attendee: {
+            email: 'user@example.com',
+            language: 'en',
+            name: 'Default',
+            phone_number: '+15555555555',
+            time_zone: 'Asia/Jerusalem'
+          },
+          booking_fields_responses: {
+            email: 'user@example.com',
+            guests: [],
+            name: 'Default'
+          },
+          duration: 30,
+          metadata: {
+            source: 'qa-test'
+          },
+          start: '2025-06-16T17:30:00.000Z'
+        })
+        return body
+      }).reply(200, booking_appointment)
+
+      return await duda.booking.appointments.book({
+        site_name,
+        appointment_type_id,
+        attendee: {
+          email: 'user@example.com',
+          language: 'en',
+          name: 'Default',
+          phone_number: '+15555555555',
+          time_zone: 'Asia/Jerusalem'
+        },
+        booking_fields_responses: {
+          email: 'user@example.com',
+          guests: [],
+          name: 'Default'
+        },
+        duration: 30,
+        metadata: {
+          source: 'qa-test'
+        },
+        start: '2025-06-16T17:30:00.000Z'
+      }).then(res => expect(res).to.eql(booking_appointment))
+    })
+
+    it('can cancel a booking appointment', async () => {
+      scope.post(`${api_path}${site_name}/booking/appointments/${appointment_uid}/cancel`, (body) => {
+        expect(body).to.eql({
+          cancellation_reason: 'Schedule conflict'
+        })
+        return body
+      }).reply(200, booking_appointment)
+
+      return await duda.booking.appointments.cancel({
+        site_name,
+        appointment_uid,
+        cancellation_reason: 'Schedule conflict'
+      }).then(res => expect(res).to.eql(booking_appointment))
+    })
+
+    it('can confirm a booking appointment', async () => {
+      scope.post(`${api_path}${site_name}/booking/appointments/${appointment_uid}/confirm`).reply(200, booking_appointment)
+
+      return await duda.booking.appointments.confirm({
+        site_name,
+        appointment_uid
+      }).then(res => expect(res).to.eql(booking_appointment))
+    })
+
+    it('can get booking appointment manage links', async () => {
+      scope.get(`${api_path}${site_name}/booking/appointments/${appointment_uid}/manage-links?lang=en`).reply(200, manage_appointment_links_response)
+
+      return await duda.booking.appointments.getManageLinks({
+        site_name,
+        appointment_uid,
+        lang: 'en'
+      }).then(res => expect(res).to.eql(manage_appointment_links_response))
+    })
+
+    it('can send a booking appointment management email', async () => {
+      scope.post(`${api_path}${site_name}/booking/appointments/${appointment_uid}/send-management-email`).reply(200, send_management_email_response)
+
+      return await duda.booking.appointments.sendManagementEmail({
+        site_name,
+        appointment_uid
+      }).then(res => expect(res).to.eql(send_management_email_response))
+    })
+
+    it('can reschedule a booking appointment', async () => {
+      scope.post(`${api_path}${site_name}/booking/appointments/${appointment_uid}/reschedule`, (body) => {
+        expect(body).to.eql({
+          rescheduling_reason: 'Availability changed',
+          start: '2025-06-16T17:30:00.000Z'
+        })
+        return body
+      }).reply(200, booking_appointment)
+
+      return await duda.booking.appointments.reschedule({
+        site_name,
+        appointment_uid,
+        rescheduling_reason: 'Availability changed',
+        start: '2025-06-16T17:30:00.000Z'
+      }).then(res => expect(res).to.eql(booking_appointment))
     })
   })
 

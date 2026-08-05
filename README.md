@@ -2044,6 +2044,78 @@ duda.ecomm.custom_fields.delete({ site_name: site_name, custom_field_id: custom_
 duda.booking.appointments.list({ site_name: site_name });
 ```
 
+## Book Appointment
+
+[Book Appointment Reference](https://developer.duda.co/reference/booking-appointments-create-booking-appointment)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointments`
+
+```typescript
+duda.booking.appointments.book({ site_name: site_name, appointment_type_id: appointment_type_id, attendee: attendee, start: start });
+```
+
+## Cancel Booking Appointment
+
+[Cancel Booking Appointment Reference](https://developer.duda.co/reference/booking-appointments-cancel-booking-appointment)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/cancel`
+
+```typescript
+duda.booking.appointments.cancel({ site_name: site_name, appointment_uid: appointment_uid });
+```
+
+## Confirm Booking Appointment
+
+[Confirm Booking Appointment Reference](https://developer.duda.co/reference/booking-appointments-confirm-booking-appointment)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/confirm`
+
+```typescript
+duda.booking.appointments.confirm({ site_name: site_name, appointment_uid: appointment_uid });
+```
+
+## Get Booking Appointment Manage Links
+
+[Get Booking Appointment Manage Links Reference](https://developer.duda.co/reference/booking-appointments-get-manage-links)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/manage-links`
+
+```typescript
+duda.booking.appointments.getManageLinks({ site_name: site_name, appointment_uid: appointment_uid });
+```
+
+## Send Booking Appointment Management Email
+
+[Send Booking Appointment Management Email Reference](https://developer.duda.co/reference/booking-appointments-send-management-email)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/send-management-email`
+
+```typescript
+duda.booking.appointments.sendManagementEmail({ site_name: site_name, appointment_uid: appointment_uid });
+```
+
+## Reschedule Booking Appointment
+
+[Reschedule Booking Appointment Reference](https://developer.duda.co/reference/booking-appointments-reschedule-booking-appointment)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/reschedule`
+
+```typescript
+duda.booking.appointments.reschedule({ site_name: site_name, appointment_uid: appointment_uid, start: start });
+```
+
 # Booking Appointment Types
 
 ## List Booking Appointment Types
