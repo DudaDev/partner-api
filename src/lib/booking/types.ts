@@ -363,3 +363,23 @@ export interface UpdateBookingStaffMembersAvailabilityPayload extends BookingSta
 }
 
 export interface UpdateBookingStaffMembersAvailabilityResponse extends BookingStaffMemberAvailability {}
+
+export interface GetBookingAvailabilityPayload {
+    site_name: string,
+    appointment_type_id?: string,
+    start?: string,
+    end?: string,
+    time_zone?: string
+    duration?: number,
+}
+
+export interface BookingAvailabilitySlot {
+    start?: string,
+    end?: string,
+ }
+export interface GetBookingAvailabilityResponse {
+    slots?: {
+        [date: string]: Array<BookingAvailabilitySlot>
+    },
+    time_zone?: string
+}
