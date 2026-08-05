@@ -2116,6 +2116,20 @@ duda.booking.appointments.sendManagementEmail({ site_name: site_name, appointmen
 duda.booking.appointments.reschedule({ site_name: site_name, appointment_uid: appointment_uid, start: start });
 ```
 
+# Booking Availability
+
+## Get Booking Availability
+
+[Get Booking Availability Reference](https://developer.duda.co/reference/booking-availability-get-available-slots)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/availability`
+
+```typescript
+duda.booking.getAvailability({ site_name: site_name });
+```
+
 # Booking Appointment Types
 
 ## List Booking Appointment Types

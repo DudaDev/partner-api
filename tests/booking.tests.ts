@@ -82,6 +82,18 @@ describe('Booking tests', () => {
     sent_to: 'user@example.com'
   }
 
+  const booking_availability_response = {
+    slots: {
+      '2025-06-16': [
+        {
+          start: '2025-06-16T17:30:00.000Z',
+          end: '2025-06-16T18:00:00.000Z'
+        }
+      ]
+    },
+    time_zone: 'UTC'
+  }
+
   const booking_appointment_types = {
     created_at: 'string',
     description: 'string',
@@ -264,6 +276,20 @@ describe('Booking tests', () => {
         rescheduling_reason: 'Availability changed',
         start: '2025-06-16T17:30:00.000Z'
       }).then(res => expect(res).to.eql(booking_appointment))
+    })
+  })
+
+  describe('booking availability', () => {
+    it('can get booking availability', async () => {
+      scope.get(`${api_path}${site_name}/booking/availability?appointment_type_id=${appointment_type_id}&start=2025-06-16&end=2025-06-17&time_zone=UTC&duration=30`).reply(200, booking_availability_response)
+      return await duda.booking.getAvailability({
+        site_name,
+        appointment_type_id,
+        start: '2025-06-16',
+        end: '2025-06-17',
+        time_zone: 'UTC',
+        duration: 30
+      }).then(res => expect(res).to.eql(booking_availability_response))
     })
   })
 
