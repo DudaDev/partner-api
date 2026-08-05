@@ -13,6 +13,7 @@ import AppsManifest from './manifest/Manifest';
 import AppsAccounts from './accounts/Accounts';
 import AppsEcomm from './ecomm/Ecomm';
 import AppsCollections from './collections/Collections';
+import AppsBooking from './booking/Booking';
 import { RequestOptions } from '../http';
 
 const DEFAULT_EXPIRY_TOLERANCE = 10000;
@@ -53,6 +54,8 @@ class Apps extends Resource {
   ecomm = new AppsEcomm(this);
 
   collections = new AppsCollections(this);
+
+  booking = new AppsBooking(this);
 
   utils = Utils;
 
