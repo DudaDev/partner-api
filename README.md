@@ -2044,6 +2044,106 @@ duda.ecomm.custom_fields.delete({ site_name: site_name, custom_field_id: custom_
 duda.booking.appointments.list({ site_name: site_name });
 ```
 
+## Book Appointment
+
+[Book Appointment Reference](https://developer.duda.co/reference/booking-appointments-create-booking-appointment)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointments`
+
+```typescript
+duda.booking.appointments.book({ site_name: site_name, appointment_type_id: appointment_type_id, attendee: attendee, start: start });
+```
+
+## Cancel Booking Appointment
+
+[Cancel Booking Appointment Reference](https://developer.duda.co/reference/booking-appointments-cancel-booking-appointment)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/cancel`
+
+```typescript
+duda.booking.appointments.cancel({ site_name: site_name, appointment_uid: appointment_uid });
+```
+
+## Confirm Booking Appointment
+
+[Confirm Booking Appointment Reference](https://developer.duda.co/reference/booking-appointments-confirm-booking-appointment)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/confirm`
+
+```typescript
+duda.booking.appointments.confirm({ site_name: site_name, appointment_uid: appointment_uid });
+```
+
+## Get Booking Appointment Manage Links
+
+[Get Booking Appointment Manage Links Reference](https://developer.duda.co/reference/booking-appointments-get-manage-links)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/manage-links`
+
+```typescript
+duda.booking.appointments.getManageLinks({ site_name: site_name, appointment_uid: appointment_uid });
+```
+
+## Send Booking Appointment Management Email
+
+[Send Booking Appointment Management Email Reference](https://developer.duda.co/reference/booking-appointments-send-management-email)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/send-management-email`
+
+```typescript
+duda.booking.appointments.sendManagementEmail({ site_name: site_name, appointment_uid: appointment_uid });
+```
+
+## Reschedule Booking Appointment
+
+[Reschedule Booking Appointment Reference](https://developer.duda.co/reference/booking-appointments-reschedule-booking-appointment)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/reschedule`
+
+```typescript
+duda.booking.appointments.reschedule({ site_name: site_name, appointment_uid: appointment_uid, start: start });
+```
+
+# Booking Availability
+
+## Get Booking Availability
+
+[Get Booking Availability Reference](https://developer.duda.co/reference/booking-availability-get-available-slots)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/booking/availability`
+
+```typescript
+duda.booking.getAvailability({ site_name: site_name });
+```
+
+# Booking Widget Embed
+
+## Create Booking Widget Embed
+
+[Create Booking Widget Embed Reference](https://developer.duda.co/reference/booking-widget-embed-get-booking-widget-embed)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/booking/widget-embed`
+
+```typescript
+duda.booking.createWidgetEmbed({ site_name: site_name, appointment_type_ids: appointment_type_ids });
+```
+
 # Booking Appointment Types
 
 ## List Booking Appointment Types
@@ -4265,6 +4365,268 @@ duda.appstore.ecomm.carts.list({ site_name: site_name });
 
 ```typescript
 duda.appstore.ecomm.carts.get({ site_name: site_name, cart_id: cart_id });
+```
+
+# Appstore Booking Appointments
+
+## List Booking Appointments
+
+[List Booking Appointments Reference](https://developer.duda.co/reference/list-booking-appointments)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/appointments`
+
+```typescript
+duda.appstore.booking.appointments.list({ site_name: site_name });
+```
+
+## Book Appointment
+
+[Book Appointment Reference](https://developer.duda.co/reference/booking-appointments-create-booking-appointment)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/appointments`
+
+```typescript
+duda.appstore.booking.appointments.book({ site_name: site_name, appointment_type_id: appointment_type_id, attendee: attendee, start: start });
+```
+
+## Cancel Booking Appointment
+
+[Cancel Booking Appointment Reference](https://developer.duda.co/reference/booking-appointments-cancel-booking-appointment)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/appointments/{appointment_uid}/cancel`
+
+```typescript
+duda.appstore.booking.appointments.cancel({ site_name: site_name, appointment_uid: appointment_uid });
+```
+
+## Confirm Booking Appointment
+
+[Confirm Booking Appointment Reference](https://developer.duda.co/reference/booking-appointments-confirm-booking-appointment)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/appointments/{appointment_uid}/confirm`
+
+```typescript
+duda.appstore.booking.appointments.confirm({ site_name: site_name, appointment_uid: appointment_uid });
+```
+
+## Get Booking Appointment Manage Links
+
+[Get Booking Appointment Manage Links Reference](https://developer.duda.co/reference/booking-appointments-get-manage-links)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/appointments/{appointment_uid}/manage-links`
+
+```typescript
+duda.appstore.booking.appointments.getManageLinks({ site_name: site_name, appointment_uid: appointment_uid });
+```
+
+## Send Booking Appointment Management Email
+
+[Send Booking Appointment Management Email Reference](https://developer.duda.co/reference/booking-appointments-send-management-email)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/appointments/{appointment_uid}/send-management-email`
+
+```typescript
+duda.appstore.booking.appointments.sendManagementEmail({ site_name: site_name, appointment_uid: appointment_uid });
+```
+
+## Reschedule Booking Appointment
+
+[Reschedule Booking Appointment Reference](https://developer.duda.co/reference/booking-appointments-reschedule-booking-appointment)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/appointments/{appointment_uid}/reschedule`
+
+```typescript
+duda.appstore.booking.appointments.reschedule({ site_name: site_name, appointment_uid: appointment_uid, start: start });
+```
+
+# Appstore Booking Availability
+
+## Get Booking Availability
+
+[Get Booking Availability Reference](https://developer.duda.co/reference/booking-availability-get-available-slots)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/availability`
+
+```typescript
+duda.appstore.booking.getAvailability({ site_name: site_name });
+```
+
+# Appstore Booking Widget Embed
+
+## Create Booking Widget Embed
+
+[Create Booking Widget Embed Reference](https://developer.duda.co/reference/booking-widget-embed-get-booking-widget-embed)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/widget-embed`
+
+```typescript
+duda.appstore.booking.createWidgetEmbed({ site_name: site_name, appointment_type_ids: appointment_type_ids });
+```
+
+# Appstore Booking Appointment Types
+
+## List Booking Appointment Types
+
+[List Booking Appointment Types Reference](https://developer.duda.co/reference/list-booking-appointment-types)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/appointment-types`
+
+```typescript
+duda.appstore.booking.appointment_types.list({ site_name: site_name });
+```
+
+## Get Booking Appointment Type
+
+[Get Booking Appointment Type Reference](https://developer.duda.co/reference/get-booking-appointment-type)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/appointment-types/{id}`
+
+```typescript
+duda.appstore.booking.appointment_types.get({ site_name: site_name, id: id });
+```
+
+## Create Booking Appointment Type
+
+[Create Booking Appointment Type Reference](https://developer.duda.co/reference/create-booking-appointment-type)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/appointment-types`
+
+```typescript
+duda.appstore.booking.appointment_types.create({ site_name: site_name });
+```
+
+## Update Booking Appointment Type
+
+[Update Booking Appointment Type Reference](https://developer.duda.co/reference/update-booking-appointment-type)
+
+### Request
+
+`PUT https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/appointment-types/{id}`
+
+```typescript
+duda.appstore.booking.appointment_types.update({ site_name: site_name, id: id });
+```
+
+## Delete Booking Appointment Type
+
+[Delete Booking Appointment Type Reference](https://developer.duda.co/reference/delete-booking-appointment-type)
+
+### Request
+
+`DELETE https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/appointment-types/{id}`
+
+```typescript
+duda.appstore.booking.appointment_types.delete({ site_name: site_name, id: id });
+```
+
+# Appstore Booking Staff Members
+
+## List Booking Staff Members
+
+[List Booking Staff Members Reference](https://developer.duda.co/reference/list-booking-staff-members)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/staff-members`
+
+```typescript
+duda.appstore.booking.staff_members.list({ site_name: site_name });
+```
+
+## Get Booking Staff Member
+
+[Get Booking Staff Member Reference](https://developer.duda.co/reference/get-booking-staff-member)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/staff-members/{id}`
+
+```typescript
+duda.appstore.booking.staff_members.get({ site_name: site_name, id: id });
+```
+
+## Create Booking Staff Member
+
+[Create Booking Staff Member Reference](https://developer.duda.co/reference/create-booking-staff-member)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/staff-members`
+
+```typescript
+duda.appstore.booking.staff_members.create({ site_name: site_name });
+```
+
+## Update Booking Staff Member
+
+[Update Booking Staff Member Reference](https://developer.duda.co/reference/update-booking-staff-member)
+
+### Request
+
+`PUT https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/staff-members/{id}`
+
+```typescript
+duda.appstore.booking.staff_members.update({ site_name: site_name, id: id });
+```
+
+## Delete Booking Staff Member
+
+[Delete Booking Staff Member Reference](https://developer.duda.co/reference/delete-booking-staff-member)
+
+### Request
+
+`DELETE https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/staff-members/{id}`
+
+```typescript
+duda.appstore.booking.staff_members.delete({ site_name: site_name, id: id });
+```
+
+## Get Booking Staff Member Availability
+
+[Get Booking Staff Member Availability Reference](https://developer.duda.co/reference/get-booking-staff-member-availability)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/staff-members/{id}/availability`
+
+```typescript
+duda.appstore.booking.staff_members.availability.get({ site_name: site_name, id: id });
+```
+
+## Update Booking Staff Member Availability
+
+[Update Booking Staff Member Availability Reference](https://developer.duda.co/reference/update-booking-staff-member-availability)
+
+### Request
+
+`PUT https://api.duda.co/api/integrationhub/application/site/{site_name}/booking/staff-members/{id}/availability`
+
+```typescript
+duda.appstore.booking.staff_members.availability.update({ site_name: site_name, id: id });
 ```
 
 # Appstore Site Wide HTML

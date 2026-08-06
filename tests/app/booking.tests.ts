@@ -1,13 +1,14 @@
-import { expect } from "chai"
 import nock from "nock"
-import { Duda } from "../src/index"
+import { expect } from "chai"
+import { Duda } from "../../src/index"
 
-describe('Booking tests', () => {
-  let duda: Duda;
-  let scope: nock.Scope;
+describe('App store booking tests', () => {
+  const base_path = '/api/integrationhub/application'
+  const site_name = 'test_site'
+  const user = 'testuser'
+  const pass = 'testpass'
+  const token = '123456'
 
-  const api_path = '/api/sites/multiscreen/';
-  const site_name = 'test_site';
   const appointment_type_id = 'test_id'
   const staff_member_id = 'test_id'
   const appointment_uid = 'test_uid'
@@ -109,7 +110,7 @@ describe('Booking tests', () => {
       currency: 'string',
       formatted_base_price: 'string'
     },
-    pricing_type: 'string', 
+    pricing_type: 'string',
     updated_at: 'string'
   }
 
@@ -154,28 +155,36 @@ describe('Booking tests', () => {
     time_zone: 'string'
   }
 
+  let duda: Duda;
+  let scope: nock.Scope;
+
   before(() => {
     duda = new Duda({
-      user: 'testuser',
-      pass: 'testpass',
-      env: Duda.Envs.direct
+      user,
+      pass,
+      env: Duda.Envs.direct,
     })
 
-    scope = nock('https://api.duda.co')
+    scope = nock('https://api.duda.co', {
+      reqheaders: {
+        'x-duda-access-token': `Bearer ${token}`
+      }
+    })
   })
 
   describe('booking appointments', () => {
     it('can list all booking appointments', async () => {
-      scope.get(`${api_path}${site_name}/booking/appointments?offset=${offset}&limit=${limit}`).reply(200, list_booking_appointments_response)
-      return await duda.booking.appointments.list({
+      scope.get(`${base_path}/site/${site_name}/booking/appointments?offset=${offset}&limit=${limit}`).reply(200, list_booking_appointments_response)
+      return await duda.appstore.booking.appointments.list({
           site_name,
           offset,
-          limit
+          limit,
+          token
       }).then(res => expect(res).to.eql(list_booking_appointments_response))
     })
 
     it('can book an appointment', async () => {
-      scope.post(`${api_path}${site_name}/booking/appointments`, (body) => {
+      scope.post(`${base_path}/site/${site_name}/booking/appointments`, (body) => {
         expect(body).to.eql({
           appointment_type_id,
           attendee: {
@@ -199,7 +208,7 @@ describe('Booking tests', () => {
         return body
       }).reply(200, booking_appointment)
 
-      return await duda.booking.appointments.book({
+      return await duda.appstore.booking.appointments.book({
         site_name,
         appointment_type_id,
         attendee: {
@@ -218,55 +227,60 @@ describe('Booking tests', () => {
         metadata: {
           source: 'qa-test'
         },
-        start: '2025-06-16T17:30:00.000Z'
+        start: '2025-06-16T17:30:00.000Z',
+        token
       }).then(res => expect(res).to.eql(booking_appointment))
     })
 
     it('can cancel a booking appointment', async () => {
-      scope.post(`${api_path}${site_name}/booking/appointments/${appointment_uid}/cancel`, (body) => {
+      scope.post(`${base_path}/site/${site_name}/booking/appointments/${appointment_uid}/cancel`, (body) => {
         expect(body).to.eql({
           cancellation_reason: 'Schedule conflict'
         })
         return body
       }).reply(200, booking_appointment)
 
-      return await duda.booking.appointments.cancel({
+      return await duda.appstore.booking.appointments.cancel({
         site_name,
         appointment_uid,
-        cancellation_reason: 'Schedule conflict'
+        cancellation_reason: 'Schedule conflict',
+        token
       }).then(res => expect(res).to.eql(booking_appointment))
     })
 
     it('can confirm a booking appointment', async () => {
-      scope.post(`${api_path}${site_name}/booking/appointments/${appointment_uid}/confirm`).reply(200, booking_appointment)
+      scope.post(`${base_path}/site/${site_name}/booking/appointments/${appointment_uid}/confirm`).reply(200, booking_appointment)
 
-      return await duda.booking.appointments.confirm({
+      return await duda.appstore.booking.appointments.confirm({
         site_name,
-        appointment_uid
+        appointment_uid,
+        token
       }).then(res => expect(res).to.eql(booking_appointment))
     })
 
     it('can get booking appointment manage links', async () => {
-      scope.get(`${api_path}${site_name}/booking/appointments/${appointment_uid}/manage-links?lang=en`).reply(200, manage_appointment_links_response)
+      scope.get(`${base_path}/site/${site_name}/booking/appointments/${appointment_uid}/manage-links?lang=en`).reply(200, manage_appointment_links_response)
 
-      return await duda.booking.appointments.getManageLinks({
+      return await duda.appstore.booking.appointments.getManageLinks({
         site_name,
         appointment_uid,
-        lang: 'en'
+        lang: 'en',
+        token
       }).then(res => expect(res).to.eql(manage_appointment_links_response))
     })
 
     it('can send a booking appointment management email', async () => {
-      scope.post(`${api_path}${site_name}/booking/appointments/${appointment_uid}/send-management-email`).reply(200, send_management_email_response)
+      scope.post(`${base_path}/site/${site_name}/booking/appointments/${appointment_uid}/send-management-email`).reply(200, send_management_email_response)
 
-      return await duda.booking.appointments.sendManagementEmail({
+      return await duda.appstore.booking.appointments.sendManagementEmail({
         site_name,
-        appointment_uid
+        appointment_uid,
+        token
       }).then(res => expect(res).to.eql(send_management_email_response))
     })
 
     it('can reschedule a booking appointment', async () => {
-      scope.post(`${api_path}${site_name}/booking/appointments/${appointment_uid}/reschedule`, (body) => {
+      scope.post(`${base_path}/site/${site_name}/booking/appointments/${appointment_uid}/reschedule`, (body) => {
         expect(body).to.eql({
           rescheduling_reason: 'Availability changed',
           start: '2025-06-16T17:30:00.000Z'
@@ -274,32 +288,34 @@ describe('Booking tests', () => {
         return body
       }).reply(200, booking_appointment)
 
-      return await duda.booking.appointments.reschedule({
+      return await duda.appstore.booking.appointments.reschedule({
         site_name,
         appointment_uid,
         rescheduling_reason: 'Availability changed',
-        start: '2025-06-16T17:30:00.000Z'
+        start: '2025-06-16T17:30:00.000Z',
+        token
       }).then(res => expect(res).to.eql(booking_appointment))
     })
   })
 
   describe('booking availability', () => {
     it('can get booking availability', async () => {
-      scope.get(`${api_path}${site_name}/booking/availability?appointment_type_id=${appointment_type_id}&start=2025-06-16&end=2025-06-17&time_zone=UTC&duration=30`).reply(200, booking_availability_response)
-      return await duda.booking.getAvailability({
+      scope.get(`${base_path}/site/${site_name}/booking/availability?appointment_type_id=${appointment_type_id}&start=2025-06-16&end=2025-06-17&time_zone=UTC&duration=30`).reply(200, booking_availability_response)
+      return await duda.appstore.booking.getAvailability({
         site_name,
         appointment_type_id,
         start: '2025-06-16',
         end: '2025-06-17',
         time_zone: 'UTC',
-        duration: 30
+        duration: 30,
+        token
       }).then(res => expect(res).to.eql(booking_availability_response))
     })
   })
 
   describe('booking widget embed', () => {
     it('can create a booking widget embed', async () => {
-      scope.post(`${api_path}${site_name}/booking/widget-embed`, (body) => {
+      scope.post(`${base_path}/site/${site_name}/booking/widget-embed`, (body) => {
         expect(body).to.eql({
           appointment_type_ids: [appointment_type_id],
           show_free_price: true,
@@ -318,7 +334,7 @@ describe('Booking tests', () => {
         return body
       }).reply(200, booking_widget_embed_response)
 
-      return await duda.booking.createWidgetEmbed({
+      return await duda.appstore.booking.createWidgetEmbed({
         site_name,
         appointment_type_ids: [appointment_type_id],
         show_free_price: true,
@@ -332,29 +348,32 @@ describe('Booking tests', () => {
           is_stage_shown: true,
           is_title_visible: true,
           title: 'string'
-        }
+        },
+        token
       }).then(res => expect(res).to.eql(booking_widget_embed_response))
     })
   })
 
   describe('booking appointments types', () => {
     it('can list all booking appointment types', async () => {
-      scope.get(`${api_path}${site_name}/booking/appointment-types`).reply(200, list_booking_appointment_types_response)
-      return await duda.booking.appointment_types.list({
-          site_name
+      scope.get(`${base_path}/site/${site_name}/booking/appointment-types`).reply(200, list_booking_appointment_types_response)
+      return await duda.appstore.booking.appointment_types.list({
+          site_name,
+          token
       }).then(res => expect(res).to.eql(list_booking_appointment_types_response))
     })
-    
+
     it('can get a booking appointment type', async () => {
-      scope.get(`/api/sites/multiscreen/${site_name}/booking/appointment-types/${appointment_type_id}`).reply(200, booking_appointment_types)
-      return await duda.booking.appointment_types.get({
+      scope.get(`${base_path}/site/${site_name}/booking/appointment-types/${appointment_type_id}`).reply(200, booking_appointment_types)
+      return await duda.appstore.booking.appointment_types.get({
         site_name,
-        id: appointment_type_id
+        id: appointment_type_id,
+        token
       }).then(res => expect(res).to.eql({ ...booking_appointment_types }))
     })
 
     it('can create a booking appointment type', async () => {
-      scope.post(`/api/sites/multiscreen/${site_name}/booking/appointment-types`, (body) => {
+      scope.post(`${base_path}/site/${site_name}/booking/appointment-types`, (body) => {
         expect(body).to.eql({
           description: 'string',
           duration: 30,
@@ -367,7 +386,7 @@ describe('Booking tests', () => {
         return body
       }).reply(200, booking_appointment_types)
 
-      return await duda.booking.appointment_types.create({
+      return await duda.appstore.booking.appointment_types.create({
         site_name,
         description: 'string',
         duration: 30,
@@ -375,12 +394,13 @@ describe('Booking tests', () => {
         price_info: {
           base_price: 'string'
         },
-        pricing_type: 'string'
+        pricing_type: 'string',
+        token
       })
     })
 
     it('can update a booking appointment type', async () => {
-      scope.put(`/api/sites/multiscreen/${site_name}/booking/appointment-types/${appointment_type_id}`, (body) => {
+      scope.put(`${base_path}/site/${site_name}/booking/appointment-types/${appointment_type_id}`, (body) => {
         expect(body).to.eql({
           description: 'string',
           duration: 30,
@@ -393,7 +413,7 @@ describe('Booking tests', () => {
         return body
       }).reply(200, booking_appointment_types)
 
-      return await duda.booking.appointment_types.update({
+      return await duda.appstore.booking.appointment_types.update({
         site_name,
         id: appointment_type_id,
         description: 'string',
@@ -402,37 +422,41 @@ describe('Booking tests', () => {
         price_info: {
           base_price: 'string'
         },
-        pricing_type: 'string'
+        pricing_type: 'string',
+        token
       })
     })
 
     it('can delete a booking appointment type', async () => {
-      scope.delete(`/api/sites/multiscreen/${site_name}/booking/appointment-types/${appointment_type_id}`).reply(204)
-      return await duda.booking.appointment_types.delete({
+      scope.delete(`${base_path}/site/${site_name}/booking/appointment-types/${appointment_type_id}`).reply(204)
+      return await duda.appstore.booking.appointment_types.delete({
         site_name,
-        id: appointment_type_id
+        id: appointment_type_id,
+        token
       })
     })
   })
 
   describe('booking staff members', () => {
     it('can list all booking staff members', async () => {
-      scope.get(`${api_path}${site_name}/booking/staff-members`).reply(200, list_booking_staff_members_response)
-      return await duda.booking.staff_members.list({
-          site_name
+      scope.get(`${base_path}/site/${site_name}/booking/staff-members`).reply(200, list_booking_staff_members_response)
+      return await duda.appstore.booking.staff_members.list({
+          site_name,
+          token
       }).then(res => expect(res).to.eql(list_booking_staff_members_response))
     })
-    
+
     it('can get a booking staff member', async () => {
-      scope.get(`/api/sites/multiscreen/${site_name}/booking/staff-members/${staff_member_id}`).reply(200, booking_staff_member)
-      return await duda.booking.staff_members.get({
+      scope.get(`${base_path}/site/${site_name}/booking/staff-members/${staff_member_id}`).reply(200, booking_staff_member)
+      return await duda.appstore.booking.staff_members.get({
         site_name,
-        id: staff_member_id
+        id: staff_member_id,
+        token
       }).then(res => expect(res).to.eql({ ...booking_staff_member }))
     })
 
     it('can create a booking staff member', async () => {
-      scope.post(`/api/sites/multiscreen/${site_name}/booking/staff-members`, (body) => {
+      scope.post(`${base_path}/site/${site_name}/booking/staff-members`, (body) => {
         expect(body).to.eql({
           account_name: 'string',
           email: 'string',
@@ -442,17 +466,18 @@ describe('Booking tests', () => {
         return body
       }).reply(200, booking_staff_member)
 
-      return await duda.booking.staff_members.create({
+      return await duda.appstore.booking.staff_members.create({
         site_name,
         account_name: 'string',
         email: 'string',
         name: 'string',
-        timezone: 'string'
+        timezone: 'string',
+        token
       })
     })
 
     it('can update a booking staff member', async () => {
-      scope.put(`/api/sites/multiscreen/${site_name}/booking/staff-members/${staff_member_id}`, (body) => {
+      scope.put(`${base_path}/site/${site_name}/booking/staff-members/${staff_member_id}`, (body) => {
         expect(body).to.eql({
           account_name: 'string',
           email: 'string',
@@ -461,38 +486,41 @@ describe('Booking tests', () => {
         return body
       }).reply(200, booking_staff_member)
 
-      return await duda.booking.staff_members.update({
+      return await duda.appstore.booking.staff_members.update({
         site_name,
         id: staff_member_id,
         account_name: 'string',
         email: 'string',
-        name: 'string'
+        name: 'string',
+        token
       })
     })
 
     it('can delete a booking staff member', async () => {
-      scope.delete(`/api/sites/multiscreen/${site_name}/booking/staff-members/${staff_member_id}`).reply(204)
-      return await duda.booking.staff_members.delete({
+      scope.delete(`${base_path}/site/${site_name}/booking/staff-members/${staff_member_id}`).reply(204)
+      return await duda.appstore.booking.staff_members.delete({
         site_name,
-        id: staff_member_id
+        id: staff_member_id,
+        token
       })
     })
 
     it('can get a booking staff member availability', async () => {
-      scope.get(`/api/sites/multiscreen/${site_name}/booking/staff-members/${staff_member_id}/availability`).reply(200, booking_staff_member_availability)
-      return await duda.booking.staff_members.availability.get({
+      scope.get(`${base_path}/site/${site_name}/booking/staff-members/${staff_member_id}/availability`).reply(200, booking_staff_member_availability)
+      return await duda.appstore.booking.staff_members.availability.get({
         site_name,
-        id: staff_member_id
+        id: staff_member_id,
+        token
       }).then(res => expect(res).to.eql({ ...booking_staff_member_availability }))
     })
 
     it('can update a booking staff member availability', async () => {
-      scope.put(`/api/sites/multiscreen/${site_name}/booking/staff-members/${staff_member_id}/availability`, (body) => {
+      scope.put(`${base_path}/site/${site_name}/booking/staff-members/${staff_member_id}/availability`, (body) => {
         expect(body).to.eql({ ...booking_staff_member_availability })
         return body
       }).reply(200, booking_staff_member_availability)
 
-      return await duda.booking.staff_members.availability.update({ site_name, id: staff_member_id, ...booking_staff_member_availability })
+      return await duda.appstore.booking.staff_members.availability.update({ site_name, id: staff_member_id, ...booking_staff_member_availability, token })
     })
   })
 })

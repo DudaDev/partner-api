@@ -56,6 +56,60 @@ class Appointments extends Resource {
       },
     },
   });
+
+  book = APIEndpoint<Types.BookAppointmentPayload, Types.BookAppointmentResponse>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}/booking/appointments',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  cancel = APIEndpoint<Types.CancelBookingAppointmentPayload, Types.CancelBookingAppointmentResponse>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/cancel',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  confirm = APIEndpoint<Types.ConfirmBookingAppointmentPayload, Types.ConfirmBookingAppointmentResponse>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/confirm',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  getManageLinks = APIEndpoint<Types.GetAppointmentManageLinksPayload, Types.GetAppointmentManageLinksResponse>({
+    method: 'get',
+    path: '/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/manage-links',
+    defaults: {
+      host: 'api.duda.co',
+    },
+    queryParams: {
+      lang: {
+        type: 'string',
+        required: false,
+      },
+    },
+  });
+
+  reschedule = APIEndpoint<Types.RescheduleBookingAppointmentPayload, Types.RescheduleBookingAppointmentResponse>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/reschedule',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
+  sendManagementEmail = APIEndpoint<Types.SendAppointmentManagementEmailPayload, Types.SendAppointmentManagementEmailResponse>({
+    method: 'post',
+    path: '/api/sites/multiscreen/{site_name}/booking/appointments/{appointment_uid}/send-management-email',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
 }
 
 export default Appointments;

@@ -49,8 +49,15 @@ type AppointmentAttendeesLanguage =
     'ca' |
     string;
 
+interface BookingFieldsResponses {
+    email?: string,
+    guests?: Array<string>,
+    name?: string
+}
+
 interface AppointmentAttendees {
     absent?: boolean,
+    booking_fields_responses?: BookingFieldsResponses,
     email?: string,
     language?: AppointmentAttendeesLanguage,
     name?: string,
@@ -62,15 +69,17 @@ interface AppointmentAttendees {
     }
 }
 
-interface BookingFieldsResponses {
+interface AppointmentAttendee {
     email?: string,
-    guests?: Array<string>,
-    name?: string
+    language?: AppointmentAttendeesLanguage,
+    name: string,
+    phone_number?: string,
+    time_zone: string,
 }
 
 interface BookingAppointmentHosts {
     email?: string,
-    id?: string,
+    id?: number,
     name?: string,
     time_zone?: string,
     username?: string
@@ -86,7 +95,7 @@ type BookingAppointmentStatus =
 export interface BookingAppointment {
     absent_host?: boolean,
     appointment_type?: AppointmentType,
-    attendees?: AppointmentAttendees,
+    attendees?: Array<AppointmentAttendees>,
     booking_fields_responses?: BookingFieldsResponses,
     cancellation_reason?: string,
     cancelled_by_email?: string,
@@ -94,10 +103,13 @@ export interface BookingAppointment {
     description?: string,
     duration?: number,
     end?: string,
-    hosts?: BookingAppointmentHosts,
+    hosts?: Array<BookingAppointmentHosts>,
     ics_uid?: string,
     id?: number,
     location?: string,
+    metadata?: {
+        [key: string]: string
+    },
     rating?: number,
     recurring_booking_uid?: string,
     rescheduled_by_email?: string,
@@ -109,7 +121,6 @@ export interface BookingAppointment {
     uid?: string,
     updated_at?: string
 }
-
 export interface ListBookingAppointmentsPayload {
     site_name: string,
     limit?: number,
@@ -131,6 +142,57 @@ export interface ListBookingAppointmentsResponse {
     results: Array<BookingAppointment>,
     site_name: string,
     total_responses: number
+}
+
+export interface  BookAppointmentPayload {
+    site_name: string,
+    appointment_type_id: string,
+    attendee: AppointmentAttendee,
+    booking_fields_responses?: BookingFieldsResponses,
+    duration?: number,
+    guests?: Array<string>,
+    metadata?: {
+        [key: string]: string
+    }
+    start: string,
+}
+
+export interface BookAppointmentResponse extends BookingAppointment {}
+
+export interface ManageAppointmentPayload {
+    site_name: string,
+    appointment_uid: string,
+}
+export interface CancelBookingAppointmentPayload extends ManageAppointmentPayload {
+    cancellation_reason?: string
+}
+
+export interface GetAppointmentManageLinksPayload extends ManageAppointmentPayload {
+    lang?: AppointmentAttendeesLanguage
+}
+
+export interface SendAppointmentManagementEmailPayload extends ManageAppointmentPayload {}
+
+export interface SendAppointmentManagementEmailResponse {
+    sent_to?: string,
+}
+
+export interface ConfirmBookingAppointmentPayload extends ManageAppointmentPayload {}
+
+export interface CancelBookingAppointmentResponse extends BookingAppointment {}
+
+export interface ConfirmBookingAppointmentResponse extends BookingAppointment {}
+
+export interface RescheduleBookingAppointmentPayload extends ManageAppointmentPayload {
+    rescheduling_reason?: string,
+    start: string,
+}
+
+export interface RescheduleBookingAppointmentResponse extends BookingAppointment {}
+
+export interface GetAppointmentManageLinksResponse {
+    cancel_link?: string,
+    reschedule_link?: string,
 }
 
 interface PriceInfo {
@@ -301,3 +363,50 @@ export interface UpdateBookingStaffMembersAvailabilityPayload extends BookingSta
 }
 
 export interface UpdateBookingStaffMembersAvailabilityResponse extends BookingStaffMemberAvailability {}
+
+export interface GetBookingAvailabilityPayload {
+    site_name: string,
+    appointment_type_id?: string,
+    start?: string,
+    end?: string,
+    time_zone?: string
+    duration?: number,
+}
+
+export interface BookingAvailabilitySlot {
+    start?: string,
+    end?: string,
+ }
+export interface GetBookingAvailabilityResponse {
+    slots?: {
+        [date: string]: Array<BookingAvailabilitySlot>
+    },
+    time_zone?: string
+}
+
+type DesignStyle = "site-theme" | "basic" 
+
+export interface WidgetEmbedStageConfig {
+    is_title_visible?: boolean,
+    title?: string,
+}
+
+export interface AppointmentStageConfig extends WidgetEmbedStageConfig {}
+
+export interface StaffMemberStageConfig extends WidgetEmbedStageConfig {
+    is_stage_shown?: boolean,
+}
+
+export interface CreateBookingWidgetEmbedPayload {
+    site_name: string,
+    appointment_type_ids: Array<string>,
+    show_free_price?: boolean,
+    design_style?: DesignStyle,
+    lang?: AppointmentAttendeesLanguage,
+    choose_appointment_stage_config?: AppointmentStageConfig,
+    choose_staff_member_stage_config?: StaffMemberStageConfig,
+}
+
+export interface CreateBookingWidgetEmbedResponse {
+    iframe_html?: string,
+}
