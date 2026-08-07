@@ -8,6 +8,7 @@ import Payments from './Payments';
 import Categories from './Categories';
 import ProductCategories from './Product_Categories';
 import Shipping from './Shipping';
+import ShippingZones from './Shipping_Zones';
 import Products from './Products';
 import Options from './Options';
 import Variations from './Variations';
@@ -35,6 +36,8 @@ class Ecomm extends Resource {
   product_categories = new ProductCategories(this.config);
 
   shipping = new Shipping(this.config);
+
+  shipping_zones = new ShippingZones(this.config);
 
   products = new Products(this.config);
 
