@@ -96,6 +96,26 @@ interface Theme {
     text?: ThemeTextStyles
 }
 
+type BusinessDataToneOfVoice =
+    'CONVERSATIONAL' |
+    'HUMOROUS' |
+    'ENTHUSIASTIC' |
+    'INFORMATIVE' |
+    'PROFESSIONAL' |
+    'WITTY' |
+    'AUTHORITATIVE';
+
+interface GenerateFromPromptBusinessData {
+    category?: string,
+    data_controller?: string,
+    description?: string,
+    logo_alt_text?: string,
+    logo_url?: string,
+    name?: string,
+    service_area?: string,
+    tone_of_voice?: BusinessDataToneOfVoice
+}
+
 export interface GenerateAsyncPayload {
     additional_ai_context?: AdditionalAIContext,
     business_data?: BusinessData,
@@ -135,3 +155,10 @@ export interface GetAsyncResponse {
     created_at: string,
     finished_at?: string
 }
+
+export interface GenerateSiteFromPromptPayload {
+    business_data: GenerateFromPromptBusinessData,
+    instructions: string
+}
+
+export interface GenerateSiteFromPromptResponse extends GetAsyncResponse {}
