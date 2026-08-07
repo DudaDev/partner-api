@@ -110,6 +110,27 @@ describe('Async Tasks tests', () => {
     created_at: 'string'
   }
 
+  const generate_site_from_prompt_payload = {
+    business_data: {
+      category: 'string',
+      data_controller: 'string',
+      description: 'string',
+      logo_alt_text: 'string',
+      logo_url: 'string',
+      name: 'string',
+      service_area: 'string',
+      tone_of_voice: 'PROFESSIONAL' as const
+    },
+    instructions: 'string'
+  }
+
+  const generate_site_from_prompt_response = {
+    id: task_id,
+    type: 'GENERATE_SITE_WITH_AI',
+    status: 'CREATED',
+    created_at: 'string'
+  }
+
   const get_async_task_response = {
     id: task_id,
     type: 'GENERATE_SITE_WITH_AI',
@@ -138,6 +159,16 @@ describe('Async Tasks tests', () => {
     }).reply(200, generate_ai_site_response)
 
     return await duda.async.generate({ ...generate_ai_site_payload })
+  })
+
+  it('can generate a site with AI from a prompt', async () => {
+    scope.post(`/api/async-tasks/v2/generate-site-with-ai`, (body) => {
+      expect(body).to.eql({ ...generate_site_from_prompt_payload })
+      return body
+    }).reply(200, generate_site_from_prompt_response)
+
+    return await duda.async.generateFromPrompt({ ...generate_site_from_prompt_payload })
+      .then(res => expect(res).to.eql({ ...generate_site_from_prompt_response }))
   })
 
   it('can get an async task', async () => {
