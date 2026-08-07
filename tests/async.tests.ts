@@ -10,7 +10,13 @@ describe('Async Tasks tests', () => {
   const task_id = 'test_task';
 
   const additional_ai_context = {
-    max_pages: 1
+    instructions: 'string',
+    pages: [
+      {
+        title: 'string',
+        description: 'string'
+      }
+    ]
   }
 
   const business_data = {
@@ -20,7 +26,7 @@ describe('Async Tasks tests', () => {
     logo_url: 'string',
     name: 'string',
     service_area: 'string',
-    tone_of_voice: 'string'
+    tone_of_voice: 'PROFESSIONAL' as const
   }
 
   const labels = {
@@ -81,7 +87,9 @@ describe('Async Tasks tests', () => {
         font_style: "string",
         breakpoints: {
           mobile: {
-              font_size: "string"
+              text: {
+                font_size: "string"
+              }
           }
         }
       }
@@ -100,6 +108,7 @@ describe('Async Tasks tests', () => {
     labels: [labels],
     lang: 'en',
     site_data: site_data,
+    template_alias: 'string',
     theme: theme
   }
 
