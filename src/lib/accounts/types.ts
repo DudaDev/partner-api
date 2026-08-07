@@ -155,7 +155,7 @@ type TeamPermissions =
   'LIMIT_EDITING' |
   'CONTENT_LIBRARY' |
   'E_COMMERCE' |
-	'CO_PILOT' |
+  'COPILOT' |
   'ACTIVITY_LOG' |
   'INSTALL_APP' |
   'PRO_SETTINGS' |
@@ -168,13 +168,16 @@ type TeamPermissions =
   'PUBLISH' |
   'CUSTOM_DOMAIN' |
   'BLOG' |
+  'PUSH_NOTIFICATIONS' |
+  'BOOKING_ADMIN' |
+  'ACCOUNT_ADDONS_AND_CREDITS' |
   string;
 
 export interface TeamGroups {
   group_name?: string,
   color?: string,
   title: string,
-  permissions?: TeamPermissions
+  permissions?: Array<TeamPermissions>
 }
 
 export type ListCustomTeamGroupsPayload = null;
