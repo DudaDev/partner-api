@@ -364,7 +364,6 @@ export interface ListCartsPayload {
   site_name: string,
   status?: 'IN_PROGRESS' | 'ABANDONED',
   mode?: 'LIVE' | 'TEST',
-  email?: string,
   cursor?: string,
   limit?: number
 }
