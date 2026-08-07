@@ -51,6 +51,10 @@ class Posts extends Resource {
         type: 'number',
         required: false,
       },
+      content: {
+        type: 'boolean',
+        required: false,
+      },
     },
   });
 
