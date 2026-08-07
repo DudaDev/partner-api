@@ -988,6 +988,41 @@ export interface BulkUpdateCategoryPayload {
 
 export interface BulkUpdateCategoryResponse extends BulkCreateCategoryResponse {}
 
+interface ProductCategoryRelation {
+  category_id: string,
+  product_id: string,
+  order?: number
+}
+
+export interface ListProductCategoriesPayload {
+  site_name: string,
+  category_ids?: string,
+  limit?: number,
+  cursor?: string
+}
+
+export interface ListProductCategoriesResponse {
+  site_name: string,
+  results: Array<ProductCategoryRelation>,
+  cursor?: string,
+  has_more?: boolean,
+  next_page?: string
+}
+
+export interface CreateProductCategoriesPayload {
+  site_name: string,
+  relations: Array<ProductCategoryRelation>
+}
+
+export type CreateProductCategoriesResponse = null;
+
+export interface DeleteProductCategoriesPayload {
+  site_name: string,
+  relations: Array<ProductCategoryRelation>
+}
+
+export type DeleteProductCategoriesResponse = null;
+
 export interface ShippingProvider {
   id: string,
   live_shipping_rates_url: string,
