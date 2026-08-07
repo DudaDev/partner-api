@@ -274,6 +274,7 @@ export interface CartItem {
   external_product_id: string,
   external_variation_id: string,
   name: string,
+  sku: string,
   image: string,
   options: {
     name: string,
