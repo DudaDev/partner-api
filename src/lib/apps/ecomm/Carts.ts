@@ -24,10 +24,6 @@ class AppsCarts extends SubResource {
         type: 'string',
         required: false,
       },
-      email: {
-        type: 'string',
-        required: false,
-      },
       cursor: {
         type: 'string',
         required: false,
