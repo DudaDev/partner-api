@@ -1023,6 +1023,137 @@ export interface DeleteProductCategoriesPayload {
 
 export type DeleteProductCategoriesResponse = null;
 
+interface ShippingZoneLocation {
+  country: string,
+  region?: string
+}
+
+type ShippingMethodType =
+  'FREE' |
+  'FLAT_RATE' |
+  'CART_PRICE_BASED' |
+  'CART_WEIGHT_BASED' |
+  'UNKNOWN' |
+  string;
+
+interface ShippingMethodRate {
+  price: number,
+  min_cart_weight?: number,
+  max_cart_weight?: number,
+  min_cart_value?: number,
+  max_cart_value?: number
+}
+
+interface ShippingZoneMethodPayload {
+  type: ShippingMethodType,
+  name: string,
+  min_delivery_time_in_days?: number,
+  max_delivery_time_in_days?: number,
+  rates: Array<ShippingMethodRate>
+}
+
+interface ShippingZoneMethod extends ShippingZoneMethodPayload {
+  id: string
+}
+
+interface ShippingZone {
+  id: string,
+  name: string,
+  locations?: Array<ShippingZoneLocation>,
+  postal_codes?: Array<string>,
+  has_automated_shipping?: boolean,
+  shipping_methods?: Array<ShippingZoneMethod>
+}
+
+export interface ListShippingZonesPayload {
+  site_name: string,
+  offset?: number,
+  limit?: number,
+  sort?: string,
+  direction?: string
+}
+
+export interface ListShippingZonesResponse {
+  offset: number,
+  limit: number,
+  total_responses: number,
+  results: Array<ShippingZone>
+}
+
+export interface GetShippingZonePayload {
+  site_name: string,
+  id: string
+}
+
+export interface GetShippingZoneResponse extends ShippingZone {}
+
+export interface UpdateShippingZonePayload {
+  site_name: string,
+  id: string,
+  name?: string,
+  locations?: Array<ShippingZoneLocation>,
+  postal_codes?: Array<string>,
+  has_automated_shipping?: boolean,
+  shipping_methods?: Array<ShippingZoneMethodPayload>
+}
+
+export interface UpdateShippingZoneResponse extends ShippingZone {}
+
+export interface DeleteShippingZonePayload {
+  site_name: string,
+  id: string
+}
+
+export type DeleteShippingZoneResponse = null;
+
+export interface ListShippingZoneMethodsPayload {
+  site_name: string,
+  zone_id: string,
+  offset?: number,
+  limit?: number,
+  sort?: string,
+  direction?: string
+}
+
+export interface ListShippingZoneMethodsResponse {
+  offset: number,
+  limit: number,
+  total_responses: number,
+  results: Array<ShippingZoneMethod>
+}
+
+export interface GetShippingZoneMethodPayload {
+  site_name: string,
+  zone_id: string,
+  id: string
+}
+
+export interface GetShippingZoneMethodResponse extends ShippingZoneMethod {}
+
+export interface CreateShippingZoneMethodPayload extends ShippingZoneMethodPayload {
+  site_name: string,
+  zone_id: string
+}
+
+export interface CreateShippingZoneMethodResponse extends ShippingZoneMethod {}
+
+export interface UpdateShippingZoneMethodPayload {
+  site_name: string,
+  zone_id: string,
+  id: string,
+  type?: ShippingMethodType,
+  name?: string,
+  min_delivery_time_in_days?: number,
+  max_delivery_time_in_days?: number,
+  rates?: Array<ShippingMethodRate>
+}
+
+export interface UpdateShippingZoneMethodResponse extends ShippingZoneMethod {}
+
+export interface DeleteShippingZoneMethodPayload extends GetShippingZoneMethodPayload {}
+
+export type DeleteShippingZoneMethodResponse = null;
+
 export interface ShippingProvider {
   id: string,
   live_shipping_rates_url: string,
