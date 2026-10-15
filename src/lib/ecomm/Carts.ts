@@ -18,10 +18,6 @@ class Carts extends Resource {
         type: 'string',
         required: false,
       },
-      email: {
-        type: 'string',
-        required: false,
-      },
       cursor: {
         type: 'string',
         required: false,

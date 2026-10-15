@@ -722,6 +722,7 @@ describe('App store ecomm tests', () => {
         external_product_id: "string",
         external_variation_id: "string",
         name: "string",
+        sku: "string",
         image: "string",
         options: [
           {

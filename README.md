@@ -4631,7 +4631,7 @@ duda.appstore.ecomm.carts.list({ site_name: site_name });
 
 ### Request
 
-`GET get https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/carts/{cart_id}`
+`GET https://api-sandbox.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/carts/{cart_id}`
 
 ```typescript
 duda.appstore.ecomm.carts.get({ site_name: site_name, cart_id: cart_id });
