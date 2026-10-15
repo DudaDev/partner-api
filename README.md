@@ -4629,6 +4629,106 @@ duda.appstore.booking.staff_members.availability.get({ site_name: site_name, id:
 duda.appstore.booking.staff_members.availability.update({ site_name: site_name, id: id });
 ```
 
+# Appstore Blog
+
+## Get Blog
+
+[Get Blog Reference](https://developer.duda.co/reference/get-blog#/)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/blog`
+
+```typescript
+duda.appstore.blog.get({ site_name: site_name });
+```
+
+# Appstore Blog Posts
+
+## List Blog Posts
+
+[List Blog Posts Reference](https://developer.duda.co/reference/blog-list-blog-posts)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/blog/posts`
+
+```typescript
+duda.appstore.blog.posts.list({ site_name: site_name });
+```
+
+## Get Blog Post
+
+[Get Blog Post Reference](https://developer.duda.co/reference/blog-get-blog-post)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/blog/posts/{post_id}`
+
+```typescript
+duda.appstore.blog.posts.get({ site_name: site_name, post_id: post_id });
+```
+
+## Import Blog Post
+
+[Import Blog Post Reference](https://developer.duda.co/reference/import-blog-post)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/blog/posts/import`
+
+```typescript
+duda.appstore.blog.posts.import({ site_name: site_name });
+```
+
+## Publish Blog Post
+
+[Publish Blog Post Reference](https://developer.duda.co/reference/blog-publish-blog-post)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/blog/posts/{post_id}/publish`
+
+```typescript
+duda.appstore.blog.posts.publish({ site_name: site_name, post_id: post_id });
+```
+
+## Unpublish Blog Post
+
+[Unpublish Blog Post Reference](https://developer.duda.co/reference/blog-unpublish-blog-post)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/blog/posts/{post_id}/unpublish`
+
+```typescript
+duda.appstore.blog.posts.unpublish({ site_name: site_name, post_id: post_id });
+```
+
+## Update Blog Post
+
+[Update Blog Post Reference](https://developer.duda.co/reference/blog-update-blog-post)
+
+### Request
+
+`PATCH https://api.duda.co/api/integrationhub/application/site/{site_name}/blog/posts/{post_id}`
+
+```typescript
+duda.appstore.blog.posts.update({ site_name: site_name, post_id: post_id });
+```
+
+## Delete Blog Post
+
+[Delete Blog Post Reference](https://developer.duda.co/reference/blog-delete-blog-post)
+
+### Request
+
+`DELETE https://api.duda.co/api/integrationhub/application/site/{site_name}/blog/posts/{post_id}`
+
+```typescript
+duda.appstore.blog.posts.delete({ site_name: site_name, post_id: post_id });
+```
+
 # Appstore Site Wide HTML
 
 ## List All Site Wide HTML
