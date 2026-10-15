@@ -9,6 +9,7 @@ import AppsGateways from './Gateways';
 import AppsCarts from './Carts';
 import AppsVariations from './Variations';
 import AppsShipping from './Shipping';
+import AppsShippingZones from './Shipping_Zones';
 import AppsStore from './Store';
 import AppsRefundIntent from './RefundIntent';
 import { TokenRequest } from '../types';
@@ -29,6 +30,8 @@ class AppsEcomm extends SubResource {
   variations = new AppsVariations(this.base);
 
   shipping = new AppsShipping(this.base);
+
+  shipping_zones = new AppsShippingZones(this.base);
 
   store = new AppsStore(this.base);
 

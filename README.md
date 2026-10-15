@@ -1742,6 +1742,116 @@ duda.ecomm.shipping.update({ site_name: site_name, id: id });
 duda.ecomm.shipping.delete({ site_name: site_name, id: id });
 ```
 
+# eComm Shipping Zones
+
+## List Shipping Zones
+
+[List Shipping Zones Reference](https://developer.duda.co/reference/ecommerce-list-shipping-zones)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/shipping-zones`
+
+```typescript
+duda.ecomm.shipping_zones.list({ site_name: site_name });
+```
+
+## Get Shipping Zone
+
+[Get Shipping Zone Reference](https://developer.duda.co/reference/ecommerce-get-shipping-zone)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/shipping-zones/{id}`
+
+```typescript
+duda.ecomm.shipping_zones.get({ site_name: site_name, id: id });
+```
+
+## Update Shipping Zone
+
+[Update Shipping Zone Reference](https://developer.duda.co/reference/ecommerce-update-shipping-zone)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/shipping-zones/{id}`
+
+```typescript
+duda.ecomm.shipping_zones.update({ site_name: site_name, id: id });
+```
+
+## Delete Shipping Zone
+
+[Delete Shipping Zone Reference](https://developer.duda.co/reference/ecommerce-delete-shipping-zone)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/shipping-zones/{id}`
+
+```typescript
+duda.ecomm.shipping_zones.delete({ site_name: site_name, id: id });
+```
+
+## List Shipping Zone Methods
+
+[List Shipping Zone Methods Reference](https://developer.duda.co/reference/ecommerce-list-shipping-zone-methods)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/shipping-zones/{zone_id}/shipping-methods`
+
+```typescript
+duda.ecomm.shipping_zones.listMethod({ site_name: site_name, zone_id: zone_id });
+```
+
+## Get Shipping Zone Method
+
+[Get Shipping Zone Method Reference](https://developer.duda.co/reference/ecommerce-get-shipping-zone-method)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/shipping-zones/{zone_id}/shipping-methods/{id}`
+
+```typescript
+duda.ecomm.shipping_zones.getMethod({ site_name: site_name, zone_id: zone_id, id: id });
+```
+
+## Create Shipping Zone Method
+
+[Create Shipping Zone Method Reference](https://developer.duda.co/reference/ecommerce-create-shipping-zone-method)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/shipping-zones/{zone_id}/shipping-methods`
+
+```typescript
+duda.ecomm.shipping_zones.createMethod({ site_name: site_name, zone_id: zone_id, type: type, name: name, rates: rates });
+```
+
+## Update Shipping Zone Method
+
+[Update Shipping Zone Method Reference](https://developer.duda.co/reference/ecommerce-update-shipping-zone-method)
+
+### Request
+
+`PATCH https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/shipping-zones/{zone_id}/shipping-methods/{id}`
+
+```typescript
+duda.ecomm.shipping_zones.updateMethod({ site_name: site_name, zone_id: zone_id, id: id });
+```
+
+## Delete Shipping Zone Method
+
+[Delete Shipping Zone Method Reference](https://developer.duda.co/reference/ecommerce-delete-shipping-zone-method)
+
+### Request
+
+`DELETE https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/shipping-zones/{zone_id}/shipping-methods/{id}`
+
+```typescript
+duda.ecomm.shipping_zones.deleteMethod({ site_name: site_name, zone_id: zone_id, id: id });
+```
+
 # eComm Products
 
 ## List Products
@@ -4375,6 +4485,116 @@ duda.appstore.ecomm.shipping.update({ site_name: site_name, id: id });
 
 ```typescript
 duda.appstore.ecomm.shipping.delete({ site_name: site_name, id: id });
+```
+
+# Appstore eComm Shipping Zones
+
+## List Shipping Zones
+
+[List Shipping Zones Reference](https://developer.duda.co/reference/app-ecommerce-list-shipping-zones)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/shipping-zones`
+
+```typescript
+duda.appstore.ecomm.shipping_zones.list({ site_name: site_name });
+```
+
+## Get Shipping Zone
+
+[Get Shipping Zone Reference](https://developer.duda.co/reference/app-ecommerce-get-shipping-zone)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/shipping-zones/{id}`
+
+```typescript
+duda.appstore.ecomm.shipping_zones.get({ site_name: site_name, id: id });
+```
+
+## Update Shipping Zone
+
+[Update Shipping Zone Reference](https://developer.duda.co/reference/app-ecommerce-update-shipping-zone)
+
+### Request
+
+`PATCH https://api.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/shipping-zones/{id}`
+
+```typescript
+duda.appstore.ecomm.shipping_zones.update({ site_name: site_name, id: id });
+```
+
+## Delete Shipping Zone
+
+[Delete Shipping Zone Reference](https://developer.duda.co/reference/app-ecommerce-delete-shipping-zone)
+
+### Request
+
+`DELETE https://api.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/shipping-zones/{id}`
+
+```typescript
+duda.appstore.ecomm.shipping_zones.delete({ site_name: site_name, id: id });
+```
+
+## List Shipping Zone Methods
+
+[List Shipping Zone Methods Reference](https://developer.duda.co/reference/app-ecommerce-list-shipping-zone-methods)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/shipping-zones/{zone_id}/shipping-methods`
+
+```typescript
+duda.appstore.ecomm.shipping_zones.listMethod({ site_name: site_name, zone_id: zone_id });
+```
+
+## Get Shipping Zone Method
+
+[Get Shipping Zone Method Reference](https://developer.duda.co/reference/app-ecommerce-get-shipping-zone-method)
+
+### Request
+
+`GET https://api.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/shipping-zones/{zone_id}/shipping-methods/{id}`
+
+```typescript
+duda.appstore.ecomm.shipping_zones.getMethod({ site_name: site_name, zone_id: zone_id, id: id });
+```
+
+## Create Shipping Zone Method
+
+[Create Shipping Zone Method Reference](https://developer.duda.co/reference/app-ecommerce-create-shipping-zone-method)
+
+### Request
+
+`POST https://api.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/shipping-zones/{zone_id}/shipping-methods`
+
+```typescript
+duda.appstore.ecomm.shipping_zones.createMethod({ site_name: site_name, zone_id: zone_id, type: type, name: name, rates: rates });
+```
+
+## Update Shipping Zone Method
+
+[Update Shipping Zone Method Reference](https://developer.duda.co/reference/app-ecommerce-update-shipping-zone-method)
+
+### Request
+
+`PATCH https://api.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/shipping-zones/{zone_id}/shipping-methods/{id}`
+
+```typescript
+duda.appstore.ecomm.shipping_zones.updateMethod({ site_name: site_name, zone_id: zone_id, id: id });
+```
+
+## Delete Shipping Zone Method
+
+[Delete Shipping Zone Method Reference](https://developer.duda.co/reference/app-ecommerce-delete-shipping-zone-method)
+
+### Request
+
+`DELETE https://api.duda.co/api/integrationhub/application/site/{site_name}/ecommerce/shipping-zones/{zone_id}/shipping-methods/{id}`
+
+```typescript
+duda.appstore.ecomm.shipping_zones.deleteMethod({ site_name: site_name, zone_id: zone_id, id: id });
 ```
 
 # Appstore eComm Store

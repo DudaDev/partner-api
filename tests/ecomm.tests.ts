@@ -1065,6 +1065,58 @@ describe('Ecomm tests', () => {
     next_page: "string"
   }
 
+  const shipping_zone_id = 'sz_test'
+  const shipping_method_id = 'sm_test'
+
+  const shipping_zone_method_payload = {
+    type: 'FLAT_RATE',
+    name: 'string',
+    min_delivery_time_in_days: 1,
+    max_delivery_time_in_days: 2,
+    rates: [
+      {
+        price: 10,
+        min_cart_weight: 0,
+        max_cart_weight: 1000,
+        min_cart_value: 0,
+        max_cart_value: 100
+      }
+    ]
+  }
+
+  const shipping_zone_method = {
+    id: shipping_method_id,
+    ...shipping_zone_method_payload
+  }
+
+  const shipping_zone = {
+    id: shipping_zone_id,
+    name: 'string',
+    locations: [
+      {
+        country: 'US',
+        region: 'US-CO'
+      }
+    ],
+    postal_codes: ['80027'],
+    has_automated_shipping: false,
+    shipping_methods: [shipping_zone_method]
+  }
+
+  const list_shipping_zones_response = {
+    offset: 0,
+    limit: 1,
+    total_responses: 1,
+    results: [shipping_zone]
+  }
+
+  const list_shipping_zone_methods_response = {
+    offset: 0,
+    limit: 1,
+    total_responses: 1,
+    results: [shipping_zone_method]
+  }
+
   const bulk_update_category_payload = {
     categories: [
       {
@@ -1715,6 +1767,104 @@ describe('Ecomm tests', () => {
     }).reply(204)
 
     return await duda.ecomm.product_categories.delete({ site_name, ...product_categories_relations_payload })
+  })
+
+  it('can list shipping zones', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-zones?offset=0&limit=1&sort=name&direction=asc`).reply(200, list_shipping_zones_response)
+    return await duda.ecomm.shipping_zones.list({
+      site_name,
+      offset: 0,
+      limit: 1,
+      sort: 'name',
+      direction: 'asc'
+    }).then(res => expect(res).to.eql(list_shipping_zones_response))
+  })
+
+  it('can get a shipping zone', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-zones/${shipping_zone_id}`).reply(200, shipping_zone)
+    return await duda.ecomm.shipping_zones.get({ site_name, id: shipping_zone_id })
+      .then(res => expect(res).to.eql(shipping_zone))
+  })
+
+  it('can update a shipping zone', async () => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-zones/${shipping_zone_id}`, (body) => {
+      expect(body).to.eql({
+        name: 'string',
+        locations: [
+          {
+            country: 'US',
+            region: 'US-CO'
+          }
+        ],
+        postal_codes: ['80027'],
+        has_automated_shipping: false,
+        shipping_methods: [shipping_zone_method_payload]
+      })
+      return body
+    }).reply(200, shipping_zone)
+
+    return await duda.ecomm.shipping_zones.update({
+      site_name,
+      id: shipping_zone_id,
+      name: 'string',
+      locations: [
+        {
+          country: 'US',
+          region: 'US-CO'
+        }
+      ],
+      postal_codes: ['80027'],
+      has_automated_shipping: false,
+      shipping_methods: [shipping_zone_method_payload]
+    }).then(res => expect(res).to.eql(shipping_zone))
+  })
+
+  it('can delete a shipping zone', async () => {
+    scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-zones/${shipping_zone_id}`).reply(204)
+    return await duda.ecomm.shipping_zones.delete({ site_name, id: shipping_zone_id })
+  })
+
+  it('can list shipping zone methods', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-zones/${shipping_zone_id}/shipping-methods?offset=0&limit=1&sort=name&direction=asc`).reply(200, list_shipping_zone_methods_response)
+    return await duda.ecomm.shipping_zones.listMethod({
+      site_name,
+      zone_id: shipping_zone_id,
+      offset: 0,
+      limit: 1,
+      sort: 'name',
+      direction: 'asc'
+    }).then(res => expect(res).to.eql(list_shipping_zone_methods_response))
+  })
+
+  it('can get a shipping zone method', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-zones/${shipping_zone_id}/shipping-methods/${shipping_method_id}`).reply(200, shipping_zone_method)
+    return await duda.ecomm.shipping_zones.getMethod({ site_name, zone_id: shipping_zone_id, id: shipping_method_id })
+      .then(res => expect(res).to.eql(shipping_zone_method))
+  })
+
+  it('can create a shipping zone method', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-zones/${shipping_zone_id}/shipping-methods`, (body) => {
+      expect(body).to.eql({ ...shipping_zone_method_payload })
+      return body
+    }).reply(201, shipping_zone_method)
+
+    return await duda.ecomm.shipping_zones.createMethod({ site_name, zone_id: shipping_zone_id, ...shipping_zone_method_payload })
+      .then(res => expect(res).to.eql(shipping_zone_method))
+  })
+
+  it('can update a shipping zone method', async () => {
+    scope.patch(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-zones/${shipping_zone_id}/shipping-methods/${shipping_method_id}`, (body) => {
+      expect(body).to.eql({ ...shipping_zone_method_payload })
+      return body
+    }).reply(200, shipping_zone_method)
+
+    return await duda.ecomm.shipping_zones.updateMethod({ site_name, zone_id: shipping_zone_id, id: shipping_method_id, ...shipping_zone_method_payload })
+      .then(res => expect(res).to.eql(shipping_zone_method))
+  })
+
+  it('can delete a shipping zone method', async () => {
+    scope.delete(`/api/sites/multiscreen/${site_name}/ecommerce/shipping-zones/${shipping_zone_id}/shipping-methods/${shipping_method_id}`).reply(204)
+    return await duda.ecomm.shipping_zones.deleteMethod({ site_name, zone_id: shipping_zone_id, id: shipping_method_id })
   })
 
   it('can list all shipping providers', async () => {
