@@ -10,7 +10,13 @@ describe('Async Tasks tests', () => {
   const task_id = 'test_task';
 
   const additional_ai_context = {
-    max_pages: 1
+    instructions: 'string',
+    pages: [
+      {
+        title: 'string',
+        description: 'string'
+      }
+    ]
   }
 
   const business_data = {
@@ -20,7 +26,7 @@ describe('Async Tasks tests', () => {
     logo_url: 'string',
     name: 'string',
     service_area: 'string',
-    tone_of_voice: 'string'
+    tone_of_voice: 'PROFESSIONAL' as const
   }
 
   const labels = {
@@ -81,7 +87,9 @@ describe('Async Tasks tests', () => {
         font_style: "string",
         breakpoints: {
           mobile: {
-              font_size: "string"
+              text: {
+                font_size: "string"
+              }
           }
         }
       }
@@ -100,6 +108,7 @@ describe('Async Tasks tests', () => {
     labels: [labels],
     lang: 'en',
     site_data: site_data,
+    template_alias: 'string',
     theme: theme
   }
 
@@ -107,6 +116,27 @@ describe('Async Tasks tests', () => {
     id: task_id,
     type: 'GENERATE_SITE_WITH_AI',
     status: 'STARTED',
+    created_at: 'string'
+  }
+
+  const generate_site_from_prompt_payload = {
+    business_data: {
+      category: 'string',
+      data_controller: 'string',
+      description: 'string',
+      logo_alt_text: 'string',
+      logo_url: 'string',
+      name: 'string',
+      service_area: 'string',
+      tone_of_voice: 'PROFESSIONAL' as const
+    },
+    instructions: 'string'
+  }
+
+  const generate_site_from_prompt_response = {
+    id: task_id,
+    type: 'GENERATE_SITE_WITH_AI',
+    status: 'CREATED',
     created_at: 'string'
   }
 
@@ -138,6 +168,16 @@ describe('Async Tasks tests', () => {
     }).reply(200, generate_ai_site_response)
 
     return await duda.async.generate({ ...generate_ai_site_payload })
+  })
+
+  it('can generate a site with AI from a prompt', async () => {
+    scope.post(`/api/async-tasks/v2/generate-site-with-ai`, (body) => {
+      expect(body).to.eql({ ...generate_site_from_prompt_payload })
+      return body
+    }).reply(200, generate_site_from_prompt_response)
+
+    return await duda.async.generateFromPrompt({ ...generate_site_from_prompt_payload })
+      .then(res => expect(res).to.eql({ ...generate_site_from_prompt_response }))
   })
 
   it('can get an async task', async () => {

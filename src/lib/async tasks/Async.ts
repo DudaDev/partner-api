@@ -13,6 +13,14 @@ class Async extends Resource {
     },
   });
 
+  generateFromPrompt = APIEndpoint<Types.GenerateSiteFromPromptPayload, Types.GenerateSiteFromPromptResponse>({
+    method: 'post',
+    path: '/api/async-tasks/v2/generate-site-with-ai',
+    defaults: {
+      host: 'api.duda.co',
+    },
+  });
+
   get = APIEndpoint<Types.GetAsyncPayload, Types.GetAsyncResponse>({
     method: 'get',
     path: '/api/async-tasks/{task_id}',

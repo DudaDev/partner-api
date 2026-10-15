@@ -482,6 +482,18 @@ duda.sites.theme.update({ site_name: site_name });
 duda.async.generate();
 ```
 
+## Generate Site with AI from a Prompt
+
+[Generate Site with AI from a Prompt Reference](https://developer.duda.co/reference/generate-site-with-ai-v2)
+
+### Request
+
+`POST https://api.duda.co/api/async-tasks/v2/generate-site-with-ai`
+
+```typescript
+duda.async.generateFromPrompt({ business_data: business_data, instructions: instructions });
+```
+
 ## Get Task
 
 [Get Task Reference](https://developer.duda.co/reference/get-task#/)

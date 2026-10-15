@@ -1,5 +1,21 @@
+type BusinessDataToneOfVoice =
+    'CONVERSATIONAL' |
+    'HUMOROUS' |
+    'ENTHUSIASTIC' |
+    'INFORMATIVE' |
+    'PROFESSIONAL' |
+    'WITTY' |
+    'AUTHORITATIVE';
+
+interface AIGeneratedPage {
+    title: string,
+    description?: string
+}
+
 interface AdditionalAIContext {
-    max_pages?: number
+    instructions?: string,
+    max_pages?: number,
+    pages?: Array<AIGeneratedPage>
 }
 
 interface BusinessData {
@@ -9,7 +25,7 @@ interface BusinessData {
     logo_url?: string,
     name: string,
     service_area?: string,
-    tone_of_voice?: string
+    tone_of_voice?: BusinessDataToneOfVoice
 }
 
 interface Labels {
@@ -60,7 +76,9 @@ interface SiteThemeColor  {
 }
 
 interface BreakpointOverrides {
-    font_size?: string
+    text?: {
+        font_size?: string
+    }
 }
 
 interface ThemeBreakpoints {
@@ -96,14 +114,26 @@ interface Theme {
     text?: ThemeTextStyles
 }
 
+interface GenerateFromPromptBusinessData {
+    category?: string,
+    data_controller?: string,
+    description?: string,
+    logo_alt_text?: string,
+    logo_url?: string,
+    name?: string,
+    service_area?: string,
+    tone_of_voice?: BusinessDataToneOfVoice
+}
+
 export interface GenerateAsyncPayload {
     additional_ai_context?: AdditionalAIContext,
-    business_data?: BusinessData,
+    business_data: BusinessData,
     default_domain_prefix?: string,
     do_not_gen_ssl?: boolean,
     labels?: Array<Labels>,
     lang?: string,
     site_data?: SiteData,
+    template_alias?: string,
     theme?: Theme
 }
 
@@ -135,3 +165,10 @@ export interface GetAsyncResponse {
     created_at: string,
     finished_at?: string
 }
+
+export interface GenerateSiteFromPromptPayload {
+    business_data: GenerateFromPromptBusinessData,
+    instructions: string
+}
+
+export interface GenerateSiteFromPromptResponse extends GetAsyncResponse {}
