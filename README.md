@@ -1639,6 +1639,44 @@ duda.ecomm.categories.bulkCreate({ site_name: site_name });
 duda.ecomm.categories.bulkUpdate({ site_name: site_name });
 ```
 
+# eComm Product Categories
+
+## List Product Categories
+
+[List Product Categories Reference](https://developer.duda.co/reference/ecommerce-list-product-categories)
+
+### Request
+
+`GET https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/product-categories`
+
+```typescript
+duda.ecomm.product_categories.list({ site_name: site_name });
+```
+
+## Create Product Categories
+
+[Create Product Categories Reference](https://developer.duda.co/reference/ecommerce-create-product-categories)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/product-categories`
+
+```typescript
+duda.ecomm.product_categories.create({ site_name: site_name, relations: relations });
+```
+
+## Delete Product Categories
+
+[Delete Product Categories Reference](https://developer.duda.co/reference/ecommerce-delete-product-categories)
+
+### Request
+
+`POST https://api.duda.co/api/sites/multiscreen/{site_name}/ecommerce/product-categories/delete`
+
+```typescript
+duda.ecomm.product_categories.delete({ site_name: site_name, relations: relations });
+```
+
 # eComm Shipping Providers
 
 ## List Shipping Providers

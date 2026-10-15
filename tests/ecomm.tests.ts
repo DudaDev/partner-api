@@ -1041,6 +1041,30 @@ describe('Ecomm tests', () => {
     ]
   }
 
+  const product_categories_relations_payload = {
+    relations: [
+      {
+        category_id: category_id,
+        product_id: product_id,
+        order: 0
+      }
+    ]
+  }
+
+  const list_product_categories_response = {
+    site_name: site_name,
+    results: [
+      {
+        product_id: product_id,
+        category_id: category_id,
+        order: 0
+      }
+    ],
+    cursor: "string",
+    has_more: false,
+    next_page: "string"
+  }
+
   const bulk_update_category_payload = {
     categories: [
       {
@@ -1663,6 +1687,34 @@ describe('Ecomm tests', () => {
     }).reply(200, bulk_category_response)
 
     return await duda.ecomm.categories.bulkUpdate({ site_name, ...bulk_update_category_payload })
+  })
+
+  it('can list product categories', async () => {
+    scope.get(`/api/sites/multiscreen/${site_name}/ecommerce/product-categories?category_ids=${category_id}&limit=1&cursor=cursor`).reply(200, list_product_categories_response)
+    return await duda.ecomm.product_categories.list({
+      site_name,
+      category_ids: category_id,
+      limit: 1,
+      cursor: 'cursor'
+    }).then(res => expect(res).to.eql(list_product_categories_response))
+  })
+
+  it('can create product categories', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/product-categories`, (body) => {
+      expect(body).to.eql({ ...product_categories_relations_payload })
+      return body
+    }).reply(204)
+
+    return await duda.ecomm.product_categories.create({ site_name, ...product_categories_relations_payload })
+  })
+
+  it('can delete product categories', async () => {
+    scope.post(`/api/sites/multiscreen/${site_name}/ecommerce/product-categories/delete`, (body) => {
+      expect(body).to.eql({ ...product_categories_relations_payload })
+      return body
+    }).reply(204)
+
+    return await duda.ecomm.product_categories.delete({ site_name, ...product_categories_relations_payload })
   })
 
   it('can list all shipping providers', async () => {
