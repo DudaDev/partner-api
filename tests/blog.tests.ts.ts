@@ -81,6 +81,13 @@ describe('Blog tests', () => {
     total_responses: 1
   }
 
+  const list_blog_posts_with_content = {
+    limit: 1,
+    offset: 0,
+    results: [{ ...blog_post, content: "string" }],
+    total_responses: 1
+  }
+
   before(() => {
     duda = new Duda({
       user: 'testuser',
@@ -186,6 +193,16 @@ describe('Blog tests', () => {
       limit: 1,
       offset: 0
     }).then(res => expect(res).to.eql(list_blog_posts))
+  })
+
+  it('can list all blog posts with their content', async () => {
+    scope.get(`${api_path}/${site_name}/blog/posts?limit=1&offset=0&content=true`).reply(200, list_blog_posts_with_content)
+    return await duda.blog.posts.list({
+      site_name: site_name,
+      limit: 1,
+      offset: 0,
+      content: true
+    }).then(res => expect(res).to.eql(list_blog_posts_with_content))
   })
 
   it('can get a blog post', async () => {

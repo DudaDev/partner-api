@@ -94,13 +94,18 @@ export interface GetBlogPostResponse extends BlogPost {
 export interface ListBlogPostsPayload {
     site_name: string,
     limit?: number,
-    offset?: number
+    offset?: number,
+    content?: boolean
+}
+
+export interface ListBlogPostResult extends BlogPost {
+    content?: string,
 }
 
 export interface ListBlogPostsResponse {
     limit: number,
     offset: number,
-    results: Array<GetBlogPostPayload>,
+    results: Array<ListBlogPostResult>,
     total_responses: number
 }
 
